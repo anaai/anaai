@@ -6,7 +6,7 @@ import numpy as np
 from PIL import Image
 import io
 
-from cartoonify import Cartoon
+from cartoonify import Cartoonifier
 
 app = FastAPI()
 
@@ -17,7 +17,7 @@ async def get_status():
 @app.post("/cartoonify")
 async def cartoonify(image: UploadFile = File(...)):
   image = _load_image(await image.read())
-  cartoonified_image = Cartoon().cartoonify(image)
+  cartoonified_image = Cartoonifier().cartoonify(image)
   encoded_image = _encode_image(cartoonified_image)
 
   return StreamingResponse(io.BytesIO(encoded_image.tobytes()),

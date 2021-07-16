@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 
-class Cartoon:
+class Cartoonifier:
   def __init__(self, line_size=7, blur_value=7, n_colors=8):
     self.line_size = line_size
     self.blur_value = blur_value

@@ -2,15 +2,15 @@ import unittest
 import cv2
 import numpy as np
 
-from cartoonify import Cartoon
+from cartoonify import Cartoonifier
 
 class CartoonificationTestCase(unittest.TestCase):
   @classmethod
   def setUpClass(cls):
-    cls.c = Cartoon()
+    cls.c = Cartoonifier()
 
   def test_object_creation(self):
-    self.assertIsInstance(self.c, Cartoon)
+    self.assertIsInstance(self.c, Cartoonifier)
 
   def test_object_default_params(self):
     self.assertEqual(7, self.c.line_size)
