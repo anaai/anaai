@@ -1,7 +1,12 @@
-import 'normalize.css'
+import "normalize.css";
+import "./App.scss";
 
 function App() {
-  return <h1>Krypto Hans</h1>;
+  return (
+    <section className="app-container">
+      <h1>Krypto Hans</h1>
+    </section>
+  );
 }
 
 export default App;
