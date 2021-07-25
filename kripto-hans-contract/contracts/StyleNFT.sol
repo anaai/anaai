@@ -21,7 +21,7 @@ contract StyleNFT is ERC721, Ownable {
 
   event ImageGenerationPaid(address sender, uint256 value, string imageURL);
   event ImagePaid(address sender, uint256 value, string tokenURI);
-  event TokenMinted(address recipient, address payer, string tokenId, string tokenURI);
+  event TokenMinted(address recipient, address payer, uint256 tokenId, string tokenURI);
   event TokenTransfered(address sender, address recipient, string tokenId);
 
   constructor() public ERC721("NFT2", "NFT2") {
@@ -40,20 +40,19 @@ contract StyleNFT is ERC721, Ownable {
   }
 
   function payGenerating(string memory imageUrl) public payable {
-    require(msg.value == 1 ether, "Not enough gold generate");
+    require(msg.value == 1 ether, "Not enough coins to generate image");
     admin.transfer(msg.value);
     emit ImageGenerationPaid(msg.sender, msg.value, imageUrl);
-
   }
 
   function payImage(string memory tokenURI)
   public payable onlyPayerFirstHour(msg.sender, tokenURI)
   {
-    require(msg.value == 2 ether, "Not enough gold pay");
+    require(msg.value == 2 ether, "Not enough coins to transfer nft");
+    // require tokenURI to exist
 
     admin.transfer(msg.value);
     emit ImagePaid(msg.sender, msg.value, tokenURI);
-
   }
 
   function mintNFT(address recipient, address payer, string memory tokenURI)
@@ -68,6 +67,8 @@ contract StyleNFT is ERC721, Ownable {
 
     // payers[payer].push(tokenURI);
     payers[tokenURI] = Asset(payer, block.timestamp);
+
+    emit TokenMinted(recipient, payer, newItemId, tokenURI);
 
     return newItemId;
   }
