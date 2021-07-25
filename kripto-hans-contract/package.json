@@ -1,0 +1,14 @@
+{
+  "name": "style-nft-contract",
+  "version": "1.0.0",
+  "description": "AI generated NFTs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "hardhat": "^2.5.0"
+  }
+}
