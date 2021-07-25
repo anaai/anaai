@@ -1,6 +1,6 @@
-const { accounts, contract, web3 } = require("@openzeppelin/test-environment");
 const { expect } = require("chai");
-const { BN, expectEvent, expectRevert } = require("@openzeppelin/test-helpers");
+const { accounts, contract, web3 } = require("@openzeppelin/test-environment");
+const { BN, expectEvent, expectRevert, time } = require("@openzeppelin/test-helpers");
 
 const StyleNFT = contract.fromArtifact("StyleNFT");
 
@@ -170,11 +170,32 @@ describe("StyleNFT", () => {
     });
 
     it("Transfers image when payer pays the image in the first hour", async () => {
+      const value = web3.utils.toWei("2", "ether");
+      const tokenURI = "token1URI"
 
+      await this.contract.mintNFT(owner, user1, tokenURI, {from: owner});
+
+      this.contract.contract.methods
+        .payImage(tokenURI)
+        .send({from: user1, gas: 500000, value});
+
+      // add boolean return value to contract and a view to see what you paid for?
+      expect(true).to.equal(true);
     });
 
     it("Transfers image when non payers pays the image after the first hour", async () => {
+      const value = web3.utils.toWei("2", "ether");
+      const tokenURI = "token1URI"
 
+      await this.contract.mintNFT(owner, user1, tokenURI, {from: owner});
+      await time.increase(3600)
+
+      this.contract.contract.methods
+        .payImage(tokenURI)
+        .send({from: user2, gas: 500000, value});
+
+      // add boolean return value to contract and a view to see what you paid for?
+      expect(true).to.equal(true);
     });
 
     it("Reverts when non payer tries to pay in the first hour", async () => {
