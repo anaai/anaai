@@ -1,0 +1,204 @@
+const { accounts, contract, web3 } = require("@openzeppelin/test-environment");
+const { expect } = require("chai");
+const { BN, expectEvent, expectRevert } = require("@openzeppelin/test-helpers");
+
+const StyleNFT = contract.fromArtifact("StyleNFT");
+
+describe("StyleNFT", () => {
+  const [ owner, user1, user2 ] = accounts;
+
+  beforeEach(async () => {
+    // Deploy a new contract for each test
+    this.contract = await StyleNFT.new({from: owner});
+  });
+
+  describe("mintNFT", () => {
+    it("Mints an NFT when you are the owner", async () => {
+      const uri = "token1URI";
+
+      const oldSupply = await this.contract.totalSupply();
+      const oldBalance = await this.contract.balanceOf(owner);
+
+      await this.contract.mintNFT(owner, user1, uri, {from: owner});
+
+      const tokenOwner = await this.contract.ownerOf(1);
+      const tokenURI = await this.contract.tokenURI(1);
+
+      const newSupply = await this.contract.totalSupply();
+      const newBalance = await this.contract.balanceOf(owner);
+
+      expect(oldSupply.toNumber()).to.equal(0);
+      expect(newSupply.toNumber()).to.equal(1);
+
+      expect(oldBalance.toNumber()).to.equal(0);
+      expect(newBalance.toNumber()).to.equal(1);
+
+      expect(tokenOwner).to.equal(owner);
+      expect(tokenURI).to.equal(uri);
+    });
+
+    it("Emits TokenMinted event", async () => {
+      const tokenURI = "token1URI";
+      const tokenId = new BN("1");
+
+      const tx = await this.contract.mintNFT(owner, user1, tokenURI, {from: owner});
+
+      expectEvent(
+        tx,
+        "TokenMinted",
+        {recipient: owner, payer: user1, tokenId, tokenURI}
+      );
+    });
+
+    it("Doesn't mint a token when you are not the owner", async () => {
+      await expectRevert(
+        this.contract.mintNFT(user1, user1, "token1URI", {from: user1}),
+        "Ownable: caller is not the owner",
+      );
+    });
+  });
+
+  describe("safeTransferFrom", () => {
+    it("Transfers ownership when you are the owner and the token exists", async () => {
+      await this.contract.mintNFT(owner, user1, "token1URI", {from: owner});
+      const tokenId = new BN("1")
+
+      const oldOwnerBalance = await this.contract.balanceOf(owner);
+      const oldRecipientBalance = await this.contract.balanceOf(user1);
+
+      await this.contract.safeTransferFrom(owner, user1, tokenId, {from: owner});
+
+      const newOwnerBalance = await this.contract.balanceOf(owner);
+      const newRecipientBalance = await this.contract.balanceOf(user1);
+
+      expect(oldOwnerBalance.toNumber()).to.equal(1);
+      expect(oldRecipientBalance.toNumber()).to.equal(0);
+
+      expect(newOwnerBalance.toNumber()).to.equal(0);
+      expect(newRecipientBalance.toNumber()).to.equal(1);
+    });
+
+    it("Reverts when you are not the owner", async () => {
+      await this.contract.mintNFT(owner, user1, "token1URI", {from: owner});
+      const tokenId = new BN("1")
+
+      await expectRevert(
+        this.contract.safeTransferFrom(owner, user1, tokenId, {from: user1}),
+        "ERC721: transfer caller is not owner nor approved",
+      );
+    });
+
+    it("Reverts when the token doesn't exist", async () => {
+      const tokenId = new BN("1");
+
+      await expectRevert(
+        this.contract.safeTransferFrom(owner, user1, tokenId, {from: user1}),
+        "ERC721: operator query for nonexistent token",
+      );
+    });
+  });
+
+  describe("payGenerating", () => {
+    it("Transfers coins to admin address", async () => {
+      const value = web3.utils.toWei("1", "ether");
+      const oldBalance = await web3.eth.getBalance(owner)
+
+      await this.contract.contract.methods
+        .payGenerating("imageUrl")
+        .send({from: user1, gas: 500000, value});
+
+      const newBalance = await web3.eth.getBalance(owner)
+
+      expect(newBalance - oldBalance).to.equal(parseInt(value));
+    });
+
+    it("Emits ImageGenerationPaid event", async () => {
+      const value = web3.utils.toWei("1", "ether");
+      const imageURL = "imageURL"
+
+      const tx = await this.contract.contract.methods
+        .payGenerating(imageURL)
+        .send({from: user1, gas: 500000, value});
+
+      expectEvent(
+        tx,
+        "ImageGenerationPaid",
+        {sender: user1, value, imageURL}
+      );
+    });
+
+    it("Reverts when exact amount of ether is not provided", async () => {
+      await expectRevert(
+        this.contract.payGenerating("imageURL", {from: user1}),
+        "Not enough coins to generate image",
+      );
+    });
+  });
+
+  describe("payImage", () => {
+    it("Transfers coins to admin address", async () => {
+      const value = web3.utils.toWei("2", "ether");
+      const tokenURI = "token1URI"
+
+      await this.contract.mintNFT(owner, user1, tokenURI, {from: owner});
+      const oldBalance = await web3.eth.getBalance(owner);
+
+      await this.contract.contract.methods
+        .payImage(tokenURI)
+        .send({from: user1, gas: 500000, value});
+
+      const newBalance = await web3.eth.getBalance(owner)
+
+      expect(newBalance - oldBalance).to.equal(parseInt(value));
+    });
+
+    it("Emits ImagePaid event", async () => {
+      const value = web3.utils.toWei("2", "ether");
+      const tokenURI = "token1URI";
+
+      await this.contract.mintNFT(owner, user1, tokenURI, {from: owner});
+
+      const tx = await this.contract.contract.methods
+        .payImage(tokenURI)
+        .send({from: user1, gas: 500000, value});
+
+      expectEvent(
+        tx,
+        "ImagePaid",
+        {sender: user1, value, tokenURI}
+      );
+    });
+
+    it("Transfers image when payer pays the image in the first hour", async () => {
+
+    });
+
+    it("Transfers image when non payers pays the image after the first hour", async () => {
+
+    });
+
+    it("Reverts when non payer tries to pay in the first hour", async () => {
+      const value = web3.utils.toWei("2", "ether");
+      const tokenURI = "token1URI"
+
+      await this.contract.mintNFT(owner, user1, tokenURI, {from: owner});
+
+      expectRevert(
+        this.contract.contract.methods
+          .payImage(tokenURI)
+          .send({from: user2, gas: 500000, value}),
+        "Only the person who generated the image can buy it in the first hour"
+      );
+    });
+
+    it("Reverts when exact amount of ether is not provided", async () => {
+      const tokenURI = "token1URI";
+      await this.contract.mintNFT(owner, user1, tokenURI, {from: owner});
+
+      expectRevert(
+        this.contract.payImage(tokenURI, {from: user1}),
+        "Not enough coins to transfer nft",
+      );
+    });
+  });
+});
