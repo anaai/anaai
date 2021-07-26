@@ -10,6 +10,7 @@ contract StyleNFT is ERC721, Ownable {
   struct Asset {
     address payer;
     uint256 time;
+    bool exists;
   }
 
   using Counters for Counters.Counter;
@@ -66,10 +67,15 @@ contract StyleNFT is ERC721, Ownable {
     _setTokenURI(newItemId, tokenURI);
 
     // payers[payer].push(tokenURI);
-    payers[newItemId] = Asset(payer, block.timestamp);
+    payers[newItemId] = Asset(payer, block.timestamp, true);
 
     emit TokenMinted(recipient, payer, newItemId, tokenURI);
 
     return newItemId;
+  }
+
+  function payerOf(uint256 tokenId) external view returns (address) {
+    require(payers[tokenId].exists, "Token doesn't exist");
+    return payers[tokenId].payer;
   }
 }

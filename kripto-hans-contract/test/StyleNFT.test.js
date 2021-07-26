@@ -222,4 +222,20 @@ describe("StyleNFT", () => {
       );
     });
   });
+
+  describe("payerOf", () => {
+    it("Returns the address of the user who payed for generating the image", async () => {
+      await this.contract.mintNFT(owner, user1, "tokenURI", {from: owner});
+      const payer = await this.contract.payerOf(new BN("1"));
+
+      expect(payer).to.equal(user1);
+    });
+
+    it("Reverts when the token doesn't exist", async () => {
+      expectRevert(
+        this.contract.payerOf(new BN("1")),
+        "Token doesn't exist"
+      );
+    });
+  });
 });
