@@ -17,21 +17,21 @@ contract StyleNFT is ERC721, Ownable {
 
   address payable private admin;
   // mapping(address => string[]) public payers;
-  mapping(string => Asset) public payers;
+  mapping(uint256 => Asset) public payers;
 
   event ImageGenerationPaid(address sender, uint256 value, string imageURL);
-  event ImagePaid(address sender, uint256 value, string tokenURI);
+  event ImagePaid(address sender, uint256 value, uint256 tokenId);
   event TokenMinted(address recipient, address payer, uint256 tokenId, string tokenURI);
-  event TokenTransfered(address sender, address recipient, string tokenId);
+  event TokenTransfered(address sender, address recipient, uint256 tokenId);
 
   constructor() public ERC721("NFT2", "NFT2") {
     admin = payable(msg.sender);
   }
 
-  modifier onlyPayerFirstHour(address sender, string memory tokenURI) {
-    if (block.timestamp < payers[tokenURI].time + 20 seconds) {
+  modifier onlyPayerFirstHour(address sender, uint256 tokenId) {
+    if (block.timestamp < payers[tokenId].time + 20 seconds) {
       require(
-        payers[tokenURI].payer == sender,
+        payers[tokenId].payer == sender,
         "Only the person who generated the image can buy it in the first hour"
       );
     }
@@ -45,14 +45,14 @@ contract StyleNFT is ERC721, Ownable {
     emit ImageGenerationPaid(msg.sender, msg.value, imageUrl);
   }
 
-  function payImage(string memory tokenURI)
-  public payable onlyPayerFirstHour(msg.sender, tokenURI)
+  function payImage(uint256 tokenId)
+  public payable onlyPayerFirstHour(msg.sender, tokenId)
   {
     require(msg.value == 2 ether, "Not enough coins to transfer nft");
     // require tokenURI to exist
 
     admin.transfer(msg.value);
-    emit ImagePaid(msg.sender, msg.value, tokenURI);
+    emit ImagePaid(msg.sender, msg.value, tokenId);
   }
 
   function mintNFT(address recipient, address payer, string memory tokenURI)
@@ -66,14 +66,10 @@ contract StyleNFT is ERC721, Ownable {
     _setTokenURI(newItemId, tokenURI);
 
     // payers[payer].push(tokenURI);
-    payers[tokenURI] = Asset(payer, block.timestamp);
+    payers[newItemId] = Asset(payer, block.timestamp);
 
     emit TokenMinted(recipient, payer, newItemId, tokenURI);
 
     return newItemId;
-  }
-
-  function getAdmin() public view returns (address) {
-    return admin;
   }
 }

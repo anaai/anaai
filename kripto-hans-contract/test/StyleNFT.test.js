@@ -138,13 +138,13 @@ describe("StyleNFT", () => {
   describe("payImage", () => {
     it("Transfers coins to admin address", async () => {
       const value = web3.utils.toWei("2", "ether");
-      const tokenURI = "token1URI"
+      const tokenId = new BN("1");
 
-      await this.contract.mintNFT(owner, user1, tokenURI, {from: owner});
+      await this.contract.mintNFT(owner, user1, "tokenURI", {from: owner});
       const oldBalance = await web3.eth.getBalance(owner);
 
       await this.contract.contract.methods
-        .payImage(tokenURI)
+        .payImage(tokenId)
         .send({from: user1, gas: 500000, value});
 
       const newBalance = await web3.eth.getBalance(owner)
@@ -154,29 +154,29 @@ describe("StyleNFT", () => {
 
     it("Emits ImagePaid event", async () => {
       const value = web3.utils.toWei("2", "ether");
-      const tokenURI = "token1URI";
+      const tokenId = new BN("1");
 
-      await this.contract.mintNFT(owner, user1, tokenURI, {from: owner});
+      await this.contract.mintNFT(owner, user1, "tokenURI", {from: owner});
 
       const tx = await this.contract.contract.methods
-        .payImage(tokenURI)
+        .payImage(tokenId)
         .send({from: user1, gas: 500000, value});
 
       expectEvent(
         tx,
         "ImagePaid",
-        {sender: user1, value, tokenURI}
+        {sender: user1, value, tokenId}
       );
     });
 
     it("Transfers image when payer pays the image in the first hour", async () => {
       const value = web3.utils.toWei("2", "ether");
-      const tokenURI = "token1URI"
+      const tokenId = new BN("1");
 
-      await this.contract.mintNFT(owner, user1, tokenURI, {from: owner});
+      await this.contract.mintNFT(owner, user1, "tokenURI", {from: owner});
 
       this.contract.contract.methods
-        .payImage(tokenURI)
+        .payImage(tokenId)
         .send({from: user1, gas: 500000, value});
 
       // add boolean return value to contract and a view to see what you paid for?
@@ -185,13 +185,13 @@ describe("StyleNFT", () => {
 
     it("Transfers image when non payers pays the image after the first hour", async () => {
       const value = web3.utils.toWei("2", "ether");
-      const tokenURI = "token1URI"
+      const tokenId = new BN("1");
 
-      await this.contract.mintNFT(owner, user1, tokenURI, {from: owner});
+      await this.contract.mintNFT(owner, user1, "tokenURI", {from: owner});
       await time.increase(3600)
 
       this.contract.contract.methods
-        .payImage(tokenURI)
+        .payImage(tokenId)
         .send({from: user2, gas: 500000, value});
 
       // add boolean return value to contract and a view to see what you paid for?
@@ -200,24 +200,24 @@ describe("StyleNFT", () => {
 
     it("Reverts when non payer tries to pay in the first hour", async () => {
       const value = web3.utils.toWei("2", "ether");
-      const tokenURI = "token1URI"
+      const tokenId = new BN("1");
 
-      await this.contract.mintNFT(owner, user1, tokenURI, {from: owner});
+      await this.contract.mintNFT(owner, user1, "tokenURI", {from: owner});
 
       expectRevert(
         this.contract.contract.methods
-          .payImage(tokenURI)
+          .payImage(tokenId)
           .send({from: user2, gas: 500000, value}),
         "Only the person who generated the image can buy it in the first hour"
       );
     });
 
     it("Reverts when exact amount of ether is not provided", async () => {
-      const tokenURI = "token1URI";
-      await this.contract.mintNFT(owner, user1, tokenURI, {from: owner});
+      const tokenId = new BN("1");
+      await this.contract.mintNFT(owner, user1, "tokenURI", {from: owner});
 
       expectRevert(
-        this.contract.payImage(tokenURI, {from: user1}),
+        this.contract.payImage(tokenId, {from: user1}),
         "Not enough coins to transfer nft",
       );
     });
