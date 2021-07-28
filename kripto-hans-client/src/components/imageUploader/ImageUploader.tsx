@@ -1,10 +1,12 @@
 import React, { ChangeEventHandler, useState } from "react";
 
+interface ClientImage {
+  imageUrl: string;
+  imageFile: File;
+}
+
 export const ImageUploader: React.FC<{}> = () => {
-  const [clientImage, setClientImage] = useState<{
-    imageUrl: string;
-    imageFile: File;
-  } | null>(null);
+  const [clientImage, setClientImage] = useState<ClientImage | null>(null);
 
   const handleImageSelect: ChangeEventHandler<HTMLInputElement> = (event) => {
     if (event.target.files && event.target.files[0]) {
