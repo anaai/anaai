@@ -2,12 +2,9 @@ import React, { ChangeEventHandler, useState } from "react";
 
 export const ImageUploader: React.FC<{}> = () => {
   const [clientImage, setClientImage] = useState<{
-    imageUrl: string | null;
-    imageFile: File | null;
-  }>({
-    imageUrl: null,
-    imageFile: null,
-  });
+    imageUrl: string;
+    imageFile: File;
+  } | null>(null);
 
   const handleImageSelect: ChangeEventHandler<HTMLInputElement> = (event) => {
     if (event.target.files && event.target.files[0]) {
@@ -28,7 +25,7 @@ export const ImageUploader: React.FC<{}> = () => {
         onChange={handleImageSelect}
       />
 
-      {clientImage && <img src={clientImage.imageUrl as string} alt="Selected"/>}
+      {clientImage && <img src={clientImage.imageUrl} alt="Selected" />}
     </>
   );
 };
