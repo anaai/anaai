@@ -1,18 +1,18 @@
 import React, { ChangeEventHandler, useState } from "react";
 
 interface ClientImage {
-  imageUrl: string;
-  imageFile: File;
+  url: string;
+  file: File;
 }
 
 export const ImageUploader: React.FC<{}> = () => {
   const [clientImage, setClientImage] = useState<ClientImage | null>(null);
 
   const handleImageSelect: ChangeEventHandler<HTMLInputElement> = (event) => {
-    if (event.target.files && event.target.files[0]) {
+    if (event.target.files?.[0]) {
       setClientImage({
-        imageUrl: URL.createObjectURL(event.target.files[0]),
-        imageFile: event.target.files[0],
+        url: URL.createObjectURL(event.target.files[0]),
+        file: event.target.files[0],
       });
     }
   };
@@ -27,7 +27,7 @@ export const ImageUploader: React.FC<{}> = () => {
         onChange={handleImageSelect}
       />
 
-      {clientImage && <img src={clientImage.imageUrl} alt="Selected" />}
+      {clientImage && <img src={clientImage.url} alt="Selected" />}
     </>
   );
 };
