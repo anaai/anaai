@@ -3,20 +3,21 @@ import React, { ChangeEventHandler, useState } from "react";
 export const ImageUploader: React.FC<{}> = () => {
   const [clientImage, setClientImage] = useState<{
     imageUrl: string | null;
-    image: File | null;
+    imageFile: File | null;
   }>({
     imageUrl: null,
-    image: null,
+    imageFile: null,
   });
 
   const handleImageSelect: ChangeEventHandler<HTMLInputElement> = (event) => {
     if (event.target.files && event.target.files[0]) {
       setClientImage({
         imageUrl: URL.createObjectURL(event.target.files[0]),
-        image: event.target.files[0],
+        imageFile: event.target.files[0],
       });
     }
   };
+
   return (
     <>
       <label htmlFor="image-upload-input">Upload image</label>
