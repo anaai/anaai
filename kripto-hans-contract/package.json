@@ -1,0 +1,25 @@
+{
+  "name": "style-nft-contract",
+  "version": "1.0.0",
+  "description": "AI generated NFTs",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --exit --recursive"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.0.2",
+    "@openzeppelin/test-environment": "^0.1.9",
+    "@openzeppelin/test-helpers": "^0.5.12",
+    "chai": "^4.3.4",
+    "ethers": "^5.4.2",
+    "hardhat": "^2.5.0",
+    "mocha": "^9.0.3"
+  },
+  "dependencies": {
+    "@alch/alchemy-web3": "^1.1.1",
+    "@openzeppelin/contracts": "^3.1.0-solc-0.7",
+    "dotenv": "^10.0.0"
+  }
+}
