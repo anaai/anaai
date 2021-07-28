@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { ChangeEventHandler, useState } from "react";
 
 interface ClientImage {
@@ -17,6 +18,16 @@ export const ImageUploader: React.FC<{}> = () => {
     }
   };
 
+  const handleImageUpload: () => void = async () => {
+    if (!clientImage) return;
+
+    const url = `${process.env.REACT_APP_SERVICE_URL!}/cartoonify`;
+    const formData = new FormData();
+    formData.append("image", clientImage.file);
+    const result = await axios.post(url, formData);
+    console.log(result);
+  };
+
   return (
     <>
       <label htmlFor="image-upload-input">Upload image</label>
@@ -27,7 +38,12 @@ export const ImageUploader: React.FC<{}> = () => {
         onChange={handleImageSelect}
       />
 
-      {clientImage && <img src={clientImage.url} alt="Selected" />}
+      {clientImage && (
+        <div>
+          <img src={clientImage.url} alt="Selected" />
+          <button onClick={handleImageUpload}>Upload image</button>
+        </div>
+      )}
     </>
   );
 };
