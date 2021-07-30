@@ -19,5 +19,23 @@ test("allows user to select an image", () => {
       files: [file],
     },
   });
+
   expect(inputElement.files![0]).toBe(file);
+});
+
+test("allows user to upload the selected image", () => {
+  window.URL.createObjectURL = function () {} as any;
+  render(<ImageUploader />);
+  const inputElement = screen.getByLabelText(
+    "Upload image"
+  ) as HTMLInputElement;
+  const file = new File(["(⌐□_□)"], "chucknorris.png", { type: "image/png" });
+  fireEvent.change(inputElement, {
+    target: {
+      files: [file],
+    },
+  });
+  const uploadButtonElement = screen.getByText("Upload");
+
+  expect(uploadButtonElement).toBeVisible();
 });
