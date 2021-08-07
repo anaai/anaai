@@ -1,6 +1,7 @@
 import "normalize.css";
 import "./App.scss";
 import { ImageUploader } from "./imageUploader/ImageUploader";
+import { WalletConnector } from "./WalletConnector/WalletConnector";
 
 function App() {
   return (
@@ -8,6 +9,8 @@ function App() {
       <h1>Krypto Hans</h1>
 
       <ImageUploader />
+
+      <WalletConnector />
     </section>
   );
 }
