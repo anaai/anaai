@@ -19,5 +19,13 @@ export const WalletConnector: React.FC<{}> = () => {
     setMetaMaskIsInstalled(isMetaMaskInstalled());
   }, []);
 
-  return <div>Wallet connector works!</div>;
+  return (
+    <>
+      {metaMaskIsInstalled ? (
+        <button>Connect</button>
+      ) : (
+        <button>Install MetaMask</button>
+      )}
+    </>
+  );
 };
