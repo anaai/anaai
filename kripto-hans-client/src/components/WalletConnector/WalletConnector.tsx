@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 declare global {
   interface Window {
@@ -7,6 +7,8 @@ declare global {
 }
 
 export const WalletConnector: React.FC<{}> = () => {
+  const [metaMaskIsInstalled, setMetaMaskIsInstalled] = useState(false);
+
   const isMetaMaskInstalled = () => {
     //Have to check the ethereum binding on the window object to see if it's installed
     const { ethereum } = window;
@@ -14,7 +16,7 @@ export const WalletConnector: React.FC<{}> = () => {
   };
 
   useEffect(() => {
-    console.log(isMetaMaskInstalled());
+    setMetaMaskIsInstalled(isMetaMaskInstalled());
   }, []);
 
   return <div>Wallet connector works!</div>;
