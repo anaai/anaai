@@ -12,6 +12,7 @@ const onboarding = new MetaMaskOnboarding({
 
 export const WalletConnector: React.FC<{}> = () => {
   const [metaMaskIsInstalled, setMetaMaskIsInstalled] = useState(false);
+  const [accounts, setAccounts] = useState<null | string[]>(null);
 
   const isMetaMaskInstalled = () => {
     //Have to check the ethereum binding on the window object to see if it's installed
@@ -23,7 +24,16 @@ export const WalletConnector: React.FC<{}> = () => {
     setMetaMaskIsInstalled(isMetaMaskInstalled());
   }, []);
 
-  const handleConnectToMetaMask = () => {};
+  const handleConnectToMetaMask = async () => {
+    try {
+      const accounts = await window.ethereum.request({
+        method: "eth_requestAccounts",
+      });
+      setAccounts(accounts);
+    } catch (error) {
+      console.error(error);
+    }
+  };
   const handleInstallMetaMask = () => {
     onboarding.startOnboarding();
   };
@@ -35,6 +45,8 @@ export const WalletConnector: React.FC<{}> = () => {
       ) : (
         <button onClick={handleInstallMetaMask}>Install MetaMask</button>
       )}
+
+      {accounts && <div>Account: {accounts[0]}</div>}
     </>
   );
 };
