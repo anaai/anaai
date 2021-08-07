@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
-
+import MetaMaskOnboarding from "@metamask/onboarding";
 declare global {
   interface Window {
     ethereum: any;
   }
 }
+
+const onboarding = new MetaMaskOnboarding({
+  forwarderOrigin: window.location.origin,
+});
 
 export const WalletConnector: React.FC<{}> = () => {
   const [metaMaskIsInstalled, setMetaMaskIsInstalled] = useState(false);
@@ -20,7 +24,9 @@ export const WalletConnector: React.FC<{}> = () => {
   }, []);
 
   const handleConnectToMetaMask = () => {};
-  const handleInstallMetaMask = () => {};
+  const handleInstallMetaMask = () => {
+    onboarding.startOnboarding();
+  };
 
   return (
     <>
