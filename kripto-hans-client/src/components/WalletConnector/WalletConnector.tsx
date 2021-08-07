@@ -19,12 +19,15 @@ export const WalletConnector: React.FC<{}> = () => {
     setMetaMaskIsInstalled(isMetaMaskInstalled());
   }, []);
 
+  const handleConnectToMetaMask = () => {};
+  const handleInstallMetaMask = () => {};
+
   return (
     <>
       {metaMaskIsInstalled ? (
-        <button>Connect</button>
+        <button onClick={handleConnectToMetaMask}>Connect</button>
       ) : (
-        <button>Install MetaMask</button>
+        <button onClick={handleInstallMetaMask}>Install MetaMask</button>
       )}
     </>
   );
