@@ -10,11 +10,11 @@ class PinataClient:
 
   def pin_image(self, image_path):
     files = self._files(image_path)
-    response = requests.post(PIN_IMAGE_URL, headers=self.headers, files=files)
+    return requests.post(PIN_IMAGE_URL, headers=self.headers, files=files)
 
   def pin_metadata(self, file_path):
     data = self._json_data(file_path)
-    response = requests.post(PIN_JSON_URL, headers=self.headers, json=data)
+    return requests.post(PIN_JSON_URL, headers=self.headers, json=data)
 
   def _files(self, image_path):
     return {"file": open(image_path, "rb")}
