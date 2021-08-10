@@ -16,11 +16,11 @@ PINATA_JWT = os.getenv("PINATA_JWT")
 app = Celery("tasks", backend=POSTGRES_URL, broker=BROKER_URL)
 
 @app.task
-def cartoonify(image_url):
+def cartoonify(image_url, image_name):
   image = _download_image(image_url)
   cartoonified_image = Cartoonifier().cartoonify(image)
 
-  image_path = working_directory.local_file_path("kikibratina5.jpeg")
+  image_path = working_directory.local_file_path(image_name)
   cv2.imwrite(image_path, cartoonified_image)
 
   pinata_client = PinataClient(PINATA_JWT)
