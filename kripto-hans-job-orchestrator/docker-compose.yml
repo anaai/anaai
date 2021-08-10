@@ -2,10 +2,12 @@ version: "3.4"
 services:
   redis:
     image: redis:5.0.3-alpine
+    container_name: job_orchestrator_redis
     restart: always
 
   postgres:
     image: postgres
+    container_name: job_orchestrator_postgres
     environment:
       - POSTGRES_USER=job_orchestrator
       - POSTGRES_PASSWORD=muchsecurity
@@ -15,6 +17,8 @@ services:
 
   job-orchestrator:
     build: .
+    image: job_orchestrator
+    container_name: job_orchestrator
     restart: always
     command: celery -A tasks worker --loglevel=INFO
     env_file:
