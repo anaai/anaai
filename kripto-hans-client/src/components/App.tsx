@@ -1,9 +1,10 @@
-import "normalize.css";
-import "./App.scss";
-import { ImageUploader } from "./imageUploader/ImageUploader";
-import { WalletConnector } from "./WalletConnector/WalletConnector";
+import 'normalize.css';
+import { ReactElement } from 'react';
+import './App.scss';
+import { ImageUploader } from './imageUploader/ImageUploader';
+import { WalletConnector } from './WalletConnector/WalletConnector';
 
-function App() {
+function App(): ReactElement {
   return (
     <section className="app-container">
       <h1>Krypto Hans</h1>

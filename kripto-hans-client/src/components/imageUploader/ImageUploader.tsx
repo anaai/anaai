@@ -1,23 +1,21 @@
-import axios from "axios";
-import React, { ChangeEventHandler, useState } from "react";
+import axios from 'axios';
+import React, { ChangeEventHandler, useState } from 'react';
 
 interface ClientImage {
   url: string;
   file: File;
 }
 
-export const ImageUploader: React.FC<{}> = () => {
+export const ImageUploader: React.FC<Record<string, never>> = () => {
   const [selectedImage, setSelectedImage] = useState<ClientImage | null>(null);
 
-  const [processedImage, setProcessedImage] = useState<ClientImage | null>(
-    null
-  );
+  const [processedImage, setProcessedImage] = useState<ClientImage | null>(null);
 
   const handleImageSelect: ChangeEventHandler<HTMLInputElement> = (event) => {
     if (event.target.files?.[0]) {
       setSelectedImage({
         url: URL.createObjectURL(event.target.files[0]),
-        file: event.target.files[0],
+        file: event.target.files[0]
       });
     }
   };
@@ -25,27 +23,24 @@ export const ImageUploader: React.FC<{}> = () => {
   const handleImageUpload: () => void = async () => {
     if (!selectedImage) return;
 
-    const url = `${process.env.REACT_APP_SERVICE_URL!}/cartoonify`;
+    const url = `${process.env.REACT_APP_SERVICE_URL}/cartoonify`;
     const formData = new FormData();
-    formData.append("image", selectedImage.file);
+    formData.append('image', selectedImage.file);
 
     const response = await axios({
       url,
-      method: "POST",
+      method: 'POST',
       data: formData,
-      responseType: "blob",
+      responseType: 'blob'
     });
 
     const processedImageBlob = new Blob([response.data], {
-      type: response.headers["content-type"],
+      type: response.headers['content-type']
     });
 
-    const fileExtension = selectedImage.file.type.split("/")[1];
+    const fileExtension = selectedImage.file.type.split('/')[1];
 
-    const processedImageFile = new File(
-      [processedImageBlob],
-      `processed-image.${fileExtension}`
-    );
+    const processedImageFile = new File([processedImageBlob], `processed-image.${fileExtension}`);
     const processedImageUrl = URL.createObjectURL(processedImageBlob);
 
     setProcessedImage({ url: processedImageUrl, file: processedImageFile });
