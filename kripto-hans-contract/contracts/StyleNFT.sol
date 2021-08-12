@@ -11,18 +11,24 @@ contract StyleNFT is ERC721, Ownable {
     address payer;
     uint256 time;
     bool exists;
+    uint256 price;
+  }
+
+  struct UserCollection {
+    uint256[] generatedTokens;
+    uint256[] boughtTokens;
   }
 
   using Counters for Counters.Counter;
   Counters.Counter private _tokenIds;
 
   address payable private admin;
-  // mapping(address => string[]) public payers;
-  mapping(uint256 => Asset) public payers;
+  mapping(uint256 => Asset) private assets;
+  mapping(address => UserCollection) private userCollection;
 
   event ImageGenerationPaid(address sender, uint256 value, string imageURL);
   event ImagePaid(address sender, uint256 value, uint256 tokenId);
-  event TokenMinted(address recipient, address payer, uint256 tokenId, string tokenURI);
+  event TokenMinted(address recipient, address payer, uint256 tokenId, string tokenURI, uint256 price);
   event TokenTransfered(address sender, address recipient, uint256 tokenId);
 
   constructor() public ERC721("NFT2", "NFT2") {
@@ -30,9 +36,9 @@ contract StyleNFT is ERC721, Ownable {
   }
 
   modifier onlyPayerFirstHour(address sender, uint256 tokenId) {
-    if (block.timestamp < payers[tokenId].time + 20 seconds) {
+    if (block.timestamp < assets[tokenId].time + 20 seconds) {
       require(
-        payers[tokenId].payer == sender,
+        assets[tokenId].payer == sender,
         "Only the person who generated the image can buy it in the first hour"
       );
     }
@@ -49,14 +55,16 @@ contract StyleNFT is ERC721, Ownable {
   function payImage(uint256 tokenId)
   public payable onlyPayerFirstHour(msg.sender, tokenId)
   {
-    require(msg.value == 2 ether, "Not enough coins to transfer nft");
+    uint256 price = 1 wei * assets[tokenId].price;
+    require(msg.value == price, "Not enough coins to transfer nft");
     // require tokenURI to exist
 
     admin.transfer(msg.value);
+    userCollection[msg.sender].boughtTokens.push(tokenId);
     emit ImagePaid(msg.sender, msg.value, tokenId);
   }
 
-  function mintNFT(address recipient, address payer, string memory tokenURI)
+  function mintNFT(address recipient, address payer, string memory tokenURI, uint256 price)
   public onlyOwner
   returns (uint256)
   {
@@ -66,16 +74,26 @@ contract StyleNFT is ERC721, Ownable {
     _mint(recipient, newItemId);
     _setTokenURI(newItemId, tokenURI);
 
-    // payers[payer].push(tokenURI);
-    payers[newItemId] = Asset(payer, block.timestamp, true);
+    assets[newItemId] = Asset(payer, block.timestamp, true, price);
+    userCollection[payer].generatedTokens.push(newItemId);
 
-    emit TokenMinted(recipient, payer, newItemId, tokenURI);
+    emit TokenMinted(recipient, payer, newItemId, tokenURI, price);
 
     return newItemId;
   }
 
   function payerOf(uint256 tokenId) external view returns (address) {
-    require(payers[tokenId].exists, "Token doesn't exist");
-    return payers[tokenId].payer;
+    require(assets[tokenId].exists, "Token doesn't exist");
+    return assets[tokenId].payer;
+  }
+
+  function userGeneratedTokens(address user) external view returns (uint256[] memory) {
+    require(userCollection[user].generatedTokens.length > 0, "User has no generated tokens");
+    return userCollection[user].generatedTokens;
+  }
+
+  function userBoughtTokens(address user) external view returns (uint256[] memory) {
+    require(userCollection[user].boughtTokens.length > 0, "User has no bought tokens");
+    return userCollection[user].boughtTokens;
   }
 }
