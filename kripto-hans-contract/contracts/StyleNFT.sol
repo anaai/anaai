@@ -18,8 +18,7 @@ contract StyleNFT is ERC721, Ownable {
   Counters.Counter private _tokenIds;
 
   address payable private admin;
-  // mapping(address => string[]) public payers;
-  mapping(uint256 => Asset) public payers;
+  mapping(uint256 => Asset) public assets;
 
   event ImageGenerationPaid(address sender, uint256 value, string imageURL);
   event ImagePaid(address sender, uint256 value, uint256 tokenId);
@@ -31,9 +30,9 @@ contract StyleNFT is ERC721, Ownable {
   }
 
   modifier onlyPayerFirstHour(address sender, uint256 tokenId) {
-    if (block.timestamp < payers[tokenId].time + 20 seconds) {
+    if (block.timestamp < assets[tokenId].time + 20 seconds) {
       require(
-        payers[tokenId].payer == sender,
+        assets[tokenId].payer == sender,
         "Only the person who generated the image can buy it in the first hour"
       );
     }
@@ -50,7 +49,7 @@ contract StyleNFT is ERC721, Ownable {
   function payImage(uint256 tokenId)
   public payable onlyPayerFirstHour(msg.sender, tokenId)
   {
-    uint256 price = 1 wei * payers[tokenId].price;
+    uint256 price = 1 wei * assets[tokenId].price;
     require(msg.value == price, "Not enough coins to transfer nft");
     // require tokenURI to exist
 
@@ -68,8 +67,7 @@ contract StyleNFT is ERC721, Ownable {
     _mint(recipient, newItemId);
     _setTokenURI(newItemId, tokenURI);
 
-    // payers[payer].push(tokenURI);
-    payers[newItemId] = Asset(payer, block.timestamp, true, price);
+    assets[newItemId] = Asset(payer, block.timestamp, true, price);
 
     emit TokenMinted(recipient, payer, newItemId, tokenURI, price);
 
@@ -77,7 +75,7 @@ contract StyleNFT is ERC721, Ownable {
   }
 
   function payerOf(uint256 tokenId) external view returns (address) {
-    require(payers[tokenId].exists, "Token doesn't exist");
-    return payers[tokenId].payer;
+    require(assets[tokenId].exists, "Token doesn't exist");
+    return assets[tokenId].payer;
   }
 }
