@@ -1,0 +1,15 @@
+{
+  "pinataMetadata": {
+    "name": "testor-metadator"
+  },
+  "attributes" : [ {
+    "trait_type" : "test",
+    "value" : "Test"
+  }, {
+  "trait_type" : "tost",
+  "value" : "Tost"
+  } ],
+  "description" : "TEST@lol",
+  "image" : "https://gateway.pinata.cloud/ipfs/QmaoycyjfeDSGrV2hK57dQiBaxf55HSRsWmok32RhpFoNH",
+  "name" : "kekor-shomun"
+}

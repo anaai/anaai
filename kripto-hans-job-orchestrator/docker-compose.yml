@@ -1,0 +1,40 @@
+version: "3.4"
+services:
+  redis:
+    image: redis:5.0.3-alpine
+    container_name: job_orchestrator_redis
+    restart: always
+
+  postgres:
+    image: postgres
+    container_name: job_orchestrator_postgres
+    environment:
+      - POSTGRES_USER=job_orchestrator
+      - POSTGRES_PASSWORD=muchsecurity
+      - POSTGRES_DB=jobs
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+
+  job-orchestrator:
+    build: .
+    image: job_orchestrator
+    container_name: job_orchestrator
+    restart: always
+    command: celery -A tasks worker --loglevel=INFO
+    env_file:
+      - .env
+    depends_on:
+      - postgres
+      - redis
+
+  job-service:
+    build: .
+    image: job_service
+    container_name: job_service
+    command: uvicorn service:app --host 0.0.0.0 --reload
+    ports:
+      - 8000:8000
+    env_file:
+      - .env
+    depends_on:
+      - redis
