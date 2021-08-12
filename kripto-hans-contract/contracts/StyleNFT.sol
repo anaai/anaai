@@ -14,12 +14,17 @@ contract StyleNFT is ERC721, Ownable {
     uint256 price;
   }
 
+  struct UserCollection {
+    uint256[] generatedTokens;
+    uint256[] boughtTokens;
+  }
+
   using Counters for Counters.Counter;
   Counters.Counter private _tokenIds;
 
   address payable private admin;
-  mapping(uint256 => Asset) public assets;
-  mapping(address => uint256[]) public userTokens;
+  mapping(uint256 => Asset) private assets;
+  mapping(address => UserCollection) private userCollection;
 
   event ImageGenerationPaid(address sender, uint256 value, string imageURL);
   event ImagePaid(address sender, uint256 value, uint256 tokenId);
@@ -55,6 +60,7 @@ contract StyleNFT is ERC721, Ownable {
     // require tokenURI to exist
 
     admin.transfer(msg.value);
+    userCollection[msg.sender].boughtTokens.push(tokenId);
     emit ImagePaid(msg.sender, msg.value, tokenId);
   }
 
@@ -69,7 +75,7 @@ contract StyleNFT is ERC721, Ownable {
     _setTokenURI(newItemId, tokenURI);
 
     assets[newItemId] = Asset(payer, block.timestamp, true, price);
-    userTokens[payer].push(newItemId);
+    userCollection[payer].generatedTokens.push(newItemId);
 
     emit TokenMinted(recipient, payer, newItemId, tokenURI, price);
 
@@ -82,7 +88,12 @@ contract StyleNFT is ERC721, Ownable {
   }
 
   function userGeneratedTokens(address user) external view returns (uint256[] memory) {
-    require(userTokens[user].length > 0, "User has no generated tokens");
-    return userTokens[user];
+    require(userCollection[user].generatedTokens.length > 0, "User has no generated tokens");
+    return userCollection[user].generatedTokens;
+  }
+
+  function userBoughtTokens(address user) external view returns (uint256[] memory) {
+    require(userCollection[user].boughtTokens.length > 0, "User has no bought tokens");
+    return userCollection[user].boughtTokens;
   }
 }
