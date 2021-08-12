@@ -1,17 +1,18 @@
-import React, { useEffect, useState } from "react";
-import MetaMaskOnboarding from "@metamask/onboarding";
+import React, { useEffect, useState } from 'react';
+import MetaMaskOnboarding from '@metamask/onboarding';
 
 declare global {
   interface Window {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ethereum: any;
   }
 }
 
 const onboarding = new MetaMaskOnboarding({
-  forwarderOrigin: window.location.origin,
+  forwarderOrigin: window.location.origin
 });
 
-export const WalletConnector: React.FC<{}> = () => {
+export const WalletConnector: React.FC<Record<string, unknown>> = () => {
   const [metaMaskIsInstalled, setMetaMaskIsInstalled] = useState(false);
   const [accounts, setAccounts] = useState<null | string[]>(null);
 
@@ -28,14 +29,14 @@ export const WalletConnector: React.FC<{}> = () => {
   const handleConnectToMetaMask = async () => {
     try {
       const accounts = await window.ethereum.request({
-        method: "eth_requestAccounts",
+        method: 'eth_requestAccounts'
       });
       setAccounts(accounts);
     } catch (error) {
       console.error(error);
     }
   };
-  
+
   const handleInstallMetaMask = () => {
     onboarding.startOnboarding();
   };

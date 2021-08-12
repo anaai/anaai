@@ -1,41 +1,41 @@
-import { fireEvent, render, screen } from "@testing-library/react";
-import { ImageUploader } from "./ImageUploader";
+import { fireEvent, render, screen } from '@testing-library/react';
+import { ImageUploader } from './ImageUploader';
 
-test("renders image upload input", () => {
+test('renders image upload input', () => {
   render(<ImageUploader />);
-  const inputElement = screen.getByLabelText("Upload image");
+  const inputElement = screen.getByLabelText('Upload image');
   expect(inputElement).toBeInTheDocument();
 });
 
-test("allows user to select an image", () => {
-  window.URL.createObjectURL = function () {} as any;
+test('allows user to select an image', () => {
+  window.URL.createObjectURL = function () {
+    return '^_^';
+  };
   render(<ImageUploader />);
-  const inputElement = screen.getByLabelText(
-    "Upload image"
-  ) as HTMLInputElement;
-  const file = new File(["(⌐□_□)"], "chucknorris.png", { type: "image/png" });
+  const inputElement = screen.getByLabelText('Upload image') as HTMLInputElement;
+  const file = new File(['(⌐□_□)'], 'chucknorris.png', { type: 'image/png' });
   fireEvent.change(inputElement, {
     target: {
-      files: [file],
-    },
+      files: [file]
+    }
   });
 
-  expect(inputElement.files![0]).toBe(file);
+  expect((inputElement.files as FileList)[0]).toBe(file);
 });
 
-test("allows user to upload the selected image", () => {
-  window.URL.createObjectURL = function () {} as any;
+test('allows user to upload the selected image', () => {
+  window.URL.createObjectURL = function () {
+    return '^_^';
+  };
   render(<ImageUploader />);
-  const inputElement = screen.getByLabelText(
-    "Upload image"
-  ) as HTMLInputElement;
-  const file = new File(["(⌐□_□)"], "chucknorris.png", { type: "image/png" });
+  const inputElement = screen.getByLabelText('Upload image') as HTMLInputElement;
+  const file = new File(['(⌐□_□)'], 'chucknorris.png', { type: 'image/png' });
   fireEvent.change(inputElement, {
     target: {
-      files: [file],
-    },
+      files: [file]
+    }
   });
-  const uploadButtonElement = screen.getByText("Upload");
+  const uploadButtonElement = screen.getByText('Upload');
 
   expect(uploadButtonElement).toBeVisible();
 });
