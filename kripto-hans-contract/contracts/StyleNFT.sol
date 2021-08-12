@@ -11,6 +11,7 @@ contract StyleNFT is ERC721, Ownable {
     address payer;
     uint256 time;
     bool exists;
+    uint256 price;
   }
 
   using Counters for Counters.Counter;
@@ -22,7 +23,7 @@ contract StyleNFT is ERC721, Ownable {
 
   event ImageGenerationPaid(address sender, uint256 value, string imageURL);
   event ImagePaid(address sender, uint256 value, uint256 tokenId);
-  event TokenMinted(address recipient, address payer, uint256 tokenId, string tokenURI);
+  event TokenMinted(address recipient, address payer, uint256 tokenId, string tokenURI, uint256 price);
   event TokenTransfered(address sender, address recipient, uint256 tokenId);
 
   constructor() public ERC721("NFT2", "NFT2") {
@@ -49,14 +50,15 @@ contract StyleNFT is ERC721, Ownable {
   function payImage(uint256 tokenId)
   public payable onlyPayerFirstHour(msg.sender, tokenId)
   {
-    require(msg.value == 2 ether, "Not enough coins to transfer nft");
+    uint256 price = 1 wei * payers[tokenId].price;
+    require(msg.value == price, "Not enough coins to transfer nft");
     // require tokenURI to exist
 
     admin.transfer(msg.value);
     emit ImagePaid(msg.sender, msg.value, tokenId);
   }
 
-  function mintNFT(address recipient, address payer, string memory tokenURI)
+  function mintNFT(address recipient, address payer, string memory tokenURI, uint256 price)
   public onlyOwner
   returns (uint256)
   {
@@ -67,9 +69,9 @@ contract StyleNFT is ERC721, Ownable {
     _setTokenURI(newItemId, tokenURI);
 
     // payers[payer].push(tokenURI);
-    payers[newItemId] = Asset(payer, block.timestamp, true);
+    payers[newItemId] = Asset(payer, block.timestamp, true, price);
 
-    emit TokenMinted(recipient, payer, newItemId, tokenURI);
+    emit TokenMinted(recipient, payer, newItemId, tokenURI, price);
 
     return newItemId;
   }
