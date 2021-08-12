@@ -19,6 +19,7 @@ contract StyleNFT is ERC721, Ownable {
 
   address payable private admin;
   mapping(uint256 => Asset) public assets;
+  mapping(address => uint256[]) public userTokens;
 
   event ImageGenerationPaid(address sender, uint256 value, string imageURL);
   event ImagePaid(address sender, uint256 value, uint256 tokenId);
@@ -68,6 +69,7 @@ contract StyleNFT is ERC721, Ownable {
     _setTokenURI(newItemId, tokenURI);
 
     assets[newItemId] = Asset(payer, block.timestamp, true, price);
+    userTokens[payer].push(newItemId);
 
     emit TokenMinted(recipient, payer, newItemId, tokenURI, price);
 
@@ -77,5 +79,10 @@ contract StyleNFT is ERC721, Ownable {
   function payerOf(uint256 tokenId) external view returns (address) {
     require(assets[tokenId].exists, "Token doesn't exist");
     return assets[tokenId].payer;
+  }
+
+  function userGeneratedTokens(address user) external view returns (uint256[] memory) {
+    require(userTokens[user].length > 0, "User has no generated tokens");
+    return userTokens[user];
   }
 }

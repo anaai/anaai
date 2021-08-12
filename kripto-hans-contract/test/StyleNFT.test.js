@@ -240,4 +240,23 @@ describe("StyleNFT", () => {
       );
     });
   });
+
+  describe("userGeneratedTokens", () => {
+    it("Returns a list of tokens the user paid for generating", async () => {
+      await this.contract.mintNFT(owner, user1, "tokenURI1", price, {from: owner});
+      await this.contract.mintNFT(owner, user1, "tokenURI2", price, {from: owner});
+      const tokens = await this.contract.userGeneratedTokens(user1);
+
+      expect(tokens.length).to.equal(2);
+      expect(tokens[0].words[0]).to.equal(1)
+      expect(tokens[1].words[0]).to.equal(2)
+    });
+
+    it("Reverts when the user didn't generate any tokens", async () => {
+      expectRevert(
+        this.contract.userGeneratedTokens(owner),
+        "User has no generated tokens"
+      );
+    });
+  });
 });
