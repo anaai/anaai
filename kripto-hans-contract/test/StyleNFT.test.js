@@ -177,12 +177,12 @@ describe("StyleNFT", () => {
 
       await this.contract.mintNFT(owner, user1, "tokenURI", price, {from: owner});
 
-      this.contract.contract.methods
+      tx = await this.contract.contract.methods
         .payImage(tokenId)
         .send({from: user1, gas: 500000, value});
 
       // add boolean return value to contract and a view to see what you paid for?
-      expect(true).to.equal(true);
+      expect(tx.status).to.equal(true);
     });
 
     it("Transfers image when non payers pays the image after the first hour", async () => {
@@ -192,12 +192,12 @@ describe("StyleNFT", () => {
       await this.contract.mintNFT(owner, user1, "tokenURI", price, {from: owner});
       await time.increase(3600)
 
-      this.contract.contract.methods
+      tx = await this.contract.contract.methods
         .payImage(tokenId)
         .send({from: user2, gas: 500000, value});
 
       // add boolean return value to contract and a view to see what you paid for?
-      expect(true).to.equal(true);
+      expect(tx.status).to.equal(true);
     });
 
     it("Reverts when non payer tries to pay in the first hour", async () => {
