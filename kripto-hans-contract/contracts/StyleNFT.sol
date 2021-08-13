@@ -47,7 +47,7 @@ contract StyleNFT is ERC721, Ownable {
   }
 
   function payGenerating(string memory imageUrl) public payable {
-    require(msg.value == 1 ether, "Not enough coins to generate image");
+    require(msg.value == 0 wei, "Not enough coins to generate image");
     admin.transfer(msg.value);
     emit ImageGenerationPaid(msg.sender, msg.value, imageUrl);
   }
