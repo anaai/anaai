@@ -3,6 +3,7 @@ require('dotenv').config();
 const API_URL = process.env.API_URL;
 const PUBLIC_KEY = process.env.PUBLIC_KEY;
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
+const CONTRACT_ADDRESS = process.env.CONTRACT_ADDRESS;
 
 const { createAlchemyWeb3 } = require("@alch/alchemy-web3");
 const web3 = createAlchemyWeb3(API_URL);
@@ -12,10 +13,8 @@ web3.eth.accounts.wallet.add(account);
 web3.eth.defaultAccount = account.address;
 
 const contract = require("../artifacts/contracts/StyleNFT.sol/StyleNFT.json");
-// const contractAddress = "0x47db177a074a716d1116eb5ef87fd1689ffd57bd";
-const contractAddress = "0x69aCA7BcEED801f6B331962c3FF4659C0d52Fa13";
-const nftContract = new web3.eth.Contract(contract.abi, contractAddress);
-const folapAddress = "0x7b245f044456183BF4949dC1aff2ae9d3691edfF"
+const nftContract = new web3.eth.Contract(contract.abi, CONTRACT_ADDRESS);
+const folapAddress = "0x7b245f044456183BF4949dC1aff2ae9d3691edfF";
 
 async function mintNFT(contract, address, payer, tokenURI, price) {
   const message = await contract.methods.mintNFT(address, payer, tokenURI, price)
