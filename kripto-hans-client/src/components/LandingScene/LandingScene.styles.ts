@@ -4,7 +4,7 @@ export const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
     height: '100vh',
-    background: `linear-gradient(200deg, #00555d88 0%, #18abc788 35%, #17ac7f88 100%), linear-gradient(160deg, #00555d88 0%, #18abc788 35%, #17ac7f88 100%)`,
+    background: `linear-gradient(200deg, #00555d77 0%, #18abc777 35%, #17ac7f77 100%), linear-gradient(160deg, #00555d77 0%, #18abc777 35%, #17ac7f77 100%)`,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -17,7 +17,8 @@ export const useStyles = makeStyles((theme) => ({
     paddingLeft: theme.spacing(2),
     marginBottom: theme.spacing(2),
     zIndex: 1,
-    textShadow: '2px 2px 5px #0005'
+    textShadow: '0 3px 3px #0005',
+    fontWeight: 'bold'
   },
   ctaButtonsContainer: {},
   generateButton: {
@@ -28,7 +29,6 @@ export const useStyles = makeStyles((theme) => ({
   acquireButton: {
     padding: `${theme.spacing(1)}px ${theme.spacing(2)}px`,
     marginLeft: theme.spacing(1),
-    borderRadius: theme.spacing(2),
-    color: '#fff'
+    borderRadius: theme.spacing(2)
   }
 }));
