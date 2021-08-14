@@ -2,9 +2,9 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders Krypto Hans title', () => {
+test('renders AI NFT ART title', () => {
   render(<App />);
-  const titleElement = screen.getByText(/Krypto Hans/i);
+  const titleElement = screen.getByText(/AI NFT ART/i);
   expect(titleElement).toBeInTheDocument();
 });
 
