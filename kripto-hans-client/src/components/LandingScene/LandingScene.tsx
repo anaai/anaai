@@ -10,6 +10,10 @@ export const LandingScene: React.FC<Record<string, unknown>> = () => {
         ANA
       </Typography>
 
+      <Typography variant="h6" className={classes.heroSubtitle}>
+        AI NFT Art
+      </Typography>
+
       <Box className={classes.ctaButtonsContainer}>
         <Button className={classes.generateButton} color="primary" variant="contained">
           Generate

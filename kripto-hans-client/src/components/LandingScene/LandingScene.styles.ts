@@ -15,10 +15,18 @@ export const useStyles = makeStyles((theme) => ({
     userSelect: 'none',
     letterSpacing: theme.spacing(2),
     paddingLeft: theme.spacing(2),
-    marginBottom: theme.spacing(2),
     zIndex: 1,
     textShadow: '0 3px 3px #0005',
     fontWeight: 'bold'
+  },
+  heroSubtitle: {
+    color: '#fff',
+    userSelect: 'none',
+    letterSpacing: theme.spacing(1.5),
+    paddingLeft: theme.spacing(2),
+    zIndex: 1,
+    textShadow: '0 3px 3px #0005',
+    marginBottom: theme.spacing(2)
   },
   ctaButtonsContainer: {},
   generateButton: {
