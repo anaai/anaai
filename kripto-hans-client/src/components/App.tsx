@@ -1,4 +1,3 @@
-import 'normalize.css';
 import 'shared/styles/Reset.scss';
 import 'shared/styles/Global.scss';
 import 'components/App.scss';
