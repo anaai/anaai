@@ -16,11 +16,14 @@ const contract = require("../artifacts/contracts/StyleNFT.sol/StyleNFT.json");
 const nftContract = new web3.eth.Contract(contract.abi, CONTRACT_ADDRESS);
 const folapAddress = "0x7b245f044456183BF4949dC1aff2ae9d3691edfF";
 
-async function mintNFT(contract, address, payer, tokenURI, price) {
-  const message = await contract.methods.mintNFT(address, payer, tokenURI, price)
-                                        .send({from: address, gas: 500000});
-  console.log(message)
+const IMAGE_URL = "http://prod-upp-image-read.ft.com/6057b8fe-0c1f-11e6-b0f1-61f222853ff3";
+
+async function payGenerating(contract, address, imageUrl) {
+  const message = await contract.methods
+    .payGenerating(imageUrl)
+    .send({from: address, gas: 500000});
+
+  console.log(message);
 }
 
-tokenURI = "https://gateway.pinata.cloud/ipfs/QmVM7S9VNc1UG5fJ6QDCrdK8K6Hfaht62i42jzhtVw4HmQ";
-mintNFT(nftContract, PUBLIC_KEY, PUBLIC_KEY, tokenURI, 0);
+payGenerating(nftContract, PUBLIC_KEY, IMAGE_URL);

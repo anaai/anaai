@@ -31,7 +31,7 @@ contract StyleNFT is ERC721, Ownable {
   event TokenMinted(address recipient, address payer, uint256 tokenId, string tokenURI, uint256 price);
   event TokenTransfered(address sender, address recipient, uint256 tokenId);
 
-  constructor() public ERC721("NFT2", "NFT2") {
+  constructor() public ERC721("styleart", "snft") {
     admin = payable(msg.sender);
   }
 
@@ -47,7 +47,7 @@ contract StyleNFT is ERC721, Ownable {
   }
 
   function payGenerating(string memory imageUrl) public payable {
-    require(msg.value == 1 ether, "Not enough coins to generate image");
+    require(msg.value == 0 wei, "Not enough coins to generate image");
     admin.transfer(msg.value);
     emit ImageGenerationPaid(msg.sender, msg.value, imageUrl);
   }
