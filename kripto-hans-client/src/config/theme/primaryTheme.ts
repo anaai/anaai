@@ -5,15 +5,15 @@ export const primaryTheme = responsiveFontSizes(
   createTheme({
     spacing: 16,
     typography: {
-      fontFamily: 'Harmattan',
+      fontFamily: 'Open Sans Condensed',
       fontSize: 32
     },
     palette: {
       primary: {
-        main: '#1768ac'
+        main: '#007a86'
       },
       secondary: {
-        main: '#24d6f9'
+        main: '#2196f3'
       }
     }
   })

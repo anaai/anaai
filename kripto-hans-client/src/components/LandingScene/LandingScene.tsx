@@ -7,7 +7,7 @@ export const LandingScene: React.FC<Record<string, unknown>> = () => {
   return (
     <Box className={classes.root}>
       <Typography variant="h1" className={classes.heroTitle}>
-        Ana
+        ANA
       </Typography>
 
       <Box className={classes.ctaButtonsContainer}>

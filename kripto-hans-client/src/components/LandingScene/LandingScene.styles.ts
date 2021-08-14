@@ -4,7 +4,7 @@ export const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
     height: '100vh',
-    background: `linear-gradient(200deg, ${theme.palette.primary.dark} 0%, ${theme.palette.primary.main} 35%, ${theme.palette.secondary.light} 100%)`,
+    background: `linear-gradient(200deg, #00555d88 0%, #18abc788 35%, #17ac7f88 100%), linear-gradient(160deg, #00555d88 0%, #18abc788 35%, #17ac7f88 100%)`,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -12,7 +12,12 @@ export const useStyles = makeStyles((theme) => ({
   },
   heroTitle: {
     color: '#fff',
-    userSelect: 'none'
+    userSelect: 'none',
+    letterSpacing: theme.spacing(2),
+    paddingLeft: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+    zIndex: 1,
+    textShadow: '2px 2px 5px #0005'
   },
   ctaButtonsContainer: {},
   generateButton: {
@@ -24,10 +29,6 @@ export const useStyles = makeStyles((theme) => ({
     padding: `${theme.spacing(1)}px ${theme.spacing(2)}px`,
     marginLeft: theme.spacing(1),
     borderRadius: theme.spacing(2),
-    color: '#fff',
-    backgroundColor: '#26b76e',
-    '&:hover': {
-      backgroundColor: '#14663D'
-    }
+    color: '#fff'
   }
 }));
