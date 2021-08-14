@@ -1,6 +1,9 @@
 import 'normalize.css';
+import 'shared/styles/Reset.scss';
+import 'shared/styles/Global.scss';
+import 'components/App.scss';
+
 import { ReactElement } from 'react';
-import './App.scss';
 import { LandingScene } from './LandingScene/LandingScene';
 
 function App(): ReactElement {
