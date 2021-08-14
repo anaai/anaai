@@ -1,5 +1,5 @@
 import unittest
-from unittest.mock import MagicMock, ANY
+from unittest.mock import patch, ANY
 from pinata import requests
 import json
 
@@ -14,20 +14,23 @@ class PinataClientTestCase(unittest.TestCase):
     self.assertIsInstance(self.c, PinataClient)
     self.assertDictEqual({"Authorization": "Bearer jwt"}, self.c.headers)
 
-  def test_pin_image(self):
-    requests.post = MagicMock()
+  @patch("pinata.requests.post")
+  def test_pin_image(self, post_mock):
+    post_mock().json.return_value = {"IpfsHash": "hash123"}
 
     headers = {"Authorization": "Bearer jwt"}
 
     image_path = "tests/original.jpeg"
     files = {"file": ANY}
 
-    self.c.pin_image(image_path)
+    image_url = self.c.pin_image(image_path)
 
-    requests.post.assert_called_with(PIN_IMAGE_URL, headers=headers, files=files)
+    post_mock.assert_called_with(PIN_IMAGE_URL, headers=headers, files=files)
+    self.assertEqual("https://gateway.pinata.cloud/ipfs/hash123", image_url)
 
-  def test_pin_metadata(self):
-    requests.post = MagicMock()
+  @patch("pinata.requests.post")
+  def test_pin_metadata(self, post_mock):
+    post_mock().json.return_value = {"IpfsHash": "hash123"}
 
     headers = {"Authorization": "Bearer jwt"}
 
@@ -37,9 +40,11 @@ class PinataClientTestCase(unittest.TestCase):
     json_path = "templates/nft-metadata-template.json"
     with open(json_path) as f:
       data = json.load(f)
-    data["image"] = image_url
-    data["name"] = name
+    data["pinataContent"]["image"] = image_url
+    data["pinataContent"]["name"] = name
+    data["pinataMetadata"]["name"] = name
 
-    self.c.pin_metadata(json_path, image_url, name)
+    metadata_url = self.c.pin_metadata(json_path, image_url, name)
 
-    requests.post.assert_called_with(PIN_JSON_URL, headers=headers, json=data)
+    post_mock.assert_called_with(PIN_JSON_URL, headers=headers, json=data)
+    self.assertEqual("https://gateway.pinata.cloud/ipfs/hash123", metadata_url)
