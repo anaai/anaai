@@ -31,10 +31,15 @@ class PinataClientTestCase(unittest.TestCase):
 
     headers = {"Authorization": "Bearer jwt"}
 
-    json_path = "tests/metadata-test.json"
+    image_url = "image_url"
+    name = "name"
+
+    json_path = "templates/nft-metadata-template.json"
     with open(json_path) as f:
       data = json.load(f)
+    data["image"] = image_url
+    data["name"] = name
 
-    self.c.pin_metadata(json_path)
+    self.c.pin_metadata(json_path, image_url, name)
 
     requests.post.assert_called_with(PIN_JSON_URL, headers=headers, json=data)
