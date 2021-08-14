@@ -37,14 +37,14 @@ class PinataClientTestCase(unittest.TestCase):
     image_url = "image_url"
     name = "name"
 
-    json_path = "templates/nft-metadata-template.json"
-    with open(json_path) as f:
+    metadata_path = "templates/nft-metadata-template.json"
+    with open(metadata_path) as f:
       data = json.load(f)
     data["pinataContent"]["image"] = image_url
     data["pinataContent"]["name"] = name
     data["pinataMetadata"]["name"] = name
 
-    metadata_url = self.c.pin_metadata(json_path, image_url, name)
+    metadata_url = self.c.pin_metadata(image_url, name)
 
     post_mock.assert_called_with(PIN_JSON_URL, headers=headers, json=data)
     self.assertEqual("https://gateway.pinata.cloud/ipfs/hash123", metadata_url)
