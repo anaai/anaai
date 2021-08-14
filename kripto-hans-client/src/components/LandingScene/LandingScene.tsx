@@ -6,7 +6,9 @@ export const LandingScene: React.FC<Record<string, unknown>> = () => {
   const classes = useStyles();
   return (
     <Box className={classes.root}>
-      <Typography variant="h1">AI NFT ART</Typography>
+      <Typography variant="h1" className={classes.heroTitle}>
+        AI NFT ART
+      </Typography>
     </Box>
   );
 };
