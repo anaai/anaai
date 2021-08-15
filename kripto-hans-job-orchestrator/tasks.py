@@ -20,15 +20,16 @@ def cartoonify(image_url, image_name):
   image = _download_image(image_url)
   cartoonified_image = Cartoonifier().cartoonify(image)
 
-  image_path = working_directory.local_file_path(image_name)
+  image_path = working_directory.local_file_path(f"{image_name}.jpg")
   cv2.imwrite(image_path, cartoonified_image)
 
   pinata_client = PinataClient(PINATA_JWT)
-  response = pinata_client.pin_image(image_path)
+  image_ipfs_url = pinata_client.pin_image(image_path)
+  metadata_ipfs_url = pinata_client.pin_metadata(image_ipfs_url, image_name)
 
   working_directory.remove_file(image_path)
 
-  return response.status_code
+  return metadata_ipfs_url
 
 def _download_image(url):
   resp = urllib.request.urlopen(url)

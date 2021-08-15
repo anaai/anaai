@@ -3,6 +3,8 @@ import json
 
 PIN_IMAGE_URL = "https://api.pinata.cloud/pinning/pinFileToIPFS"
 PIN_JSON_URL = "https://api.pinata.cloud/pinning/pinJSONToIPFS"
+TEMPLATE_PATH = "templates/nft-metadata-template.json"
+IPFS_GATEWAY_BASE_URL = "https://gateway.pinata.cloud/ipfs"
 
 class PinataClient:
   def __init__(self, jwt):
@@ -10,11 +12,18 @@ class PinataClient:
 
   def pin_image(self, image_path):
     files = self._files(image_path)
-    return requests.post(PIN_IMAGE_URL, headers=self.headers, files=files)
+    response = requests.post(PIN_IMAGE_URL, headers=self.headers, files=files)
+    # catch exception and throw a semantical one
+    return self._ipfs_hash(response.json()["IpfsHash"])
 
-  def pin_metadata(self, file_path):
-    data = self._json_data(file_path)
-    return requests.post(PIN_JSON_URL, headers=self.headers, json=data)
+  def pin_metadata(self, image_url, name):
+    data = self._json_data(TEMPLATE_PATH)
+    data["pinataContent"]["image"] = image_url
+    data["pinataContent"]["name"] = name
+    data["pinataMetadata"]["name"] = name
+    response = requests.post(PIN_JSON_URL, headers=self.headers, json=data)
+    # catch exception and throw a semantical one
+    return self._ipfs_hash(response.json()["IpfsHash"])
 
   def _files(self, image_path):
     return {"file": open(image_path, "rb")}
@@ -24,3 +33,6 @@ class PinataClient:
       data = json.load(f)
 
     return data
+
+  def _ipfs_hash(self, ipfs_hash):
+    return f"{IPFS_GATEWAY_BASE_URL}/{ipfs_hash}"

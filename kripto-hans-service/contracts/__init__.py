@@ -1,0 +1,1 @@
+from contracts.factories import style_nft_factory
