@@ -4,11 +4,25 @@ export const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
     height: '100vh',
-    background: `linear-gradient(200deg, #00555d77 0%, #18abc777 35%, #17ac7f77 100%), linear-gradient(160deg, #00555d77 0%, #18abc777 35%, #17ac7f77 100%)`,
+    background: `linear-gradient(200deg, #00555d88 0%, #18abc887 35%, #17ac7f88 100%), linear-gradient(160deg, #00555d88 0%, #18abc887 35%, #17ac7f88 100%)`,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'column'
+  },
+  headerContainer: {},
+  metamaskButton: {
+    marginTop: theme.spacing(2),
+    borderRadius: theme.spacing(2),
+    padding: `${theme.spacing(1)}px ${theme.spacing(2)}px`
+  },
+  heroContainer: {
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: theme.spacing(6)
   },
   heroTitle: {
     color: '#fff',
