@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import MetaMaskOnboarding from '@metamask/onboarding';
+import { useStyles } from './WalletConnector.styles';
+import { ReactComponent as MetaMaskFox } from 'assets/images/metamask-fox.svg';
+import { Button } from '@material-ui/core';
 
 declare global {
   interface Window {
@@ -24,6 +27,7 @@ export const WalletConnector: React.FC<Record<string, unknown>> = () => {
 
   useEffect(() => {
     setMetaMaskIsInstalled(isMetaMaskInstalled());
+    watchEthereumAccountsChange();
   }, []);
 
   const handleConnectToMetaMask = async () => {
@@ -41,15 +45,47 @@ export const WalletConnector: React.FC<Record<string, unknown>> = () => {
     onboarding.startOnboarding();
   };
 
+  const watchEthereumAccountsChange = () => {
+    const { ethereum } = window;
+    ethereum.on('accountsChanged', (newAccounts: string[]) => {
+      setAccounts(newAccounts);
+    });
+  };
+
+  const classes = useStyles();
+
   return (
     <>
       {metaMaskIsInstalled ? (
-        <button onClick={handleConnectToMetaMask}>Connect</button>
+        accounts?.length ? (
+          <Button
+            onClick={handleConnectToMetaMask}
+            className={classes.metamaskButton}
+            variant="contained"
+            endIcon={<MetaMaskFox />}
+          >
+            Connected
+          </Button>
+        ) : (
+          <Button
+            onClick={handleConnectToMetaMask}
+            className={classes.metamaskButton}
+            variant="contained"
+            endIcon={<MetaMaskFox />}
+          >
+            Connect
+          </Button>
+        )
       ) : (
-        <button onClick={handleInstallMetaMask}>Install MetaMask</button>
+        <Button
+          onClick={handleInstallMetaMask}
+          className={classes.metamaskButton}
+          variant="contained"
+          endIcon={<MetaMaskFox />}
+        >
+          Install MetaMask
+        </Button>
       )}
-
-      {accounts && <div>Account: {accounts[0]}</div>}
     </>
   );
 };

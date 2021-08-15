@@ -1,15 +1,14 @@
 import { Box, Button, Typography } from '@material-ui/core';
 import { useStyles } from './LandingScene.styles';
-import { ReactComponent as MetaMaskFox } from 'assets/images/metamask-fox.svg';
+import { WalletConnector } from 'components/WalletConnector/WalletConnector';
 
 export const LandingScene: React.FC<Record<string, unknown>> = () => {
   const classes = useStyles();
+
   return (
     <Box className={classes.root}>
       <Box className={classes.headerContainer}>
-        <Button className={classes.metamaskButton} variant="contained" endIcon={<MetaMaskFox />}>
-          Connect
-        </Button>
+        <WalletConnector />
       </Box>
       <Box className={classes.heroContainer}>
         <Typography variant="h1" className={classes.heroTitle}>

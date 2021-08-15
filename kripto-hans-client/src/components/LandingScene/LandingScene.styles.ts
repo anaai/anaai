@@ -13,10 +13,6 @@ export const useStyles = makeStyles((theme) => ({
   headerContainer: {
     marginTop: theme.spacing(2)
   },
-  metamaskButton: {
-    borderRadius: theme.spacing(2),
-    padding: `${theme.spacing(1)}px ${theme.spacing(2)}px`
-  },
   heroContainer: {
     flex: 1,
     display: 'flex',
