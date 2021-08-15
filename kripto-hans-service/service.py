@@ -36,4 +36,4 @@ async def mint_nft(nft: NFTPayload):
                                Web3.toChecksumAddress(nft.payer),
                                nft.token_uri,
                                Web3.toWei(nft.price, "ether"))
-  return JSONResponse({"token_id", token_id})
+  return JSONResponse({"token_id": token_id})
