@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import { LandingScene } from './LandingScene';
 
-test('renders AI NFT ART title', () => {
+test('renders ANA title', () => {
   render(<LandingScene />);
-  const titleElement = screen.getByText(/ana/i);
+  const titleElement = screen.getByText(/ANA/i);
   expect(titleElement).toBeInTheDocument();
 });
