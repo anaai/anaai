@@ -7,12 +7,7 @@ export const LandingScene: React.FC<Record<string, unknown>> = () => {
   return (
     <Box className={classes.root}>
       <Box className={classes.headerContainer}>
-        <Button
-          className={classes.metamaskButton}
-          color="secondary"
-          variant="contained"
-          endIcon={<MetaMaskFox />}
-        >
+        <Button className={classes.metamaskButton} variant="contained" endIcon={<MetaMaskFox />}>
           Connect
         </Button>
       </Box>

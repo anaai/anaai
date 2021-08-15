@@ -10,9 +10,10 @@ export const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     flexDirection: 'column'
   },
-  headerContainer: {},
+  headerContainer: {
+    marginTop: theme.spacing(2)
+  },
   metamaskButton: {
-    marginTop: theme.spacing(2),
     borderRadius: theme.spacing(2),
     padding: `${theme.spacing(1)}px ${theme.spacing(2)}px`
   },
@@ -40,7 +41,8 @@ export const useStyles = makeStyles((theme) => ({
     paddingLeft: theme.spacing(2),
     zIndex: 1,
     textShadow: '0 3px 3px #0005',
-    marginBottom: theme.spacing(2)
+    marginBottom: theme.spacing(2),
+    textAlign: 'center'
   },
   ctaButtonsContainer: {},
   generateButton: {
