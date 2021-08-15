@@ -1,18 +1,16 @@
-import 'normalize.css';
 import { ReactElement } from 'react';
-import './App.scss';
-import { ImageUploader } from './imageUploader/ImageUploader';
-import { WalletConnector } from './WalletConnector/WalletConnector';
+import { CssBaseline, ThemeProvider } from '@material-ui/core';
+
+import 'components/App.scss';
+import { primaryTheme } from 'config/theme/primaryTheme';
+import { LandingScene } from './LandingScene/LandingScene';
 
 function App(): ReactElement {
   return (
-    <section className="app-container">
-      <h1>Krypto Hans</h1>
-
-      <ImageUploader />
-
-      <WalletConnector />
-    </section>
+    <ThemeProvider theme={primaryTheme}>
+      <CssBaseline />
+      <LandingScene />
+    </ThemeProvider>
   );
 }
 
