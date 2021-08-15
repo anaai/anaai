@@ -11,24 +11,28 @@ declare global {
   }
 }
 
-const onboarding = new MetaMaskOnboarding({
-  forwarderOrigin: window.location.origin
-});
-
 export const WalletConnector: React.FC<Record<string, unknown>> = () => {
   const [metaMaskIsInstalled, setMetaMaskIsInstalled] = useState(false);
   const [accounts, setAccounts] = useState<null | string[]>(null);
+  const onboarding = React.useRef<MetaMaskOnboarding>(new MetaMaskOnboarding());
+
+  useEffect(() => {
+    setMetaMaskIsInstalled(isMetaMaskInstalled());
+  }, []);
+
+  useEffect(() => {
+    let unsubscribe;
+    if (metaMaskIsInstalled) {
+      unsubscribe = watchEthereumAccountsChange();
+    }
+    return unsubscribe;
+  }, [metaMaskIsInstalled]);
 
   const isMetaMaskInstalled = () => {
     // Have to check the ethereum binding on the window object to see if it's installed
     const { ethereum } = window;
     return Boolean(ethereum && ethereum.isMetaMask);
   };
-
-  useEffect(() => {
-    setMetaMaskIsInstalled(isMetaMaskInstalled());
-    watchEthereumAccountsChange();
-  }, []);
 
   const handleConnectToMetaMask = async () => {
     try {
@@ -42,14 +46,16 @@ export const WalletConnector: React.FC<Record<string, unknown>> = () => {
   };
 
   const handleInstallMetaMask = () => {
-    onboarding.startOnboarding();
+    onboarding.current.startOnboarding();
   };
 
   const watchEthereumAccountsChange = () => {
-    const { ethereum } = window;
-    ethereum.on('accountsChanged', (newAccounts: string[]) => {
+    const onAccountsChanged = (newAccounts: string[]) => {
       setAccounts(newAccounts);
-    });
+    };
+    const { ethereum } = window;
+    ethereum.on('accountsChanged', onAccountsChanged);
+    return () => ethereum.of('accountsChanged', onAccountsChanged);
   };
 
   const classes = useStyles();
