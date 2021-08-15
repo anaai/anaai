@@ -60,35 +60,27 @@ export const WalletConnector: React.FC<Record<string, unknown>> = () => {
 
   const classes = useStyles();
 
+  const sharedButtonProps = {
+    className: classes.metamaskButton,
+    variant: 'contained' as const,
+    endIcon: <MetaMaskFox />,
+    'data-testid': 'metamask-button'
+  };
+
   return (
     <>
       {metaMaskIsInstalled ? (
         accounts?.length ? (
-          <Button
-            onClick={handleConnectToMetaMask}
-            className={classes.metamaskButton}
-            variant="contained"
-            endIcon={<MetaMaskFox />}
-          >
+          <Button {...sharedButtonProps} onClick={handleConnectToMetaMask}>
             Connected
           </Button>
         ) : (
-          <Button
-            onClick={handleConnectToMetaMask}
-            className={classes.metamaskButton}
-            variant="contained"
-            endIcon={<MetaMaskFox />}
-          >
+          <Button {...sharedButtonProps} onClick={handleConnectToMetaMask}>
             Connect
           </Button>
         )
       ) : (
-        <Button
-          onClick={handleInstallMetaMask}
-          className={classes.metamaskButton}
-          variant="contained"
-          endIcon={<MetaMaskFox />}
-        >
+        <Button {...sharedButtonProps} onClick={handleInstallMetaMask}>
           Install MetaMask
         </Button>
       )}
