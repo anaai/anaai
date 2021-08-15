@@ -40,15 +40,13 @@ export const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(2),
     textAlign: 'center'
   },
-  ctaButtonsContainer: {},
+  ctaButtonsContainer: {
+    display: 'flex'
+  },
   generateButton: {
-    padding: `${theme.spacing(1)}px ${theme.spacing(2)}px`,
-    marginRight: theme.spacing(1),
-    borderRadius: theme.spacing(2)
+    marginRight: theme.spacing(1)
   },
   acquireButton: {
-    padding: `${theme.spacing(1)}px ${theme.spacing(2)}px`,
-    marginLeft: theme.spacing(1),
-    borderRadius: theme.spacing(2)
+    marginLeft: theme.spacing(1)
   }
 }));
