@@ -47,7 +47,8 @@ module.exports = {
         },
         allowChildren: true
       }
-    ]
+    ],
+    'react/prop-types': 0
   },
   overrides: [
     {
