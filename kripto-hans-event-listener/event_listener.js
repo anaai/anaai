@@ -21,6 +21,15 @@ const triggerJob = async (payer, imageURL, imageName) => {
   return data;
 }
 
+const transferOwnership = async (payer, price, tokenId) => {
+  const response = await axios.post(
+    TRANSFER_OWNERSHIP_URL,
+    {payer, price, tokenId}
+  );
+  const data = await response.data;
+  return data;
+}
+
 nftContract.events.ImageGenerationPaid(async (error, event) => {
   const imageURL = event.returnValues.imageURL;
   const payer = event.returnValues.sender;
@@ -29,4 +38,13 @@ nftContract.events.ImageGenerationPaid(async (error, event) => {
 
   const jobId = await triggerJob(payer, imageURL, `${uuid}.jpeg`);
   console.log(jobId);
+});
+
+nftContract.events.ImagePaid(async (error, event) => {
+  const payer = event.returnValues.sender;
+  const price = event.returnValues.value;
+  const tokenId = event.returnValues.tokenId;
+
+  const kek = transferOwnership(payer, price, tokenId);
+  console.log("Sending request", payer, price, tokenId);
 });
