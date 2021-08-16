@@ -26,6 +26,11 @@ async function balanceOf(contract, address) {
   console.log(`Balance of ${address} is ${message}`);
 }
 
+async function totalSupply(contract) {
+  const message = await contract.methods.totalSupply().call();
+  console.log(`Total supply is ${message}`);
+}
+
 async function transfer(contract, sender, reciever, tokenId) {
   const message = await contract.methods.safeTransferFrom(sender, reciever, tokenId)
                                         .send({from: sender, gas: 500000});
@@ -41,6 +46,7 @@ ownerOf(nftContract, 1)
 balanceOf(nftContract, PUBLIC_KEY);
 balanceOf(nftContract, folapAddress);
 tokenURI(nftContract, 1)
+totalSupply(nftContract)
 // transfer(nftContract, PUBLIC_KEY, folapAddress, 2)
 
 console.log(`Contract address: ${CONTRACT_ADDRESS}`);
