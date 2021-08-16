@@ -12,10 +12,10 @@ const web3 = createAlchemyWeb3(WS_API_URL);
 const contract = require("./StyleNFT.json");
 const nftContract = new web3.eth.Contract(contract.abi, CONTRACT_ADDRESS);
 
-const triggerJob = async (imageURL, imageName) => {
+const triggerJob = async (payer, imageURL, imageName) => {
   const response = await axios.post(
     CARTOONIFY_URL,
-    {image_url: imageURL, image_name: imageName}
+    {payer, image_url: imageURL, image_name: imageName}
   );
   const data = await response.data;
   return data;
@@ -23,9 +23,10 @@ const triggerJob = async (imageURL, imageName) => {
 
 nftContract.events.ImageGenerationPaid(async (error, event) => {
   const imageURL = event.returnValues.imageURL;
+  const payer = event.returnValues.sender;
   const uuid = uuidv4();
-  console.log("Sending request", imageURL, uuid);
+  console.log("Sending request", payer, imageURL, uuid);
 
-  const jobId = await triggerJob(imageURL, `${uuid}.jpeg`);
+  const jobId = await triggerJob(payer, imageURL, `${uuid}.jpeg`);
   console.log(jobId);
 });

@@ -1,5 +1,6 @@
 import os
 from celery import Celery
+import requests
 
 import urllib.request
 import numpy as np
@@ -13,10 +14,12 @@ POSTGRES_URL = os.getenv("POSTGRES_CONNECTION_URL")
 BROKER_URL = os.getenv("BROKER_URL")
 PINATA_JWT = os.getenv("PINATA_JWT")
 
+NFT_SERVICE_MINT_TOKEN_URL = os.getenv("NFT_SERVICE_MINT_TOKEN_URL")
+
 app = Celery("tasks", backend=POSTGRES_URL, broker=BROKER_URL)
 
 @app.task
-def cartoonify(image_url, image_name):
+def cartoonify(recipient, payer, price, image_url, image_name):
   image = _download_image(image_url)
   cartoonified_image = Cartoonifier().cartoonify(image)
 
@@ -29,7 +32,13 @@ def cartoonify(image_url, image_name):
 
   working_directory.remove_file(image_path)
 
-  return metadata_ipfs_url
+  status = _mint_nft(recipient, payer, metadata_ipfs_url, price)
+
+  return status
+
+def _mint_nft(recipient, payer, token_uri, price):
+  payload = {"recipient": recipient, "payer": payer, "token_uri": token_uri, "price": price}
+  return requests.post(NFT_SERVICE_MINT_TOKEN_URL, json=payload)
 
 def _download_image(url):
   resp = urllib.request.urlopen(url)
