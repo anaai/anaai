@@ -1,6 +1,6 @@
 require("dotenv").config();
 const axios = require("axios")
-const uuidv4 = require("uuid/v4")
+const uuid = require("uuid")
 
 const WS_API_URL = process.env.WS_API_URL;
 const CONTRACT_ADDRESS = process.env.CONTRACT_ADDRESS;
@@ -34,10 +34,10 @@ const transferOwnership = async (recipient, price, tokenId) => {
 nftContract.events.ImageGenerationPaid(async (error, event) => {
   const imageURL = event.returnValues.imageURL;
   const payer = event.returnValues.sender;
-  const uuid = uuidv4();
-  console.log("Sending request", payer, imageURL, uuid);
+  const jobHash = uuid.v4();
+  console.log("Sending request", payer, imageURL, jobHash);
 
-  const jobId = await triggerJob(payer, imageURL, `${uuid}.jpeg`);
+  const jobId = await triggerJob(payer, imageURL, `${jobHash}.jpeg`);
   console.log(jobId);
 });
 
