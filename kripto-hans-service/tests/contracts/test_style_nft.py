@@ -82,5 +82,8 @@ def test_safe_transfer_from(eth_tester, contract):
   token_id = contract.mint_nft(owner, owner, "token_uri", 0)
   assert contract.owner_of(token_id) == owner
 
-  contract.safe_transfer_from(address, token_id)
+  args = {"from": owner, 'to': address, "tokenId": token_id}
+  receipt_args = contract.safe_transfer_from(address, token_id)
+  assert receipt_args == args
+
   assert contract.owner_of(token_id) == address

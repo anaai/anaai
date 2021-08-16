@@ -34,4 +34,5 @@ class StyleNFT:
 
     tx_hash = self.w3.eth.send_raw_transaction(signed_tx.rawTransaction)
     receipt = self.w3.eth.wait_for_transaction_receipt(tx_hash)
+
     return self.contract.events.Transfer().processReceipt(receipt)[0]["args"]
