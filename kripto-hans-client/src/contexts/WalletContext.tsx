@@ -1,4 +1,12 @@
-import { createContext, Dispatch, ReactNode, useContext, useReducer } from 'react';
+import {
+  createContext,
+  Dispatch,
+  ReactNode,
+  useCallback,
+  useContext,
+  useEffect,
+  useReducer
+} from 'react';
 import MetaMaskOnboarding from '@metamask/onboarding';
 import Web3 from 'web3';
 import { Contract } from 'web3-eth-contract';
@@ -77,6 +85,10 @@ const walletReducer = (state: IWalletContextState, action: WalletReducerAction) 
         isMetaMaskInstalled: action.payload
       };
     case ACTION_TYPES.SET_ACCOUNTS:
+      return {
+        ...state,
+        accounts: action.payload
+      };
     case ACTION_TYPES.SET_WEB_3_INSTANCE:
     case ACTION_TYPES.SET_CONTRACT_INSTANCE:
       return state;
@@ -88,9 +100,27 @@ const walletReducer = (state: IWalletContextState, action: WalletReducerAction) 
 
 const WalletProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [state, dispatch] = useReducer(walletReducer, initialState);
+
+  const { isMetaMaskInstalled } = state;
+
+  const watchEthereumAccountsChange = useCallback(() => {
+    const onAccountsChanged = (newAccounts: string[]) => {
+      dispatch(createSetAccountsAction(newAccounts));
+    };
+    const { ethereum } = window;
+    ethereum.on('accountsChanged', onAccountsChanged);
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (isMetaMaskInstalled) {
+      watchEthereumAccountsChange();
+    }
+  }, [isMetaMaskInstalled, watchEthereumAccountsChange]);
+
   // NOTE: you *might* need to memoize this value
   // Learn more in http://kcd.im/optimize-context
   const value = { state, dispatch };
+
   return <WalletContext.Provider value={value}>{children}</WalletContext.Provider>;
 };
 

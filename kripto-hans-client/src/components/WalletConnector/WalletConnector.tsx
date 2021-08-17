@@ -1,8 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import MetaMaskOnboarding from '@metamask/onboarding';
 import { useStyles } from './WalletConnector.styles';
 import { ReactComponent as MetaMaskFox } from 'assets/images/metamask-fox.svg';
 import { Button } from '@material-ui/core';
+
+import StyleNFTContract from 'assets/contracts/StyleNFT.json';
+import Web3 from 'web3';
+import { createSetAccountsAction, useWallet } from 'contexts/WalletContext';
 
 declare global {
   interface Window {
@@ -12,50 +16,71 @@ declare global {
 }
 
 export const WalletConnector: React.FC<Record<string, unknown>> = () => {
-  const [metaMaskIsInstalled, setMetaMaskIsInstalled] = useState(false);
-  const [accounts, setAccounts] = useState<null | string[]>(null);
   const onboarding = React.useRef<MetaMaskOnboarding>(new MetaMaskOnboarding());
 
-  useEffect(() => {
-    setMetaMaskIsInstalled(isMetaMaskInstalled());
-  }, []);
-
-  useEffect(() => {
-    let unsubscribe;
-    if (metaMaskIsInstalled) {
-      unsubscribe = watchEthereumAccountsChange();
-    }
-    return unsubscribe;
-  }, [metaMaskIsInstalled]);
-
-  const isMetaMaskInstalled = () => {
-    // Have to check the ethereum binding on the window object to see if it's installed
-    const { ethereum } = window;
-    return Boolean(ethereum && ethereum.isMetaMask);
-  };
+  const {
+    state: { isMetaMaskInstalled, metaMaskOnboarding, accounts },
+    dispatch
+  } = useWallet();
 
   const handleConnectToMetaMask = async () => {
     try {
       const accounts = await window.ethereum.request({
         method: 'eth_requestAccounts'
       });
-      setAccounts(accounts);
+      dispatch(createSetAccountsAction(accounts));
     } catch (error) {
       console.error(error);
     }
   };
 
   const handleInstallMetaMask = () => {
-    onboarding.current.startOnboarding();
+    metaMaskOnboarding.startOnboarding();
   };
 
-  const watchEthereumAccountsChange = () => {
-    const onAccountsChanged = (newAccounts: string[]) => {
-      setAccounts(newAccounts);
-    };
-    const { ethereum } = window;
-    ethereum.on('accountsChanged', onAccountsChanged);
-    return () => ethereum.of('accountsChanged', onAccountsChanged);
+  const handleTransactionInit = async () => {
+    // eslint-disable-next-line no-debugger
+    // debugger;
+
+    const abi = StyleNFTContract.abi; // some ABI JSON;
+
+    console.warn(abi);
+
+    const address = process.env.REACT_APP_CONTRACT_ADDRESS; // some contract address as string;
+
+    console.warn(address);
+
+    const web3Instance = new Web3(window.ethereum);
+
+    console.warn(web3Instance);
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const myContract = new web3Instance.eth.Contract(abi as any, address);
+
+    console.warn(myContract);
+
+    myContract.events.TokenMinted(
+      { filter: { payer: accounts![0] } },
+      async (error: any, event: any) => {
+        console.warn('EVENT RECIEVED: ', event);
+      }
+    );
+
+    const something = await myContract.methods
+      .payGenerating(imageUrl)
+      .send({ from: accounts![0], gas: 1_000_000 });
+
+    console.warn(something);
+
+    alert(something.status);
+
+    // txHash is a hex string
+    // As with any RPC call, it may throw an error
+
+    // const txHash = await ethereum.request({
+    //   method: 'eth_sendTransaction',
+    //   params: [transactionParameters]
+    // });
   };
 
   const classes = useStyles();
@@ -67,11 +92,13 @@ export const WalletConnector: React.FC<Record<string, unknown>> = () => {
     'data-testid': 'metamask-button'
   };
 
+  const [imageUrl, setImageUrl] = useState('');
+
   return (
     <>
-      {metaMaskIsInstalled ? (
-        accounts?.length ? (
-          <Button {...sharedButtonProps} onClick={handleConnectToMetaMask}>
+      {isMetaMaskInstalled ? (
+        accounts.length ? (
+          <Button {...sharedButtonProps} onClick={handleTransactionInit}>
             Connected
           </Button>
         ) : (
@@ -84,6 +111,7 @@ export const WalletConnector: React.FC<Record<string, unknown>> = () => {
           Install MetaMask
         </Button>
       )}
+      {/* <input name="imageUrl" value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} /> */}
     </>
   );
 };
