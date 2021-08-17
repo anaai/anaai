@@ -1,22 +1,21 @@
 import { LandingScene } from 'components/LandingScene/LandingScene';
 import { createSetIsMetaMaskInstalledAction, useWallet } from 'contexts/WalletContext';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 
 export const RootView: React.FC<Record<string, unknown>> = () => {
   const { dispatch } = useWallet();
 
-  const initMetaMask = () => {
+  const initMetaMask = useCallback(() => {
     const { ethereum } = window;
     const isMetaMaskInstalled = Boolean(ethereum && ethereum.isMetaMask);
     if (isMetaMaskInstalled) {
       dispatch(createSetIsMetaMaskInstalledAction(isMetaMaskInstalled));
     }
-  };
+  }, [dispatch]);
 
   useEffect(() => {
     initMetaMask();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [initMetaMask]);
 
   return <LandingScene />;
 };
