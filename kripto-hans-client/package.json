@@ -66,5 +66,10 @@
     "*.{json,md,html,scss}": [
       "prettier --write"
     ]
+  },
+  "jest": {
+    "transformIgnorePatterns": [
+      "node_modules/(?!(react-router-transition)/)"
+    ]
   }
 }
