@@ -2117,7 +2117,14 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-router-dom@^5.1.8":
+"@types/react-motion@*":
+  version "0.0.31"
+  resolved "https://registry.yarnpkg.com/@types/react-motion/-/react-motion-0.0.31.tgz#93e2abfc5056c5c0f47650ff9ed23533857245c5"
+  integrity sha512-ncpSpnTE52QLZQTM8cuwhHA/ChpDmjfLzACihK7X6cz4DtqlIhA4RzMEsku/3WevjBMsFlbM+XJCwC2RalfDHw==
+  dependencies:
+    "@types/react" "*"
+
+"@types/react-router-dom@*", "@types/react-router-dom@^5.1.8":
   version "5.1.8"
   resolved "https://registry.yarnpkg.com/@types/react-router-dom/-/react-router-dom-5.1.8.tgz#bf3e1c8149b3d62eaa206d58599de82df0241192"
   integrity sha512-03xHyncBzG0PmDmf8pf3rehtjY0NpUj7TIN46FrT5n1ZWHPZvXz32gUyNboJ+xsL8cpg8bQVLcllptcQHvocrw==
@@ -2125,6 +2132,15 @@
     "@types/history" "*"
     "@types/react" "*"
     "@types/react-router" "*"
+
+"@types/react-router-transition@^2.1.1":
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/@types/react-router-transition/-/react-router-transition-2.1.1.tgz#abf3cc94d932d538d76fc083799380b9a1bc5e04"
+  integrity sha512-aoqvcW8jG867aDWQQTQ2/LFCYN0nc3VxXk5LpWEboM2R/5DSKl8aIsuNN6GhICnOxjBPGn34GpZdlwNpZE+hOA==
+  dependencies:
+    "@types/react" "*"
+    "@types/react-motion" "*"
+    "@types/react-router-dom" "*"
 
 "@types/react-router@*":
   version "5.1.16"
