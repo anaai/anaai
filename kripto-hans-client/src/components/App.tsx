@@ -1,5 +1,6 @@
 import { ReactElement } from 'react';
 import { CssBaseline, ThemeProvider } from '@material-ui/core';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import 'components/App.scss';
 import { primaryTheme } from 'config/theme/primaryTheme';
@@ -11,9 +12,11 @@ function App(): ReactElement {
     <ThemeProvider theme={primaryTheme}>
       <CssBaseline />
 
-      <WalletProvider>
-        <RootView />
-      </WalletProvider>
+      <Router>
+        <WalletProvider>
+          <RootView />
+        </WalletProvider>
+      </Router>
     </ThemeProvider>
   );
 }
