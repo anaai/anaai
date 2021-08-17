@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   createContext,
   Dispatch,
@@ -10,12 +11,14 @@ import {
 import MetaMaskOnboarding from '@metamask/onboarding';
 import Web3 from 'web3';
 import { Contract } from 'web3-eth-contract';
+import StyleNFTContract from 'assets/contracts/StyleNFT.json';
 
 const ACTION_TYPES = {
   SET_IS_METAMASK_INSTALLED: 'SET_IS_METAMASK_INSTALLED',
   SET_ACCOUNTS: 'SET_ACCOUNTS',
   SET_WEB_3_INSTANCE: 'SET_WEB_3_INSTANCE',
-  SET_CONTRACT_INSTANCE: 'SET_CONTRACT_INSTANCE'
+  SET_CONTRACT_INSTANCE: 'SET_CONTRACT_INSTANCE',
+  SET_TOKEN_MINTED_EVENT: 'SET_TOKEN_MINTED_EVENT'
 } as const;
 
 export const createSetIsMetaMaskInstalledAction = (isMetaMaskInstalled: boolean) =>
@@ -30,23 +33,23 @@ export const createSetAccountsAction = (accounts: string[]) =>
     payload: accounts
   } as const);
 
-export const createSetWeb3InstanceAction = (web3Instance: Web3) =>
-  ({
-    type: ACTION_TYPES.SET_WEB_3_INSTANCE,
-    payload: web3Instance
-  } as const);
-
 export const createSetContractInstanceAction = (contract: Contract) =>
   ({
     type: ACTION_TYPES.SET_CONTRACT_INSTANCE,
     payload: contract
   } as const);
 
+export const createSetTokenMintedEventAction = (event: any) =>
+  ({
+    type: ACTION_TYPES.SET_TOKEN_MINTED_EVENT,
+    payload: event
+  } as const);
+
 export type WalletReducerAction = ReturnType<
   | typeof createSetIsMetaMaskInstalledAction
   | typeof createSetAccountsAction
-  | typeof createSetWeb3InstanceAction
   | typeof createSetContractInstanceAction
+  | typeof createSetTokenMintedEventAction
 >;
 
 interface IWalletContextState {
@@ -55,6 +58,7 @@ interface IWalletContextState {
   accounts: ReadonlyArray<string>;
   web3Instance: Web3 | null;
   contract: Contract | null;
+  tokenMintedEvent: any;
 }
 
 interface IWalletContext {
@@ -67,7 +71,8 @@ const initialState: IWalletContextState = {
   isMetaMaskInstalled: false,
   accounts: [],
   web3Instance: null,
-  contract: null
+  contract: null,
+  tokenMintedEvent: null
 } as const;
 
 const WalletContext = createContext({
@@ -77,7 +82,10 @@ const WalletContext = createContext({
   }
 } as IWalletContext); // Initial value is used when context is consumed outside of its provider, a case which shouldn't happen
 
-const walletReducer = (state: IWalletContextState, action: WalletReducerAction) => {
+const walletReducer = (
+  state: IWalletContextState,
+  action: WalletReducerAction
+): IWalletContextState => {
   switch (action.type) {
     case ACTION_TYPES.SET_IS_METAMASK_INSTALLED:
       return {
@@ -85,13 +93,29 @@ const walletReducer = (state: IWalletContextState, action: WalletReducerAction) 
         isMetaMaskInstalled: action.payload
       };
     case ACTION_TYPES.SET_ACCOUNTS:
+      return action.payload.length
+        ? {
+            ...state,
+            accounts: action.payload
+          }
+        : {
+            ...state,
+            accounts: action.payload,
+            // Cleanup on user wallet account disconnect
+            contract: null,
+            tokenMintedEvent: null
+          };
+
+    case ACTION_TYPES.SET_CONTRACT_INSTANCE:
       return {
         ...state,
-        accounts: action.payload
+        contract: action.payload
       };
-    case ACTION_TYPES.SET_WEB_3_INSTANCE:
-    case ACTION_TYPES.SET_CONTRACT_INSTANCE:
-      return state;
+    case ACTION_TYPES.SET_TOKEN_MINTED_EVENT:
+      return {
+        ...state,
+        tokenMintedEvent: action.payload
+      };
     default: {
       throw new Error('unknown action type dispatched to `walletReducer`');
     }
@@ -101,7 +125,7 @@ const walletReducer = (state: IWalletContextState, action: WalletReducerAction) 
 const WalletProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [state, dispatch] = useReducer(walletReducer, initialState);
 
-  const { isMetaMaskInstalled } = state;
+  const { isMetaMaskInstalled, accounts, contract } = state;
 
   const watchEthereumAccountsChange = useCallback(() => {
     const onAccountsChanged = (newAccounts: string[]) => {
@@ -116,6 +140,30 @@ const WalletProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       watchEthereumAccountsChange();
     }
   }, [isMetaMaskInstalled, watchEthereumAccountsChange]);
+
+  useEffect(() => {
+    if (accounts.length) {
+      const abi = StyleNFTContract.abi;
+      const address = process.env.REACT_APP_CONTRACT_ADDRESS;
+      const web3Instance = new Web3(window.ethereum);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const contractInstance = new web3Instance.eth.Contract(abi as any, address);
+
+      dispatch(createSetContractInstanceAction(contractInstance));
+    }
+  }, [accounts]);
+
+  useEffect(() => {
+    if (contract) {
+      contract.events.TokenMinted(
+        { filter: { payer: accounts[0] } },
+        async (error: Error, event: any) => {
+          console.warn('EVENT RECIEVED: ', event);
+          dispatch(createSetTokenMintedEventAction(event));
+        }
+      );
+    }
+  }, [contract, accounts]);
 
   // NOTE: you *might* need to memoize this value
   // Learn more in http://kcd.im/optimize-context
