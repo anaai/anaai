@@ -3,13 +3,17 @@ import { CssBaseline, ThemeProvider } from '@material-ui/core';
 
 import 'components/App.scss';
 import { primaryTheme } from 'config/theme/primaryTheme';
-import { LandingScene } from './LandingScene/LandingScene';
+import { WalletProvider } from 'contexts/WalletContext';
+import { RootView } from './RootView/RootView';
 
 function App(): ReactElement {
   return (
     <ThemeProvider theme={primaryTheme}>
       <CssBaseline />
-      <LandingScene />
+
+      <WalletProvider>
+        <RootView />
+      </WalletProvider>
     </ThemeProvider>
   );
 }

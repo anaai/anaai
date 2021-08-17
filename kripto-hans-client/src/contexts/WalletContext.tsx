@@ -10,31 +10,31 @@ const ACTION_TYPES = {
   SET_CONTRACT_INSTANCE: 'SET_CONTRACT_INSTANCE'
 } as const;
 
-const createSetIsMetaMaskInstalledAction = (isMetaMaskInstalled: boolean) =>
+export const createSetIsMetaMaskInstalledAction = (isMetaMaskInstalled: boolean) =>
   ({
     type: ACTION_TYPES.SET_IS_METAMASK_INSTALLED,
     payload: isMetaMaskInstalled
   } as const);
 
-const createSetAccountsAction = (accounts: string[]) =>
+export const createSetAccountsAction = (accounts: string[]) =>
   ({
     type: ACTION_TYPES.SET_ACCOUNTS,
     payload: accounts
   } as const);
 
-const createSetWeb3InstanceAction = (web3Instance: Web3) =>
+export const createSetWeb3InstanceAction = (web3Instance: Web3) =>
   ({
     type: ACTION_TYPES.SET_WEB_3_INSTANCE,
     payload: web3Instance
   } as const);
 
-const createSetContractInstanceAction = (contract: Contract) =>
+export const createSetContractInstanceAction = (contract: Contract) =>
   ({
     type: ACTION_TYPES.SET_CONTRACT_INSTANCE,
     payload: contract
   } as const);
 
-type WalletReducerAction = ReturnType<
+export type WalletReducerAction = ReturnType<
   | typeof createSetIsMetaMaskInstalledAction
   | typeof createSetAccountsAction
   | typeof createSetWeb3InstanceAction
@@ -62,11 +62,20 @@ const initialState: IWalletContextState = {
   contract: null
 } as const;
 
-const WalletContext = createContext({} as IWalletContext); // Initial value is used when context is consumed outside of its provider, a case which shouldn't happen
+const WalletContext = createContext({
+  state: initialState,
+  dispatch: () => {
+    void 0;
+  }
+} as IWalletContext); // Initial value is used when context is consumed outside of its provider, a case which shouldn't happen
 
 const walletReducer = (state: IWalletContextState, action: WalletReducerAction) => {
   switch (action.type) {
     case ACTION_TYPES.SET_IS_METAMASK_INSTALLED:
+      return {
+        ...state,
+        isMetaMaskInstalled: action.payload
+      };
     case ACTION_TYPES.SET_ACCOUNTS:
     case ACTION_TYPES.SET_WEB_3_INSTANCE:
     case ACTION_TYPES.SET_CONTRACT_INSTANCE:
