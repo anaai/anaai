@@ -1,11 +1,8 @@
-import React, { useState } from 'react';
-import MetaMaskOnboarding from '@metamask/onboarding';
+import React from 'react';
 import { useStyles } from './WalletConnector.styles';
 import { ReactComponent as MetaMaskFox } from 'assets/images/metamask-fox.svg';
 import { Button } from '@material-ui/core';
 
-import StyleNFTContract from 'assets/contracts/StyleNFT.json';
-import Web3 from 'web3';
 import { createSetAccountsAction, useWallet } from 'contexts/WalletContext';
 
 declare global {
@@ -16,8 +13,6 @@ declare global {
 }
 
 export const WalletConnector: React.FC<Record<string, unknown>> = () => {
-  const onboarding = React.useRef<MetaMaskOnboarding>(new MetaMaskOnboarding());
-
   const {
     state: { isMetaMaskInstalled, metaMaskOnboarding, accounts },
     dispatch
@@ -62,7 +57,6 @@ export const WalletConnector: React.FC<Record<string, unknown>> = () => {
           Install MetaMask
         </Button>
       )}
-      {/* <input name="imageUrl" value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} /> */}
     </>
   );
 };
