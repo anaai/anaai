@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import MetaMaskOnboarding from '@metamask/onboarding';
+import React from 'react';
 import { useStyles } from './WalletConnector.styles';
 import { ReactComponent as MetaMaskFox } from 'assets/images/metamask-fox.svg';
 import { Button } from '@material-ui/core';
+
+import { createSetAccountsAction, useWallet } from 'contexts/WalletContext';
 
 declare global {
   interface Window {
@@ -12,50 +13,24 @@ declare global {
 }
 
 export const WalletConnector: React.FC<Record<string, unknown>> = () => {
-  const [metaMaskIsInstalled, setMetaMaskIsInstalled] = useState(false);
-  const [accounts, setAccounts] = useState<null | string[]>(null);
-  const onboarding = React.useRef<MetaMaskOnboarding>(new MetaMaskOnboarding());
-
-  useEffect(() => {
-    setMetaMaskIsInstalled(isMetaMaskInstalled());
-  }, []);
-
-  useEffect(() => {
-    let unsubscribe;
-    if (metaMaskIsInstalled) {
-      unsubscribe = watchEthereumAccountsChange();
-    }
-    return unsubscribe;
-  }, [metaMaskIsInstalled]);
-
-  const isMetaMaskInstalled = () => {
-    // Have to check the ethereum binding on the window object to see if it's installed
-    const { ethereum } = window;
-    return Boolean(ethereum && ethereum.isMetaMask);
-  };
+  const {
+    state: { isMetaMaskInstalled, metaMaskOnboarding, accounts },
+    dispatch
+  } = useWallet();
 
   const handleConnectToMetaMask = async () => {
     try {
       const accounts = await window.ethereum.request({
         method: 'eth_requestAccounts'
       });
-      setAccounts(accounts);
+      dispatch(createSetAccountsAction(accounts));
     } catch (error) {
       console.error(error);
     }
   };
 
   const handleInstallMetaMask = () => {
-    onboarding.current.startOnboarding();
-  };
-
-  const watchEthereumAccountsChange = () => {
-    const onAccountsChanged = (newAccounts: string[]) => {
-      setAccounts(newAccounts);
-    };
-    const { ethereum } = window;
-    ethereum.on('accountsChanged', onAccountsChanged);
-    return () => ethereum.of('accountsChanged', onAccountsChanged);
+    metaMaskOnboarding.startOnboarding();
   };
 
   const classes = useStyles();
@@ -69,11 +44,9 @@ export const WalletConnector: React.FC<Record<string, unknown>> = () => {
 
   return (
     <>
-      {metaMaskIsInstalled ? (
-        accounts?.length ? (
-          <Button {...sharedButtonProps} onClick={handleConnectToMetaMask}>
-            Connected
-          </Button>
+      {isMetaMaskInstalled ? (
+        accounts.length ? (
+          <Button {...sharedButtonProps}>Connected</Button>
         ) : (
           <Button {...sharedButtonProps} onClick={handleConnectToMetaMask}>
             Connect
