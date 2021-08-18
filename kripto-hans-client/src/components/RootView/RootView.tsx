@@ -1,5 +1,6 @@
 /* eslint-disable react/no-children-prop */
 import { Box } from '@material-ui/core';
+import { GenerateScene } from 'components/GenerateScene/GenerateScene';
 import { LandingScene } from 'components/LandingScene/LandingScene';
 import { WalletConnector } from 'components/WalletConnector/WalletConnector';
 import { createSetIsMetaMaskInstalledAction, useWallet } from 'contexts/WalletContext';
@@ -38,6 +39,7 @@ export const RootView: React.FC<Record<string, unknown>> = () => {
         atActive={{ opacity: 1 }}
       >
         <Route exact path="/" component={LandingScene} />
+        <Route exact path="/generate" component={GenerateScene} />
         <Route path="" render={() => <Redirect to="/" />} />
       </AnimatedSwitch>
     </Box>

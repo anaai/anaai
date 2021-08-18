@@ -1,7 +1,14 @@
 import { Box, Button, Typography } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
 import { useStyles } from './LandingScene.styles';
 
 export const LandingScene: React.FC<Record<string, unknown>> = () => {
+  const history = useHistory();
+
+  const handleGenerateClick = () => {
+    history.push('/generate');
+  };
+
   const classes = useStyles();
 
   return (
@@ -16,7 +23,12 @@ export const LandingScene: React.FC<Record<string, unknown>> = () => {
         </Typography>
 
         <Box className={classes.ctaButtonsContainer}>
-          <Button className={classes.generateButton} color="primary" variant="contained">
+          <Button
+            className={classes.generateButton}
+            color="primary"
+            variant="contained"
+            onClick={handleGenerateClick}
+          >
             Generate
           </Button>
           <Button className={classes.acquireButton} color="secondary" variant="contained">
