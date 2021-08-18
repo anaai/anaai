@@ -19,14 +19,6 @@ export const GenerateScene: React.FC<Record<string, unknown>> = () => {
       console.warn('payGeneratingResult: ', payGeneratingResult);
 
       alert(payGeneratingResult.status);
-
-      // txHash is a hex string
-      // As with any RPC call, it may throw an error
-
-      // const txHash = await ethereum.request({
-      //   method: 'eth_sendTransaction',
-      //   params: [transactionParameters]
-      // });
     }
   };
 
