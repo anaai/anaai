@@ -12,13 +12,17 @@ import MetaMaskOnboarding from '@metamask/onboarding';
 import Web3 from 'web3';
 import { Contract } from 'web3-eth-contract';
 import StyleNFTContract from 'assets/contracts/StyleNFT.json';
+import { TokenMintedEvent } from 'models/TokenMintedEvent.model';
 
 const ACTION_TYPES = {
   SET_IS_METAMASK_INSTALLED: 'SET_IS_METAMASK_INSTALLED',
   SET_ACCOUNTS: 'SET_ACCOUNTS',
   SET_WEB_3_INSTANCE: 'SET_WEB_3_INSTANCE',
   SET_CONTRACT_INSTANCE: 'SET_CONTRACT_INSTANCE',
-  SET_TOKEN_MINTED_EVENT: 'SET_TOKEN_MINTED_EVENT'
+  SET_PAY_GENERATING_LOADING: 'SET_PAY_GENERATING_LOADING',
+  SET_TOKEN_MINTED_EVENT: 'SET_TOKEN_MINTED_EVENT',
+  SET_PAY_IMAGE_LOADING: 'SET_PAY_IMAGE_LOADING',
+  SET_OWNERSHIP_TRANSFERRED_EVENT: 'SET_OWNERSHIP_TRANSFERRED_EVENT'
 } as const;
 
 export const createSetIsMetaMaskInstalledAction = (isMetaMaskInstalled: boolean) =>
@@ -39,9 +43,27 @@ export const createSetContractInstanceAction = (contract: Contract) =>
     payload: contract
   } as const);
 
-export const createSetTokenMintedEventAction = (event: any) =>
+export const createSetPayGeneratingLoadingAction = (loading: boolean) =>
+  ({
+    type: ACTION_TYPES.SET_PAY_GENERATING_LOADING,
+    payload: loading
+  } as const);
+
+export const createSetTokenMintedEventAction = (event: TokenMintedEvent) =>
   ({
     type: ACTION_TYPES.SET_TOKEN_MINTED_EVENT,
+    payload: event
+  } as const);
+
+export const createSetPayImageLoadingAction = (loading: boolean) =>
+  ({
+    type: ACTION_TYPES.SET_PAY_IMAGE_LOADING,
+    payload: loading
+  } as const);
+
+export const createSetOwnershipTransferredEventAction = (event: any) =>
+  ({
+    type: ACTION_TYPES.SET_OWNERSHIP_TRANSFERRED_EVENT,
     payload: event
   } as const);
 
@@ -50,6 +72,9 @@ export type WalletReducerAction = ReturnType<
   | typeof createSetAccountsAction
   | typeof createSetContractInstanceAction
   | typeof createSetTokenMintedEventAction
+  | typeof createSetPayGeneratingLoadingAction
+  | typeof createSetPayImageLoadingAction
+  | typeof createSetOwnershipTransferredEventAction
 >;
 
 interface IWalletContextState {
@@ -58,7 +83,14 @@ interface IWalletContextState {
   accounts: ReadonlyArray<string>;
   web3Instance: Web3 | null;
   contract: Contract | null;
-  tokenMintedEvent: any;
+  events: {
+    tokenMintedEvent: TokenMintedEvent | null;
+    ownershipTransferredEvent: any;
+  };
+  loading: {
+    payGenerating: boolean;
+    payImage: boolean;
+  };
 }
 
 interface IWalletContext {
@@ -72,7 +104,11 @@ const initialState: IWalletContextState = {
   accounts: [],
   web3Instance: null,
   contract: null,
-  tokenMintedEvent: null
+  events: { tokenMintedEvent: null, ownershipTransferredEvent: null },
+  loading: {
+    payGenerating: false,
+    payImage: false
+  }
 } as const;
 
 const WalletContext = createContext({
@@ -103,7 +139,7 @@ const walletReducer = (
             accounts: action.payload,
             // Cleanup on user wallet account disconnect
             contract: null,
-            tokenMintedEvent: null
+            events: { ...state.events, tokenMintedEvent: null }
           };
 
     case ACTION_TYPES.SET_CONTRACT_INSTANCE:
@@ -111,10 +147,27 @@ const walletReducer = (
         ...state,
         contract: action.payload
       };
+    case ACTION_TYPES.SET_PAY_GENERATING_LOADING:
+      return {
+        ...state,
+        loading: { ...state.loading, payGenerating: action.payload }
+      };
     case ACTION_TYPES.SET_TOKEN_MINTED_EVENT:
       return {
         ...state,
-        tokenMintedEvent: action.payload
+        events: { ...state.events, tokenMintedEvent: action.payload },
+        loading: { ...state.loading, payGenerating: false }
+      };
+    case ACTION_TYPES.SET_PAY_IMAGE_LOADING:
+      return {
+        ...state,
+        loading: { ...state.loading, payImage: action.payload }
+      };
+    case ACTION_TYPES.SET_OWNERSHIP_TRANSFERRED_EVENT:
+      return {
+        ...state,
+        events: { ...state.events, ownershipTransferredEvent: action.payload },
+        loading: { ...state.loading, payImage: false }
       };
     default: {
       throw new Error('unknown action type dispatched to `walletReducer`');
