@@ -1,6 +1,6 @@
 import { Box, Button, Typography } from '@material-ui/core';
 import { useWallet } from 'contexts/WalletContext';
-import { ChangeEventHandler, FocusEventHandler, useState } from 'react';
+import { ChangeEventHandler, FocusEventHandler, SyntheticEvent, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useStyles } from './GenerateScene.styles';
 
@@ -11,7 +11,7 @@ export const GenerateScene: React.FC<Record<string, unknown>> = () => {
 
   const [url, setUrl] = useState('');
   const [urlErrorMessage, setUrlErrorMessage] = useState('Invalid URL provided');
-  const [urlErrorShown, setUrlErrorShown] = useState(false);
+  const [urlInputTouched, setUrlInputTouched] = useState(false);
 
   const handleUrlChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     const {
@@ -25,7 +25,7 @@ export const GenerateScene: React.FC<Record<string, unknown>> = () => {
   };
   const handleUrlFocus: FocusEventHandler<HTMLInputElement> = (event) => event.target.select();
 
-  const handleUrlBlur: FocusEventHandler<HTMLInputElement> = () => setUrlErrorShown(true);
+  const handleUrlBlur: FocusEventHandler<HTMLInputElement> = () => setUrlInputTouched(true);
 
   const validateUrl = (urlString: string) => {
     let url;
@@ -51,6 +51,14 @@ export const GenerateScene: React.FC<Record<string, unknown>> = () => {
     }
   };
 
+  const handleUrlFormSubmit = (event: SyntheticEvent) => {
+    event.preventDefault();
+    const isUrlValid = validateUrl(url);
+    if (isUrlValid) {
+      handlePayGenerating();
+    }
+  };
+
   const history = useHistory();
 
   const handleBackClick = () => {
@@ -62,12 +70,7 @@ export const GenerateScene: React.FC<Record<string, unknown>> = () => {
   return (
     <Box className={classes.root}>
       <Box className={classes.contentContainer}>
-        <form
-          className={classes.urlForm}
-          onSubmit={() => {
-            void 0;
-          }}
-        >
+        <form className={classes.urlForm} onSubmit={handleUrlFormSubmit}>
           <input
             className={classes.imageUrlInput}
             type="url"
@@ -82,7 +85,7 @@ export const GenerateScene: React.FC<Record<string, unknown>> = () => {
 
           <Typography
             className={`${classes.urlErrorMessage} ${
-              urlErrorShown ? classes.urlErrorMessageVisible : ''
+              urlInputTouched ? classes.urlErrorMessageVisible : ''
             }`}
             variant="body2"
           >
@@ -94,7 +97,7 @@ export const GenerateScene: React.FC<Record<string, unknown>> = () => {
               className={classes.payGenerateButton}
               color="primary"
               variant="contained"
-              onClick={handlePayGenerating}
+              type="submit"
             >
               Pay Image Generate
             </Button>
