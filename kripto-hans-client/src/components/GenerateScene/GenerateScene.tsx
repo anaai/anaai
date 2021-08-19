@@ -1,12 +1,14 @@
 import { Box, Button, Typography } from '@material-ui/core';
-import { useWallet } from 'contexts/WalletContext';
+import { createSetPayGeneratingLoadingAction, useWallet } from 'contexts/WalletContext';
+import { PayGeneratingResult } from 'models/PayGeneratingResult.model';
 import { ChangeEventHandler, FocusEventHandler, SyntheticEvent, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useStyles } from './GenerateScene.styles';
 
 export const GenerateScene: React.FC<Record<string, unknown>> = () => {
   const {
-    state: { contract, accounts }
+    state: { contract, accounts },
+    dispatch
   } = useWallet();
 
   const [url, setUrl] = useState('');
@@ -41,13 +43,20 @@ export const GenerateScene: React.FC<Record<string, unknown>> = () => {
 
   const handlePayGenerating = async () => {
     if (contract) {
-      const payGeneratingResult = await contract.methods
-        .payGenerating(url)
-        .send({ from: accounts[0], gas: 1_000_000 });
+      // Loading finish is triggered either on payGenerating error or tokenMintedEvent
+      dispatch(createSetPayGeneratingLoadingAction(true));
+      try {
+        const payGeneratingResult: PayGeneratingResult = await contract.methods
+          .payGenerating(url)
+          .send({ from: accounts[0], gas: 1_000_000 });
 
-      console.warn('payGeneratingResult: ', payGeneratingResult);
+        console.debug('payGeneratingResult: ', payGeneratingResult);
 
-      alert(payGeneratingResult.status);
+        alert(payGeneratingResult.status);
+      } catch (error) {
+        console.error(error);
+        createSetPayGeneratingLoadingAction(false);
+      }
     }
   };
 
