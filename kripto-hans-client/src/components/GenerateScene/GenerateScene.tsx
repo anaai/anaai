@@ -10,7 +10,7 @@ export const GenerateScene: React.FC<Record<string, unknown>> = () => {
   } = useWallet();
 
   const [url, setUrl] = useState('');
-  const [urlErrorMessage, setUrlErrorMessage] = useState('');
+  const [urlErrorMessage, setUrlErrorMessage] = useState('Invalid URL provided');
   const [urlErrorShown, setUrlErrorShown] = useState(false);
 
   const handleUrlChange: ChangeEventHandler<HTMLInputElement> = (event) => {
@@ -77,7 +77,7 @@ export const GenerateScene: React.FC<Record<string, unknown>> = () => {
             onChange={handleUrlChange}
             onFocus={handleUrlFocus}
             onBlur={handleUrlBlur}
-            placeholder="Add remote image url here"
+            placeholder="Add Image URL here"
           />
 
           <Typography
@@ -86,7 +86,7 @@ export const GenerateScene: React.FC<Record<string, unknown>> = () => {
             }`}
             variant="body2"
           >
-            {`${urlErrorMessage ? urlErrorMessage : 'Ready for Liftoff'} `}
+            {`${urlErrorMessage || !url ? urlErrorMessage : 'Ready for Liftoff'} `}
           </Typography>
 
           <Box className={classes.ctaButtonsContainer}>
