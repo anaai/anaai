@@ -1,7 +1,7 @@
 import React from 'react';
 import { useStyles } from './WalletConnector.styles';
 import { ReactComponent as MetaMaskFox } from 'assets/images/metamask-fox.svg';
-import { Button, Tooltip, Typography } from '@material-ui/core';
+import { Button, PropTypes } from '@material-ui/core';
 
 import { createSetAccountsAction, useWallet } from 'contexts/WalletContext';
 import { NotificationTooltip } from 'components/NotificationTooltip/NotificationTooltip';
@@ -37,6 +37,7 @@ export const WalletConnector: React.FC<Record<string, unknown>> = () => {
   const classes = useStyles();
 
   const sharedButtonProps = {
+    color: (accounts.length ? 'primary' : '') as PropTypes.Color,
     className: classes.metamaskButton,
     variant: 'contained' as const,
     endIcon: <MetaMaskFox />,
