@@ -3,4 +3,4 @@ export const connectToMetaMaskSnackMessage = {
   message: 'Please connect your Wallet in order to proceed'
 } as const;
 
-export type SnackMessage = typeof connectToMetaMaskSnackMessage;
+export type SnackMessage = typeof connectToMetaMaskSnackMessage | null;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useStyles } from './WalletConnector.styles';
 import { ReactComponent as MetaMaskFox } from 'assets/images/metamask-fox.svg';
-import { Button } from '@material-ui/core';
+import { Button, Tooltip, Typography } from '@material-ui/core';
 
 import { createSetAccountsAction, useWallet } from 'contexts/WalletContext';
 
@@ -14,7 +14,7 @@ declare global {
 
 export const WalletConnector: React.FC<Record<string, unknown>> = () => {
   const {
-    state: { isMetaMaskInstalled, metaMaskOnboarding, accounts },
+    state: { isMetaMaskInstalled, metaMaskOnboarding, accounts, snackMessage },
     dispatch
   } = useWallet();
 
@@ -43,7 +43,21 @@ export const WalletConnector: React.FC<Record<string, unknown>> = () => {
   };
 
   return (
-    <>
+    <Tooltip
+      arrow
+      classes={{
+        tooltip: `${classes.tooltipRoot} ${
+          snackMessage?.type === 'info' ? classes.infoTooltipRoot : ''
+        }`,
+        arrow: snackMessage?.type === 'info' ? classes.infoTooltipArrow : ''
+      }}
+      open={Boolean(snackMessage)}
+      title={
+        <Typography className={classes.tooltipText} variant="subtitle2">
+          {snackMessage?.message}
+        </Typography>
+      }
+    >
       {isMetaMaskInstalled ? (
         accounts.length ? (
           <Button {...sharedButtonProps}>Connected</Button>
@@ -57,6 +71,6 @@ export const WalletConnector: React.FC<Record<string, unknown>> = () => {
           Install MetaMask
         </Button>
       )}
-    </>
+    </Tooltip>
   );
 };

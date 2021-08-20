@@ -1,13 +1,24 @@
-import { Box, Button, Typography } from '@material-ui/core';
-import { createSetPayGeneratingLoadingAction, useWallet } from 'contexts/WalletContext';
+import { Box, Button, CircularProgress, Typography } from '@material-ui/core';
+import { connectToMetaMaskSnackMessage } from 'config/snacks/snacks';
+import {
+  createSetPayGeneratingLoadingAction,
+  createSetSnackMessageAction,
+  useWallet
+} from 'contexts/WalletContext';
 import { PayGeneratingResult } from 'models/PayGeneratingResult.model';
 import { ChangeEventHandler, FocusEventHandler, SyntheticEvent, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { validateAccountConnection, validateUrl } from 'utils/validators';
 import { useStyles } from './GenerateScene.styles';
 
 export const GenerateScene: React.FC<Record<string, unknown>> = () => {
   const {
-    state: { contract, accounts },
+    state: {
+      contract,
+      accounts,
+      loading: { payGenerating: payGeneratingLoading },
+      events: { tokenMinted: tokenMintedEvent }
+    },
     dispatch
   } = useWallet();
 
@@ -28,18 +39,6 @@ export const GenerateScene: React.FC<Record<string, unknown>> = () => {
   const handleUrlFocus: FocusEventHandler<HTMLInputElement> = (event) => event.target.select();
 
   const handleUrlBlur: FocusEventHandler<HTMLInputElement> = () => setUrlInputTouched(true);
-
-  const validateUrl = (urlString: string) => {
-    let url;
-
-    try {
-      url = new URL(urlString);
-    } catch (_) {
-      return false;
-    }
-
-    return url.protocol === 'http:' || url.protocol === 'https:';
-  };
 
   const handlePayGenerating = async () => {
     if (contract) {
@@ -62,6 +61,11 @@ export const GenerateScene: React.FC<Record<string, unknown>> = () => {
 
   const handleUrlFormSubmit = (event: SyntheticEvent) => {
     event.preventDefault();
+    const isAccountConnected = validateAccountConnection(accounts);
+    if (!isAccountConnected) {
+      return dispatch(createSetSnackMessageAction(connectToMetaMaskSnackMessage));
+    }
+
     const isUrlValid = validateUrl(url);
     if (isUrlValid) {
       handlePayGenerating();
@@ -79,6 +83,9 @@ export const GenerateScene: React.FC<Record<string, unknown>> = () => {
   return (
     <Box className={classes.root}>
       <Box className={classes.contentContainer}>
+        <Box className={classes.generatedImageContainer}>
+          {payGeneratingLoading && <CircularProgress className={classes.loadingSpinner} />}
+        </Box>
         <form className={classes.urlForm} onSubmit={handleUrlFormSubmit}>
           <input
             className={classes.imageUrlInput}
@@ -86,6 +93,7 @@ export const GenerateScene: React.FC<Record<string, unknown>> = () => {
             required
             name="url"
             value={url}
+            disabled={payGeneratingLoading}
             onChange={handleUrlChange}
             onFocus={handleUrlFocus}
             onBlur={handleUrlBlur}

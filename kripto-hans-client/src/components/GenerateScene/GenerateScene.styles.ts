@@ -10,8 +10,21 @@ export const useStyles = makeStyles((theme) => ({
   },
   contentContainer: {
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    alignItems: 'center'
   },
+  generatedImageContainer: {
+    position: 'relative',
+    width: theme.spacing(40),
+    maxWidth: '100vw',
+    height: theme.spacing(30),
+    maxHeight: '30vh',
+    marginBottom: theme.spacing(2),
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  loadingSpinner: {},
   urlForm: {
     display: 'flex',
     flexDirection: 'column',
@@ -42,9 +55,8 @@ export const useStyles = makeStyles((theme) => ({
     opacity: 1
   },
   ctaButtonsContainer: {
-    marginTop: theme.spacing(2),
-    marginRight: theme.spacing(2),
-    marginLeft: theme.spacing(2),
+    margin: theme.spacing(2),
+    marginTop: theme.spacing(1),
     display: 'flex'
   },
   payGenerateButton: {
