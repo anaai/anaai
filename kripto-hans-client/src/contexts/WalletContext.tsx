@@ -13,7 +13,7 @@ import Web3 from 'web3';
 import { Contract } from 'web3-eth-contract';
 import StyleNFTContract from 'assets/contracts/StyleNFT.json';
 import { TokenMintedEvent } from 'models/TokenMintedEvent.model';
-import { SnackMessage } from 'models/SnackMessage.model';
+import { SnackMessage } from 'config/snacks/snacks';
 
 const ACTION_TYPES = {
   SET_SNACK_MESSAGE: 'SET_SNACK_MESSAGE',
@@ -26,7 +26,7 @@ const ACTION_TYPES = {
   SET_OWNERSHIP_TRANSFERRED_EVENT: 'SET_OWNERSHIP_TRANSFERRED_EVENT'
 } as const;
 
-export const createSetConnectToMetaMaskMessageAction = (snackMessage: SnackMessage) =>
+export const createSetSnackMessageAction = (snackMessage: SnackMessage) =>
   ({
     type: ACTION_TYPES.SET_SNACK_MESSAGE,
     payload: snackMessage
@@ -69,7 +69,7 @@ export const createSetOwnershipTransferredEventAction = (event: any) =>
   } as const);
 
 export type WalletReducerAction = ReturnType<
-  | typeof createSetConnectToMetaMaskMessageAction
+  | typeof createSetSnackMessageAction
   | typeof createSetAccountsAction
   | typeof createSetContractInstanceAction
   | typeof createSetTokenMintedEventAction
