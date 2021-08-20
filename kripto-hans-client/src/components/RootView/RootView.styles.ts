@@ -14,19 +14,5 @@ export const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center'
-  },
-  contentContainer: {
-    flex: 1,
-    position: 'relative',
-    '& > div': {
-      position: 'absolute',
-      top: 0,
-      right: 0,
-      bottom: 0,
-      left: 0,
-      flex: 1,
-      display: 'flex',
-      flexDirection: 'column'
-    }
   }
 }));
