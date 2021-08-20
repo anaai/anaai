@@ -13,9 +13,10 @@ import Web3 from 'web3';
 import { Contract } from 'web3-eth-contract';
 import StyleNFTContract from 'assets/contracts/StyleNFT.json';
 import { TokenMintedEvent } from 'models/TokenMintedEvent.model';
+import { SnackMessage } from 'models/SnackMessage.model';
 
 const ACTION_TYPES = {
-  SET_IS_METAMASK_INSTALLED: 'SET_IS_METAMASK_INSTALLED',
+  SET_SNACK_MESSAGE: 'SET_SNACK_MESSAGE',
   SET_ACCOUNTS: 'SET_ACCOUNTS',
   SET_WEB_3_INSTANCE: 'SET_WEB_3_INSTANCE',
   SET_CONTRACT_INSTANCE: 'SET_CONTRACT_INSTANCE',
@@ -25,10 +26,10 @@ const ACTION_TYPES = {
   SET_OWNERSHIP_TRANSFERRED_EVENT: 'SET_OWNERSHIP_TRANSFERRED_EVENT'
 } as const;
 
-export const createSetIsMetaMaskInstalledAction = (isMetaMaskInstalled: boolean) =>
+export const createSetConnectToMetaMaskMessageAction = (snackMessage: SnackMessage) =>
   ({
-    type: ACTION_TYPES.SET_IS_METAMASK_INSTALLED,
-    payload: isMetaMaskInstalled
+    type: ACTION_TYPES.SET_SNACK_MESSAGE,
+    payload: snackMessage
   } as const);
 
 export const createSetAccountsAction = (accounts: string[]) =>
@@ -68,7 +69,7 @@ export const createSetOwnershipTransferredEventAction = (event: any) =>
   } as const);
 
 export type WalletReducerAction = ReturnType<
-  | typeof createSetIsMetaMaskInstalledAction
+  | typeof createSetConnectToMetaMaskMessageAction
   | typeof createSetAccountsAction
   | typeof createSetContractInstanceAction
   | typeof createSetTokenMintedEventAction
@@ -78,14 +79,15 @@ export type WalletReducerAction = ReturnType<
 >;
 
 interface IWalletContextState {
+  snackMessage: SnackMessage | null;
   metaMaskOnboarding: MetaMaskOnboarding;
   isMetaMaskInstalled: boolean;
   accounts: ReadonlyArray<string>;
   web3Instance: Web3 | null;
   contract: Contract | null;
   events: {
-    tokenMintedEvent: TokenMintedEvent | null;
-    ownershipTransferredEvent: any;
+    tokenMinted: TokenMintedEvent | null;
+    ownershipTransferred: any;
   };
   loading: {
     payGenerating: boolean;
@@ -99,12 +101,13 @@ interface IWalletContext {
 }
 
 const initialState: IWalletContextState = {
+  snackMessage: null,
   metaMaskOnboarding: new MetaMaskOnboarding(),
-  isMetaMaskInstalled: false,
+  isMetaMaskInstalled: Boolean(window?.ethereum?.isMetaMask),
   accounts: [],
   web3Instance: null,
   contract: null,
-  events: { tokenMintedEvent: null, ownershipTransferredEvent: null },
+  events: { tokenMinted: null, ownershipTransferred: null },
   loading: {
     payGenerating: false,
     payImage: false
@@ -123,10 +126,10 @@ const walletReducer = (
   action: WalletReducerAction
 ): IWalletContextState => {
   switch (action.type) {
-    case ACTION_TYPES.SET_IS_METAMASK_INSTALLED:
+    case ACTION_TYPES.SET_SNACK_MESSAGE:
       return {
         ...state,
-        isMetaMaskInstalled: action.payload
+        snackMessage: action.payload
       };
     case ACTION_TYPES.SET_ACCOUNTS:
       return action.payload.length
@@ -134,12 +137,13 @@ const walletReducer = (
             ...state,
             accounts: action.payload
           }
-        : {
+        : // Cleanup on user wallet account disconnect
+          {
             ...state,
             accounts: action.payload,
-            // Cleanup on user wallet account disconnect
             contract: null,
-            events: { ...state.events, tokenMintedEvent: null }
+            events: { ...initialState.events },
+            loading: { ...initialState.loading }
           };
 
     case ACTION_TYPES.SET_CONTRACT_INSTANCE:
@@ -155,7 +159,7 @@ const walletReducer = (
     case ACTION_TYPES.SET_TOKEN_MINTED_EVENT:
       return {
         ...state,
-        events: { ...state.events, tokenMintedEvent: action.payload },
+        events: { ...state.events, tokenMinted: action.payload },
         loading: { ...state.loading, payGenerating: false }
       };
     case ACTION_TYPES.SET_PAY_IMAGE_LOADING:
@@ -166,7 +170,7 @@ const walletReducer = (
     case ACTION_TYPES.SET_OWNERSHIP_TRANSFERRED_EVENT:
       return {
         ...state,
-        events: { ...state.events, ownershipTransferredEvent: action.payload },
+        events: { ...state.events, ownershipTransferred: action.payload },
         loading: { ...state.loading, payImage: false }
       };
     default: {
