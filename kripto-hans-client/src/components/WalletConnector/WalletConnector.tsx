@@ -37,7 +37,7 @@ export const WalletConnector: React.FC<Record<string, unknown>> = () => {
   const classes = useStyles();
 
   const sharedButtonProps = {
-    color: (accounts.length ? 'primary' : '') as PropTypes.Color,
+    color: (accounts.length ? 'primary' : undefined) as PropTypes.Color | undefined,
     className: classes.metamaskButton,
     variant: 'contained' as const,
     endIcon: <MetaMaskFox />,

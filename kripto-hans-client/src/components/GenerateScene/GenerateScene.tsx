@@ -1,4 +1,4 @@
-import { Box, Button, CircularProgress, Typography } from '@material-ui/core';
+import { Box, Button, CircularProgress, Paper, Typography } from '@material-ui/core';
 import { connectToMetaMaskSnackMessage } from 'config/snacks/snacks';
 import {
   createSetPayGeneratingLoadingAction,
@@ -85,6 +85,7 @@ export const GenerateScene: React.FC<Record<string, unknown>> = () => {
       <Box className={classes.contentContainer}>
         <Box className={classes.generatedImageContainer}>
           {payGeneratingLoading && <CircularProgress className={classes.loadingSpinner} />}
+          <Paper className={classes.generatedImagePaper}></Paper>
         </Box>
         <form className={classes.urlForm} onSubmit={handleUrlFormSubmit}>
           <input
@@ -115,6 +116,7 @@ export const GenerateScene: React.FC<Record<string, unknown>> = () => {
               color="primary"
               variant="contained"
               type="submit"
+              disabled={payGeneratingLoading}
             >
               Pay Image Generate
             </Button>

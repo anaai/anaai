@@ -24,7 +24,16 @@ export const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     alignItems: 'center'
   },
-  loadingSpinner: {},
+  generatedImagePaper: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0
+  },
+  loadingSpinner: {
+    zIndex: 1
+  },
   urlForm: {
     display: 'flex',
     flexDirection: 'column',
