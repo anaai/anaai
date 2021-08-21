@@ -214,9 +214,11 @@ const WalletProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     if (contract) {
       contract.events.TokenMinted(
         { filter: { payer: accounts[0] } },
-        async (error: Error, event: any) => {
+        async (error: Error, event: TokenMintedEvent) => {
           console.warn('EVENT RECIEVED: ', event);
-          dispatch(createSetTokenMintedEventAction(event));
+          if (event.returnValues.payer === accounts[0]) {
+            dispatch(createSetTokenMintedEventAction(event));
+          }
         }
       );
     }
