@@ -1,5 +1,4 @@
 import { makeStyles } from '@material-ui/core';
-import { purple } from '@material-ui/core/colors';
 
 export const useStyles = makeStyles((theme) => ({
   tooltipRoot: {
@@ -8,10 +7,11 @@ export const useStyles = makeStyles((theme) => ({
     boxShadow: theme.shadows[4]
   },
   infoTooltipRoot: {
-    backgroundColor: purple['300']
+    backgroundColor: '#fdff87',
+    color: '#000'
   },
   infoTooltipArrow: {
-    color: purple['300']
+    color: '#fdff87'
   },
   tooltipText: {
     marginBottom: theme.spacing(0.5)

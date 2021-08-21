@@ -19,6 +19,7 @@ export const GenerateScene: React.FC<Record<string, unknown>> = () => {
     state: {
       contract,
       accounts,
+      mintedToken,
       loading: { payGenerating: payGeneratingLoading },
       events: { tokenMinted: tokenMintedEvent }
     },
@@ -53,8 +54,6 @@ export const GenerateScene: React.FC<Record<string, unknown>> = () => {
           .send({ from: accounts[0], gas: 1_000_000 });
 
         console.debug('payGeneratingResult: ', payGeneratingResult);
-
-        alert(payGeneratingResult.status);
       } catch (error) {
         console.error(error);
         dispatch(createSetPayGeneratingLoadingAction(false));
@@ -89,13 +88,13 @@ export const GenerateScene: React.FC<Record<string, unknown>> = () => {
       <Box className={classes.contentContainer}>
         <Box className={classes.generatedImageContainer}>
           {payGeneratingLoading && <CircularProgress className={classes.loadingSpinner} />}
-          <Paper className={classes.generatedImagePaper}>
-            {tokenMintedEvent && (
-              <img
-                className={classes.generatedImage}
-                src={tokenMintedEvent.returnValues.tokenURI}
-                alt="generated"
-              />
+          <Paper
+            className={`${classes.generatedImagePaper} ${
+              mintedToken ? classes.generatedImagePaperImageReady : ''
+            }`}
+          >
+            {mintedToken && (
+              <img className={classes.generatedImage} src={mintedToken.image} alt="generated" />
             )}
           </Paper>
         </Box>

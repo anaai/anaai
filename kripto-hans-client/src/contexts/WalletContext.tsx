@@ -14,6 +14,9 @@ import { Contract } from 'web3-eth-contract';
 import StyleNFTContract from 'assets/contracts/StyleNFT.json';
 import { TokenMintedEvent } from 'models/TokenMintedEvent.model';
 import { SnackMessage } from 'config/snacks/snacks';
+import axios from 'axios';
+import { matchesConnectedAccount } from 'utils/matchers';
+import { MintedToken } from 'models/MintedToken.model';
 
 const ACTION_TYPES = {
   SET_SNACK_MESSAGE: 'SET_SNACK_MESSAGE',
@@ -23,6 +26,7 @@ const ACTION_TYPES = {
   SET_PAY_GENERATING_LOADING: 'SET_PAY_GENERATING_LOADING',
   SET_TOKEN_MINTED_EVENT: 'SET_TOKEN_MINTED_EVENT',
   SET_PAY_IMAGE_LOADING: 'SET_PAY_IMAGE_LOADING',
+  SET_MINTED_TOKEN: 'SET_MINTED_TOKEN',
   SET_OWNERSHIP_TRANSFERRED_EVENT: 'SET_OWNERSHIP_TRANSFERRED_EVENT'
 } as const;
 
@@ -62,6 +66,12 @@ export const createSetPayImageLoadingAction = (loading: boolean) =>
     payload: loading
   } as const);
 
+export const createSetMintedTokenAction = (mintedToken: MintedToken) =>
+  ({
+    type: ACTION_TYPES.SET_MINTED_TOKEN,
+    payload: mintedToken
+  } as const);
+
 export const createSetOwnershipTransferredEventAction = (event: any) =>
   ({
     type: ACTION_TYPES.SET_OWNERSHIP_TRANSFERRED_EVENT,
@@ -75,6 +85,7 @@ export type WalletReducerAction = ReturnType<
   | typeof createSetTokenMintedEventAction
   | typeof createSetPayGeneratingLoadingAction
   | typeof createSetPayImageLoadingAction
+  | typeof createSetMintedTokenAction
   | typeof createSetOwnershipTransferredEventAction
 >;
 
@@ -85,6 +96,7 @@ interface IWalletContextState {
   accounts: ReadonlyArray<string>;
   web3Instance: Web3 | null;
   contract: Contract | null;
+  mintedToken: MintedToken | null;
   events: {
     tokenMinted: TokenMintedEvent | null;
     ownershipTransferred: any;
@@ -107,6 +119,7 @@ const initialState: IWalletContextState = {
   accounts: [],
   web3Instance: null,
   contract: null,
+  mintedToken: null,
   events: { tokenMinted: null, ownershipTransferred: null },
   loading: {
     payGenerating: false,
@@ -159,13 +172,17 @@ const walletReducer = (
     case ACTION_TYPES.SET_TOKEN_MINTED_EVENT:
       return {
         ...state,
-        events: { ...state.events, tokenMinted: action.payload },
-        loading: { ...state.loading, payGenerating: false }
+        events: { ...state.events, tokenMinted: action.payload }
       };
     case ACTION_TYPES.SET_PAY_IMAGE_LOADING:
       return {
         ...state,
         loading: { ...state.loading, payImage: action.payload }
+      };
+    case ACTION_TYPES.SET_MINTED_TOKEN:
+      return {
+        ...state,
+        mintedToken: action.payload
       };
     case ACTION_TYPES.SET_OWNERSHIP_TRANSFERRED_EVENT:
       return {
@@ -210,19 +227,29 @@ const WalletProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     }
   }, [accounts]);
 
+  const onTokenMinted = useCallback(
+    async (error: Error, event: TokenMintedEvent) => {
+      console.debug('tokenMintedEvent: ', event);
+      if (matchesConnectedAccount(accounts, event.returnValues.payer)) {
+        dispatch(createSetTokenMintedEventAction(event));
+        try {
+          const { data: mintedToken } = await axios.get(event.returnValues.tokenURI);
+          console.debug('mintedToken: ', mintedToken);
+          dispatch(createSetMintedTokenAction(mintedToken));
+        } catch (error) {
+          console.error(error);
+        }
+        dispatch(createSetPayGeneratingLoadingAction(false));
+      }
+    },
+    [accounts]
+  );
+
   useEffect(() => {
     if (contract) {
-      contract.events.TokenMinted(
-        { filter: { payer: accounts[0] } },
-        async (error: Error, event: TokenMintedEvent) => {
-          console.warn('EVENT RECIEVED: ', event);
-          if (event.returnValues.payer === accounts[0]) {
-            dispatch(createSetTokenMintedEventAction(event));
-          }
-        }
-      );
+      contract.events.TokenMinted(onTokenMinted);
     }
-  }, [contract, accounts]);
+  }, [accounts, contract, onTokenMinted]);
 
   // NOTE: you *might* need to memoize this value
   // Learn more in http://kcd.im/optimize-context

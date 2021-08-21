@@ -29,7 +29,15 @@ export const useStyles = makeStyles((theme) => ({
     top: 0,
     right: 0,
     bottom: 0,
-    left: 0
+    left: 0,
+    opacity: 0,
+    transition: theme.transitions.create('opacity', {
+      duration: theme.transitions.duration.short,
+      easing: theme.transitions.easing.easeInOut
+    })
+  },
+  generatedImagePaperImageReady: {
+    opacity: 1
   },
   generatedImage: {
     position: 'absolute',
