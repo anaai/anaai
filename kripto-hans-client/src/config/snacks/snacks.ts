@@ -5,4 +5,12 @@ export const connectToMetaMaskSnackMessage = {
   message: 'Please connect your Wallet in order to proceed'
 } as const;
 
-export type SnackMessage = typeof connectToMetaMaskSnackMessage | null;
+export const generatePaymentAbandonSnackMessage = {
+  type: 'info',
+  message: 'Image generate payment rejected'
+} as const;
+
+export type SnackMessage =
+  | typeof connectToMetaMaskSnackMessage
+  | typeof generatePaymentAbandonSnackMessage
+  | null;
