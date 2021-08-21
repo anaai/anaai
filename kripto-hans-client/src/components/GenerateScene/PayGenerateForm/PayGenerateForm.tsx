@@ -12,14 +12,13 @@ import { PayGeneratingResult } from 'models/PayGeneratingResult.model';
 import { ChangeEventHandler, FocusEventHandler, SyntheticEvent, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { validateAccountConnection, validateUrl } from 'utils/validators';
-import { useStyles } from './GenerateForm.styles';
+import { useStyles } from './PayGenerateForm.styles';
 
-export const GenerateForm: React.FC<Record<string, unknown>> = () => {
+export const PayGenerateForm: React.FC<Record<string, unknown>> = () => {
   const {
     state: {
       contract,
       accounts,
-
       loading: { payGenerating: payGeneratingLoading }
     },
     dispatch

@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
-import { GenerateForm } from './GenerateForm';
+import { PayGenerateForm } from './PayGenerateForm';
 
 test('renders generate button', () => {
-  render(<GenerateForm />);
+  render(<PayGenerateForm />);
   const generateButton = screen.getByText(/generate/i);
   expect(generateButton).toBeInTheDocument();
 });
