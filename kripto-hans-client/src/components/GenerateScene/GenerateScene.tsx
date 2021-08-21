@@ -1,5 +1,8 @@
 import { Box, Button, CircularProgress, Paper, Typography } from '@material-ui/core';
-import { connectToMetaMaskSnackMessage } from 'config/snacks/snacks';
+import {
+  connectToMetaMaskSnackMessage,
+  generatePaymentAbandonSnackMessage
+} from 'config/snacks/snacks';
 import {
   createSetPayGeneratingLoadingAction,
   createSetSnackMessageAction,
@@ -54,7 +57,8 @@ export const GenerateScene: React.FC<Record<string, unknown>> = () => {
         alert(payGeneratingResult.status);
       } catch (error) {
         console.error(error);
-        createSetPayGeneratingLoadingAction(false);
+        dispatch(createSetPayGeneratingLoadingAction(false));
+        dispatch(createSetSnackMessageAction(generatePaymentAbandonSnackMessage));
       }
     }
   };
@@ -85,7 +89,15 @@ export const GenerateScene: React.FC<Record<string, unknown>> = () => {
       <Box className={classes.contentContainer}>
         <Box className={classes.generatedImageContainer}>
           {payGeneratingLoading && <CircularProgress className={classes.loadingSpinner} />}
-          <Paper className={classes.generatedImagePaper}></Paper>
+          <Paper className={classes.generatedImagePaper}>
+            {tokenMintedEvent && (
+              <img
+                className={classes.generatedImage}
+                src={tokenMintedEvent.returnValues.tokenURI}
+                alt="generated"
+              />
+            )}
+          </Paper>
         </Box>
         <form className={classes.urlForm} onSubmit={handleUrlFormSubmit}>
           <input

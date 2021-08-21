@@ -31,6 +31,14 @@ export const useStyles = makeStyles((theme) => ({
     bottom: 0,
     left: 0
   },
+  generatedImage: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    objectFit: 'contain'
+  },
   loadingSpinner: {
     zIndex: 1
   },
