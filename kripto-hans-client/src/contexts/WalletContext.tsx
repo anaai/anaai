@@ -13,7 +13,7 @@ import Web3 from 'web3';
 import { Contract } from 'web3-eth-contract';
 import StyleNFTContract from 'assets/contracts/StyleNFT.json';
 import { TokenMintedEvent } from 'models/TokenMintedEvent.model';
-import { SnackMessage } from 'config/snacks/snacks';
+import { generateSuccessSnackMessage, SnackMessage } from 'config/snacks/snacks';
 import axios from 'axios';
 import { matchesConnectedAccount } from 'utils/matchers';
 import { MintedToken } from 'models/MintedToken.model';
@@ -236,6 +236,7 @@ const WalletProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
           const { data: mintedToken } = await axios.get(event.returnValues.tokenURI);
           console.debug('mintedToken: ', mintedToken);
           dispatch(createSetMintedTokenAction(mintedToken));
+          dispatch(createSetSnackMessageAction(generateSuccessSnackMessage));
         } catch (error) {
           console.error(error);
         }

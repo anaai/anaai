@@ -13,6 +13,13 @@ export const useStyles = makeStyles((theme) => ({
   infoTooltipArrow: {
     color: '#fdff87'
   },
+  successTooltipRoot: {
+    backgroundColor: '#7cffae',
+    color: '#000'
+  },
+  successTooltipArrow: {
+    color: '#7cffae'
+  },
   tooltipText: {
     marginBottom: theme.spacing(0.5)
   }

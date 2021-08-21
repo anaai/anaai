@@ -37,10 +37,15 @@ export const useStyles = makeStyles((theme) => ({
     width: '100%',
     objectFit: 'contain'
   },
-  payGeneratingLoadingContainer: {},
+  payGeneratingLoadingContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center'
+  },
   loadingText: {
     marginTop: theme.spacing(1),
-    textAlign: 'center'
+    textAlign: 'center',
+    color: '#fff'
   },
   loadingSpinner: {
     zIndex: 1

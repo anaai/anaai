@@ -34,8 +34,10 @@ export const NotificationTooltip: React.FC<{ children: ReactElement }> = ({ chil
       classes={{
         tooltip: `${classes.tooltipRoot} ${
           persistedMessage?.type === 'info' ? classes.infoTooltipRoot : ''
-        }`,
-        arrow: persistedMessage?.type === 'info' ? classes.infoTooltipArrow : ''
+        } ${persistedMessage?.type === 'success' ? classes.successTooltipRoot : ''}`,
+        arrow: `${persistedMessage?.type === 'info' ? classes.infoTooltipArrow : ''}
+        ${persistedMessage?.type === 'success' ? classes.successTooltipArrow : ''}
+        `
       }}
       open={Boolean(snackMessage)}
       title={

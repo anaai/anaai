@@ -1,3 +1,4 @@
+import { ChangeEventHandler, FocusEventHandler, SyntheticEvent, useState } from 'react';
 import { Box, Button, Typography } from '@material-ui/core';
 import {
   connectToMetaMaskSnackMessage,
@@ -9,7 +10,6 @@ import {
   useWallet
 } from 'contexts/WalletContext';
 import { PayGeneratingResult } from 'models/PayGeneratingResult.model';
-import { ChangeEventHandler, FocusEventHandler, SyntheticEvent, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { validateAccountConnection, validateUrl } from 'utils/validators';
 import { useStyles } from './PayGenerateForm.styles';
@@ -83,27 +83,30 @@ export const PayGenerateForm: React.FC<Record<string, unknown>> = () => {
 
   return (
     <form className={classes.root} onSubmit={handleUrlFormSubmit}>
-      <input
-        className={classes.imageUrlInput}
-        type="url"
-        required
-        name="url"
-        value={url}
-        disabled={payGeneratingLoading}
-        onChange={handleUrlChange}
-        onFocus={handleUrlFocus}
-        onBlur={handleUrlBlur}
-        placeholder="Add Image URL here"
-      />
-
-      <Typography
-        className={`${classes.urlErrorMessage} ${
-          urlInputTouched ? classes.urlErrorMessageVisible : ''
-        }`}
-        variant="body2"
-      >
-        {`${urlErrorMessage || !url ? urlErrorMessage : 'Ready for Liftoff'} `}
-      </Typography>
+      {!payGeneratingLoading && (
+        <>
+          <input
+            className={classes.imageUrlInput}
+            type="url"
+            required
+            name="url"
+            value={url}
+            disabled={payGeneratingLoading}
+            onChange={handleUrlChange}
+            onFocus={handleUrlFocus}
+            onBlur={handleUrlBlur}
+            placeholder="Add Image URL here"
+          />
+          <Typography
+            className={`${classes.urlErrorMessage} ${
+              urlInputTouched ? classes.urlErrorMessageVisible : ''
+            }`}
+            variant="body2"
+          >
+            {`${urlErrorMessage || !url ? urlErrorMessage : 'Ready for Liftoff'} `}
+          </Typography>
+        </>
+      )}
 
       <Box className={classes.ctaButtonsContainer}>
         <Button
