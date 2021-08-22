@@ -23,11 +23,11 @@ export const useStyles = makeStyles((theme) => ({
       border: `${theme.spacing(0.2)}px solid ${theme.palette.secondary.main}`
     }
   },
-  urlErrorMessage: {
+  urlInfoMessage: {
     color: '#fff',
     opacity: 0
   },
-  urlErrorMessageVisible: {
+  urlInfoMessageVisible: {
     opacity: 1
   },
   ctaButtonsContainer: {

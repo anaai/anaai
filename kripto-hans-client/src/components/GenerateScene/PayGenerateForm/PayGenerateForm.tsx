@@ -83,7 +83,7 @@ export const PayGenerateForm: React.FC<Record<string, unknown>> = () => {
 
   return (
     <form className={classes.root} onSubmit={handleUrlFormSubmit}>
-      {!payGeneratingLoading && (
+      {payGeneratingLoading || (
         <>
           <input
             className={classes.imageUrlInput}
@@ -98,8 +98,8 @@ export const PayGenerateForm: React.FC<Record<string, unknown>> = () => {
             placeholder="Add Image URL here"
           />
           <Typography
-            className={`${classes.urlErrorMessage} ${
-              urlInputTouched ? classes.urlErrorMessageVisible : ''
+            className={`${classes.urlInfoMessage} ${
+              urlInputTouched ? classes.urlInfoMessageVisible : ''
             }`}
             variant="body2"
           >
