@@ -1,16 +1,16 @@
 import { ChangeEventHandler, FocusEventHandler, SyntheticEvent, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Box, Button, Typography } from '@material-ui/core';
 import {
   connectToMetaMaskSnackMessage,
   generatePaymentAbandonSnackMessage
 } from 'config/snacks/snacks';
+import { useWallet } from 'contexts/WalletContext/WalletContext';
 import {
   createSetPayGeneratingLoadingAction,
-  createSetSnackMessageAction,
-  useWallet
-} from 'contexts/WalletContext';
+  createSetSnackMessageAction
+} from 'contexts/WalletContext/WalletContext.actions';
 import { PayGeneratingResult } from 'models/PayGeneratingResult.model';
-import { useHistory } from 'react-router-dom';
 import { validateAccountConnection, validateUrl } from 'utils/validators';
 import { useStyles } from './PayGenerateForm.styles';
 

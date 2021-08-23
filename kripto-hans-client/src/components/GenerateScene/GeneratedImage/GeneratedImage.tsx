@@ -1,5 +1,5 @@
 import { Box, CircularProgress, Paper, Typography } from '@material-ui/core';
-import { useWallet } from 'contexts/WalletContext';
+import { useWallet } from 'contexts/WalletContext/WalletContext';
 import { useStyles } from './GeneratedImage.styles';
 
 export const GeneratedImage: React.FC<Record<string, unknown>> = () => {

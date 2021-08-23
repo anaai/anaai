@@ -4,7 +4,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 import 'components/App.scss';
 import { primaryTheme } from 'config/theme/primaryTheme';
-import { WalletProvider } from 'contexts/WalletContext';
+import { WalletProvider } from 'contexts/WalletContext/WalletContext';
 import { RootView } from './RootView/RootView';
 
 function App(): ReactElement {

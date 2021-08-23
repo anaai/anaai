@@ -1,6 +1,6 @@
 import { SyntheticEvent } from 'react';
 import { Box, Button } from '@material-ui/core';
-import { useWallet } from 'contexts/WalletContext';
+import { useWallet } from 'contexts/WalletContext/WalletContext';
 import { useHistory } from 'react-router-dom';
 import { useStyles } from './PayImageForm.styles';
 

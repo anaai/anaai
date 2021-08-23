@@ -1,8 +1,9 @@
 import { ReactElement, useEffect, useRef, useState } from 'react';
 import { Tooltip, Typography } from '@material-ui/core';
-import { createSetSnackMessageAction, useWallet } from 'contexts/WalletContext';
 import { useStyles } from './NotificationTooltip.styles';
 import { NOTIFICATION_CLOSE_DELAY, SnackMessage } from 'config/snacks/snacks';
+import { useWallet } from 'contexts/WalletContext/WalletContext';
+import { createSetSnackMessageAction } from 'contexts/WalletContext/WalletContext.actions';
 
 export const NotificationTooltip: React.FC<{ children: ReactElement }> = ({ children }) => {
   const {

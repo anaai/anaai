@@ -1,5 +1,5 @@
 import { Box } from '@material-ui/core';
-import { useWallet } from 'contexts/WalletContext';
+import { useWallet } from 'contexts/WalletContext/WalletContext';
 import { GeneratedImage } from './GeneratedImage/GeneratedImage';
 import { PayGenerateForm } from './PayGenerateForm/PayGenerateForm';
 import { useStyles } from './GenerateScene.styles';
