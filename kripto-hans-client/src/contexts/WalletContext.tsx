@@ -89,7 +89,7 @@ export type WalletReducerAction = ReturnType<
   | typeof createSetOwnershipTransferredEventAction
 >;
 
-interface IWalletContextState {
+type IWalletContextState = Readonly<{
   snackMessage: SnackMessage | null;
   metaMaskOnboarding: MetaMaskOnboarding;
   isMetaMaskInstalled: boolean;
@@ -97,15 +97,15 @@ interface IWalletContextState {
   web3Instance: Web3 | null;
   contract: Contract | null;
   mintedToken: MintedToken | null;
-  events: {
+  events: Readonly<{
     tokenMinted: TokenMintedEvent | null;
     ownershipTransferred: any;
-  };
-  loading: {
+  }>;
+  loading: Readonly<{
     payGenerating: boolean;
     payImage: boolean;
-  };
-}
+  }>;
+}>;
 
 interface IWalletContext {
   state: IWalletContextState;
