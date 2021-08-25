@@ -214,7 +214,7 @@ test('SET_OWNERSHIP_TRANSFERRED_EVENT', () => {
     web3Instance: null,
     contract: null,
     mintedToken: null,
-    events: { tokenMinted: null, ownershipTransferred: {} },
+    events: { tokenMinted: null, ownershipTransferred: mockOwnershipTransferredEvent },
     loading: {
       payGenerating: false,
       payImage: false
