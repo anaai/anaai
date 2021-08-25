@@ -20,7 +20,7 @@ const IMAGE_URL = "http://prod-upp-image-read.ft.com/6057b8fe-0c1f-11e6-b0f1-61f
 
 async function payImage(contract, address) {
   const message = await contract.methods
-    .payImage(1)
+    .payImage(61)
     .send({from: address, gas: 500000});
 
   console.log(message);
