@@ -28,14 +28,14 @@ services:
       - redis
 
   job-service:
-    build: kripto-hans-job-orchestrator
+    build: kripto-hans-job-service
     image: job_service
     container_name: job_service
-    command: uvicorn service:app --host 0.0.0.0 --reload
+    command: uvicorn service:app --host 0.0.0.0 --port 8000
     ports:
       - 8000:8000
     env_file:
-      - kripto-hans-job-orchestrator/.env
+      - kripto-hans-job-service/.env
     depends_on:
       - redis
 
@@ -43,7 +43,7 @@ services:
     build: kripto-hans-service
     image: nft_service
     container_name: nft_service
-    command: uvicorn service:app --host 0.0.0.0 --reload --port 7000
+    command: uvicorn service:app --host 0.0.0.0 --port 7000
     ports:
       - 7000:7000
     env_file:
