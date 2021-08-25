@@ -1,9 +1,11 @@
 import React from 'react';
 import { useStyles } from './WalletConnector.styles';
 import { ReactComponent as MetaMaskFox } from 'assets/images/metamask-fox.svg';
-import { Button } from '@material-ui/core';
+import { Button, PropTypes } from '@material-ui/core';
 
-import { createSetAccountsAction, useWallet } from 'contexts/WalletContext';
+import { useWallet } from 'contexts/WalletContext/WalletContext';
+import { createSetAccountsAction } from 'contexts/WalletContext/WalletContext.actions';
+import { NotificationTooltip } from 'components/NotificationTooltip/NotificationTooltip';
 
 declare global {
   interface Window {
@@ -36,6 +38,7 @@ export const WalletConnector: React.FC<Record<string, unknown>> = () => {
   const classes = useStyles();
 
   const sharedButtonProps = {
+    color: (accounts.length ? 'primary' : undefined) as PropTypes.Color | undefined,
     className: classes.metamaskButton,
     variant: 'contained' as const,
     endIcon: <MetaMaskFox />,
@@ -43,7 +46,7 @@ export const WalletConnector: React.FC<Record<string, unknown>> = () => {
   };
 
   return (
-    <>
+    <NotificationTooltip>
       {isMetaMaskInstalled ? (
         accounts.length ? (
           <Button {...sharedButtonProps}>Connected</Button>
@@ -57,6 +60,6 @@ export const WalletConnector: React.FC<Record<string, unknown>> = () => {
           Install MetaMask
         </Button>
       )}
-    </>
+    </NotificationTooltip>
   );
 };

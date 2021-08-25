@@ -7,5 +7,10 @@ export const useStyles = makeStyles(() => ({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'column'
+  },
+  contentContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center'
   }
 }));
