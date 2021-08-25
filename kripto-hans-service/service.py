@@ -7,6 +7,7 @@ from pydantic import BaseModel
 
 from web3 import Web3
 
+import logger
 from contracts import style_nft_factory
 
 load_dotenv()
@@ -41,6 +42,7 @@ async def mint_nft(nft: NFTPayload):
                                Web3.toChecksumAddress(nft.payer),
                                nft.token_uri,
                                Web3.toWei(nft.price, "ether"))
+  logger.log_token_minted(token_id)
   return JSONResponse({"token_id": token_id})
 
 @app.post("/transfer_token")
@@ -48,4 +50,9 @@ async def transfer_token(transfer: TransferTokenPayload):
   contract = style_nft_factory(PUBLIC_KEY, PRIVATE_KEY, API_URL, CONTRACT_ADDRESS, CONTRACT_PATH)
   receipt_args = contract.safe_transfer_from(Web3.toChecksumAddress(transfer.recipient),
                                              transfer.token_id)
+  logger.log_token_transfered(
+    receipt_args["tokenId"],
+    receipt_args["from"],
+    receipt_args["to"]
+  )
   return JSONResponse(receipt_args.__dict__)

@@ -2,6 +2,7 @@ aiohttp==3.7.4.post0
 asgiref==3.4.1
 async-timeout==3.0.1
 attrs==21.2.0
+backcall==0.2.0
 base58==2.1.0
 bitarray==1.2.2
 blake2b-py==0.1.4
@@ -11,6 +12,7 @@ chardet==4.0.0
 charset-normalizer==2.0.1
 click==8.0.1
 cytoolz==0.11.0
+decorator==5.0.9
 eth-abi==2.1.1
 eth-account==0.5.5
 eth-bloom==1.0.4
@@ -28,8 +30,13 @@ httptools==0.2.0
 idna==3.2
 iniconfig==1.1.1
 ipfshttpclient==0.7.0
+ipython==7.25.0
+ipython-genutils==0.2.0
+jedi==0.18.0
 jsonschema==3.2.0
+logassert==6
 lru-dict==1.1.7
+matplotlib-inline==0.1.2
 multiaddr==0.0.9
 multidict==5.1.0
 mypy-extensions==0.4.3
@@ -38,9 +45,14 @@ numpy==1.21.0
 opencv-python==4.5.3.56
 packaging==21.0
 parsimonious==0.8.1
+parso==0.8.2
+pexpect==4.8.0
+pickleshare==0.7.5
 Pillow==8.3.1
 pluggy==0.13.1
+prompt-toolkit==3.0.19
 protobuf==3.17.3
+ptyprocess==0.7.0
 py==1.10.0
 py-ecc==4.1.0
 py-evm==0.4.0a4
@@ -48,6 +60,7 @@ py-geth==3.4.0
 pycryptodome==3.10.1
 pydantic==1.8.2
 pyethash==0.1.27
+Pygments==2.9.0
 pyparsing==2.4.7
 pyrsistent==0.18.0
 pysha3==1.0.2
@@ -63,6 +76,7 @@ sortedcontainers==2.4.0
 starlette==0.14.2
 toml==0.10.2
 toolz==0.11.1
+traitlets==5.0.5
 trie==2.0.0a5
 typing-extensions==3.10.0.0
 urllib3==1.26.6
@@ -70,6 +84,7 @@ uvicorn==0.14.0
 uvloop==0.15.3
 varint==1.0.2
 watchgod==0.7
-web3==5.21.0
+wcwidth==0.2.5
+web3==5.23.0
 websockets==9.1
 yarl==1.6.3

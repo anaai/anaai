@@ -35,10 +35,9 @@ nftContract.events.ImageGenerationPaid(async (error, event) => {
   const imageURL = event.returnValues.imageURL;
   const payer = event.returnValues.sender;
   const jobHash = uuid.v4();
-  console.log("Sending request", payer, imageURL, jobHash);
+  console.log(`${payer} triggered job ${jobHash} for image ${imageURL}`);
 
-  const jobId = await triggerJob(payer, imageURL, `${jobHash}.jpeg`);
-  console.log(jobId);
+  await triggerJob(payer, imageURL, `${jobHash}.jpeg`);
 });
 
 nftContract.events.ImagePaid(async (error, event) => {
@@ -46,7 +45,6 @@ nftContract.events.ImagePaid(async (error, event) => {
   const price = parseFloat(event.returnValues.value);
   const tokenId = parseInt(event.returnValues.tokenId);
 
-  console.log("Sending request", payer, price, tokenId);
-  const transfer = await transferOwnership(payer, price, tokenId);
-  console.log(transfer)
+  console.log(`${payer} paid for token ${tokenId} for ${price} wei`);
+  await transferOwnership(payer, price, tokenId);
 });
