@@ -21,10 +21,13 @@ import {
   createSetTokenMintedEventAction,
   createSetMintedTokenAction,
   createSetSnackMessageAction,
-  createSetPayGeneratingLoadingAction
+  createSetPayGeneratingLoadingAction,
+  createSetOwnershipTransferredEventAction,
+  createSetPayImageLoadingAction
 } from './WalletContext.actions';
 import { walletReducer } from './WalletContext.reducer';
 import { IWalletContextState, initialState } from './WalletContext.state';
+import { ZERO_ADDRESS } from './WalletContext.constants';
 
 interface IWalletContext {
   state: IWalletContextState;
@@ -88,11 +91,28 @@ const WalletProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     [accounts]
   );
 
+  const onTokenTransferred = useCallback(
+    async (error: Error, event: any) => {
+      console.debug('tokenTransferredEvent: ', event);
+      if (event.returnValues.from === ZERO_ADDRESS) {
+        console.debug('tokenTransferredEvent: ', 'ZEROOOOOOOOO');
+        return;
+      }
+      if (matchesConnectedAccount(accounts, event.returnValues.to)) {
+        dispatch(createSetOwnershipTransferredEventAction(event));
+        dispatch(createSetPayImageLoadingAction(false));
+      }
+    },
+    [accounts]
+  );
+
   useEffect(() => {
     if (contract) {
+      console.warn('LISTENERS REGISTERED');
       contract.events.TokenMinted(onTokenMinted);
+      contract.events.Transfer(onTokenTransferred);
     }
-  }, [accounts, contract, onTokenMinted]);
+  }, [accounts, contract, onTokenMinted, onTokenTransferred]);
 
   // NOTE: you *might* need to memoize this value
   // Learn more in http://kcd.im/optimize-context
