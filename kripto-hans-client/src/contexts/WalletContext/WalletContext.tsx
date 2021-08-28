@@ -28,6 +28,7 @@ import {
 import { walletReducer } from './WalletContext.reducer';
 import { IWalletContextState, initialState } from './WalletContext.state';
 import { ZERO_ADDRESS } from './WalletContext.constants';
+import { resolveTokenByTokenId } from 'utils/resolvers';
 
 interface IWalletContext {
   state: IWalletContextState;
@@ -75,10 +76,10 @@ const WalletProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const onTokenMinted = useCallback(
     async (error: Error, event: TokenMintedEvent) => {
       console.debug('tokenMintedEvent: ', event);
-      if (matchesConnectedAccount(accounts, event.returnValues.payer)) {
+      if (contract && matchesConnectedAccount(accounts, event.returnValues.payer)) {
         dispatch(createSetTokenMintedEventAction(event));
         try {
-          const { data: mintedToken } = await axios.get(event.returnValues.tokenURI);
+          const mintedToken = await resolveTokenByTokenId(contract, event.returnValues.tokenId);
           console.debug('mintedToken: ', mintedToken);
           dispatch(createSetMintedTokenAction(mintedToken));
           dispatch(createSetSnackMessageAction(generateSuccessSnackMessage));
@@ -88,16 +89,18 @@ const WalletProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         dispatch(createSetPayGeneratingLoadingAction(false));
       }
     },
-    [accounts]
+    [accounts, contract]
   );
 
   const onTokenTransferred = useCallback(
     async (error: Error, event: any) => {
       console.debug('tokenTransferredEvent: ', event);
+
+      // Ignore init transfer on token mint
       if (event.returnValues.from === ZERO_ADDRESS) {
-        console.debug('tokenTransferredEvent: ', 'ZEROOOOOOOOO');
         return;
       }
+
       if (matchesConnectedAccount(accounts, event.returnValues.to)) {
         dispatch(createSetOwnershipTransferredEventAction(event));
         dispatch(createSetPayImageLoadingAction(false));
@@ -108,9 +111,15 @@ const WalletProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
   useEffect(() => {
     if (contract) {
-      console.warn('LISTENERS REGISTERED');
+      // TokenMinted event is sent in addition to Transfer event.
+      // It is not possible to evaluate image generate payer (which is required in order to filter the correct pay generate flow result) from Transfer event, hence we need TokenMinted event handled too.
       contract.events.TokenMinted(onTokenMinted);
-      contract.events.Transfer(onTokenTransferred);
+      contract.events.Transfer(
+        {
+          filter: { to: accounts }
+        },
+        onTokenTransferred
+      );
     }
   }, [accounts, contract, onTokenMinted, onTokenTransferred]);
 
