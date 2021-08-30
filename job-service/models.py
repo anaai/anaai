@@ -1,6 +1,7 @@
 from datetime import datetime
 
 import sqlalchemy as sa
+from sqlalchemy.orm import backref, relationship
 from sqlalchemy.types import PickleType
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -41,3 +42,14 @@ class TaskSet(Base):
   taskset_id = sa.Column(sa.String(155), unique=True)
   result = sa.Column(PickleType, nullable=True)
   date_done = sa.Column(sa.DateTime, default=datetime.utcnow, nullable=True)
+
+class JobRequest(Base):
+  __tablename__ = "job_request"
+
+  id = sa.Column(sa.Integer, primary_key=True, index=True)
+  job_request_hash = sa.Column(sa.String(155), nullable=False)
+  payer = sa.Column(sa.String(155), nullable=False)
+  created_at = sa.Column(sa.DateTime, default=datetime.utcnow, nullable=False)
+  task_id = sa.Column(sa.Integer, sa.ForeignKey("celery_taskmeta.id"))
+
+  task = relationship("Task", backref=backref("job_request", uselist=False))
