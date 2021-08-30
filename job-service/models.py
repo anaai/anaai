@@ -13,10 +13,10 @@ Base = declarative_base()
 DEFAULT_STATE = "PENDING"
 
 class Task(Base):
-  __tablename__ = 'celery_taskmeta'
-  __table_args__ = {'sqlite_autoincrement': True, 'extend_existing': True}
+  __tablename__ = "celery_taskmeta"
+  __table_args__ = {"sqlite_autoincrement": True, "extend_existing": True}
 
-  id = sa.Column(sa.Integer, sa.Sequence('task_id_sequence'),
+  id = sa.Column(sa.Integer, sa.Sequence("task_id_sequence"),
                  primary_key=True, autoincrement=True)
   task_id = sa.Column(sa.String(155), unique=True)
   status = sa.Column(sa.String(50), default=DEFAULT_STATE)
@@ -33,10 +33,10 @@ class Task(Base):
   queue = sa.Column(sa.String(155), nullable=True)
 
 class TaskSet(Base):
-  __tablename__ = 'celery_tasksetmeta'
-  __table_args__ = {'sqlite_autoincrement': True}
+  __tablename__ = "celery_tasksetmeta"
+  __table_args__ = {"sqlite_autoincrement": True}
 
-  id = sa.Column(sa.Integer, sa.Sequence('taskset_id_sequence'),
+  id = sa.Column(sa.Integer, sa.Sequence("taskset_id_sequence"),
                  autoincrement=True, primary_key=True)
   taskset_id = sa.Column(sa.String(155), unique=True)
   result = sa.Column(PickleType, nullable=True)

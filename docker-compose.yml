@@ -1,17 +1,21 @@
-version: "3.4"
+version: "3.9"
 services:
   redis:
     image: redis:5.0.3-alpine
     container_name: job_orchestrator_redis
     restart: always
+    ports:
+      - 6378:6379
 
   postgres:
     image: postgres
     container_name: job_orchestrator_postgres
     environment:
       - POSTGRES_USER=job_orchestrator
-      - POSTGRES_PASSWORD=muchsecurity
+      - POSTGRES_PASSWORD=p
       - POSTGRES_DB=jobs
+    ports:
+      - 5432:5432
     volumes:
       - ./postgres-data:/var/lib/postgresql/data
 
@@ -26,18 +30,21 @@ services:
     depends_on:
       - postgres
       - redis
+      - job-service
 
   job-service:
     build: job-service
     image: job_service
     container_name: job_service
-    command: uvicorn service:app --host 0.0.0.0 --port 8000
+    command: bash -c "while !</dev/tcp/postgres/5432; do sleep 1; done; alembic upgrade head && uvicorn service:app --host 0.0.0.0 --port 8000"
+    # command: uvicorn service:app --host 0.0.0.0 --port 8000
     ports:
       - 8000:8000
     env_file:
       - job-service/.env
     depends_on:
       - redis
+      - postgres
 
   nft-service:
     build: nft-service
