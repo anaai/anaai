@@ -27,12 +27,15 @@ export const PayImageForm: React.FC<Record<string, unknown>> = () => {
 
   const handlePayImage = async () => {
     if (contract) {
-      // Loading finish is triggered either on payImage error or tokenMintedEvent
+      // Once we get payImageResult, the token isn't transfered yet, however
+      // it can be found within current user `userBoughtTokens`
       dispatch(createSetPayImageLoadingAction(true));
       try {
         const payImageResult: PayImageResult = await contract.methods
           .payImage(tokenMintedEvent?.returnValues.tokenId)
           .send({ from: accounts[0], gas: 1_000_000 });
+
+        dispatch(createSetPayImageLoadingAction(false));
 
         console.debug('payImageResult: ', payImageResult);
 

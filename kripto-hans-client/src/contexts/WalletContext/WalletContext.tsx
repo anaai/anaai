@@ -103,7 +103,6 @@ const WalletProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
       if (matchesConnectedAccount(accounts, event.returnValues.to)) {
         dispatch(createSetOwnershipTransferredEventAction(event));
-        dispatch(createSetPayImageLoadingAction(false));
       }
     },
     [accounts]
