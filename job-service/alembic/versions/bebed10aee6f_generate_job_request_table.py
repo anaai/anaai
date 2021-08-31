@@ -23,8 +23,8 @@ def upgrade():
     sa.Column('job_request_hash', sa.String(length=155), nullable=False),
     sa.Column('payer', sa.String(length=155), nullable=False),
     sa.Column('created_at', sa.DateTime(), nullable=False),
-    sa.Column('task_id', sa.Integer(), nullable=True),
-    sa.ForeignKeyConstraint(['task_id'], ['celery_taskmeta.id'], ),
+    sa.Column('task_id', sa.String(155), nullable=True),
+    # sa.ForeignKeyConstraint(['task_id'], ['celery_taskmeta.task_id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_job_request_id'), 'job_request', ['id'], unique=False)
