@@ -29,6 +29,10 @@ test('Has appropriate initial state', () => {
     loading: {
       payGenerating: false,
       payImage: false
+    },
+    tokens: {
+      generated: {},
+      bought: {}
     }
   });
 });
@@ -54,6 +58,10 @@ test('SET_SNACK_MESSAGE', () => {
     loading: {
       payGenerating: false,
       payImage: false
+    },
+    tokens: {
+      generated: {},
+      bought: {}
     }
   };
 
@@ -77,6 +85,10 @@ test('SET_ACCOUNTS', () => {
     loading: {
       payGenerating: false,
       payImage: false
+    },
+    tokens: {
+      generated: {},
+      bought: {}
     }
   };
 
@@ -100,6 +112,10 @@ test('SET_CONTRACT_INSTANCE', () => {
     loading: {
       payGenerating: false,
       payImage: false
+    },
+    tokens: {
+      generated: {},
+      bought: {}
     }
   };
 
@@ -123,6 +139,10 @@ test('SET_PAY_GENERATING_LOADING', () => {
     loading: {
       payGenerating: true,
       payImage: false
+    },
+    tokens: {
+      generated: {},
+      bought: {}
     }
   };
 
@@ -146,6 +166,10 @@ test('SET_TOKEN_MINTED_EVENT', () => {
     loading: {
       payGenerating: false,
       payImage: false
+    },
+    tokens: {
+      generated: {},
+      bought: {}
     }
   };
 
@@ -169,6 +193,10 @@ test('SET_PAY_IMAGE_LOADING', () => {
     loading: {
       payGenerating: false,
       payImage: true
+    },
+    tokens: {
+      generated: {},
+      bought: {}
     }
   };
 
@@ -192,6 +220,10 @@ test('SET_MINTED_TOKEN', () => {
     loading: {
       payGenerating: false,
       payImage: false
+    },
+    tokens: {
+      generated: {},
+      bought: {}
     }
   };
 
@@ -218,6 +250,10 @@ test('SET_OWNERSHIP_TRANSFERRED_EVENT', () => {
     loading: {
       payGenerating: false,
       payImage: false
+    },
+    tokens: {
+      generated: {},
+      bought: {}
     }
   };
 
