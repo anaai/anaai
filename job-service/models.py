@@ -5,7 +5,7 @@ from sqlalchemy.orm import backref, relationship
 from sqlalchemy.types import PickleType
 from sqlalchemy.ext.declarative import declarative_base
 
-Base = declarative_base()
+from database import Base
 
 # Task and TaskSet classes are copied from (reduced)
 # https://github.com/celery/celery/blob/8ebcce1523d79039f23da748f00bec465951de2a/celery/backends/database/models.py
