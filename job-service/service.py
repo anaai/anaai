@@ -9,8 +9,8 @@ from sqlalchemy.orm import Session
 from celery import Celery
 from celery.execute import send_task
 
-import crud, models
-from database import SessionLocal, engine
+import crud
+from database import get_session
 
 import logger
 
@@ -21,13 +21,6 @@ BROKER_URL = os.getenv("BROKER_URL")
 
 RECIPIENT = os.getenv("RECIPIENT")
 PRICE = 0
-
-def get_session():
-  session = SessionLocal()
-  try:
-    yield session
-  finally:
-    session.close()
 
 class JobRequest(BaseModel):
   payer: str
