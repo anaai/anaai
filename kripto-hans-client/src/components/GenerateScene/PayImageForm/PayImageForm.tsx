@@ -38,33 +38,6 @@ export const PayImageForm: React.FC<Record<string, unknown>> = () => {
         dispatch(createSetPayImageLoadingAction(false));
 
         console.debug('payImageResult: ', payImageResult);
-
-        console.debug(
-          'userGeneratedTokens #: ',
-          await contract.methods.userGeneratedTokens(accounts[0]).call()
-        );
-        console.debug(
-          'userBoughtTokens #: ',
-          await contract.methods.userBoughtTokens(accounts[0]).call()
-        );
-
-        console.debug(
-          'special #####: ',
-          await contract.methods
-            .tokenURI((await contract.methods.userBoughtTokens(accounts[0]).call())[0])
-            .call()
-        );
-
-        setTimeout(async () => {
-          console.debug(
-            'userGeneratedTokens ##: ',
-            contract.methods.userGeneratedTokens(accounts[0]).call()
-          );
-          console.debug(
-            'userBoughtTokens ##: ',
-            contract.methods.userBoughtTokens(accounts[0]).call()
-          );
-        }, 60_000);
       } catch (error) {
         console.error(error);
         dispatch(createSetPayImageLoadingAction(false));
