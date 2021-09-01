@@ -10,6 +10,11 @@ export const generatePaymentAbandonSnackMessage = {
   message: 'Image generate payment rejected'
 } as const;
 
+export const imagePaymentAbandonSnackMessage = {
+  type: 'info',
+  message: 'Image payment rejected'
+} as const;
+
 export const generateSuccessSnackMessage = {
   type: 'success',
   message: 'Image generate successful'
@@ -18,5 +23,6 @@ export const generateSuccessSnackMessage = {
 export type SnackMessage =
   | typeof connectToMetaMaskSnackMessage
   | typeof generatePaymentAbandonSnackMessage
+  | typeof imagePaymentAbandonSnackMessage
   | typeof generateSuccessSnackMessage
   | null;
