@@ -206,7 +206,7 @@ describe("StyleNFT", () => {
 
       await this.contract.mintNFT(owner, user1, "tokenURI", price, {from: owner});
 
-      expectRevert(
+      await expectRevert(
         this.contract.contract.methods
           .payImage(tokenId)
           .send({from: user2, gas: 500000, value}),
@@ -218,7 +218,7 @@ describe("StyleNFT", () => {
       const tokenId = new BN("1");
       await this.contract.mintNFT(owner, user1, "tokenURI", price, {from: owner});
 
-      expectRevert(
+      await expectRevert(
         this.contract.payImage(tokenId, {from: user1}),
         "Not enough coins to transfer nft",
       );

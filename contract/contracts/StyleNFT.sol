@@ -1,6 +1,7 @@
 //Contract based on https://docs.openzeppelin.com/contracts/3.x/erc721
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.7.3;
+pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
@@ -19,12 +20,20 @@ contract StyleNFT is ERC721, Ownable {
     uint256[] boughtTokens;
   }
 
+  struct Transformation {
+    uint256 id;
+    string name;
+    uint256 price;
+  }
+
   using Counters for Counters.Counter;
   Counters.Counter private _tokenIds;
+  Counters.Counter private _transformationIds;
 
   address payable private admin;
   mapping(uint256 => Asset) private assets;
   mapping(address => UserCollection) private userCollection;
+  Transformation[] private transformations;
 
   event ImageGenerationPaid(address sender, uint256 value, string imageURL);
   event ImagePaid(address sender, uint256 value, uint256 tokenId);
@@ -82,6 +91,26 @@ contract StyleNFT is ERC721, Ownable {
     return newItemId;
   }
 
+  function addTransformation(string memory name, uint256 price) public onlyOwner returns (uint256) {
+    _transformationIds.increment();
+    uint256 newTransformationId = _transformationIds.current();
+
+    transformations.push(Transformation(newTransformationId, name, price));
+
+    return newTransformationId;
+  }
+
+  function updateTransformationPrice(uint256 id, uint256 price) public onlyOwner returns (bool) {
+    for (uint i = 0; i < transformations.length; i++) {
+      if (transformations[i].id == id) {
+        transformations[i].price = price;
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   function payerOf(uint256 tokenId) external view returns (address) {
     require(assets[tokenId].exists, "Token doesn't exist");
     return assets[tokenId].payer;
@@ -95,5 +124,9 @@ contract StyleNFT is ERC721, Ownable {
   function userBoughtTokens(address user) external view returns (uint256[] memory) {
     require(userCollection[user].boughtTokens.length > 0, "User has no bought tokens");
     return userCollection[user].boughtTokens;
+  }
+
+  function listTransformations() external view returns (Transformation[] memory) {
+    return transformations;
   }
 }
