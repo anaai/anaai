@@ -62,3 +62,10 @@ services:
     command: node event_listener.js
     env_file:
       - event-listener/.env
+
+  client:
+    build: client
+    image: client
+    container_name: client
+    ports:
+      - 80:80
