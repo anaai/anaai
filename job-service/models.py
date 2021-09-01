@@ -50,6 +50,9 @@ class JobRequest(Base):
   job_request_hash = sa.Column(sa.String(155), nullable=False)
   payer = sa.Column(sa.String(155), nullable=False)
   created_at = sa.Column(sa.DateTime, default=datetime.utcnow, nullable=False)
-  task_id = sa.Column(sa.Integer, sa.ForeignKey("celery_taskmeta.id"))
+  task_id = sa.Column(sa.String(155), nullable=True)
+  # Change to string with foreign key when celery is setup
+  # To store data in the db as soon as task starts
+  # task_id = sa.Column(sa.Integer, sa.ForeignKey("celery_taskmeta.id"))
 
-  task = relationship("Task", backref=backref("job_request", uselist=False))
+  # task = relationship("Task", backref=backref("job_request", uselist=False))
