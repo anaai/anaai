@@ -35,7 +35,7 @@ describe("StyleNFT", () => {
         this.contract.contract.methods
           .payGenerating(2, "imageUrl")
           .send({from: user1, gas: 500000, value}),
-        "Transformation doesn't exist"
+        "Requested transformation doesn't exist"
       );
     });
 
@@ -46,7 +46,7 @@ describe("StyleNFT", () => {
         this.contract.contract.methods
           .payGenerating(1, "imageUrl")
           .send({from: user1, gas: 500000, value}),
-        "Transformation value must match transformation price"
+        "Transaction value must match transformation price"
       );
     });
 
