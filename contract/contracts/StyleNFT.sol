@@ -35,7 +35,7 @@ contract StyleNFT is ERC721, Ownable {
   mapping(address => UserCollection) private userCollection;
   Transformation[] private transformations;
 
-  event ImageGenerationPaid(address sender, uint256 value, string imageURL);
+  event ImageGenerationPaid(address sender, uint256 value, uint256 transformationId, string imageURL);
   event ImagePaid(address sender, uint256 value, uint256 tokenId);
   event TokenMinted(address recipient, address payer, uint256 tokenId, string tokenURI, uint256 price);
   event TokenTransfered(address sender, address recipient, uint256 tokenId);
@@ -55,10 +55,28 @@ contract StyleNFT is ERC721, Ownable {
     _;
   }
 
-  function payGenerating(string memory imageUrl) public payable {
-    require(msg.value == 0 wei, "Not enough coins to generate image");
+  modifier existingTransformation(uint256 id, uint256 price) {
+    bool exists = false;
+    for (uint i = 0; i < transformations.length; i++) {
+      if (transformations[i].id == id) {
+        exists = true;
+
+        require(
+          transformations[i].price == price,
+          "Transformation value must match transformation price"
+        );
+      }
+    }
+
+    require(exists, "Transformation doesn't exist");
+
+    _;
+  }
+
+  function payGenerating(uint256 transformationId, string memory imageUrl)
+  public payable existingTransformation(transformationId, msg.value) {
     admin.transfer(msg.value);
-    emit ImageGenerationPaid(msg.sender, msg.value, imageUrl);
+    emit ImageGenerationPaid(msg.sender, msg.value, transformationId, imageUrl);
   }
 
   function payImage(uint256 tokenId)
