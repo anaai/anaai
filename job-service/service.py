@@ -26,13 +26,14 @@ class JobRequest(BaseModel):
   payer: str
   image_url: str
   image_name: str
+  transformation: str
 
 celery_app = Celery("tasks", backend=POSTGRES_URL, broker=BROKER_URL)
 
 app = FastAPI()
 
-@app.post("/cartoonify")
-async def create_item(request: JobRequest, session: Session = Depends(get_session)):
+@app.post("/generate")
+async def generate(request: JobRequest, session: Session = Depends(get_session)):
   logger.log_job_request(request.payer, request.image_name, request.image_url)
 
   job_request = crud.create_job_request(session, request)
@@ -40,6 +41,7 @@ async def create_item(request: JobRequest, session: Session = Depends(get_sessio
   task = celery_app.send_task("tasks.cartoonify",
                               [RECIPIENT,
                                request.payer,
+                               request.transformation,
                                PRICE,
                                request.image_url,
                                request.image_name])
