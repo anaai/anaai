@@ -1,6 +1,6 @@
 const { expect } = require("chai");
 const { accounts, contract, web3 } = require("@openzeppelin/test-environment");
-const { expectEvent, expectRevert, time } = require("@openzeppelin/test-helpers");
+const { expectEvent, expectRevert } = require("@openzeppelin/test-helpers");
 
 const StyleNFT = contract.fromArtifact("StyleNFT");
 

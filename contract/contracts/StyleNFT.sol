@@ -82,9 +82,10 @@ contract StyleNFT is ERC721, Ownable {
   function payImage(uint256 tokenId)
   public payable onlyPayerFirstHour(msg.sender, tokenId)
   {
+    require(assets[tokenId].exists, "Token does not exist");
+
     uint256 price = 1 wei * assets[tokenId].price;
-    require(msg.value == price, "Not enough coins to transfer nft");
-    // require tokenURI to exist
+    require(msg.value == price, "Transaction value must match nft price");
 
     admin.transfer(msg.value);
     userCollection[msg.sender].boughtTokens.push(tokenId);

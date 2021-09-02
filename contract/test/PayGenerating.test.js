@@ -1,11 +1,11 @@
 const { expect } = require("chai");
 const { accounts, contract, web3 } = require("@openzeppelin/test-environment");
-const { BN, expectEvent, expectRevert, time } = require("@openzeppelin/test-helpers");
+const { BN, expectEvent, expectRevert } = require("@openzeppelin/test-helpers");
 
 const StyleNFT = contract.fromArtifact("StyleNFT");
 
 describe("StyleNFT", () => {
-  const [ owner, user1, user2 ] = accounts;
+  const [ owner, user1 ] = accounts;
   const price = web3.utils.toWei("1", "ether");
   const transformationId = new BN("1");
 
