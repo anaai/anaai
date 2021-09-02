@@ -10,6 +10,7 @@ import {
 } from 'react';
 import Web3 from 'web3';
 import StyleNFTContract from 'assets/contracts/StyleNFT.json';
+import { Contract } from 'web3-eth-contract';
 import { TokenMintedEvent } from 'models/TokenMintedEvent.model';
 import { generateSuccessSnackMessage } from 'config/snacks/snacks';
 import { matchesConnectedAccount } from 'utils/matchers';
@@ -21,7 +22,9 @@ import {
   createSetMintedTokenAction,
   createSetSnackMessageAction,
   createSetPayGeneratingLoadingAction,
-  createSetOwnershipTransferredEventAction
+  createSetOwnershipTransferredEventAction,
+  createAddUserGeneratedTokenIdsAction,
+  createAddUserBoughtTokenIdsAction
 } from './WalletContext.actions';
 import { walletReducer } from './WalletContext.reducer';
 import { IWalletContextState, initialState } from './WalletContext.state';
@@ -117,6 +120,9 @@ const WalletProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         },
         onTokenTransferred
       );
+
+      // Get user bought token ids
+      getUserTokens(contract, accounts[0], dispatch);
     }
   }, [accounts, contract, onTokenMinted, onTokenTransferred]);
 
@@ -125,6 +131,20 @@ const WalletProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const value = { state, dispatch };
 
   return <WalletContext.Provider value={value}>{children}</WalletContext.Provider>;
+};
+
+const getUserTokens = async (
+  contract: Contract,
+  account: string,
+  dispatch: Dispatch<WalletReducerAction>
+) => {
+  const [userGeneratedTokens, userBoughtTokens] = await Promise.all([
+    contract.methods.userGeneratedTokens(account).call() as Promise<string[]>,
+    contract.methods.userBoughtTokens(account).call() as Promise<string[]>
+  ]);
+
+  dispatch(createAddUserGeneratedTokenIdsAction(userGeneratedTokens));
+  dispatch(createAddUserBoughtTokenIdsAction(userBoughtTokens));
 };
 
 const useWallet = (): IWalletContext => {
