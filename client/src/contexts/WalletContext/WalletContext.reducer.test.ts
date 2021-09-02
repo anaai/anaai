@@ -15,6 +15,7 @@ import { initialState } from './WalletContext.state';
 import { Contract } from 'web3-eth-contract';
 import { TokenMintedEvent } from 'models/TokenMintedEvent.model';
 import { MintedToken } from 'models/MintedToken.model';
+import { OwnershipTransferredEvent } from 'models/OwnershipTransferredEvent.model';
 
 test('Has appropriate initial state', () => {
   expect(initialState).toEqual({
@@ -44,24 +45,10 @@ test('SET_SNACK_MESSAGE', () => {
   );
 
   const expectedState = {
+    ...initialState,
     snackMessage: {
       type: 'info',
       message: 'Please connect your Wallet in order to proceed'
-    },
-    metaMaskOnboarding: expect.any(MetaMaskOnboarding),
-    isMetaMaskInstalled: Boolean(window?.ethereum?.isMetaMask),
-    accounts: [],
-    web3Instance: null,
-    contract: null,
-    mintedToken: null,
-    events: { tokenMinted: null, ownershipTransferred: null },
-    loading: {
-      payGenerating: false,
-      payImage: false
-    },
-    tokens: {
-      generated: {},
-      bought: {}
     }
   };
 
@@ -74,22 +61,8 @@ test('SET_ACCOUNTS', () => {
   const state = walletReducer(initialState, createSetAccountsAction(mockAccounts));
 
   const expectedState = {
-    snackMessage: null,
-    metaMaskOnboarding: expect.any(MetaMaskOnboarding),
-    isMetaMaskInstalled: Boolean(window?.ethereum?.isMetaMask),
-    accounts: ['abc'],
-    web3Instance: null,
-    contract: null,
-    mintedToken: null,
-    events: { tokenMinted: null, ownershipTransferred: null },
-    loading: {
-      payGenerating: false,
-      payImage: false
-    },
-    tokens: {
-      generated: {},
-      bought: {}
-    }
+    ...initialState,
+    accounts: ['abc']
   };
 
   expect(expectedState).toEqual(state);
@@ -101,22 +74,8 @@ test('SET_CONTRACT_INSTANCE', () => {
   const state = walletReducer(initialState, createSetContractInstanceAction(mockContract));
 
   const expectedState = {
-    snackMessage: null,
-    metaMaskOnboarding: expect.any(MetaMaskOnboarding),
-    isMetaMaskInstalled: Boolean(window?.ethereum?.isMetaMask),
-    accounts: [],
-    web3Instance: null,
-    contract: {},
-    mintedToken: null,
-    events: { tokenMinted: null, ownershipTransferred: null },
-    loading: {
-      payGenerating: false,
-      payImage: false
-    },
-    tokens: {
-      generated: {},
-      bought: {}
-    }
+    ...initialState,
+    contract: {}
   };
 
   expect(expectedState).toEqual(state);
@@ -128,21 +87,10 @@ test('SET_PAY_GENERATING_LOADING', () => {
   const state = walletReducer(initialState, createSetPayGeneratingLoadingAction(isLoading));
 
   const expectedState = {
-    snackMessage: null,
-    metaMaskOnboarding: expect.any(MetaMaskOnboarding),
-    isMetaMaskInstalled: Boolean(window?.ethereum?.isMetaMask),
-    accounts: [],
-    web3Instance: null,
-    contract: null,
-    mintedToken: null,
-    events: { tokenMinted: null, ownershipTransferred: null },
+    ...initialState,
     loading: {
-      payGenerating: true,
-      payImage: false
-    },
-    tokens: {
-      generated: {},
-      bought: {}
+      ...initialState.loading,
+      payGenerating: true
     }
   };
 
@@ -155,22 +103,8 @@ test('SET_TOKEN_MINTED_EVENT', () => {
   const state = walletReducer(initialState, createSetTokenMintedEventAction(mockTokenMintedEvent));
 
   const expectedState = {
-    snackMessage: null,
-    metaMaskOnboarding: expect.any(MetaMaskOnboarding),
-    isMetaMaskInstalled: Boolean(window?.ethereum?.isMetaMask),
-    accounts: [],
-    web3Instance: null,
-    contract: null,
-    mintedToken: null,
-    events: { tokenMinted: mockTokenMintedEvent, ownershipTransferred: null },
-    loading: {
-      payGenerating: false,
-      payImage: false
-    },
-    tokens: {
-      generated: {},
-      bought: {}
-    }
+    ...initialState,
+    events: { ...initialState.events, tokenMinted: mockTokenMintedEvent }
   };
 
   expect(expectedState).toEqual(state);
@@ -182,21 +116,10 @@ test('SET_PAY_IMAGE_LOADING', () => {
   const state = walletReducer(initialState, createSetPayImageLoadingAction(isLoading));
 
   const expectedState = {
-    snackMessage: null,
-    metaMaskOnboarding: expect.any(MetaMaskOnboarding),
-    isMetaMaskInstalled: Boolean(window?.ethereum?.isMetaMask),
-    accounts: [],
-    web3Instance: null,
-    contract: null,
-    mintedToken: null,
-    events: { tokenMinted: null, ownershipTransferred: null },
+    ...initialState,
     loading: {
-      payGenerating: false,
+      ...initialState.loading,
       payImage: true
-    },
-    tokens: {
-      generated: {},
-      bought: {}
     }
   };
 
@@ -209,29 +132,15 @@ test('SET_MINTED_TOKEN', () => {
   const state = walletReducer(initialState, createSetMintedTokenAction(mockMintedToken));
 
   const expectedState = {
-    snackMessage: null,
-    metaMaskOnboarding: expect.any(MetaMaskOnboarding),
-    isMetaMaskInstalled: Boolean(window?.ethereum?.isMetaMask),
-    accounts: [],
-    web3Instance: null,
-    contract: null,
-    mintedToken: mockMintedToken,
-    events: { tokenMinted: null, ownershipTransferred: null },
-    loading: {
-      payGenerating: false,
-      payImage: false
-    },
-    tokens: {
-      generated: {},
-      bought: {}
-    }
+    ...initialState,
+    mintedToken: mockMintedToken
   };
 
   expect(expectedState).toEqual(state);
 });
 
 test('SET_OWNERSHIP_TRANSFERRED_EVENT', () => {
-  const mockOwnershipTransferredEvent = {};
+  const mockOwnershipTransferredEvent = {} as OwnershipTransferredEvent;
 
   const state = walletReducer(
     initialState,
@@ -239,22 +148,8 @@ test('SET_OWNERSHIP_TRANSFERRED_EVENT', () => {
   );
 
   const expectedState = {
-    snackMessage: null,
-    metaMaskOnboarding: expect.any(MetaMaskOnboarding),
-    isMetaMaskInstalled: Boolean(window?.ethereum?.isMetaMask),
-    accounts: [],
-    web3Instance: null,
-    contract: null,
-    mintedToken: null,
-    events: { tokenMinted: null, ownershipTransferred: mockOwnershipTransferredEvent },
-    loading: {
-      payGenerating: false,
-      payImage: false
-    },
-    tokens: {
-      generated: {},
-      bought: {}
-    }
+    ...initialState,
+    events: { ...initialState.events, ownershipTransferred: mockOwnershipTransferredEvent }
   };
 
   expect(expectedState).toEqual(state);
