@@ -12,7 +12,6 @@ import Web3 from 'web3';
 import StyleNFTContract from 'assets/contracts/StyleNFT.json';
 import { TokenMintedEvent } from 'models/TokenMintedEvent.model';
 import { generateSuccessSnackMessage } from 'config/snacks/snacks';
-import axios from 'axios';
 import { matchesConnectedAccount } from 'utils/matchers';
 import {
   WalletReducerAction,
@@ -22,8 +21,7 @@ import {
   createSetMintedTokenAction,
   createSetSnackMessageAction,
   createSetPayGeneratingLoadingAction,
-  createSetOwnershipTransferredEventAction,
-  createSetPayImageLoadingAction
+  createSetOwnershipTransferredEventAction
 } from './WalletContext.actions';
 import { walletReducer } from './WalletContext.reducer';
 import { IWalletContextState, initialState } from './WalletContext.state';
