@@ -68,25 +68,25 @@ export const createSetOwnershipTransferredEventAction = (event: OwnershipTransfe
     payload: event
   } as const);
 
-export const createSetUserGeneratedTokenIdsAction = (userGeneratedTokenIds: string[]) =>
+export const createAddUserGeneratedTokenIdsAction = (userGeneratedTokenIds: string[]) =>
   ({
     type: ACTION_TYPES.ADD_USER_GENERATED_TOKEN_IDS,
     payload: userGeneratedTokenIds
   } as const);
 
-export const createSetUserGeneratedTokenEntitiesAction = (userGeneratedEntities: TokenCollection) =>
+export const createAddUserGeneratedTokenEntitiesAction = (userGeneratedEntities: TokenCollection) =>
   ({
     type: ACTION_TYPES.ADD_USER_GENERATED_TOKEN_ENTITIES,
     payload: userGeneratedEntities
   } as const);
 
-export const createSetUserBoughtTokenIdsAction = (userBoughtTokenIds: string[]) =>
+export const createAddUserBoughtTokenIdsAction = (userBoughtTokenIds: string[]) =>
   ({
     type: ACTION_TYPES.ADD_USER_BOUGHT_TOKEN_IDS,
     payload: userBoughtTokenIds
   } as const);
 
-export const createSetUserBoughtTokenEntitiesAction = (userBoughtEntities: TokenCollection) =>
+export const createAddUserBoughtTokenEntitiesAction = (userBoughtEntities: TokenCollection) =>
   ({
     type: ACTION_TYPES.ADD_USER_BOUGHT_TOKEN_ENTITIES,
     payload: userBoughtEntities
@@ -101,8 +101,8 @@ export type WalletReducerAction = ReturnType<
   | typeof createSetPayImageLoadingAction
   | typeof createSetMintedTokenAction
   | typeof createSetOwnershipTransferredEventAction
-  | typeof createSetUserGeneratedTokenIdsAction
-  | typeof createSetUserGeneratedTokenEntitiesAction
-  | typeof createSetUserBoughtTokenIdsAction
-  | typeof createSetUserBoughtTokenEntitiesAction
+  | typeof createAddUserGeneratedTokenIdsAction
+  | typeof createAddUserGeneratedTokenEntitiesAction
+  | typeof createAddUserBoughtTokenIdsAction
+  | typeof createAddUserBoughtTokenEntitiesAction
 >;
