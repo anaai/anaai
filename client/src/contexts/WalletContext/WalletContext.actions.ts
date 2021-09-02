@@ -70,25 +70,25 @@ export const createSetOwnershipTransferredEventAction = (event: OwnershipTransfe
 export const createSetUserGeneratedTokenIdsAction = (userGeneratedTokenIds: string[]) =>
   ({
     type: ACTION_TYPES.SET_USER_GENERATED_TOKEN_IDS,
-    ids: userGeneratedTokenIds
+    payload: userGeneratedTokenIds
   } as const);
 
 export const createSetUserGeneratedTokenEntitiesAction = (userGeneratedEntities: MintedToken[]) =>
   ({
     type: ACTION_TYPES.SET_USER_GENERATED_TOKEN_ENTITIES,
-    entities: userGeneratedEntities
+    payload: userGeneratedEntities
   } as const);
 
 export const createSetUserBoughtTokenIdsAction = (userBoughtTokenIds: string[]) =>
   ({
     type: ACTION_TYPES.SET_USER_BOUGHT_TOKEN_IDS,
-    ids: userBoughtTokenIds
+    payload: userBoughtTokenIds
   } as const);
 
 export const createSetUserBoughtTokenEntitiesAction = (userBoughtEntities: MintedToken[]) =>
   ({
     type: ACTION_TYPES.SET_USER_BOUGHT_TOKEN_ENTITIES,
-    entities: userBoughtEntities
+    payload: userBoughtEntities
   } as const);
 
 export type WalletReducerAction = ReturnType<
