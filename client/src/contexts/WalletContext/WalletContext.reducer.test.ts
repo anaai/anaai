@@ -1,6 +1,10 @@
 import MetaMaskOnboarding from '@metamask/onboarding';
 import { connectToMetaMaskSnackMessage } from 'config/snacks/snacks';
 import {
+  createAddUserBoughtTokenEntitiesAction,
+  createAddUserBoughtTokenIdsAction,
+  createAddUserGeneratedTokenEntitiesAction,
+  createAddUserGeneratedTokenIdsAction,
   createSetAccountsAction,
   createSetContractInstanceAction,
   createSetMintedTokenAction,
@@ -150,6 +154,90 @@ test('SET_OWNERSHIP_TRANSFERRED_EVENT', () => {
   const expectedState = {
     ...initialState,
     events: { ...initialState.events, ownershipTransferred: mockOwnershipTransferredEvent }
+  };
+
+  expect(expectedState).toEqual(state);
+});
+
+test('ADD_USER_GENERATED_TOKEN_IDS', () => {
+  const mockTokenIds = ['1', '2'];
+
+  const state = walletReducer(initialState, createAddUserGeneratedTokenIdsAction(mockTokenIds));
+
+  const expectedState = {
+    ...initialState,
+    tokens: {
+      ...initialState.tokens,
+      generated: {
+        '1': null,
+        '2': null
+      }
+    }
+  };
+
+  expect(expectedState).toEqual(state);
+});
+
+test('ADD_USER_GENERATED_TOKEN_ENTITIES', () => {
+  const mockEntity = {
+    image: 'image-url',
+    name: 'image-name'
+  };
+  const mockTokenEntities = { '1': mockEntity, '2': mockEntity };
+
+  const state = walletReducer(
+    initialState,
+    createAddUserGeneratedTokenEntitiesAction(mockTokenEntities)
+  );
+
+  const expectedState = {
+    ...initialState,
+    tokens: {
+      ...initialState.tokens,
+      generated: { '1': mockEntity, '2': mockEntity }
+    }
+  };
+
+  expect(expectedState).toEqual(state);
+});
+
+test('ADD_USER_BOUGHT_TOKEN_IDS', () => {
+  const mockTokenIds = ['1', '2'];
+
+  const state = walletReducer(initialState, createAddUserBoughtTokenIdsAction(mockTokenIds));
+
+  const expectedState = {
+    ...initialState,
+    tokens: {
+      ...initialState.tokens,
+      bought: {
+        '1': null,
+        '2': null
+      }
+    }
+  };
+
+  expect(expectedState).toEqual(state);
+});
+
+test('ADD_USER_BOUGHT_TOKEN_ENTITIES', () => {
+  const mockEntity = {
+    image: 'image-url',
+    name: 'image-name'
+  };
+  const mockTokenEntities = { '1': mockEntity, '2': mockEntity };
+
+  const state = walletReducer(
+    initialState,
+    createAddUserBoughtTokenEntitiesAction(mockTokenEntities)
+  );
+
+  const expectedState = {
+    ...initialState,
+    tokens: {
+      ...initialState.tokens,
+      bought: { '1': mockEntity, '2': mockEntity }
+    }
   };
 
   expect(expectedState).toEqual(state);
