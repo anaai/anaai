@@ -23,13 +23,13 @@ export type IWalletContextState = Readonly<{
     payImage: boolean;
   }>;
   tokens: Readonly<{
-    generated: Readonly<{
-      [tokenId: string]: MintedToken | null;
-    }>;
-    bought: Readonly<{
-      [tokenId: string]: MintedToken | null;
-    }>;
+    generated: TokenCollection;
+    bought: TokenCollection;
   }>;
+}>;
+
+export type TokenCollection = Readonly<{
+  [tokenId: string]: MintedToken | null;
 }>;
 
 export const initialState: IWalletContextState = {
