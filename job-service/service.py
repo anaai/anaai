@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, Depends, HTTPException
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
@@ -11,6 +11,7 @@ from celery.execute import send_task
 
 import crud
 from database import get_session
+import task_mapper
 
 import logger
 
@@ -24,9 +25,9 @@ PRICE = 0
 
 class JobRequest(BaseModel):
   payer: str
+  transformation: int
   image_url: str
   image_name: str
-  transformation: str
 
 celery_app = Celery("tasks", backend=POSTGRES_URL, broker=BROKER_URL)
 
@@ -34,14 +35,19 @@ app = FastAPI()
 
 @app.post("/generate")
 async def generate(request: JobRequest, session: Session = Depends(get_session)):
-  logger.log_job_request(request.payer, request.image_name, request.image_url)
+  logger.log_job_request(request.payer, request.transformation,
+                         request.image_name, request.image_url)
+
+  try:
+    task_name = task_mapper.task_name(request.transformation)
+  except KeyError:
+    raise HTTPException(status_code=400, detail="Transformation not supported")
 
   job_request = crud.create_job_request(session, request)
 
-  task = celery_app.send_task("tasks.cartoonify",
+  task = celery_app.send_task(task_name,
                               [RECIPIENT,
                                request.payer,
-                               request.transformation,
                                PRICE,
                                request.image_url,
                                request.image_name])

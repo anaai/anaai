@@ -16,8 +16,8 @@ def test_cartoonify_response(celery_mock, test_db):
 
   response = client.post("/generate", json={
     "image_url": "", "image_name": "",
-    "payer": "", "transformation": ""}
-  )
+    "payer": "", "transformation": 1
+  })
 
   assert response.status_code == 200
   assert response.json() == {"task_id": task_id}
@@ -27,7 +27,7 @@ def test_cartoonify_task_invocation(celery_mock, test_db):
   url = "url"
   name = "name"
   payer = "payer"
-  transformation = "transformation"
+  transformation = 1
   price = 0
   celery_mock.send_task.return_value.id = "555333"
 
@@ -38,7 +38,7 @@ def test_cartoonify_task_invocation(celery_mock, test_db):
 
   celery_mock.send_task.assert_called_with(
     "tasks.cartoonify",
-    [ANY, payer, transformation, price, url, name]
+    [ANY, payer, price, url, name]
   )
 
 @patch("service.celery_app")
@@ -47,7 +47,7 @@ def test_job_request_in_db(celery_mock, test_db):
   url = "url"
   name = "name"
   payer = "payer"
-  transformation = "transformation"
+  transformation = 1
   price = 0
   celery_mock.send_task.return_value.id = task_id
 
@@ -57,9 +57,18 @@ def test_job_request_in_db(celery_mock, test_db):
   })
 
   session = TestingSessionLocal()
-  job_request = session.query(JobRequest).order_by(JobRequest.id.desc()).first()
+  job_request = session.query(JobRequest).first()
 
   assert job_request.job_request_hash == name
   assert job_request.transformation == transformation
   assert job_request.payer == payer
   assert job_request.task_id == task_id
+
+def test_invalid_transformation_request(test_db):
+  response = client.post("/generate", json={
+    "image_url": "url", "image_name": "name",
+    "payer": "payer", "transformation": 2
+  })
+
+  assert response.status_code == 400
+  assert response.json() == {"detail": "Transformation not supported"}
