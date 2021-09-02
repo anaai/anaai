@@ -1,6 +1,7 @@
 //Contract based on https://docs.openzeppelin.com/contracts/3.x/erc721
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.7.3;
+pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
@@ -19,14 +20,22 @@ contract StyleNFT is ERC721, Ownable {
     uint256[] boughtTokens;
   }
 
+  struct Transformation {
+    uint256 id;
+    string name;
+    uint256 price;
+  }
+
   using Counters for Counters.Counter;
   Counters.Counter private _tokenIds;
+  Counters.Counter private _transformationIds;
 
   address payable private admin;
   mapping(uint256 => Asset) private assets;
   mapping(address => UserCollection) private userCollection;
+  Transformation[] private transformations;
 
-  event ImageGenerationPaid(address sender, uint256 value, string imageURL);
+  event ImageGenerationPaid(address sender, uint256 value, uint256 transformationId, string imageURL);
   event ImagePaid(address sender, uint256 value, uint256 tokenId);
   event TokenMinted(address recipient, address payer, uint256 tokenId, string tokenURI, uint256 price);
   event TokenTransfered(address sender, address recipient, uint256 tokenId);
@@ -46,18 +55,37 @@ contract StyleNFT is ERC721, Ownable {
     _;
   }
 
-  function payGenerating(string memory imageUrl) public payable {
-    require(msg.value == 0 wei, "Not enough coins to generate image");
+  modifier existingTransformation(uint256 id, uint256 price) {
+    bool exists = false;
+    for (uint i = 0; i < transformations.length; i++) {
+      if (transformations[i].id == id) {
+        exists = true;
+
+        require(
+          transformations[i].price == price,
+          "Transaction value must match transformation price"
+        );
+      }
+    }
+
+    require(exists, "Requested transformation doesn't exist");
+
+    _;
+  }
+
+  function payGenerating(uint256 transformationId, string memory imageUrl)
+  public payable existingTransformation(transformationId, msg.value) {
     admin.transfer(msg.value);
-    emit ImageGenerationPaid(msg.sender, msg.value, imageUrl);
+    emit ImageGenerationPaid(msg.sender, msg.value, transformationId, imageUrl);
   }
 
   function payImage(uint256 tokenId)
   public payable onlyPayerFirstHour(msg.sender, tokenId)
   {
+    require(assets[tokenId].exists, "Token does not exist");
+
     uint256 price = 1 wei * assets[tokenId].price;
-    require(msg.value == price, "Not enough coins to transfer nft");
-    // require tokenURI to exist
+    require(msg.value == price, "Transaction value must match nft price");
 
     admin.transfer(msg.value);
     userCollection[msg.sender].boughtTokens.push(tokenId);
@@ -82,6 +110,26 @@ contract StyleNFT is ERC721, Ownable {
     return newItemId;
   }
 
+  function addTransformation(string memory name, uint256 price) public onlyOwner returns (uint256) {
+    _transformationIds.increment();
+    uint256 newTransformationId = _transformationIds.current();
+
+    transformations.push(Transformation(newTransformationId, name, price));
+
+    return newTransformationId;
+  }
+
+  function updateTransformationPrice(uint256 id, uint256 price) public onlyOwner returns (bool) {
+    for (uint i = 0; i < transformations.length; i++) {
+      if (transformations[i].id == id) {
+        transformations[i].price = price;
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   function payerOf(uint256 tokenId) external view returns (address) {
     require(assets[tokenId].exists, "Token doesn't exist");
     return assets[tokenId].payer;
@@ -95,5 +143,9 @@ contract StyleNFT is ERC721, Ownable {
   function userBoughtTokens(address user) external view returns (uint256[] memory) {
     require(userCollection[user].boughtTokens.length > 0, "User has no bought tokens");
     return userCollection[user].boughtTokens;
+  }
+
+  function listTransformations() external view returns (Transformation[] memory) {
+    return transformations;
   }
 }

@@ -21,7 +21,7 @@ services:
 
   job-orchestrator:
     build: job-orchestrator
-    image: job_orchestrator
+    image: job-orchestrator
     container_name: job_orchestrator
     restart: always
     command: celery -A tasks worker --loglevel=INFO
@@ -34,7 +34,7 @@ services:
 
   job-service:
     build: job-service
-    image: job_service
+    image: job-service
     container_name: job_service
     command: bash -c "while !</dev/tcp/postgres/5432; do sleep 1; done; alembic upgrade head && uvicorn service:app --host 0.0.0.0 --port 8000"
     ports:
@@ -47,7 +47,7 @@ services:
 
   nft-service:
     build: nft-service
-    image: nft_service
+    image: nft-service
     container_name: nft_service
     command: uvicorn service:app --host 0.0.0.0 --port 7000
     ports:
@@ -57,7 +57,7 @@ services:
 
   event-listener:
     build: event-listener
-    image: event_listener
+    image: event-listener
     container_name: event_listener
     command: node event_listener.js
     env_file:
