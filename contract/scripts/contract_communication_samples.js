@@ -42,12 +42,18 @@ async function tokenURI(contract, tokenId) {
   console.log(`URI of token ${tokenId}: ${message}`);
 }
 
-ownerOf(nftContract, 1)
-balanceOf(nftContract, PUBLIC_KEY);
-balanceOf(nftContract, folapAddress);
-tokenURI(nftContract, 1)
-totalSupply(nftContract)
+async function transformations(contract) {
+  const message = await contract.methods.listTransformations().call();
+  console.log(`Supported transformations: ${message}`);
+}
+
+// ownerOf(nftContract, 1)
+// balanceOf(nftContract, PUBLIC_KEY);
+// balanceOf(nftContract, folapAddress);
+// tokenURI(nftContract, 1)
+// totalSupply(nftContract)
 // transfer(nftContract, PUBLIC_KEY, folapAddress, 2)
+transformations(nftContract)
 
 console.log(`Contract address: ${CONTRACT_ADDRESS}`);
 console.log(`Account address: ${PUBLIC_KEY}`);
