@@ -24,7 +24,8 @@ export const walletReducer = (
             accounts: action.payload,
             contract: null,
             events: { ...initialState.events },
-            loading: { ...initialState.loading }
+            loading: { ...initialState.loading },
+            tokens: { ...initialState.tokens }
           };
 
     case ACTION_TYPES.SET_CONTRACT_INSTANCE:
