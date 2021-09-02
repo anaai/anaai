@@ -4,4 +4,3 @@ TASK_MAPPINGS = {
 
 def task_name(transformation_id):
   return TASK_MAPPINGS[transformation_id]
-
