@@ -3,6 +3,7 @@ import { MintedToken } from 'models/MintedToken.model';
 import { OwnershipTransferredEvent } from 'models/OwnershipTransferredEvent.model';
 import { TokenMintedEvent } from 'models/TokenMintedEvent.model';
 import { Contract } from 'web3-eth-contract';
+import { TokenCollection } from './WalletContext.state';
 
 export const ACTION_TYPES = {
   SET_SNACK_MESSAGE: 'SET_SNACK_MESSAGE',
@@ -73,7 +74,7 @@ export const createSetUserGeneratedTokenIdsAction = (userGeneratedTokenIds: stri
     payload: userGeneratedTokenIds
   } as const);
 
-export const createSetUserGeneratedTokenEntitiesAction = (userGeneratedEntities: MintedToken[]) =>
+export const createSetUserGeneratedTokenEntitiesAction = (userGeneratedEntities: TokenCollection) =>
   ({
     type: ACTION_TYPES.SET_USER_GENERATED_TOKEN_ENTITIES,
     payload: userGeneratedEntities
@@ -85,7 +86,7 @@ export const createSetUserBoughtTokenIdsAction = (userBoughtTokenIds: string[]) 
     payload: userBoughtTokenIds
   } as const);
 
-export const createSetUserBoughtTokenEntitiesAction = (userBoughtEntities: MintedToken[]) =>
+export const createSetUserBoughtTokenEntitiesAction = (userBoughtEntities: TokenCollection) =>
   ({
     type: ACTION_TYPES.SET_USER_BOUGHT_TOKEN_ENTITIES,
     payload: userBoughtEntities
