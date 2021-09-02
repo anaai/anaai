@@ -58,62 +58,39 @@ export const walletReducer = (
         events: { ...state.events, ownershipTransferred: action.payload },
         loading: { ...state.loading, payImage: false }
       };
-    case ACTION_TYPES.SET_USER_GENERATED_TOKEN_IDS:
+    case ACTION_TYPES.ADD_USER_GENERATED_TOKEN_IDS:
       return {
         ...state,
         tokens: {
           ...state.tokens,
-          generated: action.payload.reduce<Mutable<TokenCollection>>((acc, cur) => {
-            if (acc[cur] === undefined) {
-              acc[cur] = null;
-            }
-            return acc;
-          }, {})
+          generated: extendTokenCollectionViaTokenIdsReducer(state.tokens.generated, action.payload)
         }
       };
-    case ACTION_TYPES.SET_USER_GENERATED_TOKEN_ENTITIES:
+    case ACTION_TYPES.ADD_USER_GENERATED_TOKEN_ENTITIES:
       return {
         ...state,
         tokens: {
           ...state.tokens,
-          generated: Object.keys(action.payload).reduce<Mutable<TokenCollection>>(
-            (acc, cur) => {
-              if (!acc[cur]) {
-                acc[cur] = action.payload[cur];
-              }
-              return acc;
-            },
-            { ...state.tokens.generated }
+          generated: extendTokenCollectionViaTokenEntitiesReducer(
+            state.tokens.generated,
+            action.payload
           )
         }
       };
-    case ACTION_TYPES.SET_USER_BOUGHT_TOKEN_IDS:
+    case ACTION_TYPES.ADD_USER_BOUGHT_TOKEN_IDS:
       return {
         ...state,
         tokens: {
           ...state.tokens,
-          bought: action.payload.reduce<Mutable<TokenCollection>>((acc, cur) => {
-            if (acc[cur] === undefined) {
-              acc[cur] = null;
-            }
-            return acc;
-          }, {})
+          bought: extendTokenCollectionViaTokenIdsReducer(state.tokens.bought, action.payload)
         }
       };
-    case ACTION_TYPES.SET_USER_BOUGHT_TOKEN_ENTITIES:
+    case ACTION_TYPES.ADD_USER_BOUGHT_TOKEN_ENTITIES:
       return {
         ...state,
         tokens: {
           ...state.tokens,
-          bought: Object.keys(action.payload).reduce<Mutable<TokenCollection>>(
-            (acc, cur) => {
-              if (!acc[cur]) {
-                acc[cur] = action.payload[cur];
-              }
-              return acc;
-            },
-            { ...state.tokens.generated }
-          )
+          bought: extendTokenCollectionViaTokenEntitiesReducer(state.tokens.bought, action.payload)
         }
       };
     default: {
@@ -121,3 +98,31 @@ export const walletReducer = (
     }
   }
 };
+
+const extendTokenCollectionViaTokenIdsReducer = (
+  tokenCollection: TokenCollection,
+  ids: string[]
+): TokenCollection =>
+  ids.reduce<Mutable<TokenCollection>>(
+    (acc, cur) => {
+      if (acc[cur] === undefined) {
+        acc[cur] = null;
+      }
+      return acc;
+    },
+    { ...tokenCollection }
+  );
+
+const extendTokenCollectionViaTokenEntitiesReducer = (
+  tokenCollection: TokenCollection,
+  newTokenCollection: TokenCollection
+): TokenCollection =>
+  Object.keys(newTokenCollection).reduce<Mutable<TokenCollection>>(
+    (acc, cur) => {
+      if (!acc[cur]) {
+        acc[cur] = newTokenCollection[cur];
+      }
+      return acc;
+    },
+    { ...tokenCollection }
+  );

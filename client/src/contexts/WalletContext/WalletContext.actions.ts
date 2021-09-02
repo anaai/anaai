@@ -14,10 +14,10 @@ export const ACTION_TYPES = {
   SET_PAY_IMAGE_LOADING: 'SET_PAY_IMAGE_LOADING',
   SET_MINTED_TOKEN: 'SET_MINTED_TOKEN',
   SET_OWNERSHIP_TRANSFERRED_EVENT: 'SET_OWNERSHIP_TRANSFERRED_EVENT',
-  SET_USER_GENERATED_TOKEN_IDS: 'SET_USER_GENERATED_TOKEN_IDS',
-  SET_USER_GENERATED_TOKEN_ENTITIES: 'SET_USER_GENERATED_TOKEN_ENTITIES',
-  SET_USER_BOUGHT_TOKEN_IDS: 'SET_USER_BOUGHT_TOKEN_IDS',
-  SET_USER_BOUGHT_TOKEN_ENTITIES: 'SET_USER_BOUGHT_TOKEN_ENTITIES'
+  ADD_USER_GENERATED_TOKEN_IDS: 'ADD_USER_GENERATED_TOKEN_IDS',
+  ADD_USER_GENERATED_TOKEN_ENTITIES: 'ADD_USER_GENERATED_TOKEN_ENTITIES',
+  ADD_USER_BOUGHT_TOKEN_IDS: 'ADD_USER_BOUGHT_TOKEN_IDS',
+  ADD_USER_BOUGHT_TOKEN_ENTITIES: 'ADD_USER_BOUGHT_TOKEN_ENTITIES'
 } as const;
 
 export const createSetSnackMessageAction = (snackMessage: SnackMessage) =>
@@ -70,25 +70,25 @@ export const createSetOwnershipTransferredEventAction = (event: OwnershipTransfe
 
 export const createSetUserGeneratedTokenIdsAction = (userGeneratedTokenIds: string[]) =>
   ({
-    type: ACTION_TYPES.SET_USER_GENERATED_TOKEN_IDS,
+    type: ACTION_TYPES.ADD_USER_GENERATED_TOKEN_IDS,
     payload: userGeneratedTokenIds
   } as const);
 
 export const createSetUserGeneratedTokenEntitiesAction = (userGeneratedEntities: TokenCollection) =>
   ({
-    type: ACTION_TYPES.SET_USER_GENERATED_TOKEN_ENTITIES,
+    type: ACTION_TYPES.ADD_USER_GENERATED_TOKEN_ENTITIES,
     payload: userGeneratedEntities
   } as const);
 
 export const createSetUserBoughtTokenIdsAction = (userBoughtTokenIds: string[]) =>
   ({
-    type: ACTION_TYPES.SET_USER_BOUGHT_TOKEN_IDS,
+    type: ACTION_TYPES.ADD_USER_BOUGHT_TOKEN_IDS,
     payload: userBoughtTokenIds
   } as const);
 
 export const createSetUserBoughtTokenEntitiesAction = (userBoughtEntities: TokenCollection) =>
   ({
-    type: ACTION_TYPES.SET_USER_BOUGHT_TOKEN_ENTITIES,
+    type: ACTION_TYPES.ADD_USER_BOUGHT_TOKEN_ENTITIES,
     payload: userBoughtEntities
   } as const);
 
