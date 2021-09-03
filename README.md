@@ -18,7 +18,7 @@ content's url, alongside other information.
 ## Components
 ### Contract
 Contract defines what data we want to store on the blockchain and how to
-manioulate it. It is based on the ERC721 standard.
+manipulate it. It is based on the ERC721 standard.
 
 Possible user transactions are:
 1. payGenerating

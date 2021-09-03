@@ -16,6 +16,10 @@
 To deploy to test network, run:
 `npx hardhat run scripts/deploy.js --network ropsten`
 
+## Examples
+Examples on how to interact with the contract can be found in the `scripts`
+directory.
+
 ## Ethereum API platform
 [Alchemy](https://dashboard.alchemyapi.io/)
 

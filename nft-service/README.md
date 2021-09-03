@@ -1,18 +1,20 @@
-## Kripto Hans Service
+# NFT Service
+Service used for running admin transactions on the blockchain. Contains admin
+contracts private key.
+1. Minting NFTs on the blockchain
+2. Transfering token ownership
 
-Service for making transformations to provided images.
-
-### Requirements
+## Requirements
 1. Docker
+2. docker-compose
 
-### Setup
-1. `docker build -t kripto-hans-service .`
-2. `docker run -p 8000:8000 kripto-hans-service:latest`
+## Setup
+* `docker build -t nft-service .`
 
-### Running tests
-1. `docker run kripto-hans-service:latest python -m pytest tests`
+# Running in isolation
+* `docker-compose up nft-service`
 
-### Running examples
+## Running examples
 Start the service and:
-1. `./scripts/get_status.sh`
-2. `./scripts/cartoonify.sh`
+1. `./scripts/mint_nft.sh`
+2. `./scripts/transfer_token.sh`
