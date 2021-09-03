@@ -3,9 +3,9 @@ import logging
 LOGGER_NAME = "JOB_SERVICE_LOGGER"
 FORMAT = "%(levelname)s:%(message)s"
 
-def log_job_request(payer, image_name, image_url):
+def log_job_request(payer, transformation, image_name, image_url):
   logger = _logger()
-  logger.info(f"Recieved job request from {payer} for {image_name} at {image_url}.")
+  logger.info(f"Recieved job request from {payer} for transformation {transformation} of {image_name} at {image_url}.")
 
 def log_job_started(job_id):
   logger = _logger()

@@ -4,6 +4,7 @@ import models
 
 def create_job_request(session, job_request):
   db_job_request = models.JobRequest(job_request_hash=job_request.image_name,
+                                     transformation=job_request.transformation,
                                      payer=job_request.payer)
   session.add(db_job_request)
   session.commit()
