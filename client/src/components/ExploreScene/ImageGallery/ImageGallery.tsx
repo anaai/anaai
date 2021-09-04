@@ -59,7 +59,6 @@ const TokenResolver: React.FC<TokenResolverProps> = ({ tokenId, galleryType }) =
   } = useWallet();
 
   const resolveToken = useCallback(async () => {
-    console.warn('RESOLVE');
     if (contract) {
       const resolvedToken = await resolveTokenByTokenId(contract, tokenId);
       const resolvedTokenInjector = mapGalleryTypeToTokenCollectionInjector(galleryType);
