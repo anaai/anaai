@@ -9,6 +9,10 @@ export const LandingScene: React.FC<Record<string, unknown>> = () => {
     history.push('/generate');
   };
 
+  const handleExploreClick = () => {
+    history.push('/explore');
+  };
+
   const classes = useStyles();
 
   return (
@@ -31,7 +35,12 @@ export const LandingScene: React.FC<Record<string, unknown>> = () => {
           >
             Generate
           </Button>
-          <Button className={classes.acquireButton} color="secondary" variant="contained">
+          <Button
+            className={classes.acquireButton}
+            color="secondary"
+            variant="contained"
+            onClick={handleExploreClick}
+          >
             Explore
           </Button>
         </Box>

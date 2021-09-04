@@ -1,6 +1,10 @@
 import MetaMaskOnboarding from '@metamask/onboarding';
 import { connectToMetaMaskSnackMessage } from 'config/snacks/snacks';
 import {
+  createAddUserBoughtTokenEntitiesAction,
+  createAddUserBoughtTokenIdsAction,
+  createAddUserGeneratedTokenEntitiesAction,
+  createAddUserGeneratedTokenIdsAction,
   createSetAccountsAction,
   createSetContractInstanceAction,
   createSetMintedTokenAction,
@@ -15,6 +19,7 @@ import { initialState } from './WalletContext.state';
 import { Contract } from 'web3-eth-contract';
 import { TokenMintedEvent } from 'models/TokenMintedEvent.model';
 import { MintedToken } from 'models/MintedToken.model';
+import { OwnershipTransferredEvent } from 'models/OwnershipTransferredEvent.model';
 
 test('Has appropriate initial state', () => {
   expect(initialState).toEqual({
@@ -44,24 +49,10 @@ test('SET_SNACK_MESSAGE', () => {
   );
 
   const expectedState = {
+    ...initialState,
     snackMessage: {
       type: 'info',
       message: 'Please connect your Wallet in order to proceed'
-    },
-    metaMaskOnboarding: expect.any(MetaMaskOnboarding),
-    isMetaMaskInstalled: Boolean(window?.ethereum?.isMetaMask),
-    accounts: [],
-    web3Instance: null,
-    contract: null,
-    mintedToken: null,
-    events: { tokenMinted: null, ownershipTransferred: null },
-    loading: {
-      payGenerating: false,
-      payImage: false
-    },
-    tokens: {
-      generated: {},
-      bought: {}
     }
   };
 
@@ -74,22 +65,8 @@ test('SET_ACCOUNTS', () => {
   const state = walletReducer(initialState, createSetAccountsAction(mockAccounts));
 
   const expectedState = {
-    snackMessage: null,
-    metaMaskOnboarding: expect.any(MetaMaskOnboarding),
-    isMetaMaskInstalled: Boolean(window?.ethereum?.isMetaMask),
-    accounts: ['abc'],
-    web3Instance: null,
-    contract: null,
-    mintedToken: null,
-    events: { tokenMinted: null, ownershipTransferred: null },
-    loading: {
-      payGenerating: false,
-      payImage: false
-    },
-    tokens: {
-      generated: {},
-      bought: {}
-    }
+    ...initialState,
+    accounts: ['abc']
   };
 
   expect(expectedState).toEqual(state);
@@ -101,22 +78,8 @@ test('SET_CONTRACT_INSTANCE', () => {
   const state = walletReducer(initialState, createSetContractInstanceAction(mockContract));
 
   const expectedState = {
-    snackMessage: null,
-    metaMaskOnboarding: expect.any(MetaMaskOnboarding),
-    isMetaMaskInstalled: Boolean(window?.ethereum?.isMetaMask),
-    accounts: [],
-    web3Instance: null,
-    contract: {},
-    mintedToken: null,
-    events: { tokenMinted: null, ownershipTransferred: null },
-    loading: {
-      payGenerating: false,
-      payImage: false
-    },
-    tokens: {
-      generated: {},
-      bought: {}
-    }
+    ...initialState,
+    contract: {}
   };
 
   expect(expectedState).toEqual(state);
@@ -128,21 +91,10 @@ test('SET_PAY_GENERATING_LOADING', () => {
   const state = walletReducer(initialState, createSetPayGeneratingLoadingAction(isLoading));
 
   const expectedState = {
-    snackMessage: null,
-    metaMaskOnboarding: expect.any(MetaMaskOnboarding),
-    isMetaMaskInstalled: Boolean(window?.ethereum?.isMetaMask),
-    accounts: [],
-    web3Instance: null,
-    contract: null,
-    mintedToken: null,
-    events: { tokenMinted: null, ownershipTransferred: null },
+    ...initialState,
     loading: {
-      payGenerating: true,
-      payImage: false
-    },
-    tokens: {
-      generated: {},
-      bought: {}
+      ...initialState.loading,
+      payGenerating: true
     }
   };
 
@@ -155,22 +107,8 @@ test('SET_TOKEN_MINTED_EVENT', () => {
   const state = walletReducer(initialState, createSetTokenMintedEventAction(mockTokenMintedEvent));
 
   const expectedState = {
-    snackMessage: null,
-    metaMaskOnboarding: expect.any(MetaMaskOnboarding),
-    isMetaMaskInstalled: Boolean(window?.ethereum?.isMetaMask),
-    accounts: [],
-    web3Instance: null,
-    contract: null,
-    mintedToken: null,
-    events: { tokenMinted: mockTokenMintedEvent, ownershipTransferred: null },
-    loading: {
-      payGenerating: false,
-      payImage: false
-    },
-    tokens: {
-      generated: {},
-      bought: {}
-    }
+    ...initialState,
+    events: { ...initialState.events, tokenMinted: mockTokenMintedEvent }
   };
 
   expect(expectedState).toEqual(state);
@@ -182,21 +120,10 @@ test('SET_PAY_IMAGE_LOADING', () => {
   const state = walletReducer(initialState, createSetPayImageLoadingAction(isLoading));
 
   const expectedState = {
-    snackMessage: null,
-    metaMaskOnboarding: expect.any(MetaMaskOnboarding),
-    isMetaMaskInstalled: Boolean(window?.ethereum?.isMetaMask),
-    accounts: [],
-    web3Instance: null,
-    contract: null,
-    mintedToken: null,
-    events: { tokenMinted: null, ownershipTransferred: null },
+    ...initialState,
     loading: {
-      payGenerating: false,
+      ...initialState.loading,
       payImage: true
-    },
-    tokens: {
-      generated: {},
-      bought: {}
     }
   };
 
@@ -209,29 +136,15 @@ test('SET_MINTED_TOKEN', () => {
   const state = walletReducer(initialState, createSetMintedTokenAction(mockMintedToken));
 
   const expectedState = {
-    snackMessage: null,
-    metaMaskOnboarding: expect.any(MetaMaskOnboarding),
-    isMetaMaskInstalled: Boolean(window?.ethereum?.isMetaMask),
-    accounts: [],
-    web3Instance: null,
-    contract: null,
-    mintedToken: mockMintedToken,
-    events: { tokenMinted: null, ownershipTransferred: null },
-    loading: {
-      payGenerating: false,
-      payImage: false
-    },
-    tokens: {
-      generated: {},
-      bought: {}
-    }
+    ...initialState,
+    mintedToken: mockMintedToken
   };
 
   expect(expectedState).toEqual(state);
 });
 
 test('SET_OWNERSHIP_TRANSFERRED_EVENT', () => {
-  const mockOwnershipTransferredEvent = {};
+  const mockOwnershipTransferredEvent = {} as OwnershipTransferredEvent;
 
   const state = walletReducer(
     initialState,
@@ -239,23 +152,480 @@ test('SET_OWNERSHIP_TRANSFERRED_EVENT', () => {
   );
 
   const expectedState = {
-    snackMessage: null,
-    metaMaskOnboarding: expect.any(MetaMaskOnboarding),
-    isMetaMaskInstalled: Boolean(window?.ethereum?.isMetaMask),
-    accounts: [],
-    web3Instance: null,
-    contract: null,
-    mintedToken: null,
-    events: { tokenMinted: null, ownershipTransferred: mockOwnershipTransferredEvent },
-    loading: {
-      payGenerating: false,
-      payImage: false
-    },
-    tokens: {
-      generated: {},
-      bought: {}
-    }
+    ...initialState,
+    events: { ...initialState.events, ownershipTransferred: mockOwnershipTransferredEvent }
   };
 
   expect(expectedState).toEqual(state);
+});
+
+describe('ADD_USER_GENERATED_TOKEN_IDS', () => {
+  test('token collection is empty', () => {
+    const mockTokenIds = ['1', '2'];
+
+    const state = walletReducer(initialState, createAddUserGeneratedTokenIdsAction(mockTokenIds));
+
+    const expectedState = {
+      ...initialState,
+      tokens: {
+        ...initialState.tokens,
+        generated: {
+          '1': null,
+          '2': null
+        }
+      }
+    };
+
+    expect(expectedState).toEqual(state);
+  });
+
+  test('token collection is not empty', () => {
+    const mockTokenIds = ['3', '4'];
+
+    const state = walletReducer(
+      {
+        ...initialState,
+        tokens: {
+          ...initialState.tokens,
+          generated: {
+            '1': null,
+            '2': null
+          }
+        }
+      },
+      createAddUserGeneratedTokenIdsAction(mockTokenIds)
+    );
+
+    const expectedState = {
+      ...initialState,
+      tokens: {
+        ...initialState.tokens,
+        generated: {
+          '1': null,
+          '2': null,
+          '3': null,
+          '4': null
+        }
+      }
+    };
+
+    expect(expectedState).toEqual(state);
+  });
+
+  test('token collection already contains token id', () => {
+    const mockTokenIds = ['2', '3'];
+
+    const state = walletReducer(
+      {
+        ...initialState,
+        tokens: {
+          ...initialState.tokens,
+          generated: {
+            '1': null,
+            '2': null
+          }
+        }
+      },
+      createAddUserGeneratedTokenIdsAction(mockTokenIds)
+    );
+
+    const expectedState = {
+      ...initialState,
+      tokens: {
+        ...initialState.tokens,
+        generated: {
+          '1': null,
+          '2': null,
+          '3': null
+        }
+      }
+    };
+
+    expect(expectedState).toEqual(state);
+  });
+
+  test('token collection already contains token metadata', () => {
+    const mockTokenIds = ['2', '3'];
+    const mockTokenEntities = { image: 'image-url', name: 'image-name' };
+
+    const state = walletReducer(
+      {
+        ...initialState,
+        tokens: {
+          ...initialState.tokens,
+          generated: {
+            '1': null,
+            '2': mockTokenEntities
+          }
+        }
+      },
+      createAddUserGeneratedTokenIdsAction(mockTokenIds)
+    );
+
+    const expectedState = {
+      ...initialState,
+      tokens: {
+        ...initialState.tokens,
+        generated: {
+          '1': null,
+          '2': mockTokenEntities,
+          '3': null
+        }
+      }
+    };
+
+    expect(expectedState).toEqual(state);
+  });
+});
+
+describe('ADD_USER_GENERATED_TOKEN_ENTITIES', () => {
+  test('token collection is empty', () => {
+    const mockTokenEntity = {
+      image: 'image-url',
+      name: 'image-name'
+    };
+    const mockTokenEntities = { '1': mockTokenEntity, '2': mockTokenEntity };
+
+    const state = walletReducer(
+      initialState,
+      createAddUserGeneratedTokenEntitiesAction(mockTokenEntities)
+    );
+
+    const expectedState = {
+      ...initialState,
+      tokens: {
+        ...initialState.tokens,
+        generated: { '1': mockTokenEntity, '2': mockTokenEntity }
+      }
+    };
+
+    expect(expectedState).toEqual(state);
+  });
+
+  test('token collection is not empty', () => {
+    const mockTokenEntity = {
+      image: 'image-url',
+      name: 'image-name'
+    };
+    const mockTokenEntities = { '3': mockTokenEntity, '4': mockTokenEntity };
+
+    const state = walletReducer(
+      {
+        ...initialState,
+        tokens: {
+          ...initialState.tokens,
+          generated: {
+            '1': mockTokenEntity,
+            '2': mockTokenEntity
+          }
+        }
+      },
+      createAddUserGeneratedTokenEntitiesAction(mockTokenEntities)
+    );
+
+    const expectedState = {
+      ...initialState,
+      tokens: {
+        ...initialState.tokens,
+        generated: {
+          '1': mockTokenEntity,
+          '2': mockTokenEntity,
+          '3': mockTokenEntity,
+          '4': mockTokenEntity
+        }
+      }
+    };
+
+    expect(expectedState).toEqual(state);
+  });
+
+  test('token collection already contains token metadata', () => {
+    const mockTokenEntity = {
+      image: 'image-url',
+      name: 'image-name'
+    };
+    const mockTokenEntities = { '2': mockTokenEntity, '3': mockTokenEntity };
+
+    const state = walletReducer(
+      {
+        ...initialState,
+        tokens: {
+          ...initialState.tokens,
+          generated: {
+            '1': mockTokenEntity,
+            '2': mockTokenEntity
+          }
+        }
+      },
+      createAddUserGeneratedTokenEntitiesAction(mockTokenEntities)
+    );
+
+    const expectedState = {
+      ...initialState,
+      tokens: {
+        ...initialState.tokens,
+        generated: {
+          '1': mockTokenEntity,
+          '2': mockTokenEntity,
+          '3': mockTokenEntity
+        }
+      }
+    };
+
+    expect(expectedState).toEqual(state);
+  });
+
+  test('token collection is injected with token metadata if metadata is not present', () => {
+    const mockTokenEntity = {
+      image: 'image-url',
+      name: 'image-name'
+    };
+    const mockTokenEntities = { '1': mockTokenEntity, '2': mockTokenEntity };
+
+    const state = walletReducer(
+      {
+        ...initialState,
+        tokens: {
+          ...initialState.tokens,
+          generated: {
+            '1': null
+            // token id '2' is not present in token collection
+          }
+        }
+      },
+      createAddUserGeneratedTokenEntitiesAction(mockTokenEntities)
+    );
+
+    const expectedState = {
+      ...initialState,
+      tokens: {
+        ...initialState.tokens,
+        generated: {
+          '1': mockTokenEntity,
+          '2': mockTokenEntity
+        }
+      }
+    };
+
+    expect(expectedState).toEqual(state);
+  });
+});
+
+describe('ADD_USER_BOUGHT_TOKEN_IDS', () => {
+  test('token collection is empty', () => {
+    const mockTokenIds = ['1', '2'];
+
+    const state = walletReducer(initialState, createAddUserBoughtTokenIdsAction(mockTokenIds));
+
+    const expectedState = {
+      ...initialState,
+      tokens: {
+        ...initialState.tokens,
+        bought: {
+          '1': null,
+          '2': null
+        }
+      }
+    };
+
+    expect(expectedState).toEqual(state);
+  });
+
+  test('token collection is not empty', () => {
+    const mockTokenIds = ['3', '4'];
+
+    const state = walletReducer(
+      {
+        ...initialState,
+        tokens: {
+          ...initialState.tokens,
+          bought: {
+            '1': null,
+            '2': null
+          }
+        }
+      },
+      createAddUserBoughtTokenIdsAction(mockTokenIds)
+    );
+
+    const expectedState = {
+      ...initialState,
+      tokens: {
+        ...initialState.tokens,
+        bought: {
+          '1': null,
+          '2': null,
+          '3': null,
+          '4': null
+        }
+      }
+    };
+
+    expect(expectedState).toEqual(state);
+  });
+
+  test('token collection already contains token id', () => {
+    const mockTokenIds = ['2', '3'];
+
+    const state = walletReducer(
+      {
+        ...initialState,
+        tokens: {
+          ...initialState.tokens,
+          bought: {
+            '1': null,
+            '2': null
+          }
+        }
+      },
+      createAddUserBoughtTokenIdsAction(mockTokenIds)
+    );
+
+    const expectedState = {
+      ...initialState,
+      tokens: {
+        ...initialState.tokens,
+        bought: {
+          '1': null,
+          '2': null,
+          '3': null
+        }
+      }
+    };
+
+    expect(expectedState).toEqual(state);
+  });
+});
+
+describe('ADD_USER_BOUGHT_TOKEN_ENTITIES', () => {
+  test('token collection is empty', () => {
+    const mockTokenEntity = {
+      image: 'image-url',
+      name: 'image-name'
+    };
+    const mockTokenEntities = { '1': mockTokenEntity, '2': mockTokenEntity };
+
+    const state = walletReducer(
+      initialState,
+      createAddUserBoughtTokenEntitiesAction(mockTokenEntities)
+    );
+
+    const expectedState = {
+      ...initialState,
+      tokens: {
+        ...initialState.tokens,
+        bought: { '1': mockTokenEntity, '2': mockTokenEntity }
+      }
+    };
+
+    expect(expectedState).toEqual(state);
+  });
+
+  test('token collection is not empty', () => {
+    const mockTokenEntity = {
+      image: 'image-url',
+      name: 'image-name'
+    };
+    const mockTokenEntities = { '3': mockTokenEntity, '4': mockTokenEntity };
+
+    const state = walletReducer(
+      {
+        ...initialState,
+        tokens: {
+          ...initialState.tokens,
+          bought: {
+            '1': mockTokenEntity,
+            '2': mockTokenEntity
+          }
+        }
+      },
+      createAddUserBoughtTokenEntitiesAction(mockTokenEntities)
+    );
+
+    const expectedState = {
+      ...initialState,
+      tokens: {
+        ...initialState.tokens,
+        bought: {
+          '1': mockTokenEntity,
+          '2': mockTokenEntity,
+          '3': mockTokenEntity,
+          '4': mockTokenEntity
+        }
+      }
+    };
+
+    expect(expectedState).toEqual(state);
+  });
+
+  test('token collection already contains token metadata', () => {
+    const mockTokenEntity = {
+      image: 'image-url',
+      name: 'image-name'
+    };
+    const mockTokenEntities = { '2': mockTokenEntity, '3': mockTokenEntity };
+
+    const state = walletReducer(
+      {
+        ...initialState,
+        tokens: {
+          ...initialState.tokens,
+          bought: {
+            '1': mockTokenEntity,
+            '2': mockTokenEntity
+          }
+        }
+      },
+      createAddUserBoughtTokenEntitiesAction(mockTokenEntities)
+    );
+
+    const expectedState = {
+      ...initialState,
+      tokens: {
+        ...initialState.tokens,
+        bought: {
+          '1': mockTokenEntity,
+          '2': mockTokenEntity,
+          '3': mockTokenEntity
+        }
+      }
+    };
+
+    expect(expectedState).toEqual(state);
+  });
+
+  test('token collection is injected with token metadata if metadata is not present', () => {
+    const mockTokenEntity = {
+      image: 'image-url',
+      name: 'image-name'
+    };
+    const mockTokenEntities = { '1': mockTokenEntity, '2': mockTokenEntity };
+
+    const state = walletReducer(
+      {
+        ...initialState,
+        tokens: {
+          ...initialState.tokens,
+          bought: {
+            '1': null
+            // token id '2' is not present in token collection
+          }
+        }
+      },
+      createAddUserBoughtTokenEntitiesAction(mockTokenEntities)
+    );
+
+    const expectedState = {
+      ...initialState,
+      tokens: {
+        ...initialState.tokens,
+        bought: {
+          '1': mockTokenEntity,
+          '2': mockTokenEntity
+        }
+      }
+    };
+
+    expect(expectedState).toEqual(state);
+  });
 });

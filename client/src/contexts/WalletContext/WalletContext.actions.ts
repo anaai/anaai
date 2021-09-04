@@ -3,6 +3,7 @@ import { MintedToken } from 'models/MintedToken.model';
 import { OwnershipTransferredEvent } from 'models/OwnershipTransferredEvent.model';
 import { TokenMintedEvent } from 'models/TokenMintedEvent.model';
 import { Contract } from 'web3-eth-contract';
+import { TokenCollection } from './WalletContext.state';
 
 export const ACTION_TYPES = {
   SET_SNACK_MESSAGE: 'SET_SNACK_MESSAGE',
@@ -13,10 +14,10 @@ export const ACTION_TYPES = {
   SET_PAY_IMAGE_LOADING: 'SET_PAY_IMAGE_LOADING',
   SET_MINTED_TOKEN: 'SET_MINTED_TOKEN',
   SET_OWNERSHIP_TRANSFERRED_EVENT: 'SET_OWNERSHIP_TRANSFERRED_EVENT',
-  SET_USER_GENERATED_TOKEN_IDS: 'SET_USER_GENERATED_TOKEN_IDS',
-  SET_USER_GENERATED_TOKEN_ENTITIES: 'SET_USER_GENERATED_TOKEN_ENTITIES',
-  SET_USER_BOUGHT_TOKEN_IDS: 'SET_USER_BOUGHT_TOKEN_IDS',
-  SET_USER_BOUGHT_TOKEN_ENTITIES: 'SET_USER_BOUGHT_TOKEN_ENTITIES'
+  ADD_USER_GENERATED_TOKEN_IDS: 'ADD_USER_GENERATED_TOKEN_IDS',
+  ADD_USER_GENERATED_TOKEN_ENTITIES: 'ADD_USER_GENERATED_TOKEN_ENTITIES',
+  ADD_USER_BOUGHT_TOKEN_IDS: 'ADD_USER_BOUGHT_TOKEN_IDS',
+  ADD_USER_BOUGHT_TOKEN_ENTITIES: 'ADD_USER_BOUGHT_TOKEN_ENTITIES'
 } as const;
 
 export const createSetSnackMessageAction = (snackMessage: SnackMessage) =>
@@ -67,28 +68,28 @@ export const createSetOwnershipTransferredEventAction = (event: OwnershipTransfe
     payload: event
   } as const);
 
-export const createSetUserGeneratedTokenIdsAction = (userGeneratedTokenIds: string[]) =>
+export const createAddUserGeneratedTokenIdsAction = (userGeneratedTokenIds: string[]) =>
   ({
-    type: ACTION_TYPES.SET_USER_GENERATED_TOKEN_IDS,
-    ids: userGeneratedTokenIds
+    type: ACTION_TYPES.ADD_USER_GENERATED_TOKEN_IDS,
+    payload: userGeneratedTokenIds
   } as const);
 
-export const createSetUserGeneratedTokenEntitiesAction = (userGeneratedEntities: MintedToken[]) =>
+export const createAddUserGeneratedTokenEntitiesAction = (userGeneratedEntities: TokenCollection) =>
   ({
-    type: ACTION_TYPES.SET_USER_GENERATED_TOKEN_ENTITIES,
-    entities: userGeneratedEntities
+    type: ACTION_TYPES.ADD_USER_GENERATED_TOKEN_ENTITIES,
+    payload: userGeneratedEntities
   } as const);
 
-export const createSetUserBoughtTokenIdsAction = (userBoughtTokenIds: string[]) =>
+export const createAddUserBoughtTokenIdsAction = (userBoughtTokenIds: string[]) =>
   ({
-    type: ACTION_TYPES.SET_USER_BOUGHT_TOKEN_IDS,
-    ids: userBoughtTokenIds
+    type: ACTION_TYPES.ADD_USER_BOUGHT_TOKEN_IDS,
+    payload: userBoughtTokenIds
   } as const);
 
-export const createSetUserBoughtTokenEntitiesAction = (userBoughtEntities: MintedToken[]) =>
+export const createAddUserBoughtTokenEntitiesAction = (userBoughtEntities: TokenCollection) =>
   ({
-    type: ACTION_TYPES.SET_USER_BOUGHT_TOKEN_ENTITIES,
-    entities: userBoughtEntities
+    type: ACTION_TYPES.ADD_USER_BOUGHT_TOKEN_ENTITIES,
+    payload: userBoughtEntities
   } as const);
 
 export type WalletReducerAction = ReturnType<
@@ -100,8 +101,8 @@ export type WalletReducerAction = ReturnType<
   | typeof createSetPayImageLoadingAction
   | typeof createSetMintedTokenAction
   | typeof createSetOwnershipTransferredEventAction
-  | typeof createSetUserGeneratedTokenIdsAction
-  | typeof createSetUserGeneratedTokenEntitiesAction
-  | typeof createSetUserBoughtTokenIdsAction
-  | typeof createSetUserBoughtTokenEntitiesAction
+  | typeof createAddUserGeneratedTokenIdsAction
+  | typeof createAddUserGeneratedTokenEntitiesAction
+  | typeof createAddUserBoughtTokenIdsAction
+  | typeof createAddUserBoughtTokenEntitiesAction
 >;
