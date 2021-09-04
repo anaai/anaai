@@ -120,10 +120,20 @@ const extendTokenCollectionViaTokenEntitiesReducer = (
 ): TokenCollection =>
   Object.keys(newTokenCollection).reduce<Mutable<TokenCollection>>(
     (acc, cur) => {
-      if (!acc[cur]) {
+      if (isMetadataAbsent(acc, cur)) {
         acc[cur] = newTokenCollection[cur];
       }
       return acc;
     },
     { ...tokenCollection }
   );
+
+const isMetadataPresent = (
+  tokenCollection: TokenCollection,
+  tokenCollectionKey: keyof TokenCollection
+) => Boolean(tokenCollection[tokenCollectionKey]);
+
+const isMetadataAbsent = (
+  tokenCollection: TokenCollection,
+  tokenCollectionKey: keyof TokenCollection
+) => !isMetadataPresent(tokenCollection, tokenCollectionKey);
