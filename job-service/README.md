@@ -1,19 +1,25 @@
 # Job Service
 Job service is used for managing job requests and triggering image generation
 celery jobs. It is connected to Postgres and Redis.
+When a job request is received, the service will put a message into redis
+(message queue).
 
-### Requirements
+## Requirements
 1. Docker
 2. docker-compose
 
-### Setup
+## Setup
 * `docker build -t job-service .`
 
-### Running services
-* `docker run -p 8000:8000 job-service:latest`
+## Running in isolation
+* `docker-compose up redis postgres job-service`
 
-### Running tests
+## Running tests
 * `docker run job-service:latest python -m pytest tests`
+
+## Running examples
+Start the service and:
+1. `./scripts/trigger_job.sh`
 
 ## Migrations
 Migrations are generated, managed and ran using

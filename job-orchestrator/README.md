@@ -1,18 +1,17 @@
-## Kripto Hans Job Orchestrator
-
+# Job Orchestrator
 Job orchestrator for running background jobs for generating images.
-Redis is used as a message queue.
-Postgres is used as a db for storing job related data.
+Job orchestrator reads messages from redis (message queue), and triggers jobs.
+When the jobs are finished, the state and some metadata are stored in postgres.
 
 ### Requirements
 1. Docker
 2. docker-compose
 
 ### Setup
-* `docker-compose build`
+* `docker build -t job-orchestrator .`
 
-### Running services
-* `docker-compose up [--build]`
+## Running in isolation
+* `docker-compose up redis postgres job-orchestrator`
 
-### Running tests
-* `docker run job_orchestrator:latest python -m pytest tests`
+## Running tests
+* `docker run job-orchestrator:latest python -m pytest tests`
