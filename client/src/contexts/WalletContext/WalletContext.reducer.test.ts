@@ -159,86 +159,473 @@ test('SET_OWNERSHIP_TRANSFERRED_EVENT', () => {
   expect(expectedState).toEqual(state);
 });
 
-test('ADD_USER_GENERATED_TOKEN_IDS', () => {
-  const mockTokenIds = ['1', '2'];
+describe('ADD_USER_GENERATED_TOKEN_IDS', () => {
+  test('token collection is empty', () => {
+    const mockTokenIds = ['1', '2'];
 
-  const state = walletReducer(initialState, createAddUserGeneratedTokenIdsAction(mockTokenIds));
+    const state = walletReducer(initialState, createAddUserGeneratedTokenIdsAction(mockTokenIds));
 
-  const expectedState = {
-    ...initialState,
-    tokens: {
-      ...initialState.tokens,
-      generated: {
-        '1': null,
-        '2': null
+    const expectedState = {
+      ...initialState,
+      tokens: {
+        ...initialState.tokens,
+        generated: {
+          '1': null,
+          '2': null
+        }
       }
-    }
-  };
+    };
 
-  expect(expectedState).toEqual(state);
-});
+    expect(expectedState).toEqual(state);
+  });
 
-test('ADD_USER_GENERATED_TOKEN_ENTITIES', () => {
-  const mockEntity = {
-    image: 'image-url',
-    name: 'image-name'
-  };
-  const mockTokenEntities = { '1': mockEntity, '2': mockEntity };
+  test('token collection is not empty', () => {
+    const mockTokenIds = ['3', '4'];
 
-  const state = walletReducer(
-    initialState,
-    createAddUserGeneratedTokenEntitiesAction(mockTokenEntities)
-  );
+    const state = walletReducer(
+      {
+        ...initialState,
+        tokens: {
+          ...initialState.tokens,
+          generated: {
+            '1': null,
+            '2': null
+          }
+        }
+      },
+      createAddUserGeneratedTokenIdsAction(mockTokenIds)
+    );
 
-  const expectedState = {
-    ...initialState,
-    tokens: {
-      ...initialState.tokens,
-      generated: { '1': mockEntity, '2': mockEntity }
-    }
-  };
-
-  expect(expectedState).toEqual(state);
-});
-
-test('ADD_USER_BOUGHT_TOKEN_IDS', () => {
-  const mockTokenIds = ['1', '2'];
-
-  const state = walletReducer(initialState, createAddUserBoughtTokenIdsAction(mockTokenIds));
-
-  const expectedState = {
-    ...initialState,
-    tokens: {
-      ...initialState.tokens,
-      bought: {
-        '1': null,
-        '2': null
+    const expectedState = {
+      ...initialState,
+      tokens: {
+        ...initialState.tokens,
+        generated: {
+          '1': null,
+          '2': null,
+          '3': null,
+          '4': null
+        }
       }
-    }
-  };
+    };
 
-  expect(expectedState).toEqual(state);
+    expect(expectedState).toEqual(state);
+  });
+
+  test('token collection already contains token id', () => {
+    const mockTokenIds = ['2', '3'];
+
+    const state = walletReducer(
+      {
+        ...initialState,
+        tokens: {
+          ...initialState.tokens,
+          generated: {
+            '1': null,
+            '2': null
+          }
+        }
+      },
+      createAddUserGeneratedTokenIdsAction(mockTokenIds)
+    );
+
+    const expectedState = {
+      ...initialState,
+      tokens: {
+        ...initialState.tokens,
+        generated: {
+          '1': null,
+          '2': null,
+          '3': null
+        }
+      }
+    };
+
+    expect(expectedState).toEqual(state);
+  });
+
+  test('token collection already contains token metadata', () => {
+    const mockTokenIds = ['2', '3'];
+    const mockTokenEntities = { image: 'image-url', name: 'image-name' };
+
+    const state = walletReducer(
+      {
+        ...initialState,
+        tokens: {
+          ...initialState.tokens,
+          generated: {
+            '1': null,
+            '2': mockTokenEntities
+          }
+        }
+      },
+      createAddUserGeneratedTokenIdsAction(mockTokenIds)
+    );
+
+    const expectedState = {
+      ...initialState,
+      tokens: {
+        ...initialState.tokens,
+        generated: {
+          '1': null,
+          '2': mockTokenEntities,
+          '3': null
+        }
+      }
+    };
+
+    expect(expectedState).toEqual(state);
+  });
 });
 
-test('ADD_USER_BOUGHT_TOKEN_ENTITIES', () => {
-  const mockEntity = {
-    image: 'image-url',
-    name: 'image-name'
-  };
-  const mockTokenEntities = { '1': mockEntity, '2': mockEntity };
+describe('ADD_USER_GENERATED_TOKEN_ENTITIES', () => {
+  test('token collection is empty', () => {
+    const mockTokenEntity = {
+      image: 'image-url',
+      name: 'image-name'
+    };
+    const mockTokenEntities = { '1': mockTokenEntity, '2': mockTokenEntity };
 
-  const state = walletReducer(
-    initialState,
-    createAddUserBoughtTokenEntitiesAction(mockTokenEntities)
-  );
+    const state = walletReducer(
+      initialState,
+      createAddUserGeneratedTokenEntitiesAction(mockTokenEntities)
+    );
 
-  const expectedState = {
-    ...initialState,
-    tokens: {
-      ...initialState.tokens,
-      bought: { '1': mockEntity, '2': mockEntity }
-    }
-  };
+    const expectedState = {
+      ...initialState,
+      tokens: {
+        ...initialState.tokens,
+        generated: { '1': mockTokenEntity, '2': mockTokenEntity }
+      }
+    };
 
-  expect(expectedState).toEqual(state);
+    expect(expectedState).toEqual(state);
+  });
+
+  test('token collection is not empty', () => {
+    const mockTokenEntity = {
+      image: 'image-url',
+      name: 'image-name'
+    };
+    const mockTokenEntities = { '3': mockTokenEntity, '4': mockTokenEntity };
+
+    const state = walletReducer(
+      {
+        ...initialState,
+        tokens: {
+          ...initialState.tokens,
+          generated: {
+            '1': mockTokenEntity,
+            '2': mockTokenEntity
+          }
+        }
+      },
+      createAddUserGeneratedTokenEntitiesAction(mockTokenEntities)
+    );
+
+    const expectedState = {
+      ...initialState,
+      tokens: {
+        ...initialState.tokens,
+        generated: {
+          '1': mockTokenEntity,
+          '2': mockTokenEntity,
+          '3': mockTokenEntity,
+          '4': mockTokenEntity
+        }
+      }
+    };
+
+    expect(expectedState).toEqual(state);
+  });
+
+  test('token collection already contains token metadata', () => {
+    const mockTokenEntity = {
+      image: 'image-url',
+      name: 'image-name'
+    };
+    const mockTokenEntities = { '2': mockTokenEntity, '3': mockTokenEntity };
+
+    const state = walletReducer(
+      {
+        ...initialState,
+        tokens: {
+          ...initialState.tokens,
+          generated: {
+            '1': mockTokenEntity,
+            '2': mockTokenEntity
+          }
+        }
+      },
+      createAddUserGeneratedTokenEntitiesAction(mockTokenEntities)
+    );
+
+    const expectedState = {
+      ...initialState,
+      tokens: {
+        ...initialState.tokens,
+        generated: {
+          '1': mockTokenEntity,
+          '2': mockTokenEntity,
+          '3': mockTokenEntity
+        }
+      }
+    };
+
+    expect(expectedState).toEqual(state);
+  });
+
+  test('token collection is injected with token metadata if metadata is not present', () => {
+    const mockTokenEntity = {
+      image: 'image-url',
+      name: 'image-name'
+    };
+    const mockTokenEntities = { '1': mockTokenEntity, '2': mockTokenEntity };
+
+    const state = walletReducer(
+      {
+        ...initialState,
+        tokens: {
+          ...initialState.tokens,
+          generated: {
+            '1': null
+            // token id '2' is not present in token collection
+          }
+        }
+      },
+      createAddUserGeneratedTokenEntitiesAction(mockTokenEntities)
+    );
+
+    const expectedState = {
+      ...initialState,
+      tokens: {
+        ...initialState.tokens,
+        generated: {
+          '1': mockTokenEntity,
+          '2': mockTokenEntity
+        }
+      }
+    };
+
+    expect(expectedState).toEqual(state);
+  });
+});
+
+describe('ADD_USER_BOUGHT_TOKEN_IDS', () => {
+  test('token collection is empty', () => {
+    const mockTokenIds = ['1', '2'];
+
+    const state = walletReducer(initialState, createAddUserBoughtTokenIdsAction(mockTokenIds));
+
+    const expectedState = {
+      ...initialState,
+      tokens: {
+        ...initialState.tokens,
+        bought: {
+          '1': null,
+          '2': null
+        }
+      }
+    };
+
+    expect(expectedState).toEqual(state);
+  });
+
+  test('token collection is not empty', () => {
+    const mockTokenIds = ['3', '4'];
+
+    const state = walletReducer(
+      {
+        ...initialState,
+        tokens: {
+          ...initialState.tokens,
+          bought: {
+            '1': null,
+            '2': null
+          }
+        }
+      },
+      createAddUserBoughtTokenIdsAction(mockTokenIds)
+    );
+
+    const expectedState = {
+      ...initialState,
+      tokens: {
+        ...initialState.tokens,
+        bought: {
+          '1': null,
+          '2': null,
+          '3': null,
+          '4': null
+        }
+      }
+    };
+
+    expect(expectedState).toEqual(state);
+  });
+
+  test('token collection already contains token id', () => {
+    const mockTokenIds = ['2', '3'];
+
+    const state = walletReducer(
+      {
+        ...initialState,
+        tokens: {
+          ...initialState.tokens,
+          bought: {
+            '1': null,
+            '2': null
+          }
+        }
+      },
+      createAddUserBoughtTokenIdsAction(mockTokenIds)
+    );
+
+    const expectedState = {
+      ...initialState,
+      tokens: {
+        ...initialState.tokens,
+        bought: {
+          '1': null,
+          '2': null,
+          '3': null
+        }
+      }
+    };
+
+    expect(expectedState).toEqual(state);
+  });
+});
+
+describe('ADD_USER_BOUGHT_TOKEN_ENTITIES', () => {
+  test('token collection is empty', () => {
+    const mockTokenEntity = {
+      image: 'image-url',
+      name: 'image-name'
+    };
+    const mockTokenEntities = { '1': mockTokenEntity, '2': mockTokenEntity };
+
+    const state = walletReducer(
+      initialState,
+      createAddUserBoughtTokenEntitiesAction(mockTokenEntities)
+    );
+
+    const expectedState = {
+      ...initialState,
+      tokens: {
+        ...initialState.tokens,
+        bought: { '1': mockTokenEntity, '2': mockTokenEntity }
+      }
+    };
+
+    expect(expectedState).toEqual(state);
+  });
+
+  test('token collection is not empty', () => {
+    const mockTokenEntity = {
+      image: 'image-url',
+      name: 'image-name'
+    };
+    const mockTokenEntities = { '3': mockTokenEntity, '4': mockTokenEntity };
+
+    const state = walletReducer(
+      {
+        ...initialState,
+        tokens: {
+          ...initialState.tokens,
+          bought: {
+            '1': mockTokenEntity,
+            '2': mockTokenEntity
+          }
+        }
+      },
+      createAddUserBoughtTokenEntitiesAction(mockTokenEntities)
+    );
+
+    const expectedState = {
+      ...initialState,
+      tokens: {
+        ...initialState.tokens,
+        bought: {
+          '1': mockTokenEntity,
+          '2': mockTokenEntity,
+          '3': mockTokenEntity,
+          '4': mockTokenEntity
+        }
+      }
+    };
+
+    expect(expectedState).toEqual(state);
+  });
+
+  test('token collection already contains token metadata', () => {
+    const mockTokenEntity = {
+      image: 'image-url',
+      name: 'image-name'
+    };
+    const mockTokenEntities = { '2': mockTokenEntity, '3': mockTokenEntity };
+
+    const state = walletReducer(
+      {
+        ...initialState,
+        tokens: {
+          ...initialState.tokens,
+          bought: {
+            '1': mockTokenEntity,
+            '2': mockTokenEntity
+          }
+        }
+      },
+      createAddUserBoughtTokenEntitiesAction(mockTokenEntities)
+    );
+
+    const expectedState = {
+      ...initialState,
+      tokens: {
+        ...initialState.tokens,
+        bought: {
+          '1': mockTokenEntity,
+          '2': mockTokenEntity,
+          '3': mockTokenEntity
+        }
+      }
+    };
+
+    expect(expectedState).toEqual(state);
+  });
+
+  test('token collection is injected with token metadata if metadata is not present', () => {
+    const mockTokenEntity = {
+      image: 'image-url',
+      name: 'image-name'
+    };
+    const mockTokenEntities = { '1': mockTokenEntity, '2': mockTokenEntity };
+
+    const state = walletReducer(
+      {
+        ...initialState,
+        tokens: {
+          ...initialState.tokens,
+          bought: {
+            '1': null
+            // token id '2' is not present in token collection
+          }
+        }
+      },
+      createAddUserBoughtTokenEntitiesAction(mockTokenEntities)
+    );
+
+    const expectedState = {
+      ...initialState,
+      tokens: {
+        ...initialState.tokens,
+        bought: {
+          '1': mockTokenEntity,
+          '2': mockTokenEntity
+        }
+      }
+    };
+
+    expect(expectedState).toEqual(state);
+  });
 });
