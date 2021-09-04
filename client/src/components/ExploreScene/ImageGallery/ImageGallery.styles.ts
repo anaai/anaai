@@ -4,9 +4,7 @@ export const useStyles = makeStyles((theme) => ({
   root: {
     flex: 1,
     display: 'flex',
-    // justifyContent: 'center',
     alignItems: 'center',
-    // flexDirection: 'column',
     flexWrap: 'wrap'
   },
   imageContainer: {
