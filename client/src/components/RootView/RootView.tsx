@@ -5,6 +5,7 @@ import { GenerateScene } from 'components/GenerateScene/GenerateScene';
 import { LandingScene } from 'components/LandingScene/LandingScene';
 import { WalletConnector } from 'components/WalletConnector/WalletConnector';
 import { useStyles } from './RootView.styles';
+import { ExploreScene } from 'components/ExploreScene/ExploreScene';
 
 export const RootView: React.FC<Record<string, unknown>> = () => {
   const classes = useStyles();
@@ -18,6 +19,7 @@ export const RootView: React.FC<Record<string, unknown>> = () => {
       <Switch>
         <Route exact path="/" component={LandingScene} />
         <Route exact path="/generate" component={GenerateScene} />
+        <Route exact path="/explore" component={ExploreScene} />
         <Route path="" render={() => <Redirect to="/" />} />
       </Switch>
     </Box>
