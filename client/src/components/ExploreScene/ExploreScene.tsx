@@ -1,9 +1,8 @@
 import { Box, Tab, Tabs } from '@material-ui/core';
+import { galleryTypes, GalleryType } from 'models/ImageGallery.model';
 import { useState } from 'react';
 import { useStyles } from './ExploreScene.styles';
-
-const galleryTypes = ['generated', 'bought'] as const;
-type GalleryType = typeof galleryTypes[number];
+import { ImageGallery } from './ImageGallery/ImageGallery';
 
 export const ExploreScene: React.FC<Record<string, unknown>> = () => {
   const [selectedGalleryType, setSelectedGalleryType] = useState(
@@ -32,7 +31,9 @@ export const ExploreScene: React.FC<Record<string, unknown>> = () => {
           key={`${galleryType}-panel`}
           selectedGalleryType={selectedGalleryType}
           galleryType={galleryType}
-        />
+        >
+          <ImageGallery galleryType={galleryType} />
+        </TabPanel>
       ))}
     </Box>
   );
