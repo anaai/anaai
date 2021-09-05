@@ -21,7 +21,7 @@ class ASCIIArt:
     self.letter_height = self.font.getsize("x")[1]
 
 
-  def generate(self, image):
+  def transform(self, image):
     image = self._pil_image(image)
 
     letter_ratio = self.letter_height / self.letter_width

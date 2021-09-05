@@ -7,7 +7,7 @@ class Cartoonifier:
     self.blur_value = blur_value
     self.n_colors = n_colors
 
-  def cartoonify(self, image):
+  def transform(self, image):
     edges = self._edge_mask(image)
     reduced_color_image = self._reduce_colors(image)
     blured_image = self._reduce_noise(image)

@@ -20,11 +20,11 @@ class CartoonificationTestCase(unittest.TestCase):
   def test_cartoonified_image_type(self):
     image = cv2.imread("tests/original.jpeg")
 
-    cartoonified_image = self.c.cartoonify(image)
+    cartoonified_image = self.c.transform(image)
     self.assertIsInstance(cartoonified_image, np.ndarray)
 
   def test_cartoonified_image_shape(self):
     image = cv2.imread("tests/original.jpeg")
 
-    cartoonified_image = self.c.cartoonify(image)
+    cartoonified_image = self.c.transform(image)
     self.assertEqual(image.shape, cartoonified_image.shape)
