@@ -3,7 +3,7 @@ import cv2
 from colour import Color
 from PIL import Image, ImageDraw, ImageFont
 
-CHARS = np.asarray(list(' .,:irs?@9B&#'))
+CHARS = np.asarray(list(" .,:irs?@9B&#"))
 
 class ASCIIArt:
   def __init__(self, chars=CHARS, color_min="green", color_max="pink", bgcolor="white"):
