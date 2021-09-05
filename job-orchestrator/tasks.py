@@ -7,6 +7,7 @@ import numpy as np
 import cv2
 
 from cartoonification import Cartoonifier
+from ascii_art import ASCIIArt
 from pinata import PinataClient
 import working_directory
 
@@ -25,6 +26,24 @@ def cartoonify(recipient, payer, price, image_url, image_name):
 
   image_path = working_directory.local_file_path(f"{image_name}.jpg")
   cv2.imwrite(image_path, cartoonified_image)
+
+  pinata_client = PinataClient(PINATA_JWT)
+  image_ipfs_url = pinata_client.pin_image(image_path)
+  metadata_ipfs_url = pinata_client.pin_metadata(image_ipfs_url, image_name)
+
+  working_directory.remove_file(image_path)
+
+  status = _mint_nft(recipient, payer, metadata_ipfs_url, price)
+
+  return status
+
+@app.task
+def ascii(recipient, payer, price, image_url, image_name):
+  image = _download_image(image_url)
+  ascii_image = ASCIIArt().generate(image)
+
+  image_path = working_directory.local_file_path(f"{image_name}.jpg")
+  cv2.imwrite(image_path, ascii_image)
 
   pinata_client = PinataClient(PINATA_JWT)
   image_ipfs_url = pinata_client.pin_image(image_path)
