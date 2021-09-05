@@ -1,0 +1,32 @@
+version: "v1.0"
+name: anaai
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+
+blocks:
+  - name: Contract
+    dependencies: []
+    run:
+      when: "change_in('/contract/')"
+    task:
+      jobs:
+        - commands:
+            - checkout
+            - cd contract
+            - npm install
+            - npm test
+
+  - name: "NRT Service"
+    dependencies: []
+    run:
+      when: "change_in('/nft-service/')"
+    task:
+      jobs:
+        - commands:
+            - checkout
+            - cd nft-service
+            - make test
+            - docker build -t nft-service .
+            - docker run nft-service python -m pytest tests
