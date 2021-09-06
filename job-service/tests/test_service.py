@@ -67,7 +67,7 @@ def test_job_request_in_db(celery_mock, test_db):
 def test_invalid_transformation_request(test_db):
   response = client.post("/generate", json={
     "image_url": "url", "image_name": "name",
-    "payer": "payer", "transformation": 2
+    "payer": "payer", "transformation": 15
   })
 
   assert response.status_code == 400
