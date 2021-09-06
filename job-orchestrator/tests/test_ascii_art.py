@@ -16,6 +16,8 @@ class ASCIIArtTestCase(unittest.TestCase):
     self.assertEqual(self.a.color_min, "green")
     self.assertEqual(self.a.color_max, "pink")
     self.assertEqual(self.a.bgcolor, "white")
+    self.assertEqual(self.a.pixel_sampling_rate, 0.1)
+    self.assertEqual(self.a.gcf, 2)
     np.testing.assert_array_equal(self.a.chars, np.asarray(list(" .,:irs?@9B&#")))
 
   def test_ascii_image_type(self):
