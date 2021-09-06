@@ -2,7 +2,7 @@ import unittest
 import cv2
 import numpy as np
 
-from cartoonification import Cartoonifier
+from transformers.cartoonification import Cartoonifier
 
 class CartoonificationTestCase(unittest.TestCase):
   @classmethod

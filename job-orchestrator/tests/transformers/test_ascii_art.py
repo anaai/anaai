@@ -2,7 +2,7 @@ import unittest
 import cv2
 import numpy as np
 
-from ascii_art import ASCIIArt
+from transformers.ascii_art import ASCIIArt
 
 class ASCIIArtTestCase(unittest.TestCase):
   @classmethod

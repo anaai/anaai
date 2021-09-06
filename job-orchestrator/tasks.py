@@ -6,9 +6,8 @@ import urllib.request
 import numpy as np
 import cv2
 
-from cartoonification import Cartoonifier
-from ascii_art import ASCIIArt
 from pinata import PinataClient
+import transformers
 import working_directory
 
 POSTGRES_URL = os.getenv("POSTGRES_CONNECTION_URL")
@@ -38,14 +37,14 @@ def create_token(transformer, recipient, payer, price, image_url, image_name):
 
 @app.task
 def cartoonify(recipient, payer, price, image_url, image_name):
-  cartoonifier = Cartoonifier()
+  cartoonifier = transformers.Cartoonifier()
   status = create_token(cartoonifier, recipient, payer, price, image_url, image_name)
 
   return status
 
 @app.task
 def ascii(recipient, payer, price, image_url, image_name):
-  ascii = ASCIIArt()
+  ascii = transformers.ASCIIArt()
   status = create_token(ascii, recipient, payer, price, image_url, image_name)
 
   return status
