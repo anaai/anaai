@@ -39,9 +39,8 @@ contract StyleNFT is ERC721, Ownable {
   event ImageGenerationPaid(address sender, uint256 value, uint256 transformationId, string imageURL);
   event ImagePaid(address sender, uint256 value, uint256 tokenId);
   event TokenMinted(address recipient, address payer, uint256 tokenId, string tokenURI, uint256 price);
-  event TokenTransfered(address sender, address recipient, uint256 tokenId);
 
-  constructor() public ERC721("styleart", "snft") {
+  constructor() ERC721("styleart", "snft") {
     admin = payable(msg.sender);
   }
 
@@ -74,6 +73,13 @@ contract StyleNFT is ERC721, Ownable {
     _;
   }
 
+  modifier validNonBoughtToken(uint256 tokenId) {
+    require(assets[tokenId].exists, "Token does not exist");
+    require(assets[tokenId].paid == false, "Token already bought");
+
+    _;
+  }
+
   function payGenerating(uint256 transformationId, string memory imageUrl)
   public payable existingTransformation(transformationId, msg.value) {
     admin.transfer(msg.value);
@@ -81,11 +87,10 @@ contract StyleNFT is ERC721, Ownable {
   }
 
   function payImage(uint256 tokenId)
-  public payable onlyPayerFirstHour(msg.sender, tokenId)
+  public payable
+  validNonBoughtToken(tokenId)
+  onlyPayerFirstHour(msg.sender, tokenId)
   {
-    require(assets[tokenId].exists, "Token does not exist");
-    require(assets[tokenId].paid == false, "Token already bought");
-
     uint256 price = 1 wei * assets[tokenId].price;
     require(msg.value == price, "Transaction value must match nft price");
 
@@ -111,6 +116,14 @@ contract StyleNFT is ERC721, Ownable {
     emit TokenMinted(recipient, payer, newItemId, tokenURI, price);
 
     return newItemId;
+  }
+
+  function updateTokenPrice(uint256 tokenId, uint256 price)
+  public onlyOwner validNonBoughtToken(tokenId)
+  returns (bool)
+  {
+    assets[tokenId].price = price;
+    return true;
   }
 
   function addTransformation(string memory name, uint256 price) public onlyOwner returns (uint256) {
