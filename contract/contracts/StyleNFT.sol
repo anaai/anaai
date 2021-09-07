@@ -13,6 +13,7 @@ contract StyleNFT is ERC721, Ownable {
     uint256 time;
     bool exists;
     uint256 price;
+    bool paid;
   }
 
   struct UserCollection {
@@ -83,11 +84,13 @@ contract StyleNFT is ERC721, Ownable {
   public payable onlyPayerFirstHour(msg.sender, tokenId)
   {
     require(assets[tokenId].exists, "Token does not exist");
+    require(assets[tokenId].paid == false, "Token already bought");
 
     uint256 price = 1 wei * assets[tokenId].price;
     require(msg.value == price, "Transaction value must match nft price");
 
     admin.transfer(msg.value);
+    assets[tokenId].paid = true;
     userCollection[msg.sender].boughtTokens.push(tokenId);
     emit ImagePaid(msg.sender, msg.value, tokenId);
   }
@@ -102,7 +105,7 @@ contract StyleNFT is ERC721, Ownable {
     _mint(recipient, newItemId);
     _setTokenURI(newItemId, tokenURI);
 
-    assets[newItemId] = Asset(payer, block.timestamp, true, price);
+    assets[newItemId] = Asset(payer, block.timestamp, true, price, false);
     userCollection[payer].generatedTokens.push(newItemId);
 
     emit TokenMinted(recipient, payer, newItemId, tokenURI, price);

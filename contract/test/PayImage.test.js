@@ -110,5 +110,20 @@ describe("StyleNFT", () => {
         "Token does not exist",
       );
     });
+
+    it("Reverts when token is already bought", async () => {
+      const value = web3.utils.toWei("1", "ether");
+      const tokenId = new BN("1");
+
+      await this.contract.mintNFT(owner, user1, "tokenURI", price, {from: owner});
+      await this.contract.contract.methods
+        .payImage(tokenId)
+        .send({from: user1, gas: 500000, value});
+
+      await expectRevert(
+        this.contract.payImage(tokenId, {from: user1, value}),
+        "Token already bought",
+      );
+    });
   });
 });
