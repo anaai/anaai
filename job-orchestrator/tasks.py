@@ -49,6 +49,13 @@ def ascii(recipient, payer, price, image_url, image_name):
 
   return status
 
+@app.task
+def sketch(recipient, payer, price, image_url, image_name):
+  sketch = transformers.SketchArt()
+  status = create_token(sketch, recipient, payer, price, image_url, image_name)
+
+  return status
+
 def _mint_nft(recipient, payer, token_uri, price):
   payload = {"recipient": recipient, "payer": payer, "token_uri": token_uri, "price": price}
   return requests.post(NFT_SERVICE_MINT_TOKEN_URL, json=payload)
