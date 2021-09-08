@@ -6,3 +6,8 @@ TASK_MAPPINGS = {
 
 def task_name(transformation_id):
   return TASK_MAPPINGS[transformation_id]
+
+def transformation_name(transformation_id):
+  task_name = TASK_MAPPINGS[transformation_id]
+  transformation_name = task_name.split(".")[-1]
+  return transformation_name

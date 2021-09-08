@@ -38,7 +38,7 @@ def test_cartoonify_task_invocation(celery_mock, test_db):
 
   celery_mock.send_task.assert_called_with(
     "tasks.cartoonify",
-    [ANY, payer, price, url, name]
+    ["cartoonify", ANY, payer, price, url, name]
   )
 
 @patch("service.celery_app")

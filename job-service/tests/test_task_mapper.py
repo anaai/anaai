@@ -13,3 +13,10 @@ def test_task_name_for_existing_transformation():
 def test_task_name_for_nonexisting_transformation():
   with pytest.raises(KeyError):
     task_mapper.task_name(15)
+
+def test_transformation_name_for_existing_transformation():
+  assert task_mapper.transformation_name(1) == "cartoonify"
+
+def test_transformation_name_for_nonexisting_transformation():
+  with pytest.raises(KeyError):
+    task_mapper.transformation_name(15)
