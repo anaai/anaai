@@ -34,15 +34,20 @@ def test_pin_metadata(post_mock, client):
 
   image_url = "image_url"
   name = "name"
+  payer = "payer"
+  transformation_name = "transformation_name"
 
   metadata_path = "templates/nft-metadata-template.json"
   with open(metadata_path) as f:
     data = json.load(f)
-  data["pinataContent"]["image"] = image_url
-  data["pinataContent"]["name"] = name
   data["pinataMetadata"]["name"] = name
 
-  metadata_url = client.pin_metadata(image_url, name)
+  data["pinataContent"]["name"] = name
+  data["pinataContent"]["image"] = image_url
+  data["pinataContent"]["attributes"][0]["value"] = transformation_name
+  data["pinataContent"]["attributes"][1]["value"] = payer
+
+  metadata_url = client.pin_metadata(image_url, name, payer, transformation_name)
 
   post_mock.assert_called_with(PIN_JSON_URL, headers=headers, json=data)
   assert metadata_url == "https://gateway.pinata.cloud/ipfs/hash123"

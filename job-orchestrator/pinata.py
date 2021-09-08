@@ -16,11 +16,15 @@ class PinataClient:
     # catch exception and throw a semantical one
     return self._ipfs_hash(response.json()["IpfsHash"])
 
-  def pin_metadata(self, image_url, name):
+  def pin_metadata(self, image_url, name, payer, transformation_name):
     data = self._json_data(TEMPLATE_PATH)
-    data["pinataContent"]["image"] = image_url
-    data["pinataContent"]["name"] = name
     data["pinataMetadata"]["name"] = name
+
+    data["pinataContent"]["name"] = name
+    data["pinataContent"]["image"] = image_url
+    data["pinataContent"]["attributes"][0]["value"] = transformation_name
+    data["pinataContent"]["attributes"][1]["value"] = payer
+
     response = requests.post(PIN_JSON_URL, headers=self.headers, json=data)
     # catch exception and throw a semantical one
     return self._ipfs_hash(response.json()["IpfsHash"])
