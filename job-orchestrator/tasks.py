@@ -18,7 +18,7 @@ NFT_SERVICE_MINT_TOKEN_URL = os.getenv("NFT_SERVICE_MINT_TOKEN_URL")
 
 app = Celery("tasks", backend=POSTGRES_URL, broker=BROKER_URL)
 
-def create_token(transformer, recipient, payer, price, image_url, image_name):
+def create_token(transformer, transformation_name, recipient, payer, price, image_url, image_name):
   image = _download_image(image_url)
   transformed_image = transformer.transform(image)
 
@@ -27,7 +27,10 @@ def create_token(transformer, recipient, payer, price, image_url, image_name):
 
   pinata_client = PinataClient(PINATA_JWT)
   image_ipfs_url = pinata_client.pin_image(image_path)
-  metadata_ipfs_url = pinata_client.pin_metadata(image_ipfs_url, image_name)
+  metadata_ipfs_url = pinata_client.pin_metadata(image_ipfs_url,
+                                                 image_name,
+                                                 payer,
+                                                 transformation_name)
 
   working_directory.remove_file(image_path)
 
@@ -36,23 +39,23 @@ def create_token(transformer, recipient, payer, price, image_url, image_name):
   return status
 
 @app.task
-def cartoonify(recipient, payer, price, image_url, image_name):
+def cartoonify(transformation_name, recipient, payer, price, image_url, image_name):
   cartoonifier = transformers.Cartoonifier()
-  status = create_token(cartoonifier, recipient, payer, price, image_url, image_name)
+  status = create_token(cartoonifier, transformation_name, recipient, payer, price, image_url, image_name)
 
   return status
 
 @app.task
-def ascii(recipient, payer, price, image_url, image_name):
+def ascii(transformation_name, recipient, payer, price, image_url, image_name):
   ascii = transformers.ASCIIArt()
-  status = create_token(ascii, recipient, payer, price, image_url, image_name)
+  status = create_token(ascii, transformation_name, recipient, payer, price, image_url, image_name)
 
   return status
 
 @app.task
-def sketch(recipient, payer, price, image_url, image_name):
+def sketch(transformation_name, recipient, payer, price, image_url, image_name):
   sketch = transformers.SketchArt()
-  status = create_token(sketch, recipient, payer, price, image_url, image_name)
+  status = create_token(sketch, transformation_name, recipient, payer, price, image_url, image_name)
 
   return status
 
