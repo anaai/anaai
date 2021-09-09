@@ -18,7 +18,8 @@ NFT_SERVICE_MINT_TOKEN_URL = os.getenv("NFT_SERVICE_MINT_TOKEN_URL")
 
 app = Celery("tasks", backend=POSTGRES_URL, broker=BROKER_URL)
 
-def create_token(transformer, transformation_name, recipient, payer, price, image_url, image_name):
+def create_token(transformer, transformation_name, recipient,
+                 payer, price, image_url, image_name):
   image = _download_image(image_url)
   transformed_image = transformer.transform(image)
 
@@ -28,7 +29,7 @@ def create_token(transformer, transformation_name, recipient, payer, price, imag
   pinata_client = PinataClient(PINATA_JWT)
   image_ipfs_url = pinata_client.pin_image(image_path)
   metadata_ipfs_url = pinata_client.pin_metadata(image_ipfs_url,
-                                                 image_name,
+                                                 f"{image_name}.json",
                                                  payer,
                                                  transformation_name)
 
