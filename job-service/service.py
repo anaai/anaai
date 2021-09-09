@@ -40,13 +40,15 @@ async def generate(request: JobRequest, session: Session = Depends(get_session))
 
   try:
     task_name = task_mapper.task_name(request.transformation)
+    transformation_name = task_mapper.transformation_name(request.transformation)
   except KeyError:
     raise HTTPException(status_code=400, detail="Transformation not supported")
 
   job_request = crud.create_job_request(session, request)
 
   task = celery_app.send_task(task_name,
-                              [RECIPIENT,
+                              [transformation_name,
+                               RECIPIENT,
                                request.payer,
                                PRICE,
                                request.image_url,

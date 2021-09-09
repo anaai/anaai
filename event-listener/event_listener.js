@@ -35,11 +35,10 @@ nftContract.events.ImageGenerationPaid(async (error, event) => {
   const imageURL = event.returnValues.imageURL;
   const payer = event.returnValues.sender;
   const transformationId = parseInt(event.returnValues.transformationId);
-  console.log("TRANSFORMATION ID", transformationId)
   const jobHash = uuid.v4();
   console.log(`${payer} triggered job ${jobHash} for image ${imageURL} with transformation ${transformationId}`);
 
-  await triggerJob(payer, transformationId, imageURL, `${jobHash}.jpeg`);
+  await triggerJob(payer, transformationId, imageURL, jobHash);
 });
 
 nftContract.events.ImagePaid(async (error, event) => {

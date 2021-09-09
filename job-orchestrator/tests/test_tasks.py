@@ -17,6 +17,7 @@ def test_cartoonification(download_mock, pinata_mock, dir_mock, cv2_mock, reques
   metadata_ipfs_url = "pinata_hash_365"
   recipient = "recipient"
   payer = "payer"
+  transformation_name = "cartoonification"
   price = 0
 
   dir_mock.local_file_path.return_value = image_path
@@ -26,7 +27,7 @@ def test_cartoonification(download_mock, pinata_mock, dir_mock, cv2_mock, reques
   original_image = cv2.imread("tests/original.jpeg")
   download_mock.return_value = original_image
 
-  status = cartoonify(recipient, payer, price, image_url, image_name)
+  status = cartoonify(transformation_name, recipient, payer, price, image_url, image_name)
 
   # 1. Download the image
   download_mock.assert_called_with(image_url)
@@ -37,7 +38,8 @@ def test_cartoonification(download_mock, pinata_mock, dir_mock, cv2_mock, reques
   # 4. Upload the image to pinata
   pinata_mock().pin_image.assert_called_with(image_path)
   # 5. Upload nft metadata to pinata
-  pinata_mock().pin_metadata.assert_called_with(image_ipfs_url, image_name)
+  pinata_mock().pin_metadata.assert_called_with(image_ipfs_url, f"{image_name}.json",
+                                                payer, transformation_name)
   # 6. Remove image from the tmp file system
   dir_mock.remove_file.assert_called_with(image_path)
   # 7. Post nft
@@ -62,6 +64,7 @@ def test_ascii(download_mock, pinata_mock, dir_mock, cv2_mock, requests_mock):
   metadata_ipfs_url = "pinata_hash_365"
   recipient = "recipient"
   payer = "payer"
+  transformation_name = "ascii"
   price = 0
 
   dir_mock.local_file_path.return_value = image_path
@@ -71,7 +74,7 @@ def test_ascii(download_mock, pinata_mock, dir_mock, cv2_mock, requests_mock):
   original_image = cv2.imread("tests/original.jpeg")
   download_mock.return_value = original_image
 
-  status = ascii(recipient, payer, price, image_url, image_name)
+  status = ascii(transformation_name, recipient, payer, price, image_url, image_name)
 
   # 1. Download the image
   download_mock.assert_called_with(image_url)
@@ -82,7 +85,8 @@ def test_ascii(download_mock, pinata_mock, dir_mock, cv2_mock, requests_mock):
   # 4. Upload the image to pinata
   pinata_mock().pin_image.assert_called_with(image_path)
   # 5. Upload nft metadata to pinata
-  pinata_mock().pin_metadata.assert_called_with(image_ipfs_url, image_name)
+  pinata_mock().pin_metadata.assert_called_with(image_ipfs_url, f"{image_name}.json",
+                                                payer, transformation_name)
   # 6. Remove image from the tmp file system
   dir_mock.remove_file.assert_called_with(image_path)
   # 7. Post nft
@@ -107,6 +111,7 @@ def test_sketch(download_mock, pinata_mock, dir_mock, cv2_mock, requests_mock):
   metadata_ipfs_url = "pinata_hash_365"
   recipient = "recipient"
   payer = "payer"
+  transformation_name = "sketch"
   price = 0
 
   dir_mock.local_file_path.return_value = image_path
@@ -116,7 +121,7 @@ def test_sketch(download_mock, pinata_mock, dir_mock, cv2_mock, requests_mock):
   original_image = cv2.imread("tests/original.jpeg")
   download_mock.return_value = original_image
 
-  status = sketch(recipient, payer, price, image_url, image_name)
+  status = sketch(transformation_name, recipient, payer, price, image_url, image_name)
 
   # 1. Download the image
   download_mock.assert_called_with(image_url)
@@ -127,7 +132,8 @@ def test_sketch(download_mock, pinata_mock, dir_mock, cv2_mock, requests_mock):
   # 4. Upload the image to pinata
   pinata_mock().pin_image.assert_called_with(image_path)
   # 5. Upload nft metadata to pinata
-  pinata_mock().pin_metadata.assert_called_with(image_ipfs_url, image_name)
+  pinata_mock().pin_metadata.assert_called_with(image_ipfs_url, f"{image_name}.json",
+                                                payer, transformation_name)
   # 6. Remove image from the tmp file system
   dir_mock.remove_file.assert_called_with(image_path)
   # 7. Post nft
