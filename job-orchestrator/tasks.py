@@ -2,7 +2,6 @@ import os
 from celery import Celery
 import requests
 
-import urllib.request
 import numpy as np
 import cv2
 
@@ -65,8 +64,8 @@ def _mint_nft(recipient, payer, token_uri, price):
   return requests.post(NFT_SERVICE_MINT_TOKEN_URL, json=payload)
 
 def _download_image(url):
-  resp = urllib.request.urlopen(url)
-  image = np.asarray(bytearray(resp.read()), dtype="uint8")
+  resp = requests.get(url, stream=True).content
+  image = np.asarray(bytearray(resp), dtype="uint8")
   image = cv2.imdecode(image, cv2.IMREAD_COLOR)
 
   return image
