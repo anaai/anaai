@@ -28,6 +28,8 @@ class JobRequest(BaseModel):
   transformation: int
   image_url: str
   image_name: str
+  block_hash: str
+  transaction_hash: str
 
 celery_app = Celery("tasks", backend=POSTGRES_URL, broker=BROKER_URL)
 

@@ -49,6 +49,8 @@ class JobRequest(Base):
   id = sa.Column(sa.Integer, primary_key=True, index=True)
   job_request_hash = sa.Column(sa.String(155), nullable=False)
   payer = sa.Column(sa.String(155), nullable=False)
+  transaction_hash = sa.Column(sa.String(155), nullable=False, unique=True)
+  block_hash = sa.Column(sa.String(155), nullable=False, unique=True)
   transformation = sa.Column(sa.Integer, nullable=False)
   created_at = sa.Column(sa.DateTime, default=datetime.utcnow, nullable=False)
   task_id = sa.Column(sa.String(155), nullable=True)
