@@ -16,7 +16,8 @@ def test_cartoonify_response(celery_mock, test_db):
 
   response = client.post("/generate", json={
     "image_url": "", "image_name": "",
-    "payer": "", "transformation": 1
+    "payer": "", "transformation": 1,
+    "transaction_hash": "tx123", "block_hash": "block123"
   })
 
   assert response.status_code == 200
@@ -28,12 +29,15 @@ def test_cartoonify_task_invocation(celery_mock, test_db):
   name = "name"
   payer = "payer"
   transformation = 1
+  tx_hash = "tx123"
+  block_hash = "block123"
   price = 0
   celery_mock.send_task.return_value.id = "555333"
 
   response = client.post("/generate", json={
     "image_url": url, "image_name": name,
-    "payer": payer, "transformation": transformation
+    "payer": payer, "transformation": transformation,
+    "transaction_hash": tx_hash, "block_hash": block_hash
   })
 
   celery_mock.send_task.assert_called_with(
@@ -48,12 +52,15 @@ def test_job_request_in_db(celery_mock, test_db):
   name = "name"
   payer = "payer"
   transformation = 1
+  tx_hash = "tx123"
+  block_hash = "block123"
   price = 0
   celery_mock.send_task.return_value.id = task_id
 
   response = client.post("/generate", json={
     "image_url": url, "image_name": name,
-    "payer": payer, "transformation": transformation
+    "payer": payer, "transformation": transformation,
+    "transaction_hash": tx_hash, "block_hash": block_hash
   })
 
   session = TestingSessionLocal()
@@ -61,13 +68,16 @@ def test_job_request_in_db(celery_mock, test_db):
 
   assert job_request.job_request_hash == name
   assert job_request.transformation == transformation
+  assert job_request.transaction_hash == tx_hash
+  assert job_request.block_hash == block_hash
   assert job_request.payer == payer
   assert job_request.task_id == task_id
 
 def test_invalid_transformation_request(test_db):
   response = client.post("/generate", json={
     "image_url": "url", "image_name": "name",
-    "payer": "payer", "transformation": 15
+    "payer": "payer", "transformation": 15,
+    "transaction_hash": "tx123", "block_hash": "block123"
   })
 
   assert response.status_code == 400
