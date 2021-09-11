@@ -38,21 +38,21 @@ def create_token(transformer, transformation_name, recipient,
 
   return status
 
-@app.task
+@app.task(autoretry_for=(Exception,), retry_kwargs={"max_retries": 3, "countdown": 5})
 def cartoonify(transformation_name, recipient, payer, price, image_url, image_name):
   cartoonifier = transformers.Cartoonifier()
   status = create_token(cartoonifier, transformation_name, recipient, payer, price, image_url, image_name)
 
   return status
 
-@app.task
+@app.task(autoretry_for=(Exception,), retry_kwargs={"max_retries": 3, "countdown": 5})
 def ascii(transformation_name, recipient, payer, price, image_url, image_name):
   ascii = transformers.ASCIIArt()
   status = create_token(ascii, transformation_name, recipient, payer, price, image_url, image_name)
 
   return status
 
-@app.task
+@app.task(autoretry_for=(Exception,), retry_kwargs={"max_retries": 3, "countdown": 5})
 def sketch(transformation_name, recipient, payer, price, image_url, image_name):
   sketch = transformers.SketchArt()
   status = create_token(sketch, transformation_name, recipient, payer, price, image_url, image_name)
