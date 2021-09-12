@@ -1,7 +1,9 @@
 TASK_MAPPINGS = {
   1: "tasks.cartoonify",
   2: "tasks.ascii",
-  3: "tasks.sketch"
+  3: "tasks.sketch",
+  4: "tasks.candy",
+  5: "tasks.feathers"
 }
 
 def task_name(transformation_id):

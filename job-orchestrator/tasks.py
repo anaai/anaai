@@ -61,14 +61,14 @@ def sketch(transformation_name, recipient, payer, price, image_url, image_name):
   return status
 
 @app.task(autoretry_for=(Exception,), retry_kwargs={"max_retries": 3, "countdown": 5})
-def candy_fast_style_transfer(transformation_name, recipient, payer, price, image_url, image_name):
+def candy(transformation_name, recipient, payer, price, image_url, image_name):
   candy = transformers.FastNeuralStyle(model_paths.CANDY_FAST_NEURAL_TRANSFER_MODEL)
   status = create_token(candy, transformation_name, recipient, payer, price, image_url, image_name)
 
   return status
 
 @app.task(autoretry_for=(Exception,), retry_kwargs={"max_retries": 3, "countdown": 5})
-def feather_fast_style_transfer(transformation_name, recipient, payer, price, image_url, image_name):
+def feathers(transformation_name, recipient, payer, price, image_url, image_name):
   feather = transformers.FastNeuralStyle(model_paths.FEATHERS_FAST_NEURAL_TRANSFER_MODEL)
   status = create_token(feather, transformation_name, recipient, payer, price, image_url, image_name)
 

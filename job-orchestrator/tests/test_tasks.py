@@ -2,10 +2,7 @@ from unittest.mock import patch, ANY
 import numpy as np
 import cv2
 
-from tasks import (
-  _download_image, cartoonify, ascii, sketch,
-  candy_fast_style_transfer, feather_fast_style_transfer
-)
+from tasks import _download_image, cartoonify, ascii, sketch, candy, feathers
 
 @patch("tasks.requests")
 @patch("tasks.cv2")
@@ -171,8 +168,7 @@ def test_candy(download_mock, pinata_mock, dir_mock, cv2_mock, requests_mock):
   original_image = cv2.imread("tests/original.jpeg")
   download_mock.return_value = original_image
 
-  status = candy_fast_style_transfer(transformation_name, recipient, payer,
-                                     price, image_url, image_name)
+  status = candy(transformation_name, recipient, payer, price, image_url, image_name)
 
   # 1. Download the image
   download_mock.assert_called_with(image_url)
@@ -219,8 +215,7 @@ def test_feathers(download_mock, pinata_mock, dir_mock, cv2_mock, requests_mock)
   original_image = cv2.imread("tests/original.jpeg")
   download_mock.return_value = original_image
 
-  status = feather_fast_style_transfer(transformation_name, recipient, payer,
-                                       price, image_url, image_name)
+  status = feathers(transformation_name, recipient, payer, price, image_url, image_name)
 
   # 1. Download the image
   download_mock.assert_called_with(image_url)
