@@ -34,5 +34,4 @@ class FastNeuralStyle:
     output[0] += 103.939
     output[1] += 116.779
     output[2] += 123.680
-    output /= 255.0
     return output.transpose(1, 2, 0)
