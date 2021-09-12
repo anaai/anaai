@@ -2,6 +2,9 @@ import cv2
 import imutils
 
 IMAGE_WIDTH = 600
+RED_MEAN = 103.939
+GREEN_MEAN = 116.779
+BLUE_MEAN = 123.680
 
 class FastNeuralStyle:
   def __init__(self, model_path):
@@ -24,14 +27,14 @@ class FastNeuralStyle:
       image,
       1.0,
       (w, h),
-      (103.939, 116.779, 123.680),
+      (RED_MEAN, GREEN_MEAN, BLUE_MEAN),
       swapRB=False,
       crop=False
     )
 
   def _postprocess_output(self, image):
     output = image.reshape((3, image.shape[2], image.shape[3]))
-    output[0] += 103.939
-    output[1] += 116.779
-    output[2] += 123.680
+    output[0] += RED_MEAN
+    output[1] += GREEN_MEAN
+    output[2] += BLUE_MEAN
     return output.transpose(1, 2, 0)
