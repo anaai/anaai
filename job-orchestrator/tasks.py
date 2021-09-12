@@ -1,6 +1,8 @@
 import os
-from celery import Celery
 import requests
+
+from celery import Celery
+from celery_slack import Slackify
 
 import numpy as np
 import cv2
@@ -9,13 +11,20 @@ from pinata import PinataClient
 import transformers
 import working_directory
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
 POSTGRES_URL = os.getenv("POSTGRES_CONNECTION_URL")
 BROKER_URL = os.getenv("BROKER_URL")
 PINATA_JWT = os.getenv("PINATA_JWT")
+SLACK_WEBHOOK_URL = os.getenv("SLACK_WEBHOOK_URL")
 
 NFT_SERVICE_MINT_TOKEN_URL = os.getenv("NFT_SERVICE_MINT_TOKEN_URL")
 
 app = Celery("tasks", backend=POSTGRES_URL, broker=BROKER_URL)
+print(SLACK_WEBHOOK_URL)
+Slackify(app, SLACK_WEBHOOK_URL)
 
 def create_token(transformer, transformation_name, recipient,
                  payer, price, image_url, image_name):
