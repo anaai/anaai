@@ -1,0 +1,2 @@
+CANDY_FAST_NEURAL_TRANSFER_MODEL = "models/candy.t7"
+FEATHERS_FAST_NEURAL_TRANSFER_MODEL = "models/feathers.t7"

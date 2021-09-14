@@ -13,9 +13,11 @@ click-plugins==1.1.1
 click-repl==0.2.0
 colour==0.1.5
 decorator==5.0.9
+ephem==3.7.7.1
 greenlet==1.1.1
 h11==0.12.0
 idna==3.2
+imutils==0.5.4
 iniconfig==1.1.1
 ipython==7.26.0
 ipython-genutils==0.2.0
