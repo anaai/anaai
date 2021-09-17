@@ -1,5 +1,6 @@
 import {
   ACTION_TYPES,
+  createAddUserGeneratedTokenEntitiesAction,
   createAddUserGeneratedTokenIdsAction,
   createSetAccountsAction,
   createSetContractInstanceAction,
@@ -17,6 +18,7 @@ import { TokenMintedEvent } from 'models/TokenMintedEvent.model';
 import { MintedToken } from 'models/MintedToken.model';
 import { OwnershipTransferredEvent } from 'models/OwnershipTransferredEvent.model';
 import { Transformations } from 'models/Transformations.model';
+import { TokenCollection } from './WalletContext.state';
 
 test('createSetSnackMessageAction', () => {
   const action = createSetSnackMessageAction(connectToMetaMaskSnackMessage);
@@ -141,6 +143,23 @@ test('createAddUserGeneratedTokenIdsAction', () => {
   const expectedAction = {
     type: ACTION_TYPES.ADD_USER_GENERATED_TOKEN_IDS,
     payload: mockUserGeneratedTokenIds
+  };
+
+  expect(action).toEqual(expectedAction);
+});
+
+test('createAddUserGeneratedTokenEntitiesAction', () => {
+  const mockUserGeneratedEntities = {
+    '1': {
+      image: 'mockUrl',
+      name: 'mockName'
+    }
+  } as TokenCollection;
+  const action = createAddUserGeneratedTokenEntitiesAction(mockUserGeneratedEntities);
+
+  const expectedAction = {
+    type: ACTION_TYPES.ADD_USER_GENERATED_TOKEN_ENTITIES,
+    payload: mockUserGeneratedEntities
   };
 
   expect(action).toEqual(expectedAction);
