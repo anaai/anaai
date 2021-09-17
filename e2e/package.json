@@ -1,0 +1,10 @@
+{
+  "name": "anaai-e2e",
+  "version": "1.0.0",
+  "description": "anaai e2e tests",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "cypress": "^8.4.0"
+  }
+}
