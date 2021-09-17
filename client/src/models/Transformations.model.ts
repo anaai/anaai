@@ -1,6 +1,6 @@
 export type Transformations = Transformation[];
 
-interface Transformation {
+export interface Transformation {
   id: string;
   name: string;
   price: string;
