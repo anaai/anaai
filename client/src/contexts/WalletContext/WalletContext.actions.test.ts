@@ -1,5 +1,7 @@
 import {
   ACTION_TYPES,
+  createAddUserBoughtTokenEntitiesAction,
+  createAddUserBoughtTokenIdsAction,
   createAddUserGeneratedTokenEntitiesAction,
   createAddUserGeneratedTokenIdsAction,
   createSetAccountsAction,
@@ -160,6 +162,19 @@ test('createAddUserGeneratedTokenEntitiesAction', () => {
   const expectedAction = {
     type: ACTION_TYPES.ADD_USER_GENERATED_TOKEN_ENTITIES,
     payload: mockUserGeneratedEntities
+  };
+
+  expect(action).toEqual(expectedAction);
+});
+
+test('createAddUserBoughtTokenIdsAction', () => {
+  const mockUserBoughtTokenIds = ['1', '2', '3'];
+
+  const action = createAddUserBoughtTokenIdsAction(mockUserBoughtTokenIds);
+
+  const expectedAction = {
+    type: ACTION_TYPES.ADD_USER_BOUGHT_TOKEN_IDS,
+    payload: mockUserBoughtTokenIds
   };
 
   expect(action).toEqual(expectedAction);
