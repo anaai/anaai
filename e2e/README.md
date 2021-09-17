@@ -5,7 +5,8 @@ End to end tests for the whole platform. We are using [Cypress](https://www.cypr
 `yarn install`
 
 ## Opening cypress application
-`yarn run cypress open`
+1. `docker-compose up` - in a separate tab
+2. `yarn run cypress open`
 
 ## Running tests
 1. All - `yarn run cypress run --spec "cypress/integration/**"`

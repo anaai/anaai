@@ -1,0 +1,71 @@
+version: "3.9"
+services:
+  redis:
+    image: redis:5.0.3-alpine
+    container_name: job_orchestrator_redis
+    restart: always
+    ports:
+      - 6378:6379
+
+  postgres:
+    image: postgres
+    container_name: job_orchestrator_postgres
+    environment:
+      - POSTGRES_USER=job_orchestrator
+      - POSTGRES_PASSWORD=p
+      - POSTGRES_DB=jobs
+    ports:
+      - 5432:5432
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+
+  job-orchestrator:
+    build: job-orchestrator
+    image: job-orchestrator
+    container_name: job_orchestrator
+    restart: always
+    command: celery -A tasks worker --loglevel=INFO
+    env_file:
+      - .env/.job-orchestrator.env
+    depends_on:
+      - postgres
+      - redis
+      - job-service
+
+  job-service:
+    build: job-service
+    image: job-service
+    container_name: job_service
+    command: bash -c "while !</dev/tcp/postgres/5432; do sleep 1; done; alembic upgrade head && uvicorn service:app --host 0.0.0.0 --port 8000"
+    ports:
+      - 8000:8000
+    env_file:
+      - .env/.job-service.env
+    depends_on:
+      - redis
+      - postgres
+
+  nft-service:
+    build: nft-service
+    image: nft-service
+    container_name: nft_service
+    command: uvicorn service:app --host 0.0.0.0 --port 7000
+    ports:
+      - 7000:7000
+    env_file:
+      - .env/.nft-service.env
+
+  event-listener:
+    build: event-listener
+    image: event-listener
+    container_name: event_listener
+    command: node event_listener.js
+    env_file:
+      - .env/.event-listener.env
+
+  client:
+    build: client
+    image: client
+    container_name: client
+    ports:
+      - 80:80
