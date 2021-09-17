@@ -5,6 +5,7 @@ import Web3 from 'web3';
 import { Contract } from 'web3-eth-contract';
 import MetaMaskOnboarding from '@metamask/onboarding';
 import { OwnershipTransferredEvent } from 'models/OwnershipTransferredEvent.model';
+import { Transformations } from 'models/Transformations.model';
 
 export type IWalletContextState = Readonly<{
   snackMessage: SnackMessage | null;
@@ -13,6 +14,7 @@ export type IWalletContextState = Readonly<{
   accounts: ReadonlyArray<string>;
   web3Instance: Web3 | null;
   contract: Contract | null;
+  transformations: Transformations | null;
   mintedToken: MintedToken | null;
   events: Readonly<{
     tokenMinted: TokenMintedEvent | null;
@@ -39,6 +41,7 @@ export const initialState: IWalletContextState = {
   accounts: [],
   web3Instance: null,
   contract: null,
+  transformations: null,
   mintedToken: null,
   events: { tokenMinted: null, ownershipTransferred: null },
   loading: {
