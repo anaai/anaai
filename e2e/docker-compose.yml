@@ -69,3 +69,10 @@ services:
     container_name: client
     ports:
       - 80:80
+
+  e2e:
+    build: .
+    image: e2e
+    container_name: e2e
+    command: test.sh
+    ipc: host
