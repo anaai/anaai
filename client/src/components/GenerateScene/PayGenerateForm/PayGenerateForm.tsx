@@ -1,6 +1,15 @@
 import { ChangeEventHandler, FocusEventHandler, SyntheticEvent, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Box, Button, Typography } from '@material-ui/core';
+import {
+  Box,
+  Button,
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  Radio,
+  RadioGroup,
+  Typography
+} from '@material-ui/core';
 import {
   connectToMetaMaskSnackMessage,
   generatePaymentAbandonSnackMessage
@@ -13,11 +22,13 @@ import {
 import { PayGeneratingResult } from 'models/PayGeneratingResult.model';
 import { validateAccountConnection, validateUrl } from 'utils/validators';
 import { useStyles } from './PayGenerateForm.styles';
+import { resolveTransformationById } from 'utils/resolvers';
 
 export const PayGenerateForm: React.FC<Record<string, unknown>> = () => {
   const {
     state: {
       contract,
+      transformations,
       accounts,
       loading: { payGenerating: payGeneratingLoading }
     },
@@ -47,8 +58,9 @@ export const PayGenerateForm: React.FC<Record<string, unknown>> = () => {
       // Loading finish is triggered either on payGenerating error or tokenMintedEvent
       dispatch(createSetPayGeneratingLoadingAction(true));
       try {
+        console.log(transformations?.[0]);
         const payGeneratingResult: PayGeneratingResult = await contract.methods
-          .payGenerating(url)
+          .payGenerating(transformations?.[0].id, url)
           .send({ from: accounts[0], gas: 1_000_000 });
 
         console.debug('payGeneratingResult: ', payGeneratingResult);
@@ -72,6 +84,14 @@ export const PayGenerateForm: React.FC<Record<string, unknown>> = () => {
       handlePayGenerating();
     }
   };
+
+  const [transformationType, setTransformationType] = useState(transformations?.[0]);
+
+  const handleTransformationTypeChange: ChangeEventHandler<HTMLInputElement> = ({
+    target: { value: transformationId }
+  }) =>
+    transformations &&
+    setTransformationType(resolveTransformationById(transformations, transformationId));
 
   const history = useHistory();
 
@@ -105,6 +125,27 @@ export const PayGenerateForm: React.FC<Record<string, unknown>> = () => {
           >
             {`${urlErrorMessage || !url ? urlErrorMessage : 'Ready for Liftoff'} `}
           </Typography>
+
+          {transformations && (
+            <FormControl component="fieldset" className={classes.transformationFieldset}>
+              <FormLabel component="legend">Transformation type</FormLabel>
+              <RadioGroup
+                aria-label="gender"
+                name="transformationType"
+                value={transformationType?.id}
+                onChange={handleTransformationTypeChange}
+              >
+                {transformations.map((transformation) => (
+                  <FormControlLabel
+                    key={transformation.id}
+                    value={transformation.id}
+                    control={<Radio />}
+                    label={transformation.name}
+                  />
+                ))}
+              </RadioGroup>
+            </FormControl>
+          )}
         </>
       )}
 
