@@ -30,6 +30,13 @@ export const useStyles = makeStyles((theme) => ({
   urlInfoMessageVisible: {
     opacity: 1
   },
+  transformationFieldset: {
+    border: `2px solid ${theme.palette.primary.main}`,
+    borderRadius: theme.spacing(2),
+    padding: theme.spacing(2),
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1)
+  },
   ctaButtonsContainer: {
     margin: theme.spacing(2),
     marginTop: theme.spacing(1),
