@@ -179,3 +179,20 @@ test('createAddUserBoughtTokenIdsAction', () => {
 
   expect(action).toEqual(expectedAction);
 });
+
+test('createAddUserBoughtTokenEntitiesAction', () => {
+  const mockUserBoughtEntities = {
+    '1': {
+      image: 'mockUrl',
+      name: 'mockName'
+    }
+  } as TokenCollection;
+  const action = createAddUserBoughtTokenEntitiesAction(mockUserBoughtEntities);
+
+  const expectedAction = {
+    type: ACTION_TYPES.ADD_USER_BOUGHT_TOKEN_ENTITIES,
+    payload: mockUserBoughtEntities
+  };
+
+  expect(action).toEqual(expectedAction);
+});
