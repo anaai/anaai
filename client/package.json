@@ -61,10 +61,10 @@
     }
   },
   "lint-staged": {
-    "*.{js,ts,tsx}": [
+    "client/**/*.{js,ts,tsx}": [
       "eslint --quiet --fix"
     ],
-    "*.{json,md,html,scss}": [
+    "client/**/*.{json,md,html,scss}": [
       "prettier --write"
     ]
   },
