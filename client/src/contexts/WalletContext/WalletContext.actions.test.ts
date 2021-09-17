@@ -1,5 +1,6 @@
 import {
   ACTION_TYPES,
+  createAddUserGeneratedTokenIdsAction,
   createSetAccountsAction,
   createSetContractInstanceAction,
   createSetMintedTokenAction,
@@ -127,6 +128,19 @@ test('createSetTransformationsAction', () => {
   const expectedAction = {
     type: ACTION_TYPES.SET_TRANSFORMATIONS,
     payload: mockTransformations
+  };
+
+  expect(action).toEqual(expectedAction);
+});
+
+test('createAddUserGeneratedTokenIdsAction', () => {
+  const mockUserGeneratedTokenIds = ['1', '2', '3'];
+
+  const action = createAddUserGeneratedTokenIdsAction(mockUserGeneratedTokenIds);
+
+  const expectedAction = {
+    type: ACTION_TYPES.ADD_USER_GENERATED_TOKEN_IDS,
+    payload: mockUserGeneratedTokenIds
   };
 
   expect(action).toEqual(expectedAction);
