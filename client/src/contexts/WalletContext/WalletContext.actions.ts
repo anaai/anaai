@@ -2,6 +2,7 @@ import { SnackMessage } from 'config/snacks/snacks';
 import { MintedToken } from 'models/MintedToken.model';
 import { OwnershipTransferredEvent } from 'models/OwnershipTransferredEvent.model';
 import { TokenMintedEvent } from 'models/TokenMintedEvent.model';
+import { Transformations } from 'models/Transformations.model';
 import { Contract } from 'web3-eth-contract';
 import { TokenCollection } from './WalletContext.state';
 
@@ -14,6 +15,7 @@ export const ACTION_TYPES = {
   SET_PAY_IMAGE_LOADING: 'SET_PAY_IMAGE_LOADING',
   SET_MINTED_TOKEN: 'SET_MINTED_TOKEN',
   SET_OWNERSHIP_TRANSFERRED_EVENT: 'SET_OWNERSHIP_TRANSFERRED_EVENT',
+  SET_TRANSFORMATIONS: 'SET_TRANSFORMATIONS',
   ADD_USER_GENERATED_TOKEN_IDS: 'ADD_USER_GENERATED_TOKEN_IDS',
   ADD_USER_GENERATED_TOKEN_ENTITIES: 'ADD_USER_GENERATED_TOKEN_ENTITIES',
   ADD_USER_BOUGHT_TOKEN_IDS: 'ADD_USER_BOUGHT_TOKEN_IDS',
@@ -68,6 +70,12 @@ export const createSetOwnershipTransferredEventAction = (event: OwnershipTransfe
     payload: event
   } as const);
 
+export const createSetTransformationsAction = (transformations: Transformations) =>
+  ({
+    type: ACTION_TYPES.SET_TRANSFORMATIONS,
+    payload: transformations
+  } as const);
+
 export const createAddUserGeneratedTokenIdsAction = (userGeneratedTokenIds: string[]) =>
   ({
     type: ACTION_TYPES.ADD_USER_GENERATED_TOKEN_IDS,
@@ -101,6 +109,7 @@ export type WalletReducerAction = ReturnType<
   | typeof createSetPayImageLoadingAction
   | typeof createSetMintedTokenAction
   | typeof createSetOwnershipTransferredEventAction
+  | typeof createSetTransformationsAction
   | typeof createAddUserGeneratedTokenIdsAction
   | typeof createAddUserGeneratedTokenEntitiesAction
   | typeof createAddUserBoughtTokenIdsAction

@@ -59,6 +59,11 @@ export const walletReducer = (
         events: { ...state.events, ownershipTransferred: action.payload },
         loading: { ...state.loading, payImage: false }
       };
+    case ACTION_TYPES.SET_TRANSFORMATIONS:
+      return {
+        ...state,
+        transformations: action.payload
+      };
     case ACTION_TYPES.ADD_USER_GENERATED_TOKEN_IDS:
       return {
         ...state,

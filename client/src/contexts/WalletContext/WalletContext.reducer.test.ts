@@ -12,7 +12,8 @@ import {
   createSetPayGeneratingLoadingAction,
   createSetPayImageLoadingAction,
   createSetSnackMessageAction,
-  createSetTokenMintedEventAction
+  createSetTokenMintedEventAction,
+  createSetTransformationsAction
 } from './WalletContext.actions';
 import { walletReducer } from './WalletContext.reducer';
 import { initialState } from './WalletContext.state';
@@ -29,6 +30,7 @@ test('Has appropriate initial state', () => {
     accounts: [],
     web3Instance: null,
     contract: null,
+    transformations: null,
     mintedToken: null,
     events: { tokenMinted: null, ownershipTransferred: null },
     loading: {
@@ -154,6 +156,25 @@ test('SET_OWNERSHIP_TRANSFERRED_EVENT', () => {
   const expectedState = {
     ...initialState,
     events: { ...initialState.events, ownershipTransferred: mockOwnershipTransferredEvent }
+  };
+
+  expect(expectedState).toEqual(state);
+});
+
+test('SET_TRANSFORMATIONS', () => {
+  const mockTransformations = [
+    {
+      id: 'a',
+      name: 'b',
+      price: '1'
+    }
+  ];
+
+  const state = walletReducer(initialState, createSetTransformationsAction(mockTransformations));
+
+  const expectedState = {
+    ...initialState,
+    transformations: mockTransformations
   };
 
   expect(expectedState).toEqual(state);

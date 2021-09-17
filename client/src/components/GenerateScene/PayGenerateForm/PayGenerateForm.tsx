@@ -1,6 +1,15 @@
-import { ChangeEventHandler, FocusEventHandler, SyntheticEvent, useState } from 'react';
+import { ChangeEventHandler, FocusEventHandler, SyntheticEvent, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Box, Button, Typography } from '@material-ui/core';
+import {
+  Box,
+  Button,
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  Radio,
+  RadioGroup,
+  Typography
+} from '@material-ui/core';
 import {
   connectToMetaMaskSnackMessage,
   generatePaymentAbandonSnackMessage
@@ -13,11 +22,14 @@ import {
 import { PayGeneratingResult } from 'models/PayGeneratingResult.model';
 import { validateAccountConnection, validateUrl } from 'utils/validators';
 import { useStyles } from './PayGenerateForm.styles';
+import { resolveTransformationById } from 'utils/resolvers';
+import { Transformation } from 'models/Transformations.model';
 
 export const PayGenerateForm: React.FC<Record<string, unknown>> = () => {
   const {
     state: {
       contract,
+      transformations,
       accounts,
       loading: { payGenerating: payGeneratingLoading }
     },
@@ -43,12 +55,12 @@ export const PayGenerateForm: React.FC<Record<string, unknown>> = () => {
   const handleUrlBlur: FocusEventHandler<HTMLInputElement> = () => setUrlInputTouched(true);
 
   const handlePayGenerating = async () => {
-    if (contract) {
+    if (contract && selectedTransformationType) {
       // Loading finish is triggered either on payGenerating error or tokenMintedEvent
       dispatch(createSetPayGeneratingLoadingAction(true));
       try {
         const payGeneratingResult: PayGeneratingResult = await contract.methods
-          .payGenerating(url)
+          .payGenerating(selectedTransformationType.id, url)
           .send({ from: accounts[0], gas: 1_000_000 });
 
         console.debug('payGeneratingResult: ', payGeneratingResult);
@@ -72,6 +84,20 @@ export const PayGenerateForm: React.FC<Record<string, unknown>> = () => {
       handlePayGenerating();
     }
   };
+
+  const [selectedTransformationType, setSelectedTransformationType] = useState<Transformation>();
+
+  useEffect(() => {
+    if (transformations) {
+      setSelectedTransformationType(transformations[0]);
+    }
+  }, [transformations]);
+
+  const handleSelectedTransformationTypeChange: ChangeEventHandler<HTMLInputElement> = ({
+    target: { value: transformationId }
+  }) =>
+    transformations &&
+    setSelectedTransformationType(resolveTransformationById(transformations, transformationId));
 
   const history = useHistory();
 
@@ -105,6 +131,27 @@ export const PayGenerateForm: React.FC<Record<string, unknown>> = () => {
           >
             {`${urlErrorMessage || !url ? urlErrorMessage : 'Ready for Liftoff'} `}
           </Typography>
+
+          {transformations && selectedTransformationType && (
+            <FormControl component="fieldset" className={classes.transformationFieldset}>
+              <FormLabel component="legend">Transformation type</FormLabel>
+              <RadioGroup
+                aria-label="gender"
+                name="selectedTransformationType"
+                value={selectedTransformationType.id}
+                onChange={handleSelectedTransformationTypeChange}
+              >
+                {transformations.map((transformation) => (
+                  <FormControlLabel
+                    key={transformation.id}
+                    value={transformation.id}
+                    control={<Radio />}
+                    label={transformation.name}
+                  />
+                ))}
+              </RadioGroup>
+            </FormControl>
+          )}
         </>
       )}
 
