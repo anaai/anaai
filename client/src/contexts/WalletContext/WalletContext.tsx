@@ -24,7 +24,8 @@ import {
   createSetPayGeneratingLoadingAction,
   createSetOwnershipTransferredEventAction,
   createAddUserGeneratedTokenIdsAction,
-  createAddUserBoughtTokenIdsAction
+  createAddUserBoughtTokenIdsAction,
+  createSetTransformationsAction
 } from './WalletContext.actions';
 import { walletReducer } from './WalletContext.reducer';
 import { IWalletContextState, initialState } from './WalletContext.state';
@@ -123,6 +124,7 @@ const WalletProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
       // Get user bought token ids
       getUserTokens(contract, accounts[0], dispatch);
+      getTransformations(contract, dispatch);
     }
   }, [accounts, contract, onTokenMinted, onTokenTransferred]);
 
@@ -145,6 +147,13 @@ const getUserTokens = async (
 
   dispatch(createAddUserGeneratedTokenIdsAction(userGeneratedTokens));
   dispatch(createAddUserBoughtTokenIdsAction(userBoughtTokens));
+};
+
+const getTransformations = async (contract: Contract, dispatch: Dispatch<WalletReducerAction>) => {
+  const transformations = (await contract.methods.listTransformations().call()) as any;
+  console.log(transformations);
+
+  dispatch(createSetTransformationsAction(transformations));
 };
 
 const useWallet = (): IWalletContext => {
