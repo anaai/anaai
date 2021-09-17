@@ -7,13 +7,15 @@ import {
   createSetPayGeneratingLoadingAction,
   createSetPayImageLoadingAction,
   createSetSnackMessageAction,
-  createSetTokenMintedEventAction
+  createSetTokenMintedEventAction,
+  createSetTransformationsAction
 } from './WalletContext.actions';
 import { connectToMetaMaskSnackMessage } from 'config/snacks/snacks';
 import { Contract } from 'web3-eth-contract';
 import { TokenMintedEvent } from 'models/TokenMintedEvent.model';
 import { MintedToken } from 'models/MintedToken.model';
 import { OwnershipTransferredEvent } from 'models/OwnershipTransferredEvent.model';
+import { Transformations } from 'models/Transformations.model';
 
 test('createSetSnackMessageAction', () => {
   const action = createSetSnackMessageAction(connectToMetaMaskSnackMessage);
@@ -112,6 +114,19 @@ test('createSetOwnershipTransferredEventAction', () => {
   const expectedAction = {
     type: ACTION_TYPES.SET_OWNERSHIP_TRANSFERRED_EVENT,
     payload: mockOwnershipTransferredEvent
+  };
+
+  expect(action).toEqual(expectedAction);
+});
+
+test('createSetTransformationsAction', () => {
+  const mockTransformations = {} as Transformations;
+
+  const action = createSetTransformationsAction(mockTransformations);
+
+  const expectedAction = {
+    type: ACTION_TYPES.SET_TRANSFORMATIONS,
+    payload: mockTransformations
   };
 
   expect(action).toEqual(expectedAction);
