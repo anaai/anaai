@@ -33,7 +33,8 @@ export const useStyles = makeStyles((theme) => ({
   transformationFieldset: {
     border: `2px solid ${theme.palette.primary.main}`,
     borderRadius: theme.spacing(2),
-    padding: theme.spacing(2),
+    padding: theme.spacing(1),
+    paddingTop: 0,
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(1)
   },
