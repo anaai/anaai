@@ -13,6 +13,7 @@ import { connectToMetaMaskSnackMessage } from 'config/snacks/snacks';
 import { Contract } from 'web3-eth-contract';
 import { TokenMintedEvent } from 'models/TokenMintedEvent.model';
 import { MintedToken } from 'models/MintedToken.model';
+import { OwnershipTransferredEvent } from 'models/OwnershipTransferredEvent.model';
 
 test('createSetSnackMessageAction', () => {
   const action = createSetSnackMessageAction(connectToMetaMaskSnackMessage);
@@ -104,7 +105,7 @@ test('createSetMintedTokenAction', () => {
 });
 
 test('createSetOwnershipTransferredEventAction', () => {
-  const mockOwnershipTransferredEvent = {};
+  const mockOwnershipTransferredEvent = {} as OwnershipTransferredEvent;
 
   const action = createSetOwnershipTransferredEventAction(mockOwnershipTransferredEvent);
 
