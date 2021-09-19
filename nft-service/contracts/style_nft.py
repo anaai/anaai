@@ -26,7 +26,7 @@ class StyleNFT:
     receipt = self.w3.eth.wait_for_transaction_receipt(tx_hash)
     return self.contract.events.Transfer().processReceipt(receipt)[0]["args"]
 
-def _sign_and_send(self, fc)
+  def _sign_and_send(self, fc):
     nonce = self.w3.eth.getTransactionCount(self.public_key)
 
     tx = fc.buildTransaction({"from": self.public_key, "nonce": nonce})
