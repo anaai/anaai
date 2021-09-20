@@ -18,7 +18,6 @@ contract StyleNFT is ERC721, Ownable {
 
   struct UserCollection {
     uint256[] generatedTokens;
-    uint256[] boughtTokens;
   }
 
   struct Transformation {
@@ -96,7 +95,6 @@ contract StyleNFT is ERC721, Ownable {
 
     admin.transfer(msg.value);
     assets[tokenId].paid = true;
-    userCollection[msg.sender].boughtTokens.push(tokenId);
     emit ImagePaid(msg.sender, msg.value, tokenId);
   }
 
@@ -155,11 +153,6 @@ contract StyleNFT is ERC721, Ownable {
   function userGeneratedTokens(address user) external view returns (uint256[] memory) {
     require(userCollection[user].generatedTokens.length > 0, "User has no generated tokens");
     return userCollection[user].generatedTokens;
-  }
-
-  function userBoughtTokens(address user) external view returns (uint256[] memory) {
-    require(userCollection[user].boughtTokens.length > 0, "User has no bought tokens");
-    return userCollection[user].boughtTokens;
   }
 
   function listTransformations() external view returns (Transformation[] memory) {
