@@ -20,9 +20,6 @@ load_dotenv()
 POSTGRES_URL = os.getenv("POSTGRES_CONNECTION_URL")
 BROKER_URL = os.getenv("BROKER_URL")
 
-RECIPIENT = os.getenv("RECIPIENT")
-PRICE = 0
-
 class JobRequest(BaseModel):
   payer: str
   transformation: int
@@ -50,9 +47,7 @@ async def generate(request: JobRequest, session: Session = Depends(get_session))
 
   task = celery_app.send_task(task_name,
                               [transformation_name,
-                               RECIPIENT,
                                request.payer,
-                               PRICE,
                                request.image_url,
                                request.image_name])
   logger.log_job_started(task.id)
