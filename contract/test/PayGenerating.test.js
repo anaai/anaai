@@ -7,12 +7,13 @@ const StyleNFT = contract.fromArtifact("StyleNFT");
 describe("StyleNFT", () => {
   const [ owner, user1 ] = accounts;
   const price = web3.utils.toWei("1", "ether");
+  const supply = new BN("10");
   const transformationId = new BN("1");
 
   beforeEach(async () => {
     // Deploy a new contract for each test
     this.contract = await StyleNFT.new({from: owner});
-    await this.contract.addTransformation("blur", price, {from: owner});
+    await this.contract.addTransformation("blur", price, supply, {from: owner});
   });
 
   describe("payGenerating", () => {

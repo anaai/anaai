@@ -23,6 +23,7 @@ contract StyleNFT is ERC721, Ownable {
   struct Transformation {
     uint256 id;
     uint256 price;
+    uint256 supply;
     string name;
   }
 
@@ -55,7 +56,7 @@ contract StyleNFT is ERC721, Ownable {
     _;
   }
 
-  modifier existingTransformation(uint256 id, uint256 price) {
+  modifier availableTransformation(uint256 id, uint256 price) {
     bool exists = false;
     for (uint i = 0; i < transformations.length; i++) {
       if (transformations[i].id == id) {
@@ -81,7 +82,13 @@ contract StyleNFT is ERC721, Ownable {
   }
 
   function payGenerating(uint256 transformationId, string memory imageUrl)
-  public payable existingTransformation(transformationId, msg.value) {
+  public payable availableTransformation(transformationId, msg.value) {
+    for (uint i = 0; i < transformations.length; i++) {
+      if (transformations[i].id == transformationId) {
+        transformations[i].supply -= 1;
+      }
+    }
+
     admin.transfer(msg.value);
     emit ImageGenerationPaid(msg.sender, msg.value, transformationId, imageUrl);
   }
@@ -125,11 +132,12 @@ contract StyleNFT is ERC721, Ownable {
     return true;
   }
 
-  function addTransformation(string memory name, uint256 price) public onlyOwner returns (uint256) {
+  function addTransformation(string memory name, uint256 price, uint256 supply)
+  public onlyOwner returns (uint256) {
     _transformationIds.increment();
     uint256 newTransformationId = _transformationIds.current();
 
-    transformations.push(Transformation(newTransformationId, price, name));
+    transformations.push(Transformation(newTransformationId, price, supply, name));
 
     return newTransformationId;
   }
