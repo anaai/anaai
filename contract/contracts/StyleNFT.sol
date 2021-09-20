@@ -11,8 +11,8 @@ contract StyleNFT is ERC721, Ownable {
   struct Asset {
     address payer;
     uint256 time;
-    bool exists;
     uint256 price;
+    bool exists;
     bool paid;
   }
 
@@ -23,8 +23,8 @@ contract StyleNFT is ERC721, Ownable {
 
   struct Transformation {
     uint256 id;
-    string name;
     uint256 price;
+    string name;
   }
 
   using Counters for Counters.Counter;
@@ -32,6 +32,7 @@ contract StyleNFT is ERC721, Ownable {
   Counters.Counter private _transformationIds;
 
   address payable private admin;
+
   mapping(uint256 => Asset) private assets;
   mapping(address => UserCollection) private userCollection;
   Transformation[] private transformations;
@@ -91,8 +92,7 @@ contract StyleNFT is ERC721, Ownable {
   validNonBoughtToken(tokenId)
   onlyPayerFirstHour(msg.sender, tokenId)
   {
-    uint256 price = 1 wei * assets[tokenId].price;
-    require(msg.value == price, "Transaction value must match nft price");
+    require(msg.value == assets[tokenId].price, "Transaction value must match nft price");
 
     admin.transfer(msg.value);
     assets[tokenId].paid = true;
@@ -110,7 +110,7 @@ contract StyleNFT is ERC721, Ownable {
     _mint(recipient, newItemId);
     _setTokenURI(newItemId, tokenURI);
 
-    assets[newItemId] = Asset(payer, block.timestamp, true, price, false);
+    assets[newItemId] = Asset(payer, block.timestamp, price, true, false);
     userCollection[payer].generatedTokens.push(newItemId);
 
     emit TokenMinted(recipient, payer, newItemId, tokenURI, price);
@@ -122,6 +122,7 @@ contract StyleNFT is ERC721, Ownable {
   public onlyOwner validNonBoughtToken(tokenId)
   returns (bool)
   {
+    // only owned tokens
     assets[tokenId].price = price;
     return true;
   }
@@ -130,7 +131,7 @@ contract StyleNFT is ERC721, Ownable {
     _transformationIds.increment();
     uint256 newTransformationId = _transformationIds.current();
 
-    transformations.push(Transformation(newTransformationId, name, price));
+    transformations.push(Transformation(newTransformationId, price, name));
 
     return newTransformationId;
   }
