@@ -7,6 +7,10 @@ const StyleNFT = contract.fromArtifact("StyleNFT");
 describe("StyleNFT", () => {
   const [ owner, user1 ] = accounts;
 
+  const name = "Transformation 1";
+  const price = 3;
+  const supply = 10;
+
   beforeEach(async () => {
     // Deploy a new contract for each test
     this.contract = await StyleNFT.new({from: owner});
@@ -19,42 +23,39 @@ describe("StyleNFT", () => {
     });
 
     it("Returns all transformations", async () => {
-      const name = "Transformation 1";
-      const price = 3;
 
-      await this.contract.addTransformation(name, price, {from: owner});
+      await this.contract.addTransformation(name, price, supply, {from: owner});
       const transformations = await this.contract.listTransformations();
 
       expect(transformations.length).to.equal(1);
       expect(transformations[0].id).to.equal("1");
       expect(transformations[0].name).to.equal(name);
       expect(transformations[0].price).to.equal(price.toString());
+      expect(transformations[0].supply).to.equal(supply.toString());
     });
 
     it("Creates a transformation", async () => {
-      const name = "Transformation 1";
-      const price = 3;
-
-      await this.contract.addTransformation(name, price, {from: owner});
+      await this.contract.addTransformation(name, price, supply, {from: owner});
       const transformations = await this.contract.listTransformations();
 
       expect(transformations.length).to.equal(1);
       expect(transformations[0].id).to.equal("1");
+      expect(transformations[0].name).to.equal(name);
+      expect(transformations[0].price).to.equal(price.toString());
+      expect(transformations[0].supply).to.equal(supply.toString());
     });
 
     it("Reverts transformation creation when caller is not admin", async () => {
       await expectRevert(
-        this.contract.addTransformation("name", 1, {from: user1}),
+        this.contract.addTransformation("name", 1, 10, {from: user1}),
         "Ownable: caller is not the owner"
       );
     });
 
     it("Updates transformation price", async () => {
-      const name = "Transformation 1";
-      const price = 3;
       const newPrice = 4;
 
-      await this.contract.addTransformation(name, price, {from: owner});
+      await this.contract.addTransformation(name, price, supply, {from: owner});
       let transformations = await this.contract.listTransformations();
       expect(transformations[0].price).to.equal(price.toString());
 
@@ -64,7 +65,7 @@ describe("StyleNFT", () => {
     });
 
     it("Reverts transformation update when caller is not admin", async () => {
-      await this.contract.addTransformation("name", 4, {from: owner});
+      await this.contract.addTransformation("name", 4, 10, {from: owner});
 
       await expectRevert(
         this.contract.updateTransformationPrice(1, 5, {from: user1}),

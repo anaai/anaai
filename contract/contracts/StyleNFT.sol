@@ -11,20 +11,20 @@ contract StyleNFT is ERC721, Ownable {
   struct Asset {
     address payer;
     uint256 time;
-    bool exists;
     uint256 price;
+    bool exists;
     bool paid;
   }
 
   struct UserCollection {
     uint256[] generatedTokens;
-    uint256[] boughtTokens;
   }
 
   struct Transformation {
     uint256 id;
-    string name;
     uint256 price;
+    uint256 supply;
+    string name;
   }
 
   using Counters for Counters.Counter;
@@ -32,6 +32,7 @@ contract StyleNFT is ERC721, Ownable {
   Counters.Counter private _transformationIds;
 
   address payable private admin;
+
   mapping(uint256 => Asset) private assets;
   mapping(address => UserCollection) private userCollection;
   Transformation[] private transformations;
@@ -55,7 +56,7 @@ contract StyleNFT is ERC721, Ownable {
     _;
   }
 
-  modifier existingTransformation(uint256 id, uint256 price) {
+  modifier availableTransformation(uint256 id, uint256 price) {
     bool exists = false;
     for (uint i = 0; i < transformations.length; i++) {
       if (transformations[i].id == id) {
@@ -64,6 +65,11 @@ contract StyleNFT is ERC721, Ownable {
         require(
           transformations[i].price == price,
           "Transaction value must match transformation price"
+        );
+
+        require(
+          transformations[i].supply > 0,
+          "Transformation supply is exhausted"
         );
       }
     }
@@ -81,7 +87,13 @@ contract StyleNFT is ERC721, Ownable {
   }
 
   function payGenerating(uint256 transformationId, string memory imageUrl)
-  public payable existingTransformation(transformationId, msg.value) {
+  public payable availableTransformation(transformationId, msg.value) {
+    for (uint i = 0; i < transformations.length; i++) {
+      if (transformations[i].id == transformationId) {
+        transformations[i].supply -= 1;
+      }
+    }
+
     admin.transfer(msg.value);
     emit ImageGenerationPaid(msg.sender, msg.value, transformationId, imageUrl);
   }
@@ -91,12 +103,10 @@ contract StyleNFT is ERC721, Ownable {
   validNonBoughtToken(tokenId)
   onlyPayerFirstHour(msg.sender, tokenId)
   {
-    uint256 price = 1 wei * assets[tokenId].price;
-    require(msg.value == price, "Transaction value must match nft price");
+    require(msg.value == assets[tokenId].price, "Transaction value must match nft price");
 
     admin.transfer(msg.value);
     assets[tokenId].paid = true;
-    userCollection[msg.sender].boughtTokens.push(tokenId);
     emit ImagePaid(msg.sender, msg.value, tokenId);
   }
 
@@ -110,7 +120,7 @@ contract StyleNFT is ERC721, Ownable {
     _mint(recipient, newItemId);
     _setTokenURI(newItemId, tokenURI);
 
-    assets[newItemId] = Asset(payer, block.timestamp, true, price, false);
+    assets[newItemId] = Asset(payer, block.timestamp, price, true, false);
     userCollection[payer].generatedTokens.push(newItemId);
 
     emit TokenMinted(recipient, payer, newItemId, tokenURI, price);
@@ -122,15 +132,17 @@ contract StyleNFT is ERC721, Ownable {
   public onlyOwner validNonBoughtToken(tokenId)
   returns (bool)
   {
+    // only owned tokens
     assets[tokenId].price = price;
     return true;
   }
 
-  function addTransformation(string memory name, uint256 price) public onlyOwner returns (uint256) {
+  function addTransformation(string memory name, uint256 price, uint256 supply)
+  public onlyOwner returns (uint256) {
     _transformationIds.increment();
     uint256 newTransformationId = _transformationIds.current();
 
-    transformations.push(Transformation(newTransformationId, name, price));
+    transformations.push(Transformation(newTransformationId, price, supply, name));
 
     return newTransformationId;
   }
@@ -154,11 +166,6 @@ contract StyleNFT is ERC721, Ownable {
   function userGeneratedTokens(address user) external view returns (uint256[] memory) {
     require(userCollection[user].generatedTokens.length > 0, "User has no generated tokens");
     return userCollection[user].generatedTokens;
-  }
-
-  function userBoughtTokens(address user) external view returns (uint256[] memory) {
-    require(userCollection[user].boughtTokens.length > 0, "User has no bought tokens");
-    return userCollection[user].boughtTokens;
   }
 
   function listTransformations() external view returns (Transformation[] memory) {
