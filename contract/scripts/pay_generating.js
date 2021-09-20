@@ -16,8 +16,8 @@ const contract = require("../artifacts/contracts/StyleNFT.sol/StyleNFT.json");
 const nftContract = new web3.eth.Contract(contract.abi, CONTRACT_ADDRESS);
 const folapAddress = "0x7b245f044456183BF4949dC1aff2ae9d3691edfF";
 
-const TRANFORMATION_ID = 1;
-const IMAGE_URL = "http://prod-upp-image-read.ft.com/6057b8fe-0c1f-11e6-b0f1-61f222853ff3";
+const TRANFORMATION_ID = 5;
+const IMAGE_URL = "https://images.unsplash.com/photo-1522767131594-6b7e96848fba?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTd8fGJlYXV0aWZ1bCUyMGdpcmx8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80";
 
 async function payGenerating(contract, address, transformationId, imageUrl) {
   const message = await contract.methods

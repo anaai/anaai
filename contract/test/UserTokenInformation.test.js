@@ -6,7 +6,6 @@ const StyleNFT = contract.fromArtifact("StyleNFT");
 
 describe("StyleNFT", () => {
   const [ owner, user1 ] = accounts;
-  const price = web3.utils.toWei("1", "ether");
 
   beforeEach(async () => {
     // Deploy a new contract for each test
@@ -15,7 +14,7 @@ describe("StyleNFT", () => {
 
   describe("payerOf", () => {
     it("Returns the address of the user who payed for generating the image", async () => {
-      await this.contract.mintNFT(owner, user1, "tokenURI", price, {from: owner});
+      await this.contract.mintNFT(user1, "tokenURI", {from: owner});
       const payer = await this.contract.payerOf(new BN("1"));
 
       expect(payer).to.equal(user1);
@@ -31,8 +30,8 @@ describe("StyleNFT", () => {
 
   describe("userGeneratedTokens", () => {
     it("Returns a list of tokens the user paid for generating", async () => {
-      await this.contract.mintNFT(owner, user1, "tokenURI1", price, {from: owner});
-      await this.contract.mintNFT(owner, user1, "tokenURI2", price, {from: owner});
+      await this.contract.mintNFT(user1, "tokenURI1", {from: owner});
+      await this.contract.mintNFT(user1, "tokenURI2", {from: owner});
       const tokens = await this.contract.userGeneratedTokens(user1);
 
       expect(tokens.length).to.equal(2);

@@ -11,9 +11,7 @@ contract StyleNFT is ERC721, Ownable {
   struct Asset {
     address payer;
     uint256 time;
-    uint256 price;
     bool exists;
-    bool paid;
   }
 
   struct UserCollection {
@@ -38,22 +36,10 @@ contract StyleNFT is ERC721, Ownable {
   Transformation[] private transformations;
 
   event ImageGenerationPaid(address sender, uint256 value, uint256 transformationId, string imageURL);
-  event ImagePaid(address sender, uint256 value, uint256 tokenId);
-  event TokenMinted(address recipient, address payer, uint256 tokenId, string tokenURI, uint256 price);
+  event TokenMinted(address payer, uint256 tokenId, string tokenURI);
 
   constructor() ERC721("styleart", "snft") {
     admin = payable(msg.sender);
-  }
-
-  modifier onlyPayerFirstHour(address sender, uint256 tokenId) {
-    if (block.timestamp < assets[tokenId].time + 20 seconds) {
-      require(
-        assets[tokenId].payer == sender,
-        "Only the person who generated the image can buy it in the first hour"
-      );
-    }
-
-    _;
   }
 
   modifier availableTransformation(uint256 id, uint256 price) {
@@ -79,9 +65,8 @@ contract StyleNFT is ERC721, Ownable {
     _;
   }
 
-  modifier validNonBoughtToken(uint256 tokenId) {
+  modifier validToken(uint256 tokenId) {
     require(assets[tokenId].exists, "Token does not exist");
-    require(assets[tokenId].paid == false, "Token already bought");
 
     _;
   }
@@ -98,43 +83,22 @@ contract StyleNFT is ERC721, Ownable {
     emit ImageGenerationPaid(msg.sender, msg.value, transformationId, imageUrl);
   }
 
-  function payImage(uint256 tokenId)
-  public payable
-  validNonBoughtToken(tokenId)
-  onlyPayerFirstHour(msg.sender, tokenId)
-  {
-    require(msg.value == assets[tokenId].price, "Transaction value must match nft price");
-
-    admin.transfer(msg.value);
-    assets[tokenId].paid = true;
-    emit ImagePaid(msg.sender, msg.value, tokenId);
-  }
-
-  function mintNFT(address recipient, address payer, string memory tokenURI, uint256 price)
+  function mintNFT(address payer, string memory tokenURI)
   public onlyOwner
   returns (uint256)
   {
     _tokenIds.increment();
 
     uint256 newItemId = _tokenIds.current();
-    _mint(recipient, newItemId);
+    _mint(payer, newItemId);
     _setTokenURI(newItemId, tokenURI);
 
-    assets[newItemId] = Asset(payer, block.timestamp, price, true, false);
+    assets[newItemId] = Asset(payer, block.timestamp, true);
     userCollection[payer].generatedTokens.push(newItemId);
 
-    emit TokenMinted(recipient, payer, newItemId, tokenURI, price);
+    emit TokenMinted(payer, newItemId, tokenURI);
 
     return newItemId;
-  }
-
-  function updateTokenPrice(uint256 tokenId, uint256 price)
-  public onlyOwner validNonBoughtToken(tokenId)
-  returns (bool)
-  {
-    // only owned tokens
-    assets[tokenId].price = price;
-    return true;
   }
 
   function addTransformation(string memory name, uint256 price, uint256 supply)
