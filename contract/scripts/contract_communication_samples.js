@@ -51,7 +51,7 @@ async function transformations(contract) {
 // balanceOf(nftContract, PUBLIC_KEY);
 // balanceOf(nftContract, folapAddress);
 // tokenURI(nftContract, 1)
-// totalSupply(nftContract)
+totalSupply(nftContract)
 // transfer(nftContract, PUBLIC_KEY, folapAddress, 2)
 transformations(nftContract)
 

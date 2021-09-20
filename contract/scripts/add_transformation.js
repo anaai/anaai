@@ -15,10 +15,14 @@ web3.eth.defaultAccount = account.address;
 const contract = require("../artifacts/contracts/StyleNFT.sol/StyleNFT.json");
 const nftContract = new web3.eth.Contract(contract.abi, CONTRACT_ADDRESS);
 
-async function addTransformation(contract, address, name, price) {
-  const message = await contract.methods.addTransformation(name, price)
+async function addTransformation(contract, address, name, price, supply) {
+  const message = await contract.methods.addTransformation(name, price, supply)
                                         .send({from: address, gas: 500000});
   console.log(message)
 }
 
-addTransformation(nftContract, PUBLIC_KEY, "cartoonification", 0);
+// addTransformation(nftContract, PUBLIC_KEY, "cartoonification", 0, 300);
+// addTransformation(nftContract, PUBLIC_KEY, "ascii", 0, 300);
+// addTransformation(nftContract, PUBLIC_KEY, "sketch", 0, 300);
+// addTransformation(nftContract, PUBLIC_KEY, "candy", 0, 300);
+addTransformation(nftContract, PUBLIC_KEY, "feathers", 0, 300);
