@@ -36,7 +36,7 @@ contract StyleNFT is ERC721, Ownable {
   Transformation[] private transformations;
 
   event ImageGenerationPaid(address sender, uint256 value, uint256 transformationId, string imageURL);
-  event TokenMinted(address recipient, address payer, uint256 tokenId, string tokenURI);
+  event TokenMinted(address payer, uint256 tokenId, string tokenURI);
 
   constructor() ERC721("styleart", "snft") {
     admin = payable(msg.sender);
@@ -83,20 +83,20 @@ contract StyleNFT is ERC721, Ownable {
     emit ImageGenerationPaid(msg.sender, msg.value, transformationId, imageUrl);
   }
 
-  function mintNFT(address recipient, address payer, string memory tokenURI)
+  function mintNFT(address payer, string memory tokenURI)
   public onlyOwner
   returns (uint256)
   {
     _tokenIds.increment();
 
     uint256 newItemId = _tokenIds.current();
-    _mint(recipient, newItemId);
+    _mint(payer, newItemId);
     _setTokenURI(newItemId, tokenURI);
 
     assets[newItemId] = Asset(payer, block.timestamp, true);
     userCollection[payer].generatedTokens.push(newItemId);
 
-    emit TokenMinted(recipient, payer, newItemId, tokenURI);
+    emit TokenMinted(payer, newItemId, tokenURI);
 
     return newItemId;
   }
