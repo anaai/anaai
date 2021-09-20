@@ -66,6 +66,11 @@ contract StyleNFT is ERC721, Ownable {
           transformations[i].price == price,
           "Transaction value must match transformation price"
         );
+
+        require(
+          transformations[i].supply > 0,
+          "Transformation supply is exhausted"
+        );
       }
     }
 

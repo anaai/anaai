@@ -7,7 +7,7 @@ const StyleNFT = contract.fromArtifact("StyleNFT");
 describe("StyleNFT", () => {
   const [ owner, user1 ] = accounts;
   const price = web3.utils.toWei("1", "ether");
-  const supply = new BN("10");
+  const supply = new BN("1");
   const transformationId = new BN("1");
 
   beforeEach(async () => {
@@ -48,6 +48,21 @@ describe("StyleNFT", () => {
           .payGenerating(1, "imageUrl")
           .send({from: user1, gas: 500000, value}),
         "Transaction value must match transformation price"
+      );
+    });
+
+    it("It reverts when transformation supply is exhausted", async () => {
+      const value = web3.utils.toWei("1", "ether");
+
+      await this.contract.contract.methods
+        .payGenerating(1, "imageUrl1")
+        .send({from: user1, gas: 500000, value}),
+
+      await expectRevert(
+        this.contract.contract.methods
+          .payGenerating(1, "imageUrl2")
+          .send({from: user1, gas: 500000, value}),
+        "Transformation supply is exhausted"
       );
     });
 
