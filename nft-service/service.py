@@ -31,9 +31,8 @@ async def get_status():
 @app.post("/mint_nft")
 async def mint_nft(nft: NFTPayload):
   contract = style_nft_factory(PUBLIC_KEY, PRIVATE_KEY, API_URL, CONTRACT_ADDRESS, CONTRACT_PATH)
-  token_id = contract.mint_nft(Web3.toChecksumAddress(nft.recipient),
-                               Web3.toChecksumAddress(nft.payer),
-                               nft.token_uri,
-                               Web3.toWei(nft.price, "ether"))
+  token_id = contract.mint_nft(Web3.toChecksumAddress(nft.payer),
+                               nft.token_uri)
+
   logger.log_token_minted(token_id)
   return JSONResponse({"token_id": token_id})
