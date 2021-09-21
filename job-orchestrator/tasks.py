@@ -8,7 +8,9 @@ import cv2
 from pinata import PinataClient
 import transformers
 from transformers import model_paths
+
 import working_directory
+import logger
 
 POSTGRES_URL = os.getenv("POSTGRES_CONNECTION_URL")
 BROKER_URL = os.getenv("BROKER_URL")
@@ -20,17 +22,24 @@ app = Celery("tasks", backend=POSTGRES_URL, broker=BROKER_URL)
 
 def create_token(transformer, transformation_name, payer, image_url, image_name):
   image = _download_image(image_url)
+  logger.log_image_downloaded(image_url)
+
   transformed_image = transformer.transform(image)
+  logger.log_image_generated(transformation_name)
 
   image_path = working_directory.local_file_path(f"{image_name}.jpg")
   cv2.imwrite(image_path, transformed_image)
 
   pinata_client = PinataClient(PINATA_JWT)
+
   image_ipfs_url = pinata_client.pin_image(image_path)
+  logger.log_image_uploaded(image_ipfs_url)
+
   metadata_ipfs_url = pinata_client.pin_metadata(image_ipfs_url,
                                                  f"{image_name}.json",
                                                  payer,
                                                  transformation_name)
+  logger.log_metadata_uploaded(metadata_ipfs_url)
 
   working_directory.remove_file(image_path)
 
