@@ -18,8 +18,7 @@ NFT_SERVICE_MINT_TOKEN_URL = os.getenv("NFT_SERVICE_MINT_TOKEN_URL")
 
 app = Celery("tasks", backend=POSTGRES_URL, broker=BROKER_URL)
 
-def create_token(transformer, transformation_name, recipient,
-                 payer, price, image_url, image_name):
+def create_token(transformer, transformation_name, payer, image_url, image_name):
   image = _download_image(image_url)
   transformed_image = transformer.transform(image)
 
@@ -35,47 +34,47 @@ def create_token(transformer, transformation_name, recipient,
 
   working_directory.remove_file(image_path)
 
-  status = _mint_nft(recipient, payer, metadata_ipfs_url, price)
+  status = _mint_nft(payer, metadata_ipfs_url)
 
   return status
 
 @app.task(autoretry_for=(Exception,), retry_kwargs={"max_retries": 3, "countdown": 5})
-def cartoonify(transformation_name, recipient, payer, price, image_url, image_name):
+def cartoonify(transformation_name, payer, image_url, image_name):
   cartoonifier = transformers.Cartoonifier()
-  status = create_token(cartoonifier, transformation_name, recipient, payer, price, image_url, image_name)
+  status = create_token(cartoonifier, transformation_name, payer, image_url, image_name)
 
   return status
 
 @app.task(autoretry_for=(Exception,), retry_kwargs={"max_retries": 3, "countdown": 5})
-def ascii(transformation_name, recipient, payer, price, image_url, image_name):
+def ascii(transformation_name, payer, image_url, image_name):
   ascii = transformers.ASCIIArt()
-  status = create_token(ascii, transformation_name, recipient, payer, price, image_url, image_name)
+  status = create_token(ascii, transformation_name, payer, image_url, image_name)
 
   return status
 
 @app.task(autoretry_for=(Exception,), retry_kwargs={"max_retries": 3, "countdown": 5})
-def sketch(transformation_name, recipient, payer, price, image_url, image_name):
+def sketch(transformation_name, payer, image_url, image_name):
   sketch = transformers.SketchArt()
-  status = create_token(sketch, transformation_name, recipient, payer, price, image_url, image_name)
+  status = create_token(sketch, transformation_name, payer, image_url, image_name)
 
   return status
 
 @app.task(autoretry_for=(Exception,), retry_kwargs={"max_retries": 3, "countdown": 5})
-def candy(transformation_name, recipient, payer, price, image_url, image_name):
+def candy(transformation_name, payer, image_url, image_name):
   candy = transformers.FastNeuralStyle(model_paths.CANDY_FAST_NEURAL_TRANSFER_MODEL)
-  status = create_token(candy, transformation_name, recipient, payer, price, image_url, image_name)
+  status = create_token(candy, transformation_name, payer, image_url, image_name)
 
   return status
 
 @app.task(autoretry_for=(Exception,), retry_kwargs={"max_retries": 3, "countdown": 5})
-def feathers(transformation_name, recipient, payer, price, image_url, image_name):
+def feathers(transformation_name, payer, image_url, image_name):
   feather = transformers.FastNeuralStyle(model_paths.FEATHERS_FAST_NEURAL_TRANSFER_MODEL)
-  status = create_token(feather, transformation_name, recipient, payer, price, image_url, image_name)
+  status = create_token(feather, transformation_name, payer, image_url, image_name)
 
   return status
 
-def _mint_nft(recipient, payer, token_uri, price):
-  payload = {"recipient": recipient, "payer": payer, "token_uri": token_uri, "price": price}
+def _mint_nft(payer, token_uri):
+  payload = {"payer": payer, "token_uri": token_uri}
   return requests.post(NFT_SERVICE_MINT_TOKEN_URL, json=payload)
 
 def _download_image(url):

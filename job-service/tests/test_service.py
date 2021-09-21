@@ -1,5 +1,5 @@
 from fastapi.testclient import TestClient
-from unittest.mock import patch, ANY
+from unittest.mock import patch
 
 from service import app
 from database import get_session
@@ -31,7 +31,6 @@ def test_cartoonify_task_invocation(celery_mock, test_db):
   transformation = 1
   tx_hash = "tx123"
   block_hash = "block123"
-  price = 0
   celery_mock.send_task.return_value.id = "555333"
 
   response = client.post("/generate", json={
@@ -42,7 +41,7 @@ def test_cartoonify_task_invocation(celery_mock, test_db):
 
   celery_mock.send_task.assert_called_with(
     "tasks.cartoonify",
-    ["cartoonify", ANY, payer, price, url, name]
+    ["cartoonify", payer, url, name]
   )
 
 @patch("service.celery_app")
@@ -54,7 +53,7 @@ def test_job_request_in_db(celery_mock, test_db):
   transformation = 1
   tx_hash = "tx123"
   block_hash = "block123"
-  price = 0
+
   celery_mock.send_task.return_value.id = task_id
 
   response = client.post("/generate", json={

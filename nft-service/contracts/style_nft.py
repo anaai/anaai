@@ -14,17 +14,11 @@ class StyleNFT:
   def owner_of(self, token_id):
     return self.contract.functions.ownerOf(token_id).call()
 
-  def mint_nft(self, recipient, payer, token_uri, price):
-    fc = self.contract.functions.mintNFT(recipient, payer, token_uri, price)
+  def mint_nft(self, payer, token_uri):
+    fc = self.contract.functions.mintNFT(payer, token_uri)
     tx_hash = self._sign_and_send(fc)
     receipt = self.w3.eth.wait_for_transaction_receipt(tx_hash)
     return self.contract.events.Transfer().processReceipt(receipt)[0]["args"].tokenId
-
-  def safe_transfer_from(self, recipient, tokenId):
-    fc = self.contract.functions.safeTransferFrom(self.public_key, recipient, tokenId)
-    tx_hash = self._sign_and_send(fc)
-    receipt = self.w3.eth.wait_for_transaction_receipt(tx_hash)
-    return self.contract.events.Transfer().processReceipt(receipt)[0]["args"]
 
   def _sign_and_send(self, fc):
     nonce = self.w3.eth.getTransactionCount(self.public_key)

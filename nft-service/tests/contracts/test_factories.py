@@ -8,9 +8,9 @@ CONTRACT_PATH = "./contracts/StyleNFT.json"
 CONTRACT_ADDRESS = "0x4E4648af923336AEb2E72C0c9bb80Ae62F2684de"
 
 CONTRACT_FUNCTIONS = [
-    'mintNFT', 'ownerOf', 'payGenerating', 'payImage', 'payerOf', 'renounceOwnership',
+    'mintNFT', 'ownerOf', 'payGenerating', 'payerOf', 'renounceOwnership',
     'safeTransferFrom', 'tokenByIndex', 'tokenURI', 'totalSupply', 'transferFrom',
-    'transferOwnership', 'userBoughtTokens', 'userGeneratedTokens'
+    'transferOwnership', 'userGeneratedTokens'
 ]
 
 def test_style_nft_factory():

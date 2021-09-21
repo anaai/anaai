@@ -62,28 +62,16 @@ def test_total_supply(contract):
 
 def test_balance_of(eth_tester, contract):
   owner = eth_tester.get_accounts()[0]
-  contract.mint_nft(owner, owner, "token_uri", 0)
+  contract.mint_nft(owner, "token_uri")
 
   assert contract.balance_of(owner) == 1
 
 def test_minting_nft(eth_tester, contract):
-  address = eth_tester.get_accounts()[-1]
   owner = eth_tester.get_accounts()[0]
-  token_id = contract.mint_nft(owner, address, "token_uri", 0)
+  address = eth_tester.get_accounts()[-1]
+
+  token_id = contract.mint_nft(address, "token_uri")
   assert token_id == 1
 
-  assert contract.balance_of(address) == 0
-  assert contract.balance_of(owner) == 1
-
-def test_safe_transfer_from(eth_tester, contract):
-  address = eth_tester.get_accounts()[-1]
-  owner = eth_tester.get_accounts()[0]
-
-  token_id = contract.mint_nft(owner, owner, "token_uri", 0)
-  assert contract.owner_of(token_id) == owner
-
-  args = {"from": owner, 'to': address, "tokenId": token_id}
-  receipt_args = contract.safe_transfer_from(address, token_id)
-  assert receipt_args == args
-
-  assert contract.owner_of(token_id) == address
+  assert contract.balance_of(address) == 1
+  assert contract.balance_of(owner) == 0

@@ -28,15 +28,6 @@ const triggerJob = async (payer, transformation, imageURL, imageName, txHash, bl
   return data;
 }
 
-const transferOwnership = async (recipient, price, tokenId) => {
-  const response = await axios.post(
-    TRANSFER_TOKEN_URL,
-    {recipient, price, "token_id": tokenId}
-  );
-  const data = await response.data;
-  return data;
-}
-
 nftContract.events.ImageGenerationPaid(async (error, event) => {
   const imageURL = event.returnValues.imageURL;
   const payer = event.returnValues.sender;
@@ -48,13 +39,4 @@ nftContract.events.ImageGenerationPaid(async (error, event) => {
   console.log(`${payer} triggered job ${jobHash} for image ${imageURL} with transformation ${transformationId}`);
 
   await triggerJob(payer, transformationId, imageURL, jobHash, txHash, blockHash);
-});
-
-nftContract.events.ImagePaid(async (error, event) => {
-  const payer = event.returnValues.sender;
-  const price = parseFloat(event.returnValues.value);
-  const tokenId = parseInt(event.returnValues.tokenId);
-
-  console.log(`${payer} paid for token ${tokenId} for ${price} wei`);
-  await transferOwnership(payer, price, tokenId);
 });

@@ -9,10 +9,8 @@ IMAGE_NAME = "image_name"
 IMAGE_PATH = "image_path"
 IMAGE_IPFS_URL = "pinata_hash_123"
 METADATA_IPFS_URL = "pinata_hash_365"
-RECIPIENT = "recipient"
 PAYER = "payer"
 TRANSFORMATION_NAME = "sketch"
-PRICE = 0
 
 def _setup_mocks(dir_mock, pinata_mock, download_mock, original_image):
   dir_mock.local_file_path.return_value = IMAGE_PATH
@@ -38,10 +36,7 @@ def _assert_call_order_and_params(download_mock, dir_mock, cv2_mock, pinata_mock
   # 7. Post nft
   requests_mock.post.assert_called_with(
     ANY,
-    json = {"recipient": RECIPIENT,
-            "payer": PAYER,
-            "token_uri": METADATA_IPFS_URL,
-            "price": PRICE}
+    json = {"payer": PAYER, "token_uri": METADATA_IPFS_URL}
   )
 
 @patch("tasks.requests")
@@ -54,7 +49,7 @@ def test_cartoonification(download_mock, pinata_mock, dir_mock, cv2_mock, reques
 
   _setup_mocks(dir_mock, pinata_mock, download_mock, original_image)
 
-  status = cartoonify(TRANSFORMATION_NAME, RECIPIENT, PAYER, PRICE, IMAGE_URL, IMAGE_NAME)
+  status = cartoonify(TRANSFORMATION_NAME, PAYER, IMAGE_URL, IMAGE_NAME)
 
   _assert_call_order_and_params(download_mock, dir_mock, cv2_mock, pinata_mock, requests_mock)
 
@@ -68,7 +63,7 @@ def test_ascii(download_mock, pinata_mock, dir_mock, cv2_mock, requests_mock):
 
   _setup_mocks(dir_mock, pinata_mock, download_mock, original_image)
 
-  status = ascii(TRANSFORMATION_NAME, RECIPIENT, PAYER, PRICE, IMAGE_URL, IMAGE_NAME)
+  status = ascii(TRANSFORMATION_NAME, PAYER, IMAGE_URL, IMAGE_NAME)
 
   _assert_call_order_and_params(download_mock, dir_mock, cv2_mock, pinata_mock, requests_mock)
 
@@ -82,7 +77,7 @@ def test_sketch(download_mock, pinata_mock, dir_mock, cv2_mock, requests_mock):
 
   _setup_mocks(dir_mock, pinata_mock, download_mock, original_image)
 
-  status = sketch(TRANSFORMATION_NAME, RECIPIENT, PAYER, PRICE, IMAGE_URL, IMAGE_NAME)
+  status = sketch(TRANSFORMATION_NAME, PAYER, IMAGE_URL, IMAGE_NAME)
 
   _assert_call_order_and_params(download_mock, dir_mock, cv2_mock, pinata_mock, requests_mock)
 
@@ -96,7 +91,7 @@ def test_candy(download_mock, pinata_mock, dir_mock, cv2_mock, requests_mock):
 
   _setup_mocks(dir_mock, pinata_mock, download_mock, original_image)
 
-  status = candy(TRANSFORMATION_NAME, RECIPIENT, PAYER, PRICE, IMAGE_URL, IMAGE_NAME)
+  status = candy(TRANSFORMATION_NAME, PAYER, IMAGE_URL, IMAGE_NAME)
 
   _assert_call_order_and_params(download_mock, dir_mock, cv2_mock, pinata_mock, requests_mock)
 
@@ -110,6 +105,6 @@ def test_feathers(download_mock, pinata_mock, dir_mock, cv2_mock, requests_mock)
 
   _setup_mocks(dir_mock, pinata_mock, download_mock, original_image)
 
-  status = feathers(TRANSFORMATION_NAME, RECIPIENT, PAYER, PRICE, IMAGE_URL, IMAGE_NAME)
+  status = feathers(TRANSFORMATION_NAME, PAYER, IMAGE_URL, IMAGE_NAME)
 
   _assert_call_order_and_params(download_mock, dir_mock, cv2_mock, pinata_mock, requests_mock)
