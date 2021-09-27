@@ -36,7 +36,17 @@ export const useStyles = makeStyles((theme) => ({
     textAlign: 'center'
   },
   ctaButtonsContainer: {
-    display: 'flex'
+    display: 'flex',
+    opacity: 0,
+    transform: 'translate(0, -2rem)',
+    transition: theme.transitions.create(['opacity', 'transform'], {
+      duration: theme.transitions.duration.short,
+      easing: theme.transitions.easing.easeOut
+    })
+  },
+  show: {
+    opacity: 1,
+    transform: 'translate(0)'
   },
   generateButton: {
     marginRight: theme.spacing(1)
