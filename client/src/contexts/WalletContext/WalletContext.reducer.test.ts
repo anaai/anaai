@@ -1,18 +1,13 @@
 import MetaMaskOnboarding from '@metamask/onboarding';
 import { connectToMetaMaskSnackMessage } from 'config/snacks/snacks';
 import {
-  createAddUserBoughtTokenEntitiesAction,
-  createAddUserBoughtTokenIdsAction,
   createAddUserGeneratedTokenEntitiesAction,
   createAddUserGeneratedTokenIdsAction,
   createSetAccountsAction,
   createSetContractInstanceAction,
   createSetMintedTokenAction,
-  createSetOwnershipTransferredEventAction,
   createSetPayGeneratingLoadingAction,
-  createSetPayImageLoadingAction,
   createSetSnackMessageAction,
-  createSetTokenMintedEventAction,
   createSetTransformationsAction
 } from './WalletContext.actions';
 import { walletReducer } from './WalletContext.reducer';
@@ -32,14 +27,11 @@ test('Has appropriate initial state', () => {
     contract: null,
     transformations: null,
     mintedToken: null,
-    events: { tokenMinted: null, ownershipTransferred: null },
     loading: {
-      payGenerating: false,
-      payImage: false
+      payGenerating: false
     },
     tokens: {
-      generated: {},
-      bought: {}
+      generated: {}
     }
   });
 });
@@ -103,35 +95,6 @@ test('SET_PAY_GENERATING_LOADING', () => {
   expect(expectedState).toEqual(state);
 });
 
-test('SET_TOKEN_MINTED_EVENT', () => {
-  const mockTokenMintedEvent = {} as TokenMintedEvent;
-
-  const state = walletReducer(initialState, createSetTokenMintedEventAction(mockTokenMintedEvent));
-
-  const expectedState = {
-    ...initialState,
-    events: { ...initialState.events, tokenMinted: mockTokenMintedEvent }
-  };
-
-  expect(expectedState).toEqual(state);
-});
-
-test('SET_PAY_IMAGE_LOADING', () => {
-  const isLoading = true;
-
-  const state = walletReducer(initialState, createSetPayImageLoadingAction(isLoading));
-
-  const expectedState = {
-    ...initialState,
-    loading: {
-      ...initialState.loading,
-      payImage: true
-    }
-  };
-
-  expect(expectedState).toEqual(state);
-});
-
 test('SET_MINTED_TOKEN', () => {
   const mockMintedToken = {} as MintedToken;
 
@@ -140,22 +103,6 @@ test('SET_MINTED_TOKEN', () => {
   const expectedState = {
     ...initialState,
     mintedToken: mockMintedToken
-  };
-
-  expect(expectedState).toEqual(state);
-});
-
-test('SET_OWNERSHIP_TRANSFERRED_EVENT', () => {
-  const mockOwnershipTransferredEvent = {} as OwnershipTransferredEvent;
-
-  const state = walletReducer(
-    initialState,
-    createSetOwnershipTransferredEventAction(mockOwnershipTransferredEvent)
-  );
-
-  const expectedState = {
-    ...initialState,
-    events: { ...initialState.events, ownershipTransferred: mockOwnershipTransferredEvent }
   };
 
   expect(expectedState).toEqual(state);
@@ -422,225 +369,6 @@ describe('ADD_USER_GENERATED_TOKEN_ENTITIES', () => {
       tokens: {
         ...initialState.tokens,
         generated: {
-          '1': mockTokenEntity,
-          '2': mockTokenEntity
-        }
-      }
-    };
-
-    expect(expectedState).toEqual(state);
-  });
-});
-
-describe('ADD_USER_BOUGHT_TOKEN_IDS', () => {
-  test('token collection is empty', () => {
-    const mockTokenIds = ['1', '2'];
-
-    const state = walletReducer(initialState, createAddUserBoughtTokenIdsAction(mockTokenIds));
-
-    const expectedState = {
-      ...initialState,
-      tokens: {
-        ...initialState.tokens,
-        bought: {
-          '1': null,
-          '2': null
-        }
-      }
-    };
-
-    expect(expectedState).toEqual(state);
-  });
-
-  test('token collection is not empty', () => {
-    const mockTokenIds = ['3', '4'];
-
-    const state = walletReducer(
-      {
-        ...initialState,
-        tokens: {
-          ...initialState.tokens,
-          bought: {
-            '1': null,
-            '2': null
-          }
-        }
-      },
-      createAddUserBoughtTokenIdsAction(mockTokenIds)
-    );
-
-    const expectedState = {
-      ...initialState,
-      tokens: {
-        ...initialState.tokens,
-        bought: {
-          '1': null,
-          '2': null,
-          '3': null,
-          '4': null
-        }
-      }
-    };
-
-    expect(expectedState).toEqual(state);
-  });
-
-  test('token collection already contains token id', () => {
-    const mockTokenIds = ['2', '3'];
-
-    const state = walletReducer(
-      {
-        ...initialState,
-        tokens: {
-          ...initialState.tokens,
-          bought: {
-            '1': null,
-            '2': null
-          }
-        }
-      },
-      createAddUserBoughtTokenIdsAction(mockTokenIds)
-    );
-
-    const expectedState = {
-      ...initialState,
-      tokens: {
-        ...initialState.tokens,
-        bought: {
-          '1': null,
-          '2': null,
-          '3': null
-        }
-      }
-    };
-
-    expect(expectedState).toEqual(state);
-  });
-});
-
-describe('ADD_USER_BOUGHT_TOKEN_ENTITIES', () => {
-  test('token collection is empty', () => {
-    const mockTokenEntity = {
-      image: 'image-url',
-      name: 'image-name'
-    };
-    const mockTokenEntities = { '1': mockTokenEntity, '2': mockTokenEntity };
-
-    const state = walletReducer(
-      initialState,
-      createAddUserBoughtTokenEntitiesAction(mockTokenEntities)
-    );
-
-    const expectedState = {
-      ...initialState,
-      tokens: {
-        ...initialState.tokens,
-        bought: { '1': mockTokenEntity, '2': mockTokenEntity }
-      }
-    };
-
-    expect(expectedState).toEqual(state);
-  });
-
-  test('token collection is not empty', () => {
-    const mockTokenEntity = {
-      image: 'image-url',
-      name: 'image-name'
-    };
-    const mockTokenEntities = { '3': mockTokenEntity, '4': mockTokenEntity };
-
-    const state = walletReducer(
-      {
-        ...initialState,
-        tokens: {
-          ...initialState.tokens,
-          bought: {
-            '1': mockTokenEntity,
-            '2': mockTokenEntity
-          }
-        }
-      },
-      createAddUserBoughtTokenEntitiesAction(mockTokenEntities)
-    );
-
-    const expectedState = {
-      ...initialState,
-      tokens: {
-        ...initialState.tokens,
-        bought: {
-          '1': mockTokenEntity,
-          '2': mockTokenEntity,
-          '3': mockTokenEntity,
-          '4': mockTokenEntity
-        }
-      }
-    };
-
-    expect(expectedState).toEqual(state);
-  });
-
-  test('token collection already contains token metadata', () => {
-    const mockTokenEntity = {
-      image: 'image-url',
-      name: 'image-name'
-    };
-    const mockTokenEntities = { '2': mockTokenEntity, '3': mockTokenEntity };
-
-    const state = walletReducer(
-      {
-        ...initialState,
-        tokens: {
-          ...initialState.tokens,
-          bought: {
-            '1': mockTokenEntity,
-            '2': mockTokenEntity
-          }
-        }
-      },
-      createAddUserBoughtTokenEntitiesAction(mockTokenEntities)
-    );
-
-    const expectedState = {
-      ...initialState,
-      tokens: {
-        ...initialState.tokens,
-        bought: {
-          '1': mockTokenEntity,
-          '2': mockTokenEntity,
-          '3': mockTokenEntity
-        }
-      }
-    };
-
-    expect(expectedState).toEqual(state);
-  });
-
-  test('token collection is injected with token metadata if metadata is not present', () => {
-    const mockTokenEntity = {
-      image: 'image-url',
-      name: 'image-name'
-    };
-    const mockTokenEntities = { '1': mockTokenEntity, '2': mockTokenEntity };
-
-    const state = walletReducer(
-      {
-        ...initialState,
-        tokens: {
-          ...initialState.tokens,
-          bought: {
-            '1': null
-            // token id '2' is not present in token collection
-          }
-        }
-      },
-      createAddUserBoughtTokenEntitiesAction(mockTokenEntities)
-    );
-
-    const expectedState = {
-      ...initialState,
-      tokens: {
-        ...initialState.tokens,
-        bought: {
           '1': mockTokenEntity,
           '2': mockTokenEntity
         }

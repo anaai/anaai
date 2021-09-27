@@ -11,25 +11,22 @@ import {
 import Web3 from 'web3';
 import StyleNFTContract from 'assets/contracts/StyleNFT.json';
 import { Contract } from 'web3-eth-contract';
-import { TokenMintedEvent } from 'models/TokenMintedEvent.model';
 import { generateSuccessSnackMessage } from 'config/snacks/snacks';
-import { matchesConnectedAccount } from 'utils/matchers';
 import {
   WalletReducerAction,
   createSetAccountsAction,
   createSetContractInstanceAction,
-  createSetTokenMintedEventAction,
-  createSetMintedTokenAction,
   createSetSnackMessageAction,
-  createSetPayGeneratingLoadingAction,
-  createSetOwnershipTransferredEventAction,
   createAddUserGeneratedTokenIdsAction,
-  createAddUserBoughtTokenIdsAction,
-  createSetTransformationsAction
+  createSetTransformationsAction,
+  createSetMintedTokenAction,
+  createAddUserGeneratedTokenEntitiesAction,
+  createSetPayGeneratingLoadingAction
 } from './WalletContext.actions';
 import { walletReducer } from './WalletContext.reducer';
 import { IWalletContextState, initialState } from './WalletContext.state';
 import { ZERO_ADDRESS } from './WalletContext.constants';
+import { OwnershipTransferredEvent } from 'models/OwnershipTransferredEvent.model';
 import { resolveTokenByTokenId } from 'utils/resolvers';
 
 interface IWalletContext {
@@ -75,46 +72,28 @@ const WalletProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     }
   }, [accounts]);
 
-  const onTokenMinted = useCallback(
-    async (error: Error, event: TokenMintedEvent) => {
-      console.debug('tokenMintedEvent: ', event);
-      if (contract && matchesConnectedAccount(accounts, event.returnValues.payer)) {
-        dispatch(createSetTokenMintedEventAction(event));
-        try {
-          const mintedToken = await resolveTokenByTokenId(contract, event.returnValues.tokenId);
-          console.debug('mintedToken: ', mintedToken);
-          dispatch(createSetMintedTokenAction(mintedToken));
-          dispatch(createSetSnackMessageAction(generateSuccessSnackMessage));
-        } catch (error) {
-          console.error(error);
-        }
-        dispatch(createSetPayGeneratingLoadingAction(false));
-      }
-    },
-    [accounts, contract]
-  );
-
   const onTokenTransferred = useCallback(
-    async (error: Error, event: any) => {
+    async (error: Error, event: OwnershipTransferredEvent) => {
       console.debug('tokenTransferredEvent: ', event);
 
-      // Ignore init transfer on token mint
-      if (event.returnValues.from === ZERO_ADDRESS) {
-        return;
-      }
-
-      if (matchesConnectedAccount(accounts, event.returnValues.to)) {
-        dispatch(createSetOwnershipTransferredEventAction(event));
+      if (contract) {
+        // Token minted/image generated conditional
+        if (event.returnValues.from === ZERO_ADDRESS) {
+          const mintedToken = await resolveTokenByTokenId(contract, event.returnValues.tokenId);
+          dispatch(createSetMintedTokenAction(mintedToken));
+          dispatch(
+            createAddUserGeneratedTokenEntitiesAction({ [event.returnValues.tokenId]: mintedToken })
+          );
+          dispatch(createSetSnackMessageAction(generateSuccessSnackMessage));
+          dispatch(createSetPayGeneratingLoadingAction(false));
+        }
       }
     },
-    [accounts]
+    [contract]
   );
 
   useEffect(() => {
     if (contract) {
-      // TokenMinted event is sent in addition to Transfer event.
-      // It is not possible to evaluate image generate payer (which is required in order to filter the correct pay generate flow result) from Transfer event, hence we need TokenMinted event handled too.
-      contract.events.TokenMinted(onTokenMinted);
       contract.events.Transfer(
         {
           filter: { to: accounts }
@@ -122,11 +101,10 @@ const WalletProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         onTokenTransferred
       );
 
-      // Get user bought token ids
       getUserTokens(contract, accounts[0], dispatch);
       getTransformations(contract, dispatch);
     }
-  }, [accounts, contract, onTokenMinted, onTokenTransferred]);
+  }, [accounts, contract, onTokenTransferred]);
 
   // NOTE: you *might* need to memoize this value
   // Learn more in http://kcd.im/optimize-context
@@ -140,13 +118,11 @@ const getUserTokens = async (
   account: string,
   dispatch: Dispatch<WalletReducerAction>
 ) => {
-  const [userGeneratedTokens, userBoughtTokens] = await Promise.all([
-    contract.methods.userGeneratedTokens(account).call() as Promise<string[]>,
-    contract.methods.userBoughtTokens(account).call() as Promise<string[]>
+  const [userGeneratedTokens] = await Promise.all([
+    contract.methods.userGeneratedTokens(account).call() as Promise<string[]>
   ]);
 
   dispatch(createAddUserGeneratedTokenIdsAction(userGeneratedTokens));
-  dispatch(createAddUserBoughtTokenIdsAction(userBoughtTokens));
 };
 
 const getTransformations = async (contract: Contract, dispatch: Dispatch<WalletReducerAction>) => {

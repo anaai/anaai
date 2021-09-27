@@ -23,11 +23,9 @@ export const walletReducer = (
             ...state,
             accounts: action.payload,
             contract: null,
-            events: { ...initialState.events },
             loading: { ...initialState.loading },
             tokens: { ...initialState.tokens }
           };
-
     case ACTION_TYPES.SET_CONTRACT_INSTANCE:
       return {
         ...state,
@@ -38,26 +36,10 @@ export const walletReducer = (
         ...state,
         loading: { ...state.loading, payGenerating: action.payload }
       };
-    case ACTION_TYPES.SET_TOKEN_MINTED_EVENT:
-      return {
-        ...state,
-        events: { ...state.events, tokenMinted: action.payload }
-      };
-    case ACTION_TYPES.SET_PAY_IMAGE_LOADING:
-      return {
-        ...state,
-        loading: { ...state.loading, payImage: action.payload }
-      };
     case ACTION_TYPES.SET_MINTED_TOKEN:
       return {
         ...state,
         mintedToken: action.payload
-      };
-    case ACTION_TYPES.SET_OWNERSHIP_TRANSFERRED_EVENT:
-      return {
-        ...state,
-        events: { ...state.events, ownershipTransferred: action.payload },
-        loading: { ...state.loading, payImage: false }
       };
     case ACTION_TYPES.SET_TRANSFORMATIONS:
       return {
@@ -81,22 +63,6 @@ export const walletReducer = (
             state.tokens.generated,
             action.payload
           )
-        }
-      };
-    case ACTION_TYPES.ADD_USER_BOUGHT_TOKEN_IDS:
-      return {
-        ...state,
-        tokens: {
-          ...state.tokens,
-          bought: extendTokenCollectionViaTokenIdsReducer(state.tokens.bought, action.payload)
-        }
-      };
-    case ACTION_TYPES.ADD_USER_BOUGHT_TOKEN_ENTITIES:
-      return {
-        ...state,
-        tokens: {
-          ...state.tokens,
-          bought: extendTokenCollectionViaTokenEntitiesReducer(state.tokens.bought, action.payload)
         }
       };
     default: {
