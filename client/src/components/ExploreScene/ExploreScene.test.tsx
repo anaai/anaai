@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import { ExploreScene } from './ExploreScene';
 
-test('renders explore text', () => {
+test('renders explore scene root container', () => {
   render(<ExploreScene />);
-  const exploreTextElement = screen.getByText(/explore/i);
-  expect(exploreTextElement).toBeInTheDocument();
+  const rootContainerElement = screen.getByTestId(/ExploreScene-root-container/i);
+  expect(rootContainerElement).toBeInTheDocument();
 });

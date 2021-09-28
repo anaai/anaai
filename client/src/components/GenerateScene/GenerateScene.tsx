@@ -3,7 +3,7 @@ import { useWallet } from 'contexts/WalletContext/WalletContext';
 import { GeneratedImage } from './GeneratedImage/GeneratedImage';
 import { PayGenerateForm } from './PayGenerateForm/PayGenerateForm';
 import { useStyles } from './GenerateScene.styles';
-import { PayImageForm } from './PayImageForm/PayImageForm';
+import { ImageGeneratedActions } from './ImageGeneratedActions/ImageGeneratedActions';
 
 export const GenerateScene: React.FC<Record<string, unknown>> = () => {
   const {
@@ -16,7 +16,7 @@ export const GenerateScene: React.FC<Record<string, unknown>> = () => {
     <Box className={classes.root}>
       <Box className={classes.contentContainer}>
         <GeneratedImage />
-        {mintedToken ? <PayImageForm /> : <PayGenerateForm />}
+        {mintedToken ? <ImageGeneratedActions /> : <PayGenerateForm />}
       </Box>
     </Box>
   );

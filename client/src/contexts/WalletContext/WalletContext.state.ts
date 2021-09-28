@@ -1,10 +1,8 @@
 import { SnackMessage } from 'config/snacks/snacks';
 import { MintedToken } from 'models/MintedToken.model';
-import { TokenMintedEvent } from 'models/TokenMintedEvent.model';
 import Web3 from 'web3';
 import { Contract } from 'web3-eth-contract';
 import MetaMaskOnboarding from '@metamask/onboarding';
-import { OwnershipTransferredEvent } from 'models/OwnershipTransferredEvent.model';
 import { Transformations } from 'models/Transformations.model';
 
 export type IWalletContextState = Readonly<{
@@ -16,17 +14,11 @@ export type IWalletContextState = Readonly<{
   contract: Contract | null;
   transformations: Transformations | null;
   mintedToken: MintedToken | null;
-  events: Readonly<{
-    tokenMinted: TokenMintedEvent | null;
-    ownershipTransferred: OwnershipTransferredEvent | null;
-  }>;
   loading: Readonly<{
     payGenerating: boolean;
-    payImage: boolean;
   }>;
   tokens: Readonly<{
     generated: TokenCollection;
-    bought: TokenCollection;
   }>;
 }>;
 
@@ -43,13 +35,10 @@ export const initialState: IWalletContextState = {
   contract: null,
   transformations: null,
   mintedToken: null,
-  events: { tokenMinted: null, ownershipTransferred: null },
   loading: {
-    payGenerating: false,
-    payImage: false
+    payGenerating: false
   },
   tokens: {
-    generated: {},
-    bought: {}
+    generated: {}
   }
 } as const;

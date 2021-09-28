@@ -1,22 +1,16 @@
 import {
   ACTION_TYPES,
-  createAddUserBoughtTokenEntitiesAction,
-  createAddUserBoughtTokenIdsAction,
   createAddUserGeneratedTokenEntitiesAction,
   createAddUserGeneratedTokenIdsAction,
   createSetAccountsAction,
   createSetContractInstanceAction,
   createSetMintedTokenAction,
-  createSetOwnershipTransferredEventAction,
   createSetPayGeneratingLoadingAction,
-  createSetPayImageLoadingAction,
   createSetSnackMessageAction,
-  createSetTokenMintedEventAction,
   createSetTransformationsAction
 } from './WalletContext.actions';
 import { connectToMetaMaskSnackMessage } from 'config/snacks/snacks';
 import { Contract } from 'web3-eth-contract';
-import { TokenMintedEvent } from 'models/TokenMintedEvent.model';
 import { MintedToken } from 'models/MintedToken.model';
 import { OwnershipTransferredEvent } from 'models/OwnershipTransferredEvent.model';
 import { Transformations } from 'models/Transformations.model';
@@ -72,32 +66,6 @@ test('createSetPayGeneratingLoadingAction', () => {
   expect(action).toEqual(expectedAction);
 });
 
-test('createSetTokenMintedEventAction', () => {
-  const mockTokenMintedEvent = {} as TokenMintedEvent;
-
-  const action = createSetTokenMintedEventAction(mockTokenMintedEvent);
-
-  const expectedAction = {
-    type: ACTION_TYPES.SET_TOKEN_MINTED_EVENT,
-    payload: mockTokenMintedEvent
-  };
-
-  expect(action).toEqual(expectedAction);
-});
-
-test('createSetPayImageLoadingAction', () => {
-  const isLoading = true;
-
-  const action = createSetPayImageLoadingAction(isLoading);
-
-  const expectedAction = {
-    type: ACTION_TYPES.SET_PAY_IMAGE_LOADING,
-    payload: isLoading
-  };
-
-  expect(action).toEqual(expectedAction);
-});
-
 test('createSetMintedTokenAction', () => {
   const mockMintedToken = {} as MintedToken;
 
@@ -106,19 +74,6 @@ test('createSetMintedTokenAction', () => {
   const expectedAction = {
     type: ACTION_TYPES.SET_MINTED_TOKEN,
     payload: mockMintedToken
-  };
-
-  expect(action).toEqual(expectedAction);
-});
-
-test('createSetOwnershipTransferredEventAction', () => {
-  const mockOwnershipTransferredEvent = {} as OwnershipTransferredEvent;
-
-  const action = createSetOwnershipTransferredEventAction(mockOwnershipTransferredEvent);
-
-  const expectedAction = {
-    type: ACTION_TYPES.SET_OWNERSHIP_TRANSFERRED_EVENT,
-    payload: mockOwnershipTransferredEvent
   };
 
   expect(action).toEqual(expectedAction);
@@ -162,36 +117,6 @@ test('createAddUserGeneratedTokenEntitiesAction', () => {
   const expectedAction = {
     type: ACTION_TYPES.ADD_USER_GENERATED_TOKEN_ENTITIES,
     payload: mockUserGeneratedEntities
-  };
-
-  expect(action).toEqual(expectedAction);
-});
-
-test('createAddUserBoughtTokenIdsAction', () => {
-  const mockUserBoughtTokenIds = ['1', '2', '3'];
-
-  const action = createAddUserBoughtTokenIdsAction(mockUserBoughtTokenIds);
-
-  const expectedAction = {
-    type: ACTION_TYPES.ADD_USER_BOUGHT_TOKEN_IDS,
-    payload: mockUserBoughtTokenIds
-  };
-
-  expect(action).toEqual(expectedAction);
-});
-
-test('createAddUserBoughtTokenEntitiesAction', () => {
-  const mockUserBoughtEntities = {
-    '1': {
-      image: 'mockUrl',
-      name: 'mockName'
-    }
-  } as TokenCollection;
-  const action = createAddUserBoughtTokenEntitiesAction(mockUserBoughtEntities);
-
-  const expectedAction = {
-    type: ACTION_TYPES.ADD_USER_BOUGHT_TOKEN_ENTITIES,
-    payload: mockUserBoughtEntities
   };
 
   expect(action).toEqual(expectedAction);

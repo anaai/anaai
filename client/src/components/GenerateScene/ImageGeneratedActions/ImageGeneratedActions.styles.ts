@@ -1,12 +1,6 @@
 import { makeStyles } from '@material-ui/core';
 
 export const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center'
-  },
-
   ctaButtonsContainer: {
     margin: theme.spacing(2),
     marginTop: theme.spacing(1),
