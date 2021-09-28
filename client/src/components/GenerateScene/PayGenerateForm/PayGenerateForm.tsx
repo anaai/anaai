@@ -56,7 +56,7 @@ export const PayGenerateForm: React.FC<Record<string, unknown>> = () => {
 
   const handlePayGenerating = async () => {
     if (contract && selectedTransformationType) {
-      // Loading finish is triggered either on payGenerating error or tokenMintedEvent
+      // Loading finish is triggered either on payGenerating error or tokenTransferredEvent
       dispatch(createSetPayGeneratingLoadingAction(true));
       try {
         const payGeneratingResult: PayGeneratingResult = await contract.methods

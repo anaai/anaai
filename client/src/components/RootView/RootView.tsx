@@ -6,9 +6,16 @@ import { LandingScene } from 'components/LandingScene/LandingScene';
 import { WalletConnector } from 'components/WalletConnector/WalletConnector';
 import { useStyles } from './RootView.styles';
 import { ExploreScene } from 'components/ExploreScene/ExploreScene';
+import { useWallet } from 'contexts/WalletContext/WalletContext';
 
 export const RootView: React.FC<Record<string, unknown>> = () => {
   const classes = useStyles();
+
+  const {
+    state: { accounts }
+  } = useWallet();
+
+  const isWalletConnected = accounts[0];
 
   return (
     <Box className={classes.root}>
@@ -17,9 +24,10 @@ export const RootView: React.FC<Record<string, unknown>> = () => {
       </Box>
 
       <Switch>
+        {isWalletConnected && <Route exact path="/generate" component={GenerateScene} />}
+        {isWalletConnected && <Route exact path="/explore" component={ExploreScene} />}
+
         <Route exact path="/" component={LandingScene} />
-        <Route exact path="/generate" component={GenerateScene} />
-        <Route exact path="/explore" component={ExploreScene} />
         <Route path="" render={() => <Redirect to="/" />} />
       </Switch>
     </Box>
