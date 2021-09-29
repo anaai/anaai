@@ -12,7 +12,7 @@ const account = web3.eth.accounts.privateKeyToAccount('0x' + PRIVATE_KEY);
 web3.eth.accounts.wallet.add(account);
 web3.eth.defaultAccount = account.address;
 
-const contract = require("../artifacts/contracts/StyleNFT.sol/StyleNFT.json");
+const contract = require("../artifacts/contracts/StyleArt.sol/StyleArt.json");
 const nftContract = new web3.eth.Contract(contract.abi, CONTRACT_ADDRESS);
 
 async function addTransformation(contract, address, name, price, supply) {

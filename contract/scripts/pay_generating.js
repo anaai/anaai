@@ -12,12 +12,12 @@ const account = web3.eth.accounts.privateKeyToAccount('0x' + PRIVATE_KEY);
 web3.eth.accounts.wallet.add(account);
 web3.eth.defaultAccount = account.address;
 
-const contract = require("../artifacts/contracts/StyleNFT.sol/StyleNFT.json");
+const contract = require("../artifacts/contracts/StyleArt.sol/StyleArt.json");
 const nftContract = new web3.eth.Contract(contract.abi, CONTRACT_ADDRESS);
 const folapAddress = "0x7b245f044456183BF4949dC1aff2ae9d3691edfF";
 
-const TRANFORMATION_ID = 5;
-const IMAGE_URL = "https://images.unsplash.com/photo-1522767131594-6b7e96848fba?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTd8fGJlYXV0aWZ1bCUyMGdpcmx8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80";
+const TRANFORMATION_ID = 3;
+const IMAGE_URL = "https://i.pinimg.com/originals/5b/b9/59/5bb95935defd974fa87b44eaa8ed9bcd.jpg";
 
 async function payGenerating(contract, address, transformationId, imageUrl) {
   const message = await contract.methods
