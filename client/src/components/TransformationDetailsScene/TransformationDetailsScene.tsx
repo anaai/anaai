@@ -1,4 +1,5 @@
 import { Box, Typography } from '@material-ui/core';
+import ReactCompareImage from 'react-compare-image';
 import { useParams } from 'react-router';
 import { useStyles } from './TransformationDetailsScene.styles';
 
@@ -46,7 +47,14 @@ export const TransformationDetailsScene: React.FC<Record<string, unknown>> = () 
         </Box>
 
         <Box className={classes.transformationImagesContainer}>
-          <img
+          <ReactCompareImage
+            hover
+            handle={<></>}
+            sliderPositionPercentage={0.33}
+            leftImage="https://trello.com/1/cards/614765dca3613935ccdc0650/attachments/6153357c9744274e1150b8cd/previews/6153357e9744274e1150b901/download/gril.jpeg.jpg"
+            rightImage="https://trello.com/1/cards/614765dca3613935ccdc0650/attachments/615334dc4815db7724dea6e0/previews/615334dd4815db7724dea704/download/gril.jpeg"
+          />
+          {/* <img
             className={classes.tranformationImage}
             src="https://trello.com/1/cards/614765dca3613935ccdc0650/attachments/615335823572a21f5a51ee0f/previews/615335823572a21f5a51ee55/download/lake.jpeg.jpg"
             alt="example"
@@ -65,7 +73,7 @@ export const TransformationDetailsScene: React.FC<Record<string, unknown>> = () 
             className={classes.tranformationImage}
             src="https://trello.com/1/cards/614765dca3613935ccdc0650/attachments/61533570863d532acf250fce/previews/61533571863d532acf250fe7/download/dogo.jpeg.jpg"
             alt="example"
-          />
+          /> */}
         </Box>
       </Box>
     </Box>

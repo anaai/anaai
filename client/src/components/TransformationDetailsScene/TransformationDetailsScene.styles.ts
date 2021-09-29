@@ -18,6 +18,8 @@ export const useStyles = makeStyles((theme) => ({
     cursor: 'pointer',
     userSelect: 'none',
     overflow: 'hidden',
+    maxWidth: theme.spacing(100),
+    boxShadow: theme.shadows[1],
     transition: theme.transitions.create('background-color', {
       duration: theme.transitions.duration.short,
       easing: theme.transitions.easing.easeInOut
@@ -58,19 +60,8 @@ export const useStyles = makeStyles((theme) => ({
   transformationImagesContainer: {
     flex: 1,
     maxWidth: '50%',
-    display: 'grid',
-    gridTemplateColumns: '1fr 1fr',
-    gridTemplateRows: '1fr 1fr',
-    columnGap: theme.spacing(1),
-    rowGap: theme.spacing(1),
-    padding: theme.spacing(4),
-    backgroundColor: '#fff',
-    transition: `${theme.transitions.create(['padding'], {
-      duration: theme.transitions.duration.short,
-      easing: theme.transitions.easing.easeInOut
-    })} `,
-    '&:hover': {
-      padding: theme.spacing(3)
+    '& > div': {
+      height: '100%!important'
     }
   },
   tranformationImage: {

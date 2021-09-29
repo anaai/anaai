@@ -4,6 +4,17 @@ import { createMemoryHistory } from 'history';
 import { Router } from 'react-router';
 
 test('renders transformation detail scene root container', () => {
+  class ResizeObserver {
+    observe() {
+      // do nothing
+    }
+    unobserve() {
+      // do nothing
+    }
+  }
+
+  global.ResizeObserver = ResizeObserver as any;
+
   const history = createMemoryHistory();
   const route = '/transformations/1';
   history.push(route);
