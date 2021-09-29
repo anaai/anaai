@@ -5,7 +5,7 @@ from web3 import EthereumTesterProvider, Web3
 from eth_tester import EthereumTester, PyEVMBackend
 import eth_tester.backends.pyevm.main as py_evm_main
 
-from contracts.style_nft import StyleNFT
+from contracts.style_art import StyleArt
 
 py_evm_main.GENESIS_GAS_LIMIT = 10000000
 PRIVATE_KEY = "0x0000000000000000000000000000000000000000000000000000000000000001"
@@ -34,14 +34,14 @@ def w3(tester_provider):
 def contract(eth_tester, w3):
   deploy_address = eth_tester.get_accounts()[0]
 
-  with open("contracts/StyleNFT.json") as f:
+  with open("contracts/StyleArt.json") as f:
     contract = json.load(f)
     abi = contract["abi"]
     bytecode = contract["bytecode"]
 
-  StyleNFTContract = w3.eth.contract(abi=abi, bytecode=bytecode)
+  StyleArtContract = w3.eth.contract(abi=abi, bytecode=bytecode)
 
-  tx_hash = StyleNFTContract.constructor().transact({
+  tx_hash = StyleArtContract.constructor().transact({
     "from": deploy_address,
     "gas": 10000000
   })
@@ -50,12 +50,12 @@ def contract(eth_tester, w3):
   # instantiate and return an instance of our contract.
   contract = w3.eth.contract(abi=abi, address=tx_receipt.contractAddress)
 
-  style_nft = StyleNFT(contract, w3, deploy_address, PRIVATE_KEY)
+  style_art = StyleArt(contract, w3, deploy_address, PRIVATE_KEY)
 
-  return style_nft
+  return style_art
 
 def test_contract_creation(contract):
-  assert type(contract) is StyleNFT
+  assert type(contract) is StyleArt
 
 def test_total_supply(contract):
   assert contract.total_supply() == 0

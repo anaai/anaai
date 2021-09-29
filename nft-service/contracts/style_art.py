@@ -1,4 +1,4 @@
-class StyleNFT:
+class StyleArt:
   def __init__(self, contract, w3, public_key, private_key):
     self.contract = contract
     self.w3 = w3

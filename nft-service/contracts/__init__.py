@@ -1,1 +1,1 @@
-from contracts.factories import style_nft_factory
+from contracts.factories import style_art_factory
