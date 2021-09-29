@@ -1,1 +1,1 @@
-curl localhost:8000/status
+curl localhost:7000/status

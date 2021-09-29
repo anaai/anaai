@@ -17,7 +17,7 @@ const nftContract = new web3.eth.Contract(contract.abi, CONTRACT_ADDRESS);
 const folapAddress = "0x7b245f044456183BF4949dC1aff2ae9d3691edfF";
 
 async function mintNFT(contract, address, payer, tokenURI, price) {
-  const message = await contract.methods.mintNFT(address, payer, tokenURI, price)
+  const message = await contract.methods.mintNFT(payer, tokenURI)
                                         .send({from: address, gas: 500000});
   console.log(message)
 }
