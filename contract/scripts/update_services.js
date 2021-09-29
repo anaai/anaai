@@ -1,5 +1,4 @@
 const fs = require('fs');
-
 const replace = require("replace");
 
 const PATHS = [
@@ -13,12 +12,12 @@ const CLIENT_PATHS = [
 ];
 
 const CONTRACT_ABI_PATHS = [
-  "../event-listener/StyleNFT.json",
-  "../nft-service/contracts/StyleNFT.json",
-  "../client/src/assets/contracts/StyleNFT.json"
+  "../event-listener/StyleArt.json",
+  "../nft-service/contracts/StyleArt.json",
+  "../client/src/assets/contracts/StyleArt.json"
 ];
 
-const CONTRACT_ABI_PATH = "artifacts/contracts/StyleNFT.sol/StyleNFT.json";
+const CONTRACT_ABI_PATH = "artifacts/contracts/StyleArt.sol/StyleArt.json";
 
 const CONTRACT_ADDRESS = process.argv[2];
 
