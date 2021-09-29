@@ -21,6 +21,7 @@
     "lint-staged": "^11.1.2",
     "prettier": "2.3.2",
     "react": "^17.0.2",
+    "react-compare-image": "^3.1.0",
     "react-dom": "^17.0.2",
     "react-lazy-load-image-component": "^1.5.1",
     "react-router-dom": "^5.2.0",
