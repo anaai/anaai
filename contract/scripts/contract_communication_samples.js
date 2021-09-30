@@ -8,7 +8,7 @@ const CONTRACT_ADDRESS = process.env.CONTRACT_ADDRESS;
 const { createAlchemyWeb3 } = require("@alch/alchemy-web3");
 const web3 = createAlchemyWeb3(API_URL);
 
-const contract = require("../artifacts/contracts/StyleNFT.sol/StyleNFT.json");
+const contract = require("../artifacts/contracts/StyleArt.sol/StyleArt.json");
 const nftContract = new web3.eth.Contract(contract.abi, CONTRACT_ADDRESS);
 const folapAddress = "0x7b245f044456183BF4949dC1aff2ae9d3691edfF"
 

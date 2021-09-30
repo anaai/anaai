@@ -8,7 +8,7 @@ from pydantic import BaseModel
 from web3 import Web3
 
 import logger
-from contracts import style_nft_factory
+from contracts import style_art_factory
 
 load_dotenv()
 
@@ -16,7 +16,7 @@ PUBLIC_KEY = Web3.toChecksumAddress(os.getenv("PUBLIC_KEY"))
 PRIVATE_KEY = f'0x{os.getenv("PRIVATE_KEY")}'
 API_URL = os.getenv("API_URL")
 CONTRACT_ADDRESS = Web3.toChecksumAddress(os.getenv("CONTRACT_ADDRESS"))
-CONTRACT_PATH = "contracts/StyleNFT.json"
+CONTRACT_PATH = "contracts/StyleArt.json"
 
 app = FastAPI()
 
@@ -30,7 +30,7 @@ async def get_status():
 
 @app.post("/mint_nft")
 async def mint_nft(nft: NFTPayload):
-  contract = style_nft_factory(PUBLIC_KEY, PRIVATE_KEY, API_URL, CONTRACT_ADDRESS, CONTRACT_PATH)
+  contract = style_art_factory(PUBLIC_KEY, PRIVATE_KEY, API_URL, CONTRACT_ADDRESS, CONTRACT_PATH)
   token_id = contract.mint_nft(Web3.toChecksumAddress(nft.payer),
                                nft.token_uri)
 

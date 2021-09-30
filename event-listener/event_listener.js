@@ -10,7 +10,7 @@ const TRANSFER_TOKEN_URL = process.env.NFT_SERVICE_TRANSFER_TOKEN_URL;
 const { createAlchemyWeb3 } = require("@alch/alchemy-web3");
 const web3 = createAlchemyWeb3(WS_API_URL);
 
-const contract = require("./StyleNFT.json");
+const contract = require("./StyleArt.json");
 const nftContract = new web3.eth.Contract(contract.abi, CONTRACT_ADDRESS);
 
 const triggerJob = async (payer, transformation, imageURL, imageName, txHash, blockHash) => {

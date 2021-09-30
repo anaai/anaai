@@ -2,9 +2,9 @@ const { expect } = require("chai");
 const { accounts, contract, web3 } = require("@openzeppelin/test-environment");
 const { BN, expectEvent, expectRevert } = require("@openzeppelin/test-helpers");
 
-const StyleNFT = contract.fromArtifact("StyleNFT");
+const StyleNFT = contract.fromArtifact("StyleArt");
 
-describe("StyleNFT", () => {
+describe("StyleArt", () => {
   const [ owner, user1 ] = accounts;
   const uri = "token1URI";
 

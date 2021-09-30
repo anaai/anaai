@@ -1,4 +1,4 @@
-//Contract based on https://docs.openzeppelin.com/contracts/3.x/erc721
+// Contract based on https://docs.openzeppelin.com/contracts/3.x/erc721
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.7.3;
 pragma experimental ABIEncoderV2;
@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract StyleNFT is ERC721, Ownable {
+contract StyleArt is ERC721, Ownable {
   struct Asset {
     address payer;
     uint256 time;
@@ -38,7 +38,7 @@ contract StyleNFT is ERC721, Ownable {
   event ImageGenerationPaid(address sender, uint256 value, uint256 transformationId, string imageURL);
   event TokenMinted(address payer, uint256 tokenId, string tokenURI);
 
-  constructor() ERC721("styleart", "snft") {
+  constructor() ERC721("styleart", "sart") {
     admin = payable(msg.sender);
   }
 
