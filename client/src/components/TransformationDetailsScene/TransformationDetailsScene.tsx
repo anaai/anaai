@@ -91,9 +91,14 @@ export const TransformationDetailsScene: React.FC<Record<string, unknown>> = () 
 
       <Box className={classes.galleryContainer}>
         <Box className={classes.galleryContainerInner}>
-          <ImageList rowHeight={theme.spacing(30)} className={classes.imageList} cols={2}>
+          <ImageList
+            rowHeight={theme.spacing(30)}
+            className={classes.imageList}
+            cols={2}
+            gap={theme.spacing(1)}
+          >
             {Object.entries(images[transformationId]).map(([imageName, imageUrl]) => (
-              <ImageListItem key={imageUrl} cols={1}>
+              <ImageListItem className={classes.galleryImageContainer} key={imageUrl} cols={1}>
                 <ReactCompareImage
                   // hover
                   // handle={<></>}

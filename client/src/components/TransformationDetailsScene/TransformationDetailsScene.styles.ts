@@ -84,5 +84,14 @@ export const useStyles = makeStyles((theme) => ({
     width: theme.spacing(100)
   },
   galleryContainerInner: {},
-  imageList: {}
+  imageList: {},
+  galleryImageContainer: {
+    padding: '0!important',
+    borderRadius: theme.spacing(0.2),
+    boxShadow: theme.shadows[1],
+    overflow: 'hidden',
+    '& > div > div': {
+      height: '100%!important'
+    }
+  }
 }));
