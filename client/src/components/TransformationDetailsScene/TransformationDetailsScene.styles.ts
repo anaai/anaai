@@ -77,5 +77,12 @@ export const useStyles = makeStyles((theme) => ({
     width: '100%',
     height: '100%',
     objectFit: 'cover'
-  }
+  },
+  galleryContainer: {
+    margin: theme.spacing(5),
+    maxWidth: `calc(100% - ${theme.spacing(10)}px)`,
+    width: theme.spacing(100)
+  },
+  galleryContainerInner: {},
+  imageList: {}
 }));

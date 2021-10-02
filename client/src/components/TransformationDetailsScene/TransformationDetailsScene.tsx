@@ -1,13 +1,24 @@
-import { Box, Typography } from '@material-ui/core';
+import { Box, ImageList, ImageListItem, Typography } from '@material-ui/core';
+import { useTheme } from '@material-ui/core';
 import { images } from 'config/imageLoader/imageLoader';
 import ReactCompareImage from 'react-compare-image';
 import { useParams } from 'react-router';
 import { useStyles } from './TransformationDetailsScene.styles';
 
+type TransformationId = keyof typeof images;
+
+type ImageName = keyof typeof images[TransformationId];
+
+interface TransformationDetailsParams {
+  id: TransformationId;
+}
+
 export const TransformationDetailsScene: React.FC<Record<string, unknown>> = () => {
   const classes = useStyles();
 
-  const { id } = useParams<{ id: string }>();
+  const { id: transformationId } = useParams<TransformationDetailsParams>();
+
+  const theme = useTheme();
 
   return (
     <Box className={classes.root} data-testid="TransformationDetailsScene-root-container">
@@ -52,7 +63,7 @@ export const TransformationDetailsScene: React.FC<Record<string, unknown>> = () 
             // hover
             // handle={<></>}
             sliderPositionPercentage={0.33}
-            leftImage={images.skectch.gril}
+            leftImage={images[transformationId].gril}
             rightImage={images.base.gril}
           />
           {/* <img
@@ -75,6 +86,24 @@ export const TransformationDetailsScene: React.FC<Record<string, unknown>> = () 
             src="https://trello.com/1/cards/614765dca3613935ccdc0650/attachments/61533570863d532acf250fce/previews/61533571863d532acf250fe7/download/dogo.jpeg.jpg"
             alt="example"
           /> */}
+        </Box>
+      </Box>
+
+      <Box className={classes.galleryContainer}>
+        <Box className={classes.galleryContainerInner}>
+          <ImageList rowHeight={theme.spacing(30)} className={classes.imageList} cols={2}>
+            {Object.entries(images[transformationId]).map(([imageName, imageUrl]) => (
+              <ImageListItem key={imageUrl} cols={1}>
+                <ReactCompareImage
+                  // hover
+                  // handle={<></>}
+                  sliderPositionPercentage={0.33}
+                  leftImage={imageUrl}
+                  rightImage={images.base[imageName as ImageName]}
+                />
+              </ImageListItem>
+            ))}
+          </ImageList>
         </Box>
       </Box>
     </Box>

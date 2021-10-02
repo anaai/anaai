@@ -37,7 +37,7 @@ export const images = {
     lake: feathersLake,
     nature: feathersNature
   },
-  skectch: {
+  sketch: {
     dogo: sketchDogo,
     gril: sketchGril,
     lake: sketchLake,
@@ -55,4 +55,4 @@ export const images = {
     lake: sketchLake,
     nature: sketchNature
   }
-};
+} as const;
