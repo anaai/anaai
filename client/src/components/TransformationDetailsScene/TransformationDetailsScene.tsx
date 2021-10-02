@@ -1,4 +1,5 @@
 import { Box, Typography } from '@material-ui/core';
+import { images } from 'config/imageLoader/imageLoader';
 import ReactCompareImage from 'react-compare-image';
 import { useParams } from 'react-router';
 import { useStyles } from './TransformationDetailsScene.styles';
@@ -48,11 +49,11 @@ export const TransformationDetailsScene: React.FC<Record<string, unknown>> = () 
 
         <Box className={classes.transformationImagesContainer}>
           <ReactCompareImage
-            hover
-            handle={<></>}
+            // hover
+            // handle={<></>}
             sliderPositionPercentage={0.33}
-            leftImage="https://trello.com/1/cards/614765dca3613935ccdc0650/attachments/6153357c9744274e1150b8cd/previews/6153357e9744274e1150b901/download/gril.jpeg.jpg"
-            rightImage="https://trello.com/1/cards/614765dca3613935ccdc0650/attachments/615334dc4815db7724dea6e0/previews/615334dd4815db7724dea704/download/gril.jpeg"
+            leftImage={images.skectch.gril}
+            rightImage={images.base.gril}
           />
           {/* <img
             className={classes.tranformationImage}
