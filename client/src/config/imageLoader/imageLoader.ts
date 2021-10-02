@@ -19,23 +19,40 @@ import sketchLake from 'assets/images/transformations/sketch/lake.jpg';
 import sketchNature from 'assets/images/transformations/sketch/nature.jpg';
 
 export const images = {
-  baseDogo,
-  baseGril,
-  baseLake,
-  baseNature,
-
-  candyDogo,
-  candyGril,
-  candyLake,
-  candyNature,
-
-  feathersDogo,
-  feathersGril,
-  feathersLake,
-  feathersNature,
-
-  sketchDogo,
-  sketchGril,
-  sketchLake,
-  sketchNature
+  base: {
+    dogo: baseDogo,
+    gril: baseGril,
+    lake: baseLake,
+    nature: baseNature
+  },
+  candy: {
+    dogo: candyDogo,
+    gril: candyGril,
+    lake: candyLake,
+    nature: candyNature
+  },
+  feathers: {
+    dogo: feathersDogo,
+    gril: feathersGril,
+    lake: feathersLake,
+    nature: feathersNature
+  },
+  skectch: {
+    dogo: sketchDogo,
+    gril: sketchGril,
+    lake: sketchLake,
+    nature: sketchNature
+  },
+  ascii: {
+    dogo: sketchDogo,
+    gril: sketchGril,
+    lake: sketchLake,
+    nature: sketchNature
+  },
+  cartoonification: {
+    dogo: sketchDogo,
+    gril: sketchGril,
+    lake: sketchLake,
+    nature: sketchNature
+  }
 };
