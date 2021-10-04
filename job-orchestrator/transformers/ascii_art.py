@@ -50,12 +50,12 @@ class ASCIIArt:
     image = image.resize(shape)
     image = np.asarray(image)
 
-    image = cv2.bitwise_not(image)
-
     image = np.sum(image, axis=2)
-
     # Normalize the results, enhance and reduce the brightness contrast.
-    image -= image.min()
+    image = cv2.normalize(image, None,
+                          alpha=0, beta=1,
+                          norm_type=cv2.NORM_MINMAX,
+                          dtype=cv2.CV_32F)
     # Map grayscale values to bins of symbols
     image = (1.0 - image / image.max()) ** self.gcf * (self.chars.size - 1)
 
