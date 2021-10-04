@@ -26,10 +26,16 @@ export const RootView: React.FC<Record<string, unknown>> = () => {
       </Box>
 
       <Switch>
-        {isWalletConnected && <Route exact path="/generate" component={GenerateScene} />}
+        {isWalletConnected && (
+          <Route exact path="/generate/:transformationName" component={GenerateScene} />
+        )}
         {isWalletConnected && <Route exact path="/explore" component={ExploreScene} />}
         <Route exact path="/transformations" component={TransformationsScene} />
-        <Route exact path="/transformations/:id" component={TransformationDetailsScene} />
+        <Route
+          exact
+          path="/transformations/:transformationName"
+          component={TransformationDetailsScene}
+        />
 
         <Route exact path="/" component={LandingScene} />
         <Route path="" render={() => <Redirect to="/" />} />
