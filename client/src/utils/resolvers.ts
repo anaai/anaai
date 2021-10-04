@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { MintedToken } from 'models/MintedToken.model';
-import { Transformation, Transformations } from 'models/Transformations.model';
 import { Contract } from 'web3-eth-contract';
 
 export const resolveTokenByTokenId = async (
@@ -16,9 +15,3 @@ export const resolveTokenByTokenId = async (
     throw error;
   }
 };
-
-export const resolveTransformationById = (
-  transformations: Transformations,
-  transformationId: string
-): Transformation | undefined =>
-  transformations.find((transformation) => transformation.id === transformationId);
