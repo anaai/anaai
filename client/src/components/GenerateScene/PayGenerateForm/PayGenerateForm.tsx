@@ -1,5 +1,6 @@
-import { ChangeEventHandler, FocusEventHandler, SyntheticEvent, useEffect, useState } from 'react';
+import { ChangeEventHandler, FocusEventHandler, SyntheticEvent, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useParams } from 'react-router';
 import {
   Box,
   Button,
@@ -22,10 +23,15 @@ import {
 import { PayGeneratingResult } from 'models/PayGeneratingResult.model';
 import { validateAccountConnection, validateUrl } from 'utils/validators';
 import { useStyles } from './PayGenerateForm.styles';
-import { resolveTransformationById } from 'utils/resolvers';
-import { Transformation } from 'models/Transformations.model';
+import { TransformationName } from 'config/transformations/transformations';
+
+interface PayGenerateFormParams {
+  transformationName: TransformationName;
+}
 
 export const PayGenerateForm: React.FC<Record<string, unknown>> = () => {
+  const { transformationName } = useParams<PayGenerateFormParams>();
+
   const {
     state: {
       contract,
@@ -35,6 +41,10 @@ export const PayGenerateForm: React.FC<Record<string, unknown>> = () => {
     },
     dispatch
   } = useWallet();
+
+  const transformationEntity = transformations?.find(
+    (transformation) => transformation.name === transformationName
+  );
 
   const [url, setUrl] = useState('');
   const [urlErrorMessage, setUrlErrorMessage] = useState('Invalid URL provided');
@@ -55,12 +65,12 @@ export const PayGenerateForm: React.FC<Record<string, unknown>> = () => {
   const handleUrlBlur: FocusEventHandler<HTMLInputElement> = () => setUrlInputTouched(true);
 
   const handlePayGenerating = async () => {
-    if (contract && selectedTransformationType) {
+    if (contract && transformationName && transformationEntity) {
       // Loading finish is triggered either on payGenerating error or tokenTransferredEvent
       dispatch(createSetPayGeneratingLoadingAction(true));
       try {
         const payGeneratingResult: PayGeneratingResult = await contract.methods
-          .payGenerating(selectedTransformationType.id, url)
+          .payGenerating(transformationEntity.id, url)
           .send({ from: accounts[0], gas: 1_000_000 });
 
         console.debug('payGeneratingResult: ', payGeneratingResult);
@@ -85,21 +95,13 @@ export const PayGenerateForm: React.FC<Record<string, unknown>> = () => {
     }
   };
 
-  const [selectedTransformationType, setSelectedTransformationType] = useState<Transformation>();
-
-  useEffect(() => {
-    if (transformations) {
-      setSelectedTransformationType(transformations[0]);
-    }
-  }, [transformations]);
+  const history = useHistory();
 
   const handleSelectedTransformationTypeChange: ChangeEventHandler<HTMLInputElement> = ({
-    target: { value: transformationId }
-  }) =>
-    transformations &&
-    setSelectedTransformationType(resolveTransformationById(transformations, transformationId));
-
-  const history = useHistory();
+    target: { value: transformationName }
+  }) => {
+    transformations && history.push(`/generate/${transformationName}`);
+  };
 
   const handleBackClick = () => {
     history.goBack();
@@ -108,7 +110,11 @@ export const PayGenerateForm: React.FC<Record<string, unknown>> = () => {
   const classes = useStyles();
 
   return (
-    <form className={classes.root} onSubmit={handleUrlFormSubmit}>
+    <form
+      className={classes.root}
+      onSubmit={handleUrlFormSubmit}
+      data-testid="PayGenerateForm-root-container"
+    >
       {payGeneratingLoading || (
         <>
           <input
@@ -132,19 +138,19 @@ export const PayGenerateForm: React.FC<Record<string, unknown>> = () => {
             {`${urlErrorMessage || !url ? urlErrorMessage : 'Ready for Liftoff'} `}
           </Typography>
 
-          {transformations && selectedTransformationType && (
+          {transformations && transformationName && (
             <FormControl component="fieldset" className={classes.transformationFieldset}>
               <FormLabel component="legend">Transformation type</FormLabel>
               <RadioGroup
                 aria-label="gender"
                 name="selectedTransformationType"
-                value={selectedTransformationType.id}
+                value={transformationName}
                 onChange={handleSelectedTransformationTypeChange}
               >
                 {transformations.map((transformation) => (
                   <FormControlLabel
                     key={transformation.id}
-                    value={transformation.id}
+                    value={transformation.name}
                     control={<Radio />}
                     label={transformation.name}
                   />
