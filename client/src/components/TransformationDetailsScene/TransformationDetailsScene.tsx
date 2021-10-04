@@ -1,30 +1,43 @@
-import { Box, ImageList, ImageListItem, Typography } from '@material-ui/core';
+import {
+  Box,
+  Button,
+  ImageList,
+  ImageListItem,
+  Typography,
+  useMediaQuery
+} from '@material-ui/core';
 import { useTheme } from '@material-ui/core';
 import { images } from 'config/imageLoader/imageLoader';
+import { ImageName, TransformationName } from 'config/transformations/transformations';
 import ReactCompareImage from 'react-compare-image';
-import { useParams } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import { useStyles } from './TransformationDetailsScene.styles';
 
-type TransformationId = keyof typeof images;
-
-type ImageName = keyof typeof images[TransformationId];
-
 interface TransformationDetailsParams {
-  id: TransformationId;
+  transformationName: TransformationName;
 }
 
 export const TransformationDetailsScene: React.FC<Record<string, unknown>> = () => {
-  const classes = useStyles();
+  const { transformationName } = useParams<TransformationDetailsParams>();
 
-  const { id: transformationId } = useParams<TransformationDetailsParams>();
+  const history = useHistory();
+  const handleExploreOtherTransformationsClick = () => {
+    history.push('/transformations');
+  };
+
+  const handleGenerateClick = () => {
+    history.push(`/generate/${transformationName}`);
+  };
 
   const theme = useTheme();
+  const matchesSmDown = useMediaQuery(theme.breakpoints.down('sm'));
+  const classes = useStyles();
 
   return (
     <Box className={classes.root} data-testid="TransformationDetailsScene-root-container">
-      <Box className={classes.tranformationCard}>
+      <Box>
         <Box className={classes.transformationInfoContainer}>
-          <Typography className={classes.transformationTitle} variant="h5">
+          <Typography className={classes.transformationTitle} variant="h3">
             Transformation title
           </Typography>
 
@@ -58,50 +71,42 @@ export const TransformationDetailsScene: React.FC<Record<string, unknown>> = () 
           </Box>
         </Box>
 
-        <Box className={classes.transformationImagesContainer}>
-          <ReactCompareImage
-            // hover
-            // handle={<></>}
-            sliderPositionPercentage={0.33}
-            leftImage={images[transformationId].gril}
-            rightImage={images.base.gril}
-          />
-          {/* <img
-            className={classes.tranformationImage}
-            src="https://trello.com/1/cards/614765dca3613935ccdc0650/attachments/615335823572a21f5a51ee0f/previews/615335823572a21f5a51ee55/download/lake.jpeg.jpg"
-            alt="example"
-          />
-          <img
-            className={classes.tranformationImage}
-            src="https://trello.com/1/cards/614765dca3613935ccdc0650/attachments/6153357c9744274e1150b8cd/previews/6153357e9744274e1150b901/download/gril.jpeg.jpg"
-            alt="example"
-          />
-          <img
-            className={classes.tranformationImage}
-            src="https://trello.com/1/cards/614765dca3613935ccdc0650/attachments/61533574ebd5aa595af3b47a/previews/61533575ebd5aa595af3b4be/download/nature.jpeg.jpg"
-            alt="example"
-          />
-          <img
-            className={classes.tranformationImage}
-            src="https://trello.com/1/cards/614765dca3613935ccdc0650/attachments/61533570863d532acf250fce/previews/61533571863d532acf250fe7/download/dogo.jpeg.jpg"
-            alt="example"
-          /> */}
+        <Box className={classes.transformationDetailsActionsContainer}>
+          <Button
+            onClick={handleGenerateClick}
+            className={classes.generateNowButton}
+            color="primary"
+            variant="contained"
+          >
+            Generate
+          </Button>
+
+          <Button
+            onClick={handleExploreOtherTransformationsClick}
+            className={classes.exploreOtherTransformations}
+            color="secondary"
+            variant="contained"
+          >
+            Explore other transformations
+          </Button>
         </Box>
       </Box>
 
       <Box className={classes.galleryContainer}>
+        <Typography variant="h3" className={classes.examplesTitle}>
+          Examples
+        </Typography>
+
         <Box className={classes.galleryContainerInner}>
           <ImageList
             rowHeight={theme.spacing(30)}
             className={classes.imageList}
-            cols={2}
-            gap={theme.spacing(1)}
+            cols={matchesSmDown ? 1 : 2}
+            gap={theme.spacing(1.5)}
           >
-            {Object.entries(images[transformationId]).map(([imageName, imageUrl]) => (
+            {Object.entries(images[transformationName]).map(([imageName, imageUrl]) => (
               <ImageListItem className={classes.galleryImageContainer} key={imageUrl} cols={1}>
                 <ReactCompareImage
-                  // hover
-                  // handle={<></>}
                   sliderPositionPercentage={0.33}
                   leftImage={imageUrl}
                   rightImage={images.base[imageName as ImageName]}

@@ -5,43 +5,22 @@ export const useStyles = makeStyles((theme) => ({
     flex: 1,
     display: 'flex',
     alignItems: 'center',
-    flexDirection: 'column'
-  },
-  tranformationCard: {
-    borderRadius: theme.spacing(0.2),
-    backgroundColor: 'rgba(255, 255, 255, .15)',
-    backdropFilter: 'blur(5px)',
-    display: 'flex',
-    margin: theme.spacing(5),
-    color: '#fff',
-    textShadow: '1px 1px #0005',
-    userSelect: 'none',
-    overflow: 'hidden',
-    maxWidth: theme.spacing(100),
-    boxShadow: theme.shadows[1],
-    transition: theme.transitions.create('background-color', {
-      duration: theme.transitions.duration.short,
-      easing: theme.transitions.easing.easeInOut
-    }),
-    '&:hover': {
-      backgroundColor: 'rgba(255, 255, 255, .20)'
-    },
-    [theme.breakpoints.down('sm')]: {
-      flexDirection: 'column-reverse'
-    }
+    flexDirection: 'column',
+    maxWidth: '100%'
   },
   transformationInfoContainer: {
     flex: 1,
-    maxWidth: '50%',
     display: 'flex',
     flexDirection: 'column',
     padding: theme.spacing(2),
+    margin: `0 ${theme.spacing(5)}px`,
+    maxWidth: theme.spacing(100),
     [theme.breakpoints.down('sm')]: {
       maxWidth: 'initial'
     }
   },
   transformationTitle: {
-    marginBottom: theme.spacing(1)
+    marginBottom: theme.spacing(2)
   },
   transformationDescription: {
     marginBottom: theme.spacing(2),
@@ -49,7 +28,8 @@ export const useStyles = makeStyles((theme) => ({
   },
   transformationStats: {
     display: 'flex',
-    justifyContent: 'space-around'
+    justifyContent: 'center',
+    marginTop: theme.spacing(1)
   },
   transformationStat: {
     display: 'flex',
@@ -60,6 +40,14 @@ export const useStyles = makeStyles((theme) => ({
     textAlign: 'center'
   },
   transformationStatValue: {},
+  transformationDetailsActionsContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+    marginTop: theme.spacing(2)
+  },
+  generateNowButton: { marginRight: theme.spacing(2) },
+  exploreOtherTransformations: {},
   transformationImagesContainer: {
     flex: 1,
     maxWidth: '50%',
@@ -78,18 +66,21 @@ export const useStyles = makeStyles((theme) => ({
     height: '100%',
     objectFit: 'cover'
   },
+  examplesTitle: {
+    marginBottom: theme.spacing(2)
+  },
   galleryContainer: {
-    margin: theme.spacing(5),
+    margin: `0 ${theme.spacing(5)}px ${theme.spacing(2)}px`,
     maxWidth: `calc(100% - ${theme.spacing(10)}px)`,
     width: theme.spacing(100)
   },
   galleryContainerInner: {},
   imageList: {},
   galleryImageContainer: {
-    padding: '0!important',
-    borderRadius: theme.spacing(0.2),
-    boxShadow: theme.shadows[1],
-    overflow: 'hidden',
+    '& > div': {
+      borderRadius: theme.spacing(0.2),
+      boxShadow: theme.shadows[1]
+    },
     '& > div > div': {
       height: '100%!important'
     }

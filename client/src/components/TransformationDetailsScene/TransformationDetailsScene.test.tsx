@@ -1,32 +1,20 @@
 import { render, screen } from '@testing-library/react';
 import { TransformationDetailsScene } from './TransformationDetailsScene';
 import { createMemoryHistory } from 'history';
-import { MemoryRouter, Route } from 'react-router';
+import { Router, Route } from 'react-router-dom';
+import { injectGlobalResizeObserverMock } from 'tests/mocks/ResizeObserver';
 
 test('renders transformation detail scene root container', () => {
-  class ResizeObserver {
-    observe() {
-      // do nothing
-    }
-    unobserve() {
-      // do nothing
-    }
-    disconnect() {
-      // do nothing
-    }
-  }
-
-  global.ResizeObserver = ResizeObserver as any;
+  injectGlobalResizeObserverMock();
 
   const history = createMemoryHistory();
   const route = 'transformations/sketch';
-  const initialEntries = [route];
   history.push(route);
 
   render(
-    <MemoryRouter initialEntries={initialEntries}>
-      <Route path="transformations/:id" component={TransformationDetailsScene} />
-    </MemoryRouter>
+    <Router history={history}>
+      <Route path="/transformations/:transformationName" component={TransformationDetailsScene} />
+    </Router>
   );
   const rootContainerElement = screen.getByTestId(/TransformationDetailsScene-root-container/i);
   expect(rootContainerElement).toBeInTheDocument();
