@@ -3,13 +3,25 @@ import { blueGrey } from '@material-ui/core/colors';
 
 const spacing = (n: number) => n * 16;
 
+const defaultTypographyStyles = {
+  color: '#fff',
+  textShadow: '1px 1px #0005'
+};
 // Theme palette: https://coolors.co/03256c-2541b2-1768ac-06bee1-ffffff
 export const primaryTheme = responsiveFontSizes(
   createTheme({
     spacing: spacing(1),
     typography: {
       fontFamily: 'Open Sans Condensed',
-      fontSize: spacing(2)
+      fontSize: spacing(2),
+      body1: defaultTypographyStyles,
+      body2: defaultTypographyStyles,
+      h1: defaultTypographyStyles,
+      h2: defaultTypographyStyles,
+      h3: defaultTypographyStyles,
+      h4: defaultTypographyStyles,
+      h5: defaultTypographyStyles,
+      h6: defaultTypographyStyles
     },
     palette: {
       primary: {
