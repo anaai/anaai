@@ -1,6 +1,5 @@
 import { Box, Button, Typography } from '@material-ui/core';
 import { useWallet } from 'contexts/WalletContext/WalletContext';
-import { Transformations } from 'models/Transformations.model';
 import { useHistory } from 'react-router-dom';
 import { useStyles } from './LandingScene.styles';
 
@@ -14,7 +13,7 @@ export const LandingScene: React.FC<Record<string, unknown>> = () => {
   const history = useHistory();
 
   const handleGenerateClick = () => {
-    history.push(`/generate/${(transformations as Transformations)[0].name}`);
+    history.push(`/generate/${transformations?.[0].name}`);
   };
 
   const handleExploreClick = () => {
@@ -33,25 +32,6 @@ export const LandingScene: React.FC<Record<string, unknown>> = () => {
         <Typography variant="h6" className={classes.heroSubtitle}>
           AI NFT Art
         </Typography>
-
-        <Box className={`${classes.ctaButtonsContainer} ${isWalletConnected && classes.show}`}>
-          <Button
-            className={classes.generateButton}
-            color="primary"
-            variant="contained"
-            onClick={handleGenerateClick}
-          >
-            Generate
-          </Button>
-          <Button
-            className={classes.acquireButton}
-            color="secondary"
-            variant="contained"
-            onClick={handleExploreClick}
-          >
-            Explore
-          </Button>
-        </Box>
       </Box>
     </Box>
   );
