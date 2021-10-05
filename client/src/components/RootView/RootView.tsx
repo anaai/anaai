@@ -5,10 +5,11 @@ import { GenerateScene } from 'components/GenerateScene/GenerateScene';
 import { LandingScene } from 'components/LandingScene/LandingScene';
 import { WalletConnector } from 'components/WalletConnector/WalletConnector';
 import { useStyles } from './RootView.styles';
-import { ExploreScene } from 'components/ExploreScene/ExploreScene';
 import { useWallet } from 'contexts/WalletContext/WalletContext';
 import { TransformationsScene } from 'components/TransformationsScene/TransformationsScene';
 import { TransformationDetailsScene } from 'components/TransformationDetailsScene/TransformationDetailsScene';
+import { MyArtScene } from 'components/MyArtScene/MyArtScene';
+import { Header } from 'components/Header/Header';
 
 export const RootView: React.FC<Record<string, unknown>> = () => {
   const classes = useStyles();
@@ -21,22 +22,23 @@ export const RootView: React.FC<Record<string, unknown>> = () => {
 
   return (
     <Box className={classes.root}>
-      <Box className={classes.headerContainer}>
-        <WalletConnector />
-      </Box>
+      <Header />
 
       <Switch>
         {isWalletConnected && (
           <Route exact path="/generate/:transformationName" component={GenerateScene} />
         )}
-        {isWalletConnected && <Route exact path="/explore" component={ExploreScene} />}
-        <Route exact path="/transformations" component={TransformationsScene} />
-        <Route
-          exact
-          path="/transformations/:transformationName"
-          component={TransformationDetailsScene}
-        />
-
+        {isWalletConnected && <Route exact path="/my-art" component={MyArtScene} />}
+        {isWalletConnected && (
+          <Route exact path="/transformations" component={TransformationsScene} />
+        )}
+        {isWalletConnected && (
+          <Route
+            exact
+            path="/transformations/:transformationName"
+            component={TransformationDetailsScene}
+          />
+        )}
         <Route exact path="/" component={LandingScene} />
         <Route path="" render={() => <Redirect to="/" />} />
       </Switch>
