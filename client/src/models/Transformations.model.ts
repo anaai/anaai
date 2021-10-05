@@ -4,4 +4,5 @@ export interface Transformation {
   id: string;
   name: string;
   price: string;
+  supply: string;
 }

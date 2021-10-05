@@ -9,7 +9,7 @@ import {
   useReducer
 } from 'react';
 import Web3 from 'web3';
-import StyleNFTContract from 'assets/contracts/StyleNFT.json';
+import StyleArtContract from 'assets/contracts/StyleArt.json';
 import { Contract } from 'web3-eth-contract';
 import { generateSuccessSnackMessage } from 'config/snacks/snacks';
 import {
@@ -62,7 +62,7 @@ const WalletProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
   useEffect(() => {
     if (accounts.length) {
-      const abi = StyleNFTContract.abi;
+      const abi = StyleArtContract.abi;
       const address = process.env.REACT_APP_CONTRACT_ADDRESS;
       const web3Instance = new Web3(window.ethereum);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any

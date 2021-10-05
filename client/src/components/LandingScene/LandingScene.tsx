@@ -1,11 +1,12 @@
 import { Box, Button, Typography } from '@material-ui/core';
 import { useWallet } from 'contexts/WalletContext/WalletContext';
+import { Transformations } from 'models/Transformations.model';
 import { useHistory } from 'react-router-dom';
 import { useStyles } from './LandingScene.styles';
 
 export const LandingScene: React.FC<Record<string, unknown>> = () => {
   const {
-    state: { accounts }
+    state: { accounts, transformations }
   } = useWallet();
 
   const isWalletConnected = accounts[0];
@@ -13,7 +14,7 @@ export const LandingScene: React.FC<Record<string, unknown>> = () => {
   const history = useHistory();
 
   const handleGenerateClick = () => {
-    history.push('/generate');
+    history.push(`/generate/${(transformations as Transformations)[0].name}`);
   };
 
   const handleExploreClick = () => {

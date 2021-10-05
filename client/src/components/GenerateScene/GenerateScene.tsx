@@ -13,7 +13,7 @@ export const GenerateScene: React.FC<Record<string, unknown>> = () => {
   const classes = useStyles();
 
   return (
-    <Box className={classes.root}>
+    <Box className={classes.root} data-testid="GenerateScene-root-container">
       <Box className={classes.contentContainer}>
         <GeneratedImage />
         {mintedToken ? <ImageGeneratedActions /> : <PayGenerateForm />}
