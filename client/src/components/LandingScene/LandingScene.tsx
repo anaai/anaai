@@ -32,25 +32,6 @@ export const LandingScene: React.FC<Record<string, unknown>> = () => {
         <Typography variant="h6" className={classes.heroSubtitle}>
           AI NFT Art
         </Typography>
-
-        <Box className={`${classes.ctaButtonsContainer} ${isWalletConnected && classes.show}`}>
-          <Button
-            className={classes.generateButton}
-            color="primary"
-            variant="contained"
-            onClick={handleGenerateClick}
-          >
-            Generate
-          </Button>
-          <Button
-            className={classes.acquireButton}
-            color="secondary"
-            variant="contained"
-            onClick={handleExploreClick}
-          >
-            Explore
-          </Button>
-        </Box>
       </Box>
     </Box>
   );

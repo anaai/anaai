@@ -34,24 +34,5 @@ export const useStyles = makeStyles((theme) => ({
     textShadow: '0 3px 3px #0005',
     marginBottom: theme.spacing(2),
     textAlign: 'center'
-  },
-  ctaButtonsContainer: {
-    display: 'flex',
-    opacity: 0,
-    transform: 'translate(0, -2rem)',
-    transition: theme.transitions.create(['opacity', 'transform'], {
-      duration: theme.transitions.duration.short,
-      easing: theme.transitions.easing.easeOut
-    })
-  },
-  show: {
-    opacity: 1,
-    transform: 'translate(0)'
-  },
-  generateButton: {
-    marginRight: theme.spacing(1)
-  },
-  acquireButton: {
-    marginLeft: theme.spacing(1)
   }
 }));
