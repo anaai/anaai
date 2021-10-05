@@ -1,7 +1,7 @@
 import { createTheme, responsiveFontSizes } from '@material-ui/core';
 import { blueGrey } from '@material-ui/core/colors';
 
-const spacing = (n: number) => n * 16;
+const spacing = (n: number) => n * 13;
 
 const defaultTypographyStyles = {
   color: '#fff',
