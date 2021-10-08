@@ -9,6 +9,7 @@ describe("StyleArt", () => {
   const price = web3.utils.toWei("1", "ether");
   const supply = new BN("1");
   const transformationId = new BN("1");
+  const transformationNumber = new BN("1");
 
   beforeEach(async () => {
     // Deploy a new contract for each test
@@ -77,7 +78,7 @@ describe("StyleArt", () => {
       expectEvent(
         tx,
         "ImageGenerationPaid",
-        {sender: user1, value, transformationId, imageURL}
+        {sender: user1, value, transformationId, transformationNumber, imageURL}
       );
     });
   });

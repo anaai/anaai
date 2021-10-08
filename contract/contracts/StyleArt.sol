@@ -22,6 +22,7 @@ contract StyleArt is ERC721, Ownable {
     uint256 id;
     uint256 price;
     uint256 supply;
+    uint256 nTokens;
     string name;
   }
 
@@ -35,7 +36,8 @@ contract StyleArt is ERC721, Ownable {
   mapping(address => UserCollection) private userCollection;
   Transformation[] private transformations;
 
-  event ImageGenerationPaid(address sender, uint256 value, uint256 transformationId, string imageURL);
+  event ImageGenerationPaid(address sender, uint256 value, uint256 transformationId,
+                            uint256 transformationNumber, string imageURL);
   event TokenMinted(address payer, uint256 tokenId, string tokenURI);
 
   constructor() ERC721("styleart", "sart") {
@@ -54,7 +56,7 @@ contract StyleArt is ERC721, Ownable {
         );
 
         require(
-          transformations[i].supply > 0,
+          transformations[i].nTokens < transformations[i].supply,
           "Transformation supply is exhausted"
         );
       }
@@ -73,14 +75,18 @@ contract StyleArt is ERC721, Ownable {
 
   function payGenerating(uint256 transformationId, string memory imageUrl)
   public payable availableTransformation(transformationId, msg.value) {
+    uint256 transformationNumber;
+
     for (uint i = 0; i < transformations.length; i++) {
       if (transformations[i].id == transformationId) {
-        transformations[i].supply -= 1;
+        transformations[i].nTokens += 1;
+        transformationNumber = transformations[i].nTokens;
+        break;
       }
     }
 
     admin.transfer(msg.value);
-    emit ImageGenerationPaid(msg.sender, msg.value, transformationId, imageUrl);
+    emit ImageGenerationPaid(msg.sender, msg.value, transformationId, transformationNumber, imageUrl);
   }
 
   function mintNFT(address payer, string memory tokenURI)
@@ -106,7 +112,7 @@ contract StyleArt is ERC721, Ownable {
     _transformationIds.increment();
     uint256 newTransformationId = _transformationIds.current();
 
-    transformations.push(Transformation(newTransformationId, price, supply, name));
+    transformations.push(Transformation(newTransformationId, price, supply, 0, name));
 
     return newTransformationId;
   }
