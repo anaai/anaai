@@ -13,11 +13,14 @@ const web3 = createAlchemyWeb3(WS_API_URL);
 const contract = require("./StyleArt.json");
 const nftContract = new web3.eth.Contract(contract.abi, CONTRACT_ADDRESS);
 
-const triggerJob = async (payer, transformation, imageURL, imageName, txHash, blockHash) => {
+const triggerJob = async (
+  payer, transformation, transformationNumber, imageURL, imageName, txHash, blockHash
+) => {
   const response = await axios.post(
     GENERATE_URL, {
       payer,
       transformation,
+      transformation_number: transformationNumber,
       image_url: imageURL,
       image_name: imageName,
       transaction_hash: txHash,
@@ -32,11 +35,12 @@ nftContract.events.ImageGenerationPaid(async (error, event) => {
   const imageURL = event.returnValues.imageURL;
   const payer = event.returnValues.sender;
   const transformationId = parseInt(event.returnValues.transformationId);
+  const transformationNumber = parseInt(event.returnValues.transformationNumber)
   const txHash = event.transactionHash;
   const blockHash = event.blockHash;
   const jobHash = uuid.v4();
   console.log(`Recieved transaction ${txHash} in block ${blockHash}`);
   console.log(`${payer} triggered job ${jobHash} for image ${imageURL} with transformation ${transformationId}`);
 
-  await triggerJob(payer, transformationId, imageURL, jobHash, txHash, blockHash);
+  await triggerJob(payer, transformationId, transformationNumber, imageURL, jobHash, txHash, blockHash);
 });
