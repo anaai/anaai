@@ -23,6 +23,7 @@ BROKER_URL = os.getenv("BROKER_URL")
 class JobRequest(BaseModel):
   payer: str
   transformation: int
+  transformation_number: int
   image_url: str
   image_name: str
   block_hash: str
@@ -34,8 +35,11 @@ app = FastAPI()
 
 @app.post("/generate")
 async def generate(request: JobRequest, session: Session = Depends(get_session)):
-  logger.log_job_request(request.payer, request.transformation,
-                         request.image_name, request.image_url)
+  logger.log_job_request(request.payer,
+                         request.transformation,
+                         request.transformation_number,
+                         request.image_name,
+                         request.image_url)
 
   try:
     task_name = task_mapper.task_name(request.transformation)
@@ -47,6 +51,7 @@ async def generate(request: JobRequest, session: Session = Depends(get_session))
 
   task = celery_app.send_task(task_name,
                               [transformation_name,
+                               request.transformation_number,
                                request.payer,
                                request.image_url,
                                request.image_name])
