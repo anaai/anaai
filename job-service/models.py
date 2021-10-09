@@ -52,6 +52,7 @@ class JobRequest(Base):
   transaction_hash = sa.Column(sa.String(155), nullable=False, unique=True)
   block_hash = sa.Column(sa.String(155), nullable=False)
   transformation = sa.Column(sa.Integer, nullable=False)
+  transformation_number = sa.Column(sa.Integer, nullable=False)
   created_at = sa.Column(sa.DateTime, default=datetime.utcnow, nullable=False)
   task_id = sa.Column(sa.String(155), nullable=True)
   # Change to string with foreign key when celery is setup

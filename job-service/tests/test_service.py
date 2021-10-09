@@ -72,6 +72,7 @@ def test_job_request_in_db(celery_mock, test_db):
 
   assert job_request.job_request_hash == name
   assert job_request.transformation == transformation
+  assert job_request.transformation_number == transformation_number
   assert job_request.transaction_hash == tx_hash
   assert job_request.block_hash == block_hash
   assert job_request.payer == payer
