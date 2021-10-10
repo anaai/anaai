@@ -25,7 +25,7 @@ def test_cartoonify_response(celery_mock, test_db):
   assert response.json() == {"task_id": task_id}
 
 @patch("service.celery_app")
-def test_cartoonify_task_invocation(celery_mock, test_db):
+def test_ascii_task_invocation(celery_mock, test_db):
   url = "url"
   name = "name"
   payer = "payer"
@@ -43,8 +43,8 @@ def test_cartoonify_task_invocation(celery_mock, test_db):
   })
 
   celery_mock.send_task.assert_called_with(
-    "tasks.cartoonify",
-    ["cartoonify", transformation_number, payer, url, name]
+    "tasks.ascii",
+    ["ascii", transformation_number, payer, url, name]
   )
 
 @patch("service.celery_app")
