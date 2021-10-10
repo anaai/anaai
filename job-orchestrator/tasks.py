@@ -50,14 +50,6 @@ def create_token(transformer, transformation_name, transformation_number,
   return status
 
 @app.task(autoretry_for=(Exception,), retry_kwargs={"max_retries": 3, "countdown": 5})
-def cartoonify(transformation_name, transformation_number, payer, image_url, image_name):
-  cartoonifier = transformers.Cartoonifier()
-  status = create_token(cartoonifier, transformation_name, transformation_number,
-                        payer, image_url, image_name)
-
-  return status
-
-@app.task(autoretry_for=(Exception,), retry_kwargs={"max_retries": 3, "countdown": 5})
 def ascii(transformation_name, transformation_number, payer, image_url, image_name):
   ascii = transformers.ASCIIArt()
   status = create_token(ascii, transformation_name, transformation_number,

@@ -2,7 +2,7 @@ from unittest.mock import patch, ANY
 import numpy as np
 import cv2
 
-from tasks import _download_image, cartoonify, ascii, sketch, candy, feathers
+from tasks import _download_image, ascii, sketch, candy, feathers
 
 IMAGE_URL = "image_url"
 IMAGE_NAME = "image_name"
@@ -40,20 +40,6 @@ def _assert_call_order_and_params(download_mock, dir_mock, cv2_mock, pinata_mock
     ANY,
     json = {"payer": PAYER, "token_uri": METADATA_IPFS_URL}
   )
-
-@patch("tasks.requests")
-@patch("tasks.cv2")
-@patch("tasks.working_directory", return_value="image_path.jpg")
-@patch("tasks.PinataClient")
-@patch("tasks._download_image")
-def test_cartoonification(download_mock, pinata_mock, dir_mock, cv2_mock, requests_mock):
-  original_image = cv2.imread("tests/original.jpeg")
-
-  _setup_mocks(dir_mock, pinata_mock, download_mock, original_image)
-
-  status = cartoonify(TRANSFORMATION_NAME, TRANSFORMATION_NUMBER, PAYER, IMAGE_URL, IMAGE_NAME)
-
-  _assert_call_order_and_params(download_mock, dir_mock, cv2_mock, pinata_mock, requests_mock)
 
 @patch("tasks.requests")
 @patch("tasks.cv2")
