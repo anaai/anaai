@@ -26,4 +26,7 @@ async function addTransformation(contract, address, name, price, supply) {
   await addTransformation(nftContract, PUBLIC_KEY, "sketch", 0, 300);
   await addTransformation(nftContract, PUBLIC_KEY, "candy", 0, 300);
   await addTransformation(nftContract, PUBLIC_KEY, "feathers", 0, 300);
+  await addTransformation(nftContract, PUBLIC_KEY, "mosaic", 0, 300);
+  await addTransformation(nftContract, PUBLIC_KEY, "the_scream", 0, 300);
+  await addTransformation(nftContract, PUBLIC_KEY, "udnie", 0, 300);
 })();
