@@ -81,6 +81,30 @@ def feathers(transformation_name, transformation_number, payer, image_url, image
 
   return status
 
+@app.task(autoretry_for=(Exception,), retry_kwargs={"max_retries": 3, "countdown": 5})
+def mosaic(transformation_name, transformation_number, payer, image_url, image_name):
+  feather = transformers.FastNeuralStyle(model_paths.MOSAIC_FAST_NEURAL_TRANSFER_MODEL)
+  status = create_token(feather, transformation_name, transformation_number,
+                        payer, image_url, image_name)
+
+  return status
+
+@app.task(autoretry_for=(Exception,), retry_kwargs={"max_retries": 3, "countdown": 5})
+def the_scream(transformation_name, transformation_number, payer, image_url, image_name):
+  feather = transformers.FastNeuralStyle(model_paths.THE_SCREAM_FAST_NEURAL_TRANSFER_MODEL)
+  status = create_token(feather, transformation_name, transformation_number,
+                        payer, image_url, image_name)
+
+  return status
+
+@app.task(autoretry_for=(Exception,), retry_kwargs={"max_retries": 3, "countdown": 5})
+def udnie(transformation_name, transformation_number, payer, image_url, image_name):
+  feather = transformers.FastNeuralStyle(model_paths.UDNIE_FAST_NEURAL_TRANSFER_MODEL)
+  status = create_token(feather, transformation_name, transformation_number,
+                        payer, image_url, image_name)
+
+  return status
+
 def _mint_nft(payer, token_uri):
   payload = {"payer": payer, "token_uri": token_uri}
   return requests.post(NFT_SERVICE_MINT_TOKEN_URL, json=payload)
