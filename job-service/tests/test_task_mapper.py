@@ -2,11 +2,14 @@ import pytest
 import task_mapper
 
 def test_supported_transformations():
-  assert len(task_mapper.TASK_MAPPINGS) == 4
+  assert len(task_mapper.TASK_MAPPINGS) == 7
   assert task_mapper.TASK_MAPPINGS[1] == "tasks.ascii"
   assert task_mapper.TASK_MAPPINGS[2] == "tasks.sketch"
   assert task_mapper.TASK_MAPPINGS[3] == "tasks.candy"
   assert task_mapper.TASK_MAPPINGS[4] == "tasks.feathers"
+  assert task_mapper.TASK_MAPPINGS[5] == "tasks.mosaic"
+  assert task_mapper.TASK_MAPPINGS[6] == "tasks.the_scream"
+  assert task_mapper.TASK_MAPPINGS[7] == "tasks.udnie"
 
 def test_task_name_for_existing_transformation():
   assert task_mapper.task_name(1) == "tasks.ascii"
