@@ -17,7 +17,8 @@ def test_cartoonify_response(celery_mock, test_db):
   response = client.post("/generate", json={
     "image_url": "", "image_name": "",
     "payer": "", "transformation": 1,
-    "transaction_hash": "tx123", "block_hash": "block123"
+    "transaction_hash": "tx123", "block_hash": "block123",
+    "transformation_number": 1
   })
 
   assert response.status_code == 200
@@ -29,6 +30,7 @@ def test_cartoonify_task_invocation(celery_mock, test_db):
   name = "name"
   payer = "payer"
   transformation = 1
+  transformation_number = 1
   tx_hash = "tx123"
   block_hash = "block123"
   celery_mock.send_task.return_value.id = "555333"
@@ -36,12 +38,13 @@ def test_cartoonify_task_invocation(celery_mock, test_db):
   response = client.post("/generate", json={
     "image_url": url, "image_name": name,
     "payer": payer, "transformation": transformation,
-    "transaction_hash": tx_hash, "block_hash": block_hash
+    "transaction_hash": tx_hash, "block_hash": block_hash,
+    "transformation_number": transformation_number
   })
 
   celery_mock.send_task.assert_called_with(
     "tasks.cartoonify",
-    ["cartoonify", payer, url, name]
+    ["cartoonify", transformation_number, payer, url, name]
   )
 
 @patch("service.celery_app")
@@ -51,6 +54,7 @@ def test_job_request_in_db(celery_mock, test_db):
   name = "name"
   payer = "payer"
   transformation = 1
+  transformation_number = 1
   tx_hash = "tx123"
   block_hash = "block123"
 
@@ -59,7 +63,8 @@ def test_job_request_in_db(celery_mock, test_db):
   response = client.post("/generate", json={
     "image_url": url, "image_name": name,
     "payer": payer, "transformation": transformation,
-    "transaction_hash": tx_hash, "block_hash": block_hash
+    "transaction_hash": tx_hash, "block_hash": block_hash,
+    "transformation_number": transformation_number
   })
 
   session = TestingSessionLocal()
@@ -67,6 +72,7 @@ def test_job_request_in_db(celery_mock, test_db):
 
   assert job_request.job_request_hash == name
   assert job_request.transformation == transformation
+  assert job_request.transformation_number == transformation_number
   assert job_request.transaction_hash == tx_hash
   assert job_request.block_hash == block_hash
   assert job_request.payer == payer
@@ -76,7 +82,8 @@ def test_invalid_transformation_request(test_db):
   response = client.post("/generate", json={
     "image_url": "url", "image_name": "name",
     "payer": "payer", "transformation": 15,
-    "transaction_hash": "tx123", "block_hash": "block123"
+    "transaction_hash": "tx123", "block_hash": "block123",
+    "transformation_number": 1
   })
 
   assert response.status_code == 400

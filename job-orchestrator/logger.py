@@ -7,9 +7,9 @@ def log_image_downloaded(image_url):
   logger = _logger()
   logger.info(f"Image downloaded from {image_url}.")
 
-def log_image_generated(transformation_name):
+def log_image_generated(transformation_name, transformation_number):
   logger = _logger()
-  logger.info(f"Image generated using {transformation_name} transformation.")
+  logger.info(f"Image generated using {transformation_name} transformation #{transformation_number}.")
 
 def log_image_uploaded(image_url):
   logger = _logger()

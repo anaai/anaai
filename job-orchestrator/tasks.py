@@ -20,12 +20,13 @@ NFT_SERVICE_MINT_TOKEN_URL = os.getenv("NFT_SERVICE_MINT_TOKEN_URL")
 
 app = Celery("tasks", backend=POSTGRES_URL, broker=BROKER_URL)
 
-def create_token(transformer, transformation_name, payer, image_url, image_name):
+def create_token(transformer, transformation_name, transformation_number,
+                 payer, image_url, image_name):
   image = _download_image(image_url)
   logger.log_image_downloaded(image_url)
 
   transformed_image = transformer.transform(image)
-  logger.log_image_generated(transformation_name)
+  logger.log_image_generated(transformation_name, transformation_number)
 
   image_path = working_directory.local_file_path(f"{image_name}.jpg")
   cv2.imwrite(image_path, transformed_image)
@@ -35,8 +36,9 @@ def create_token(transformer, transformation_name, payer, image_url, image_name)
   image_ipfs_url = pinata_client.pin_image(image_path)
   logger.log_image_uploaded(image_ipfs_url)
 
+  token_name = f"{transformation_name} #{transformation_number}"
   metadata_ipfs_url = pinata_client.pin_metadata(image_ipfs_url,
-                                                 f"{image_name}.json",
+                                                 token_name,
                                                  payer,
                                                  transformation_name)
   logger.log_metadata_uploaded(metadata_ipfs_url)
@@ -48,37 +50,42 @@ def create_token(transformer, transformation_name, payer, image_url, image_name)
   return status
 
 @app.task(autoretry_for=(Exception,), retry_kwargs={"max_retries": 3, "countdown": 5})
-def cartoonify(transformation_name, payer, image_url, image_name):
+def cartoonify(transformation_name, transformation_number, payer, image_url, image_name):
   cartoonifier = transformers.Cartoonifier()
-  status = create_token(cartoonifier, transformation_name, payer, image_url, image_name)
+  status = create_token(cartoonifier, transformation_name, transformation_number,
+                        payer, image_url, image_name)
 
   return status
 
 @app.task(autoretry_for=(Exception,), retry_kwargs={"max_retries": 3, "countdown": 5})
-def ascii(transformation_name, payer, image_url, image_name):
+def ascii(transformation_name, transformation_number, payer, image_url, image_name):
   ascii = transformers.ASCIIArt()
-  status = create_token(ascii, transformation_name, payer, image_url, image_name)
+  status = create_token(ascii, transformation_name, transformation_number,
+                        payer, image_url, image_name)
 
   return status
 
 @app.task(autoretry_for=(Exception,), retry_kwargs={"max_retries": 3, "countdown": 5})
-def sketch(transformation_name, payer, image_url, image_name):
+def sketch(transformation_name, transformation_number, payer, image_url, image_name):
   sketch = transformers.SketchArt()
-  status = create_token(sketch, transformation_name, payer, image_url, image_name)
+  status = create_token(sketch, transformation_name, transformation_number,
+                        payer, image_url, image_name)
 
   return status
 
 @app.task(autoretry_for=(Exception,), retry_kwargs={"max_retries": 3, "countdown": 5})
-def candy(transformation_name, payer, image_url, image_name):
+def candy(transformation_name, transformation_number, payer, image_url, image_name):
   candy = transformers.FastNeuralStyle(model_paths.CANDY_FAST_NEURAL_TRANSFER_MODEL)
-  status = create_token(candy, transformation_name, payer, image_url, image_name)
+  status = create_token(candy, transformation_name, transformation_number,
+                        payer, image_url, image_name)
 
   return status
 
 @app.task(autoretry_for=(Exception,), retry_kwargs={"max_retries": 3, "countdown": 5})
-def feathers(transformation_name, payer, image_url, image_name):
+def feathers(transformation_name, transformation_number, payer, image_url, image_name):
   feather = transformers.FastNeuralStyle(model_paths.FEATHERS_FAST_NEURAL_TRANSFER_MODEL)
-  status = create_token(feather, transformation_name, payer, image_url, image_name)
+  status = create_token(feather, transformation_name, transformation_number,
+                        payer, image_url, image_name)
 
   return status
 
