@@ -40,6 +40,48 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
             necessitatibus, tenetur distinctio ea error reiciendis!
           </Typography>
         </Box>
+
+        <Box className={classes.examplesContainer}>
+          <Box className={classes.exampleContainer}>
+            <ReactCompareImage
+              sliderPositionPercentage={0.33}
+              leftImage={images.feathers.mForest}
+              rightImage={images.base.mForest}
+            />
+          </Box>
+
+          <Box className={classes.exampleContainer}>
+            <ReactCompareImage
+              sliderPositionPercentage={0.33}
+              leftImage={images.cartoonification.mGirl}
+              rightImage={images.base.mGirl}
+            />
+          </Box>
+
+          <Box className={classes.exampleContainer}>
+            <ReactCompareImage
+              sliderPositionPercentage={0.33}
+              leftImage={images.sketch.mCity}
+              rightImage={images.base.mCity}
+            />
+          </Box>
+
+          <Box className={classes.exampleContainer}>
+            <ReactCompareImage
+              sliderPositionPercentage={0.33}
+              leftImage={images.candy.mLake}
+              rightImage={images.base.mLake}
+            />
+          </Box>
+
+          <Box className={classes.exampleContainer}>
+            <ReactCompareImage
+              sliderPositionPercentage={0.33}
+              leftImage={images.ascii.fParrot}
+              rightImage={images.base.fParrot}
+            />
+          </Box>
+        </Box>
       </Box>
     </Box>
   );

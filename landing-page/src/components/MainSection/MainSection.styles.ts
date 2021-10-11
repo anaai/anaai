@@ -67,5 +67,16 @@ export const useStyles = makeStyles((theme) => ({
     maxWidth: theme.spacing(100),
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4)
+  },
+  examplesContainer: {
+    margin: `${theme.spacing(0.5)}px auto`,
+    maxWidth: theme.spacing(60),
+    width: '100%',
+    padding: theme.spacing(2)
+  },
+  exampleContainer: {
+    marginBottom: theme.spacing(2),
+    minHeight: theme.spacing(20),
+    width: '100%'
   }
 }));
