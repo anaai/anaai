@@ -5,8 +5,10 @@ export const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: theme.spacing(1),
-    marginLeft: theme.spacing(1)
+    paddingRight: theme.spacing(1),
+    paddingLeft: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+    boxShadow: theme.shadows[1]
   },
   footerContentContainer: {
     flex: 1,

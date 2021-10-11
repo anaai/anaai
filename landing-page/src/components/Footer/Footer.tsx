@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 import { useStyles } from './Footer.styles';
 
 export const Footer: React.FC<Record<string, unknown>> = () => {
