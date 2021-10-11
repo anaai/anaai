@@ -34,6 +34,9 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
         </Box>
 
         <Box className={classes.ourVisionContainer}>
+          <Typography variant="h3" className={classes.title}>
+            Our Vision
+          </Typography>
           <Typography className={classes.ourVisionText}>
             Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis maiores enim iste ratione
             quos deserunt hic rerum autem corporis, tempora rem voluptates eaque facere
@@ -42,6 +45,9 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
         </Box>
 
         <Box className={classes.examplesContainer}>
+          <Typography variant="h3" className={classes.title}>
+            Examples
+          </Typography>
           <Box className={classes.exampleContainer}>
             <ReactCompareImage
               sliderPositionPercentage={0.33}

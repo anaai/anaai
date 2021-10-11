@@ -60,13 +60,17 @@ export const useStyles = makeStyles((theme) => ({
   ourVisionContainer: {
     width: '100%',
     backgroundColor: theme.palette.primary.main,
-    marginBottom: theme.spacing(30)
+    marginBottom: theme.spacing(15),
+    paddingTop: theme.spacing(4),
+    paddingBottom: theme.spacing(4)
+  },
+  title: {
+    marginBottom: theme.spacing(2),
+    textAlign: 'center'
   },
   ourVisionText: {
     margin: `${theme.spacing(0.5)}px auto`,
-    maxWidth: theme.spacing(100),
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4)
+    maxWidth: theme.spacing(100)
   },
   examplesContainer: {
     margin: `${theme.spacing(0.5)}px auto`,
@@ -75,6 +79,7 @@ export const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2)
   },
   exampleContainer: {
+    marginTop: theme.spacing(4),
     marginBottom: theme.spacing(2),
     minHeight: theme.spacing(20),
     width: '100%'
