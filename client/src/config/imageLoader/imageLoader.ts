@@ -10,18 +10,6 @@ import baseMLake from 'assets/images/transformations/base/mlake.jpg';
 import baseMForest from 'assets/images/transformations/base/mforest.jpg';
 import baseMCity from 'assets/images/transformations/base/mcity.jpg';
 
-import cartoonificationFGirl from 'assets/images/transformations/cartoonification/fgirl-cartoonify.jpg';
-import cartoonificationFCat from 'assets/images/transformations/cartoonification/fcat-cartoonify.jpg';
-import cartoonificationFDog from 'assets/images/transformations/cartoonification/fdog-cartoonify.jpg';
-import cartoonificationFParrot from 'assets/images/transformations/cartoonification/fparrot-cartoonify.jpg';
-import cartoonificationFBeach from 'assets/images/transformations/cartoonification/fbeach-cartoonify.jpg';
-import cartoonificationFSky from 'assets/images/transformations/cartoonification/fsky-cartoonify.jpg';
-import cartoonificationMGirl from 'assets/images/transformations/cartoonification/mgirl-cartoonify.jpg';
-import cartoonificationMDogs from 'assets/images/transformations/cartoonification/mdogs-cartoonify.jpg';
-import cartoonificationMLake from 'assets/images/transformations/cartoonification/mlake-cartoonify.jpg';
-import cartoonificationMForest from 'assets/images/transformations/cartoonification/mforest-cartoonify.jpg';
-import cartoonificationMCity from 'assets/images/transformations/cartoonification/mcity-cartoonify.jpg';
-
 import asciiFGirl from 'assets/images/transformations/ascii/fgirl-ascii.jpg';
 import asciiFCat from 'assets/images/transformations/ascii/fcat-ascii.jpg';
 import asciiFDog from 'assets/images/transformations/ascii/fdog-ascii.jpg';
@@ -70,6 +58,42 @@ import feathersMLake from 'assets/images/transformations/feathers/mlake-feathers
 import feathersMForest from 'assets/images/transformations/feathers/mforest-feathers.jpg';
 import feathersMCity from 'assets/images/transformations/feathers/mcity-feathers.jpg';
 
+import mosaicFGirl from 'assets/images/transformations/mosaic/fgirl-mosaic.jpg';
+import mosaicFCat from 'assets/images/transformations/mosaic/fcat-mosaic.jpg';
+import mosaicFDog from 'assets/images/transformations/mosaic/fdog-mosaic.jpg';
+import mosaicFParrot from 'assets/images/transformations/mosaic/fparrot-mosaic.jpg';
+import mosaicFBeach from 'assets/images/transformations/mosaic/fbeach-mosaic.jpg';
+import mosaicFSky from 'assets/images/transformations/mosaic/fsky-mosaic.jpg';
+import mosaicMGirl from 'assets/images/transformations/mosaic/mgirl-mosaic.jpg';
+import mosaicMDogs from 'assets/images/transformations/mosaic/mdogs-mosaic.jpg';
+import mosaicMLake from 'assets/images/transformations/mosaic/mlake-mosaic.jpg';
+import mosaicMForest from 'assets/images/transformations/mosaic/mforest-mosaic.jpg';
+import mosaicMCity from 'assets/images/transformations/mosaic/mcity-mosaic.jpg';
+
+import theScreamFGirl from 'assets/images/transformations/the-scream/fgirl-the-scream.jpg';
+import theScreamFCat from 'assets/images/transformations/the-scream/fcat-the-scream.jpg';
+import theScreamFDog from 'assets/images/transformations/the-scream/fdog-the-scream.jpg';
+import theScreamFParrot from 'assets/images/transformations/the-scream/fparrot-the-scream.jpg';
+import theScreamFBeach from 'assets/images/transformations/the-scream/fbeach-the-scream.jpg';
+import theScreamFSky from 'assets/images/transformations/the-scream/fsky-the-scream.jpg';
+import theScreamMGirl from 'assets/images/transformations/the-scream/mgirl-the-scream.jpg';
+import theScreamMDogs from 'assets/images/transformations/the-scream/mdogs-the-scream.jpg';
+import theScreamMLake from 'assets/images/transformations/the-scream/mlake-the-scream.jpg';
+import theScreamMForest from 'assets/images/transformations/the-scream/mforest-the-scream.jpg';
+import theScreamMCity from 'assets/images/transformations/the-scream/mcity-the-scream.jpg';
+
+import udnieFGirl from 'assets/images/transformations/udnie/fgirl-udnie.jpg';
+import udnieFCat from 'assets/images/transformations/udnie/fcat-udnie.jpg';
+import udnieFDog from 'assets/images/transformations/udnie/fdog-udnie.jpg';
+import udnieFParrot from 'assets/images/transformations/udnie/fparrot-udnie.jpg';
+import udnieFBeach from 'assets/images/transformations/udnie/fbeach-udnie.jpg';
+import udnieFSky from 'assets/images/transformations/udnie/fsky-udnie.jpg';
+import udnieMGirl from 'assets/images/transformations/udnie/mgirl-udnie.jpg';
+import udnieMDogs from 'assets/images/transformations/udnie/mdogs-udnie.jpg';
+import udnieMLake from 'assets/images/transformations/udnie/mlake-udnie.jpg';
+import udnieMForest from 'assets/images/transformations/udnie/mforest-udnie.jpg';
+import udnieMCity from 'assets/images/transformations/udnie/mcity-udnie.jpg';
+
 export const images = {
   base: {
     fGirl: baseFGirl,
@@ -83,19 +107,6 @@ export const images = {
     mLake: baseMLake,
     mForest: baseMForest,
     mCity: baseMCity
-  },
-  cartoonification: {
-    fGirl: cartoonificationFGirl,
-    fCat: cartoonificationFCat,
-    fDog: cartoonificationFDog,
-    fParrot: cartoonificationFParrot,
-    fBeach: cartoonificationFBeach,
-    fSky: cartoonificationFSky,
-    mGirl: cartoonificationMGirl,
-    mDogs: cartoonificationMDogs,
-    mLake: cartoonificationMLake,
-    mForest: cartoonificationMForest,
-    mCity: cartoonificationMCity
   },
   ascii: {
     fGirl: asciiFGirl,
@@ -148,5 +159,44 @@ export const images = {
     mLake: feathersMLake,
     mForest: feathersMForest,
     mCity: feathersMCity
+  },
+  mosaic: {
+    fGirl: mosaicFGirl,
+    fCat: mosaicFCat,
+    fDog: mosaicFDog,
+    fParrot: mosaicFParrot,
+    fBeach: mosaicFBeach,
+    fSky: mosaicFSky,
+    mGirl: mosaicMGirl,
+    mDogs: mosaicMDogs,
+    mLake: mosaicMLake,
+    mForest: mosaicMForest,
+    mCity: mosaicMCity
+  },
+  theScream: {
+    fGirl: theScreamFGirl,
+    fCat: theScreamFCat,
+    fDog: theScreamFDog,
+    fParrot: theScreamFParrot,
+    fBeach: theScreamFBeach,
+    fSky: theScreamFSky,
+    mGirl: theScreamMGirl,
+    mDogs: theScreamMDogs,
+    mLake: theScreamMLake,
+    mForest: theScreamMForest,
+    mCity: theScreamMCity
+  },
+  udnie: {
+    fGirl: udnieFGirl,
+    fCat: udnieFCat,
+    fDog: udnieFDog,
+    fParrot: udnieFParrot,
+    fBeach: udnieFBeach,
+    fSky: udnieFSky,
+    mGirl: udnieMGirl,
+    mDogs: udnieMDogs,
+    mLake: udnieMLake,
+    mForest: udnieMForest,
+    mCity: udnieMCity
   }
 } as const;
