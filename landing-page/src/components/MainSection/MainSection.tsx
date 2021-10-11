@@ -1,4 +1,6 @@
 import { Box, Button, Typography } from '@material-ui/core';
+import { images } from 'config/imageLoader/imageLoader';
+import ReactCompareImage from 'react-compare-image';
 import { useStyles } from './MainSection.styles';
 
 export const MainSection: React.FC<Record<string, unknown>> = () => {
@@ -22,7 +24,13 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
             </Typography>
           </Box>
 
-          <Box className={classes.heroImageContainer}>image placeholder</Box>
+          <Box className={classes.heroImageContainer}>
+            <ReactCompareImage
+              sliderPositionPercentage={0.5}
+              leftImage={images.feathers.mDogs}
+              rightImage={images.base.mDogs}
+            />
+          </Box>
         </Box>
       </Box>
     </Box>

@@ -17,10 +17,15 @@ export const useStyles = makeStyles((theme) => ({
     maxWidth: theme.spacing(100)
   },
   heroSectionContainer: {
-    display: 'flex'
+    display: 'flex',
+    alignItems: 'center',
+    [theme.breakpoints.down('md')]: {
+      flexDirection: 'column'
+    }
   },
   heroTextContainer: {
-    flex: 1
+    flex: 1,
+    padding: theme.spacing(2)
   },
   heroTitle: {
     color: '#fff',
@@ -44,6 +49,12 @@ export const useStyles = makeStyles((theme) => ({
   },
   heroDescription: {},
   heroImageContainer: {
-    flex: 1
+    margin: theme.spacing(2),
+    flex: 1,
+    boxShadow: theme.shadows[1],
+    [theme.breakpoints.down('md')]: {
+      width: '80%',
+      minHeight: theme.spacing(20)
+    }
   }
 }));
