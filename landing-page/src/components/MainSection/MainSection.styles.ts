@@ -5,20 +5,20 @@ export const useStyles = makeStyles((theme) => ({
     flex: 1,
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: theme.spacing(1),
-    marginLeft: theme.spacing(1)
+    justifyContent: 'center'
   },
   mainSectionContentContainer: {
     flex: 1,
     display: 'flex',
-    alignItems: 'center',
-    margin: `${theme.spacing(0.5)}px auto`,
-    maxWidth: theme.spacing(100)
+    flexDirection: 'column',
+    alignItems: 'center'
   },
   heroSectionContainer: {
     display: 'flex',
     alignItems: 'center',
+    minHeight: '90vh',
+    margin: `${theme.spacing(0.5)}px auto`,
+    maxWidth: theme.spacing(100),
     [theme.breakpoints.down('md')]: {
       flexDirection: 'column'
     }
@@ -56,5 +56,16 @@ export const useStyles = makeStyles((theme) => ({
       width: '80%',
       minHeight: theme.spacing(20)
     }
+  },
+  ourVisionContainer: {
+    width: '100%',
+    backgroundColor: theme.palette.primary.main,
+    marginBottom: theme.spacing(30)
+  },
+  ourVisionText: {
+    margin: `${theme.spacing(0.5)}px auto`,
+    maxWidth: theme.spacing(100),
+    paddingTop: theme.spacing(4),
+    paddingBottom: theme.spacing(4)
   }
 }));

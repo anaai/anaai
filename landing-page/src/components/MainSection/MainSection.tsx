@@ -32,6 +32,14 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
             />
           </Box>
         </Box>
+
+        <Box className={classes.ourVisionContainer}>
+          <Typography className={classes.ourVisionText}>
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis maiores enim iste ratione
+            quos deserunt hic rerum autem corporis, tempora rem voluptates eaque facere
+            necessitatibus, tenetur distinctio ea error reiciendis!
+          </Typography>
+        </Box>
       </Box>
     </Box>
   );
