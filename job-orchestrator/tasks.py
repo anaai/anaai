@@ -50,14 +50,6 @@ def create_token(transformer, transformation_name, transformation_number,
   return status
 
 @app.task(autoretry_for=(Exception,), retry_kwargs={"max_retries": 3, "countdown": 5})
-def cartoonify(transformation_name, transformation_number, payer, image_url, image_name):
-  cartoonifier = transformers.Cartoonifier()
-  status = create_token(cartoonifier, transformation_name, transformation_number,
-                        payer, image_url, image_name)
-
-  return status
-
-@app.task(autoretry_for=(Exception,), retry_kwargs={"max_retries": 3, "countdown": 5})
 def ascii(transformation_name, transformation_number, payer, image_url, image_name):
   ascii = transformers.ASCIIArt()
   status = create_token(ascii, transformation_name, transformation_number,
@@ -84,6 +76,30 @@ def candy(transformation_name, transformation_number, payer, image_url, image_na
 @app.task(autoretry_for=(Exception,), retry_kwargs={"max_retries": 3, "countdown": 5})
 def feathers(transformation_name, transformation_number, payer, image_url, image_name):
   feather = transformers.FastNeuralStyle(model_paths.FEATHERS_FAST_NEURAL_TRANSFER_MODEL)
+  status = create_token(feather, transformation_name, transformation_number,
+                        payer, image_url, image_name)
+
+  return status
+
+@app.task(autoretry_for=(Exception,), retry_kwargs={"max_retries": 3, "countdown": 5})
+def mosaic(transformation_name, transformation_number, payer, image_url, image_name):
+  feather = transformers.FastNeuralStyle(model_paths.MOSAIC_FAST_NEURAL_TRANSFER_MODEL)
+  status = create_token(feather, transformation_name, transformation_number,
+                        payer, image_url, image_name)
+
+  return status
+
+@app.task(autoretry_for=(Exception,), retry_kwargs={"max_retries": 3, "countdown": 5})
+def the_scream(transformation_name, transformation_number, payer, image_url, image_name):
+  feather = transformers.FastNeuralStyle(model_paths.THE_SCREAM_FAST_NEURAL_TRANSFER_MODEL)
+  status = create_token(feather, transformation_name, transformation_number,
+                        payer, image_url, image_name)
+
+  return status
+
+@app.task(autoretry_for=(Exception,), retry_kwargs={"max_retries": 3, "countdown": 5})
+def udnie(transformation_name, transformation_number, payer, image_url, image_name):
+  feather = transformers.FastNeuralStyle(model_paths.UDNIE_FAST_NEURAL_TRANSFER_MODEL)
   status = create_token(feather, transformation_name, transformation_number,
                         payer, image_url, image_name)
 

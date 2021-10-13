@@ -5,4 +5,5 @@ export interface Transformation {
   name: string;
   price: string;
   supply: string;
+  nTokens: string;
 }
