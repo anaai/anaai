@@ -15,7 +15,9 @@ export const Header: React.FC<Record<string, unknown>> = () => {
 
         <Box className={classes.headerActionsContainer}>
           <Button>Our Vision</Button>
+          <Button>How it works</Button>
           <Button>Examples</Button>
+          <Button>What to expect</Button>
           <Button color="secondary" variant="contained">
             App
           </Button>

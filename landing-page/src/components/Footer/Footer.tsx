@@ -7,6 +7,11 @@ export const Footer: React.FC<Record<string, unknown>> = () => {
   return (
     <Box className={classes.root} data-testid="Footer-root-container">
       <Box className={classes.footerContentContainer}>Footer works</Box>
+      Discord, Twitter, Mail, Reddit
+      <br />
+      Terms of use, Privacy policy
+      <br />
+      Link to contract
     </Box>
   );
 };

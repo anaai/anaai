@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from '@material-ui/core';
+import { Box, Typography } from '@material-ui/core';
 import { images } from 'config/imageLoader/imageLoader';
 import ReactCompareImage from 'react-compare-image';
 import { useStyles } from './MainSection.styles';
@@ -14,13 +14,11 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
             <Typography variant="h3" className={classes.heroTitle}>
               ANA
             </Typography>
-            <Typography variant="body1" className={classes.heroSubtitle}>
-              AI GENERATED ART
-            </Typography>
+            {/* <Typography variant="body1" className={classes.heroSubtitle}>
+              AI
+            </Typography> */}
             <Typography variant="body1" className={classes.heroDescription}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus unde, enim illo ea
-              velit maiores nihil ipsum. Doloremque amet perspiciatis velit nihil, illum officia
-              illo odio quo laudantium ea reprehenderit.
+              Unlock the future of generative digital art.
             </Typography>
           </Box>
 
@@ -38,10 +36,53 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
             Our Vision
           </Typography>
           <Typography className={classes.ourVisionText}>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis maiores enim iste ratione
-            quos deserunt hic rerum autem corporis, tempora rem voluptates eaque facere
-            necessitatibus, tenetur distinctio ea error reiciendis!
+            There is a new art form on the rise.
+            <br />
+            <br />
+            Generative art is a process of algorithmically generating new ideas, forms, shapes,
+            colors or patterns.
+            <br />
+            <br />
+            Inspired by maths, AI and blockchain technology, we believe everyone should be able to
+            generate, posess or sell their own art.
           </Typography>
+        </Box>
+
+        <Box className={classes.howItWorksContainer}>
+          <Typography variant="h3" className={classes.title}>
+            How it works
+          </Typography>
+
+          <Typography className={classes.limitedTransformationsLeadingParahraph}>
+            Art is generated used one of our predefined transformations. Each transformation has a
+            limited supply meaning that it can be used only a number of times. After that, the
+            transformation becomes unavialable for future use.
+          </Typography>
+
+          <Box className={classes.howItWorksContentContainer}>
+            <Box className={classes.howItWorksVideoContainer}>
+              <video className={classes.howItWorksVideo} controls autoPlay>
+                <source src="http://www.w3schools.com/html/movie.mp4" type="video/mp4" />
+                <track kind="captions"></track>
+              </video>
+            </Box>
+
+            <Box className={classes.howItWorksTextContainer}>
+              <Typography className={classes.howItWorksLeadingParahraph}>
+                ANA platform allows you to create a personal art collection in 3 clicks.
+              </Typography>
+
+              <ul className={classes.howItWorksList}>
+                <li className={classes.howItWorksListItem}>
+                  Choose base image to apply transformation to
+                </li>
+                <li className={classes.howItWorksListItem}>Choose transformation</li>
+                <li className={classes.howItWorksListItem}>Generate art</li>
+                <li className={classes.howItWorksListItem}>ANA mints the token for you</li>
+                <li className={classes.howItWorksListItem}>Enjoy your newly generated art!</li>
+              </ul>
+            </Box>
+          </Box>
         </Box>
 
         <Box className={classes.examplesContainer}>
@@ -86,6 +127,66 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
               leftImage={images.ascii.fParrot}
               rightImage={images.base.fParrot}
             />
+          </Box>
+        </Box>
+
+        <Box className={classes.whatToExpectContainer}>
+          <Typography variant="h3" className={classes.title}>
+            What to expect
+          </Typography>
+
+          <Typography className={classes.whatToExpectLeadingParahraph}>
+            We have big plans for the future, jump along for the ride!
+          </Typography>
+
+          <Box className={classes.whatToExpectCardsContainer}>
+            <Box className={classes.whatToExpectCard}>
+              <img
+                src="https://3.img-dpreview.com/files/p/E~TS590x0~articles/8692662059/8283897908.jpeg"
+                alt=""
+                className={classes.whatToExpectCardImage}
+              />
+
+              <Typography variant="h6" className={classes.whatToExpectCardTitle}>
+                More transformations
+              </Typography>
+
+              <Typography variant="body1" className={classes.whatToExpectCardDescription}>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              </Typography>
+            </Box>
+
+            <Box className={classes.whatToExpectCard}>
+              <img
+                src="https://3.img-dpreview.com/files/p/E~TS590x0~articles/8692662059/8283897908.jpeg"
+                alt=""
+                className={classes.whatToExpectCardImage}
+              />
+
+              <Typography variant="h6" className={classes.whatToExpectCardTitle}>
+                Support for audio/video
+              </Typography>
+
+              <Typography variant="body1" className={classes.whatToExpectCardDescription}>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              </Typography>
+            </Box>
+
+            <Box className={classes.whatToExpectCard}>
+              <img
+                src="https://3.img-dpreview.com/files/p/E~TS590x0~articles/8692662059/8283897908.jpeg"
+                alt=""
+                className={classes.whatToExpectCardImage}
+              />
+
+              <Typography variant="h6" className={classes.whatToExpectCardTitle}>
+                Open sourcing custom generative models
+              </Typography>
+
+              <Typography variant="body1" className={classes.whatToExpectCardDescription}>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              </Typography>
+            </Box>
           </Box>
         </Box>
       </Box>
