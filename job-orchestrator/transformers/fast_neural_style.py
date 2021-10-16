@@ -1,7 +1,7 @@
 import cv2
 import imutils
 
-IMAGE_WIDTH = 600
+IMAGE_WIDTH = 1000
 RED_MEAN = 103.939
 GREEN_MEAN = 116.779
 BLUE_MEAN = 123.680
