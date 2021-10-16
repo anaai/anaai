@@ -2,10 +2,12 @@ import { images } from 'config/imageLoader/imageLoader';
 
 export const transformationNames = [
   'ascii',
+  'sketch',
   'candy',
-  'cartoonification',
   'feathers',
-  'sketch'
+  'mosaic',
+  'theScream',
+  'udnie',
 ] as const;
 
 export type TransformationName = typeof transformationNames[number];
