@@ -14,7 +14,7 @@ describe("StyleArt", () => {
   beforeEach(async () => {
     // Deploy a new contract for each test
     this.contract = await StyleNFT.new({from: owner});
-    await this.contract.addTransformation("blur", price, supply, {from: owner});
+    await this.contract.addTransformation("blur", "desc", price, supply, {from: owner});
   });
 
   describe("payGenerating", () => {

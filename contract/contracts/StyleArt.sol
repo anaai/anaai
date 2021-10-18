@@ -24,6 +24,7 @@ contract StyleArt is ERC721, Ownable {
     uint256 supply;
     uint256 nTokens;
     string name;
+    string description;
   }
 
   using Counters for Counters.Counter;
@@ -107,12 +108,12 @@ contract StyleArt is ERC721, Ownable {
     return newItemId;
   }
 
-  function addTransformation(string memory name, uint256 price, uint256 supply)
+  function addTransformation(string memory name, string memory description, uint256 price, uint256 supply)
   public onlyOwner returns (uint256) {
     _transformationIds.increment();
     uint256 newTransformationId = _transformationIds.current();
 
-    transformations.push(Transformation(newTransformationId, price, supply, 0, name));
+    transformations.push(Transformation(newTransformationId, price, supply, 0, name, description));
 
     return newTransformationId;
   }
