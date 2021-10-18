@@ -1,4 +1,4 @@
-import { Box } from '@material-ui/core';
+import { Box, Typography, Link } from '@material-ui/core';
 import { useWallet } from 'contexts/WalletContext/WalletContext';
 import { tokenIdsAscendingSorter } from 'utils/sorters';
 import { LazyLoadComponent, LazyLoadImage } from 'react-lazy-load-image-component';
@@ -18,17 +18,32 @@ export const ImageGallery: React.FC<Record<string, unknown>> = () => {
 
   const classes = useStyles();
 
+  const tokenURL = (tokenId: string) => {
+    const baseURL = process.env.REACT_APP_OPENSEA_BASE_URL;
+    const contractAddress = process.env.REACT_APP_CONTRACT_ADDRESS;
+
+    return `${baseURL}/${contractAddress}/${tokenId}`;
+  };
+
   return (
     <Box className={classes.root} data-testid="ImageGallery-root-container">
       {sortedTokenIds.map((tokenId) => (
         <Box key={tokenId} className={classes.imageContainer}>
           {generatedTokens[tokenId] ? (
-            <LazyLoadImage
-              className={classes.image}
-              alt={generatedTokens[tokenId]?.name}
-              effect="blur"
-              src={generatedTokens[tokenId]?.image}
-            />
+            <>
+              <Typography variant="h6">
+                <Link variant="inherit" href={tokenURL(tokenId)} target="_blank">
+                  {generatedTokens[tokenId]?.name}
+                </Link>
+              </Typography>
+
+              <LazyLoadImage
+                className={classes.image}
+                alt={generatedTokens[tokenId]?.name}
+                effect="blur"
+                src={generatedTokens[tokenId]?.image}
+              />
+            </>
           ) : (
             <LazyLoadComponent>
               <TokenResolver tokenId={tokenId} />
