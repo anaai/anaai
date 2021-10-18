@@ -3,7 +3,6 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import { Box } from '@material-ui/core';
 import { GenerateScene } from 'components/GenerateScene/GenerateScene';
 import { LandingScene } from 'components/LandingScene/LandingScene';
-import { WalletConnector } from 'components/WalletConnector/WalletConnector';
 import { useStyles } from './RootView.styles';
 import { useWallet } from 'contexts/WalletContext/WalletContext';
 import { TransformationsScene } from 'components/TransformationsScene/TransformationsScene';
