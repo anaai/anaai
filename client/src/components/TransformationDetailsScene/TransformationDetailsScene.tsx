@@ -6,19 +6,32 @@ import {
   Typography,
   useMediaQuery
 } from '@material-ui/core';
+import { useWallet } from 'contexts/WalletContext/WalletContext';
 import { useTheme } from '@material-ui/core';
 import { images } from 'config/imageLoader/imageLoader';
 import { ImageName, TransformationName } from 'config/transformations/transformations';
 import ReactCompareImage from 'react-compare-image';
 import { useHistory, useParams } from 'react-router';
 import { useStyles } from './TransformationDetailsScene.styles';
+import { resolveTransformationByTransformationName } from 'utils/resolvers';
+import { Transformation } from 'models/Transformations.model';
 
 interface TransformationDetailsParams {
   transformationName: TransformationName;
 }
 
 export const TransformationDetailsScene: React.FC<Record<string, unknown>> = () => {
+  const {
+    state: { transformations }
+  } = useWallet();
+
   const { transformationName } = useParams<TransformationDetailsParams>();
+  const transformation = resolveTransformationByTransformationName(
+    transformations as Transformation[],
+    transformationName
+  );
+
+  console.log(transformation);
 
   const history = useHistory();
   const handleExploreOtherTransformationsClick = () => {
@@ -38,28 +51,26 @@ export const TransformationDetailsScene: React.FC<Record<string, unknown>> = () 
       <Box>
         <Box className={classes.transformationInfoContainer}>
           <Typography className={classes.transformationTitle} variant="h3">
-            Transformation title
+            {transformationName}
           </Typography>
 
           <Typography className={classes.transformationDescription} variant="body2">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Officiis iure ipsa
-            necessitatibus provident nam quaerat quas. Maiores consequuntur iusto, temporibus quam
-            beatae culpa libero dicta quidem repellat earum repellendus soluta!
+            {transformation.description}
           </Typography>
 
           <Box className={classes.transformationStats}>
             <Box className={classes.transformationStat}>
               <Typography className={classes.transformationStatValue} variant="h6">
-                15
+                {transformation.supply}
               </Typography>
-              <Typography>Lorem start</Typography>
+              <Typography>Supply</Typography>
             </Box>
 
             <Box className={classes.transformationStat}>
               <Typography className={classes.transformationStatValue} variant="h6">
-                15
+                {transformation.nTokens}
               </Typography>
-              <Typography>Lorem start</Typography>
+              <Typography>Minted</Typography>
             </Box>
 
             <Box className={classes.transformationStat}>

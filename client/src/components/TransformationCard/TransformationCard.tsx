@@ -4,12 +4,17 @@ import { transformationNames } from 'config/transformations/transformations';
 import ReactCompareImage from 'react-compare-image';
 import { useHistory, useLocation } from 'react-router';
 import { useStyles } from './TransformationCard.styles';
+import { Transformation } from 'models/Transformations.model';
 
 interface TransformationCardProps {
   transformationName: typeof transformationNames[number];
+  transformation: Transformation;
 }
 
-export const TransformationCard: React.FC<TransformationCardProps> = ({ transformationName }) => {
+export const TransformationCard: React.FC<TransformationCardProps> = ({
+  transformationName,
+  transformation
+}) => {
   const classes = useStyles();
 
   const history = useHistory();
@@ -28,28 +33,26 @@ export const TransformationCard: React.FC<TransformationCardProps> = ({ transfor
       <Box className={classes.tranformationCard}>
         <Box className={classes.transformationInfoContainer}>
           <Typography className={classes.transformationTitle} variant="h5">
-            Transformation title
+            {transformation.name}
           </Typography>
 
           <Typography className={classes.transformationDescription} variant="body2">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Officiis iure ipsa
-            necessitatibus provident nam quaerat quas. Maiores consequuntur iusto, temporibus quam
-            beatae culpa libero dicta quidem repellat earum repellendus soluta!
+            {transformation.description}
           </Typography>
 
           <Box className={classes.transformationStats}>
             <Box className={classes.transformationStat}>
               <Typography className={classes.transformationStatValue} variant="h6">
-                15
+                {transformation.supply}
               </Typography>
-              <Typography>Lorem start</Typography>
+              <Typography>Supply</Typography>
             </Box>
 
             <Box className={classes.transformationStat}>
               <Typography className={classes.transformationStatValue} variant="h6">
-                15
+                {transformation.nTokens}
               </Typography>
-              <Typography>Lorem start</Typography>
+              <Typography>Minted</Typography>
             </Box>
 
             <Box className={classes.transformationStat}>
