@@ -1,4 +1,5 @@
 import { makeStyles } from '@material-ui/core';
+import transparentMacbookPng from 'assets/images/devices/macbook-transparent.png';
 
 export const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,12 +21,9 @@ export const useStyles = makeStyles((theme) => ({
     margin: `${theme.spacing(0.5)}px auto`,
     width: '100%',
     maxWidth: theme.spacing(100),
-    [theme.breakpoints.down('md')]: {
-      flexDirection: 'column'
-    }
+    flexDirection: 'column'
   },
   heroTextContainer: {
-    flex: 1,
     padding: theme.spacing(2)
   },
   heroTitle: {
@@ -53,12 +51,30 @@ export const useStyles = makeStyles((theme) => ({
   },
   heroImageContainer: {
     margin: theme.spacing(2),
-    flex: 1,
-    boxShadow: theme.shadows[1],
-
-    [theme.breakpoints.down('md')]: {
-      width: '80%',
-      minHeight: theme.spacing(20)
+    width: '100%',
+    maxWidth: theme.spacing(70),
+    position: 'relative'
+  },
+  macbookDeviceContainer: {
+    position: 'relative',
+    height: 0,
+    overflow: 'hidden',
+    backgroundImage: `url(${transparentMacbookPng})`,
+    paddingTop: `${(545 / 920) * 100}%`,
+    backgroundPosition: 'center',
+    backgroundSize: '100%',
+    zIndex: 2,
+    pointerEvents: 'none'
+  },
+  macbookDeviceContentContainer: {
+    position: 'absolute',
+    top: `${(26 / 545) * 100}%`,
+    left: `${(156 / 925) * 100}%`,
+    width: `${(594 / 925) * 100}%`,
+    height: `${(370 / 545) * 100}%`,
+    zIndex: 1,
+    '& > div': {
+      height: '100%!important'
     }
   },
   ourVisionContainer: {

@@ -23,11 +23,14 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
           </Box>
 
           <Box className={classes.heroImageContainer}>
-            <ReactCompareImage
-              sliderPositionPercentage={0.5}
-              leftImage={images.feathers.mDogs}
-              rightImage={images.base.mDogs}
-            />
+            <Box className={classes.macbookDeviceContainer}></Box>
+            <Box className={classes.macbookDeviceContentContainer}>
+              <ReactCompareImage
+                sliderPositionPercentage={0.5}
+                leftImage={images.feathers.mDogs}
+                rightImage={images.base.mDogs}
+              />
+            </Box>
           </Box>
         </Box>
 
