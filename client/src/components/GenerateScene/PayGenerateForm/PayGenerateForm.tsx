@@ -100,7 +100,7 @@ export const PayGenerateForm: React.FC<Record<string, unknown>> = () => {
   const handleSelectedTransformationTypeChange: ChangeEventHandler<HTMLInputElement> = ({
     target: { value: transformationName }
   }) => {
-    transformations && history.push(`/generate/${transformationName}`);
+    transformations && history.replace(`/generate/${transformationName}`);
   };
 
   const handleBackClick = () => {
