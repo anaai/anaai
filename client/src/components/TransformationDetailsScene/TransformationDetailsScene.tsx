@@ -33,8 +33,6 @@ export const TransformationDetailsScene: React.FC<Record<string, unknown>> = () 
     ) || {};
   // TODO: Remove empty object
 
-  console.log(transformation);
-
   const history = useHistory();
   const handleExploreOtherTransformationsClick = () => {
     history.push('/transformations');
