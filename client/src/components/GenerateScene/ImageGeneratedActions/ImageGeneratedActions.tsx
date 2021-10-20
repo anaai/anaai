@@ -1,9 +1,13 @@
 import { Box, Button } from '@material-ui/core';
+import { useWallet } from 'contexts/WalletContext/WalletContext';
+import { createSetMintedTokenAction } from 'contexts/WalletContext/WalletContext.actions';
 
 import { useHistory } from 'react-router-dom';
 import { useStyles } from './ImageGeneratedActions.styles';
 
 export const ImageGeneratedActions: React.FC<Record<string, unknown>> = () => {
+  const { dispatch } = useWallet();
+
   const history = useHistory();
 
   const handleBackClick = () => {
@@ -11,7 +15,7 @@ export const ImageGeneratedActions: React.FC<Record<string, unknown>> = () => {
   };
 
   const handleGenerateMoreClick = () => {
-    alert('generate more click');
+    dispatch(createSetMintedTokenAction(null));
   };
 
   const classes = useStyles();
