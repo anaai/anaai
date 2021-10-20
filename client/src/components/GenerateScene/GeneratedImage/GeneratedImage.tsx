@@ -22,15 +22,15 @@ export const GeneratedImage: React.FC<Record<string, unknown>> = () => {
           </Typography>
         </Box>
       )}
-      <Paper
-        className={`${classes.generatedImagePaper} ${
-          mintedToken ? classes.generatedImagePaperImageReady : ''
+      <Box
+        className={`${classes.generatedImageContainer} ${
+          mintedToken ? classes.generatedImageContainerImageReady : ''
         }`}
       >
         {mintedToken && (
           <img className={classes.generatedImage} src={mintedToken.image} alt="generated" />
         )}
-      </Paper>
+      </Box>
     </Box>
   );
 };
