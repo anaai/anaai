@@ -31,8 +31,14 @@ export const ImageGallery: React.FC<Record<string, unknown>> = () => {
         <Box key={tokenId} className={classes.imageContainer}>
           {generatedTokens[tokenId] ? (
             <>
-              <Typography variant="h6">
-                <Link variant="inherit" href={tokenURL(tokenId)} target="_blank">
+              <Typography variant="h5" className={classes.tokenName}>
+                <Link
+                  color="secondary"
+                  className={classes.tokenLink}
+                  variant="inherit"
+                  href={tokenURL(tokenId)}
+                  target="_blank"
+                >
                   {generatedTokens[tokenId]?.name}
                 </Link>
               </Typography>

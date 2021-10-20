@@ -1,4 +1,4 @@
-import { Box, CircularProgress, Paper, Typography } from '@material-ui/core';
+import { Box, CircularProgress, Typography } from '@material-ui/core';
 import { useWallet } from 'contexts/WalletContext/WalletContext';
 import { useStyles } from './GeneratedImage.styles';
 
@@ -20,17 +20,20 @@ export const GeneratedImage: React.FC<Record<string, unknown>> = () => {
           <Typography className={classes.loadingText} variant="h6">
             Generating Image
           </Typography>
+          <Typography className={classes.loadingText} variant="body2">
+            This can take up to a couple of minutes
+          </Typography>
         </Box>
       )}
-      <Paper
-        className={`${classes.generatedImagePaper} ${
-          mintedToken ? classes.generatedImagePaperImageReady : ''
+      <Box
+        className={`${classes.generatedImageContainer} ${
+          mintedToken ? classes.generatedImageContainerImageReady : ''
         }`}
       >
         {mintedToken && (
           <img className={classes.generatedImage} src={mintedToken.image} alt="generated" />
         )}
-      </Paper>
+      </Box>
     </Box>
   );
 };

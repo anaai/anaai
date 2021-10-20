@@ -26,12 +26,12 @@ export const TransformationDetailsScene: React.FC<Record<string, unknown>> = () 
   } = useWallet();
 
   const { transformationName } = useParams<TransformationDetailsParams>();
-  const transformation = resolveTransformationByTransformationName(
-    transformations as Transformation[],
-    transformationName
-  );
-
-  console.log(transformation);
+  const transformation =
+    resolveTransformationByTransformationName(
+      transformations as Transformation[],
+      transformationName
+    ) || {};
+  // TODO: Remove empty object
 
   const history = useHistory();
   const handleExploreOtherTransformationsClick = () => {

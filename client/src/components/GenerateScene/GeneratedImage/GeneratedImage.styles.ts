@@ -12,7 +12,7 @@ export const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     alignItems: 'center'
   },
-  generatedImagePaper: {
+  generatedImageContainer: {
     position: 'absolute',
     top: 0,
     right: 0,
@@ -24,7 +24,7 @@ export const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.easeInOut
     })
   },
-  generatedImagePaperImageReady: {
+  generatedImageContainerImageReady: {
     opacity: 1
   },
   generatedImage: {

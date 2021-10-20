@@ -23,7 +23,7 @@ export const resolveTransformationByTransformationName = (
   transformations: Transformations,
   transformationName: TransformationName
 ): Transformation => {
-  return transformations.find(
+  return transformations?.find(
     (transformation) => transformation.name === transformationName
   ) as Transformation;
 };
