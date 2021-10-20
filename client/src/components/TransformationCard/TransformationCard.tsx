@@ -1,31 +1,26 @@
 import { Box, Button, Typography } from '@material-ui/core';
 import { images } from 'config/imageLoader/imageLoader';
-import { transformationNames } from 'config/transformations/transformations';
 import ReactCompareImage from 'react-compare-image';
 import { useHistory, useLocation } from 'react-router';
 import { useStyles } from './TransformationCard.styles';
 import { Transformation } from 'models/Transformations.model';
 
 interface TransformationCardProps {
-  transformationName: typeof transformationNames[number];
   transformation: Transformation;
 }
 
-export const TransformationCard: React.FC<TransformationCardProps> = ({
-  transformationName,
-  transformation
-}) => {
+export const TransformationCard: React.FC<TransformationCardProps> = ({ transformation }) => {
   const classes = useStyles();
 
   const history = useHistory();
   const location = useLocation();
 
   const handleLearnMoreClick = () => {
-    history.push(`${location.pathname}/${transformationName}`);
+    history.push(`${location.pathname}/${transformation.name}`);
   };
 
   const handleGenerateClick = () => {
-    history.push(`/generate/${transformationName}`);
+    history.push(`/generate/${transformation.name}`);
   };
 
   return (
@@ -87,7 +82,7 @@ export const TransformationCard: React.FC<TransformationCardProps> = ({
         <Box className={classes.transformationImagesContainer}>
           <ReactCompareImage
             sliderPositionPercentage={0.33}
-            leftImage={images[transformationName].fGirl}
+            leftImage={images[transformation.name].fGirl}
             rightImage={images.base.fGirl}
           />
         </Box>

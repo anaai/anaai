@@ -19,7 +19,6 @@ export const TransformationsScene: React.FC<Record<string, unknown>> = () => {
           <TransformationCard
             key={transformation!.name}
             transformation={transformation as Transformation}
-            transformationName={transformation!.name as TransformationName}
           />
         ))}
     </Box>

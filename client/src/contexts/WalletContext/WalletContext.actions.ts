@@ -39,7 +39,7 @@ export const createSetPayGeneratingLoadingAction = (loading: boolean) =>
     payload: loading
   } as const);
 
-export const createSetMintedTokenAction = (mintedToken: MintedToken) =>
+export const createSetMintedTokenAction = (mintedToken: MintedToken | null) =>
   ({
     type: ACTION_TYPES.SET_MINTED_TOKEN,
     payload: mintedToken
