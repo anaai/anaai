@@ -1,4 +1,4 @@
-import { Box, Button } from '@material-ui/core';
+import { AppBar, Box, Button, Toolbar, Typography } from '@material-ui/core';
 import { WalletConnector } from 'components/WalletConnector/WalletConnector';
 import { useWallet } from 'contexts/WalletContext/WalletContext';
 import { useHistory, useLocation } from 'react-router';
@@ -34,45 +34,55 @@ export const Header: React.FC<Record<string, unknown>> = () => {
 
   return (
     <Box className={classes.root} data-testid="Header-root-container">
-      <Box className={`${classes.ctaButtonsContainer} ${isWalletConnected && classes.show}`}>
-        <Button
-          className={classes.generateButton}
-          variant="contained"
-          color={location.pathname === '/' ? 'primary' : 'secondary'}
-          onClick={handleHomeClick}
-        >
-          Home
-        </Button>
+      <AppBar position="static" color="secondary" className={classes.appBar}>
+        <Toolbar>
+          <Typography variant="h6" className={classes.logo}>
+            ANA.AI
+          </Typography>
 
-        <Button
-          className={classes.generateButton}
-          variant="contained"
-          color={location.pathname.startsWith('/generate') ? 'primary' : 'secondary'}
-          onClick={handleGenerateClick}
-        >
-          Generate
-        </Button>
+          <WalletConnector />
 
-        <Button
-          className={classes.transformationsButton}
-          variant="contained"
-          color={location.pathname.startsWith('/transformations') ? 'primary' : 'secondary'}
-          onClick={handleTransformationsClick}
-        >
-          Transformations
-        </Button>
+          <Box className={`${classes.ctaButtonsContainer} ${isWalletConnected && classes.show}`}>
+            <Button
+              className={`${classes.generateButton} ${
+                location.pathname === '/' ? classes.activeButton : 'undefined'
+              }`}
+              onClick={handleHomeClick}
+            >
+              Home
+            </Button>
 
-        <Button
-          className={classes.myArtButton}
-          variant="contained"
-          color={location.pathname.startsWith('/my-art') ? 'primary' : 'secondary'}
-          onClick={handleMyArtClick}
-        >
-          My Art
-        </Button>
-      </Box>
+            <Button
+              className={`${classes.generateButton} ${
+                location.pathname.startsWith('/generate') ? classes.activeButton : 'undefined'
+              }`}
+              onClick={handleGenerateClick}
+            >
+              Generate
+            </Button>
 
-      <WalletConnector />
+            <Button
+              className={`${classes.transformationsButton} ${
+                location.pathname.startsWith('/transformations')
+                  ? classes.activeButton
+                  : 'undefined'
+              }`}
+              onClick={handleTransformationsClick}
+            >
+              Transformations
+            </Button>
+
+            <Button
+              className={`${classes.myArtButton} ${
+                location.pathname.startsWith('/my-art') ? classes.activeButton : 'undefined'
+              }`}
+              onClick={handleMyArtClick}
+            >
+              My Art
+            </Button>
+          </Box>
+        </Toolbar>
+      </AppBar>
     </Box>
   );
 };
