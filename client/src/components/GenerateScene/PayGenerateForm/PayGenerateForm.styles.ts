@@ -36,7 +36,19 @@ export const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1),
     paddingTop: 0,
     marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1)
+    marginBottom: theme.spacing(1),
+    maxWidth: theme.spacing(40),
+    width: `calc(100% - ${theme.spacing(4)}px)`,
+    margin: 'auto'
+  },
+  transformationsRadioGroup: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    width: '100%'
+  },
+  transformationFormControlLabel: {
+    width: theme.spacing(16)
   },
   ctaButtonsContainer: {
     margin: theme.spacing(2),
