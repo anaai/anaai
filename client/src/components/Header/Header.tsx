@@ -1,8 +1,21 @@
-import { AppBar, Box, Button, Toolbar, Typography } from '@material-ui/core';
+import {
+  AppBar,
+  Box,
+  Button,
+  IconButton,
+  Menu,
+  MenuItem,
+  Toolbar,
+  Typography,
+  useMediaQuery,
+  useTheme
+} from '@material-ui/core';
 import { WalletConnector } from 'components/WalletConnector/WalletConnector';
 import { useWallet } from 'contexts/WalletContext/WalletContext';
 import { useHistory, useLocation } from 'react-router';
 import { useStyles } from './Header.styles';
+import MenuIcon from '@material-ui/icons/Menu';
+import { MouseEventHandler, useState } from 'react';
 
 export const Header: React.FC<Record<string, unknown>> = () => {
   const {
@@ -16,19 +29,37 @@ export const Header: React.FC<Record<string, unknown>> = () => {
 
   const handleHomeClick = () => {
     history.push('/');
+    handleMenuClose();
   };
 
   const handleGenerateClick = () => {
     history.push(`/generate/${transformations?.[0].name}`);
+    handleMenuClose();
   };
 
   const handleTransformationsClick = () => {
     history.push('/transformations');
+    handleMenuClose();
   };
 
   const handleMyArtClick = () => {
     history.push('/my-art');
+    handleMenuClose();
   };
+
+  const [menuAnchorEl, setMenuAnchorEl] = useState<Element | null>(null);
+
+  const handleMenuClick: MouseEventHandler<HTMLButtonElement> = (event) => {
+    setMenuAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setMenuAnchorEl(null);
+  };
+
+  const theme = useTheme();
+
+  const matchesMdDown = useMediaQuery(theme.breakpoints.down('md'));
 
   const classes = useStyles();
 
@@ -42,45 +73,87 @@ export const Header: React.FC<Record<string, unknown>> = () => {
 
           <WalletConnector />
 
-          <Box className={`${classes.ctaButtonsContainer} ${isWalletConnected && classes.show}`}>
-            <Button
-              className={`${classes.generateButton} ${
-                location.pathname === '/' ? classes.activeButton : 'undefined'
-              }`}
-              onClick={handleHomeClick}
-            >
-              Home
-            </Button>
+          <Box className={classes.spacerBox} />
 
-            <Button
-              className={`${classes.generateButton} ${
-                location.pathname.startsWith('/generate') ? classes.activeButton : 'undefined'
-              }`}
-              onClick={handleGenerateClick}
-            >
-              Generate
-            </Button>
+          {matchesMdDown ? (
+            <>
+              <IconButton
+                className={`${classes.menuButton} ${isWalletConnected && classes.show}`}
+                onClick={handleMenuClick}
+              >
+                <MenuIcon />
+              </IconButton>
 
-            <Button
-              className={`${classes.transformationsButton} ${
-                location.pathname.startsWith('/transformations')
-                  ? classes.activeButton
-                  : 'undefined'
-              }`}
-              onClick={handleTransformationsClick}
-            >
-              Transformations
-            </Button>
+              <Menu
+                anchorEl={menuAnchorEl}
+                keepMounted
+                open={Boolean(menuAnchorEl)}
+                onClose={handleMenuClose}
+                classes={{ paper: classes.dropdownMenuPaper }}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                getContentAnchorEl={null}
+              >
+                <MenuItem
+                  className={`${classes.menuItem} ${
+                    location.pathname.startsWith('/generate') ? classes.activeButton : 'undefined'
+                  }`}
+                  onClick={handleGenerateClick}
+                >
+                  Generate
+                </MenuItem>
+                <MenuItem
+                  className={`${classes.menuItem} ${
+                    location.pathname.startsWith('/transformations')
+                      ? classes.activeButton
+                      : 'undefined'
+                  }`}
+                  onClick={handleTransformationsClick}
+                >
+                  Transformations
+                </MenuItem>
+                <MenuItem
+                  className={`${classes.menuItem} ${
+                    location.pathname.startsWith('/my-art') ? classes.activeButton : 'undefined'
+                  }`}
+                  onClick={handleMyArtClick}
+                >
+                  My Art
+                </MenuItem>
+              </Menu>
+            </>
+          ) : (
+            <Box className={`${classes.ctaButtonsContainer} ${isWalletConnected && classes.show}`}>
+              <Button
+                className={`${classes.generateButton} ${
+                  location.pathname.startsWith('/generate') ? classes.activeButton : 'undefined'
+                }`}
+                onClick={handleGenerateClick}
+              >
+                Generate
+              </Button>
 
-            <Button
-              className={`${classes.myArtButton} ${
-                location.pathname.startsWith('/my-art') ? classes.activeButton : 'undefined'
-              }`}
-              onClick={handleMyArtClick}
-            >
-              My Art
-            </Button>
-          </Box>
+              <Button
+                className={`${classes.transformationsButton} ${
+                  location.pathname.startsWith('/transformations')
+                    ? classes.activeButton
+                    : 'undefined'
+                }`}
+                onClick={handleTransformationsClick}
+              >
+                Transformations
+              </Button>
+
+              <Button
+                className={`${classes.myArtButton} ${
+                  location.pathname.startsWith('/my-art') ? classes.activeButton : 'undefined'
+                }`}
+                onClick={handleMyArtClick}
+              >
+                My Art
+              </Button>
+            </Box>
+          )}
         </Toolbar>
       </AppBar>
     </Box>

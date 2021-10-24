@@ -18,28 +18,19 @@ export const useStyles = makeStyles((theme) => ({
     fontWeight: 'bold',
     marginRight: theme.spacing(1)
   },
+  spacerBox: {
+    flex: 1
+  },
   ctaButtonsContainer: {
     display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'flex-end',
     alignItems: 'center',
-    flexGrow: 1,
     opacity: 0,
+    visibility: 'hidden',
     transform: 'translate(0, -2rem)',
     transition: theme.transitions.create(['opacity', 'transform'], {
       duration: theme.transitions.duration.short,
       easing: theme.transitions.easing.easeOut
     })
-  },
-  show: {
-    opacity: 1,
-    transform: 'translate(0)'
-  },
-  homeButton: {
-    color: '#fff',
-    marginRight: theme.spacing(1),
-    marginLeft: theme.spacing(1),
-    border: `2px solid ${theme.palette.secondary.main}`
   },
   generateButton: {
     color: '#fff',
@@ -61,5 +52,26 @@ export const useStyles = makeStyles((theme) => ({
   },
   activeButton: {
     border: `2px solid ${grey[200]}`
+  },
+  menuButton: {
+    color: '#fff',
+    marginLeft: theme.spacing(1),
+    border: `2px solid ${theme.palette.secondary.main}`,
+    opacity: 0,
+    visibility: 'hidden',
+    transform: 'translate(0, -2rem)',
+    transition: theme.transitions.create(['opacity', 'transform'], {
+      duration: theme.transitions.duration.short,
+      easing: theme.transitions.easing.easeOut
+    })
+  },
+  menuItem: {},
+  show: {
+    opacity: 1,
+    visibility: 'visible',
+    transform: 'translate(0)'
+  },
+  dropdownMenuPaper: {
+    backgroundColor: theme.palette.secondary.main
   }
 }));
