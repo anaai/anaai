@@ -29,6 +29,10 @@ export const Header: React.FC<Record<string, unknown>> = () => {
   const history = useHistory();
   const location = useLocation();
 
+  const handleHomeClick = () => {
+    history.push('/');
+  };
+
   const handleGenerateClick = () => {
     history.push(`/generate/${transformations?.[0].name}`);
     handleMenuClose();
@@ -64,7 +68,7 @@ export const Header: React.FC<Record<string, unknown>> = () => {
     <Box className={classes.root} data-testid="Header-root-container">
       <AppBar position="static" color="secondary" className={classes.appBar}>
         <Toolbar>
-          <Typography variant="h6" className={classes.logo}>
+          <Typography variant="h6" className={classes.logo} onClick={handleHomeClick}>
             ANA.AI
           </Typography>
 
