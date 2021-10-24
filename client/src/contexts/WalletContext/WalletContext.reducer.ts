@@ -46,6 +46,11 @@ export const walletReducer = (
         ...state,
         transformations: action.payload
       };
+    case ACTION_TYPES.SET_CHAIN_ID_HEX:
+      return {
+        ...state,
+        chainIdHex: action.payload
+      };
     case ACTION_TYPES.ADD_USER_GENERATED_TOKEN_IDS:
       return {
         ...state,
