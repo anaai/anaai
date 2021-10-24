@@ -9,6 +9,7 @@ import { TransformationsScene } from 'components/TransformationsScene/Transforma
 import { TransformationDetailsScene } from 'components/TransformationDetailsScene/TransformationDetailsScene';
 import { MyArtScene } from 'components/MyArtScene/MyArtScene';
 import { Header } from 'components/Header/Header';
+import { Footer } from 'components/Footer/Footer';
 
 export const RootView: React.FC<Record<string, unknown>> = () => {
   const classes = useStyles();
@@ -45,6 +46,8 @@ export const RootView: React.FC<Record<string, unknown>> = () => {
           <Route path="" render={() => <Redirect to="/" />} />
         </Switch>
       </Box>
+
+      <Footer />
     </Box>
   );
 };
