@@ -52,10 +52,11 @@ export const createSetTransformationsAction = (transformations: Transformations)
     payload: transformations
   } as const);
 
-export const createSetChainIdHexAction = (chainIdHex: string) => ({
-  type: ACTION_TYPES.SET_CHAIN_ID_HEX,
-  payload: chainIdHex
-});
+export const createSetChainIdHexAction = (chainIdHex: string) =>
+  ({
+    type: ACTION_TYPES.SET_CHAIN_ID_HEX,
+    payload: chainIdHex
+  } as const);
 
 export const createAddUserGeneratedTokenIdsAction = (userGeneratedTokenIds: string[]) =>
   ({
