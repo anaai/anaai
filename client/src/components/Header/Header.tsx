@@ -19,10 +19,12 @@ import { MouseEventHandler, useState } from 'react';
 
 export const Header: React.FC<Record<string, unknown>> = () => {
   const {
-    state: { accounts, transformations }
+    state: { accounts, transformations, chainIdHex }
   } = useWallet();
 
   const isWalletConnected = accounts[0];
+  const isCorrectChainId = chainIdHex === process.env.REACT_APP_CHAIN_ID_HEX;
+  const shouldAllowEntry = isWalletConnected && isCorrectChainId;
 
   const history = useHistory();
   const location = useLocation();
@@ -66,14 +68,14 @@ export const Header: React.FC<Record<string, unknown>> = () => {
             ANA.AI
           </Typography>
 
-          <WalletConnector />
-
           <Box className={classes.spacerBox} />
 
           {matchesMdDown ? (
             <>
+              <WalletConnector />
+
               <IconButton
-                className={`${classes.menuButton} ${isWalletConnected && classes.show}`}
+                className={`${classes.menuButton} ${shouldAllowEntry && classes.show}`}
                 onClick={handleMenuClick}
               >
                 <MenuIcon />
@@ -118,36 +120,40 @@ export const Header: React.FC<Record<string, unknown>> = () => {
               </Menu>
             </>
           ) : (
-            <Box className={`${classes.ctaButtonsContainer} ${isWalletConnected && classes.show}`}>
-              <Button
-                className={`${classes.generateButton} ${
-                  location.pathname.startsWith('/generate') ? classes.activeButton : 'undefined'
-                }`}
-                onClick={handleGenerateClick}
-              >
-                Generate
-              </Button>
+            <>
+              <Box className={`${classes.ctaButtonsContainer} ${shouldAllowEntry && classes.show}`}>
+                <Button
+                  className={`${classes.generateButton} ${
+                    location.pathname.startsWith('/generate') ? classes.activeButton : 'undefined'
+                  }`}
+                  onClick={handleGenerateClick}
+                >
+                  Generate
+                </Button>
 
-              <Button
-                className={`${classes.transformationsButton} ${
-                  location.pathname.startsWith('/transformations')
-                    ? classes.activeButton
-                    : 'undefined'
-                }`}
-                onClick={handleTransformationsClick}
-              >
-                Transformations
-              </Button>
+                <Button
+                  className={`${classes.transformationsButton} ${
+                    location.pathname.startsWith('/transformations')
+                      ? classes.activeButton
+                      : 'undefined'
+                  }`}
+                  onClick={handleTransformationsClick}
+                >
+                  Transformations
+                </Button>
 
-              <Button
-                className={`${classes.myArtButton} ${
-                  location.pathname.startsWith('/my-art') ? classes.activeButton : 'undefined'
-                }`}
-                onClick={handleMyArtClick}
-              >
-                My Art
-              </Button>
-            </Box>
+                <Button
+                  className={`${classes.myArtButton} ${
+                    location.pathname.startsWith('/my-art') ? classes.activeButton : 'undefined'
+                  }`}
+                  onClick={handleMyArtClick}
+                >
+                  My Art
+                </Button>
+              </Box>
+
+              <WalletConnector />
+            </>
           )}
         </Toolbar>
       </AppBar>
