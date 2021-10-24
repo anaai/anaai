@@ -21,7 +21,8 @@ import {
   createSetTransformationsAction,
   createSetMintedTokenAction,
   createAddUserGeneratedTokenEntitiesAction,
-  createSetPayGeneratingLoadingAction
+  createSetPayGeneratingLoadingAction,
+  createSetChainIdHexAction
 } from './WalletContext.actions';
 import { walletReducer } from './WalletContext.reducer';
 import { IWalletContextState, initialState } from './WalletContext.state';
@@ -44,24 +45,56 @@ const WalletContext = createContext({
 const WalletProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [state, dispatch] = useReducer(walletReducer, initialState);
 
-  const { isMetaMaskInstalled, accounts, contract } = state;
+  const { isMetaMaskInstalled, accounts, contract, chainIdHex } = state;
 
   const watchEthereumAccountsChange = useCallback(() => {
+    const { ethereum } = window;
+
     const onAccountsChanged = (newAccounts: string[]) => {
       dispatch(createSetAccountsAction(newAccounts));
     };
-    const { ethereum } = window;
     ethereum.on('accountsChanged', onAccountsChanged);
+
+    const onChainChanged = (chainIdHex: string) => {
+      console.log('chainIdHex', chainIdHex);
+      if (chainIdHex !== process.env.REACT_APP_CHAIN_ID_HEX) {
+        window.location.reload();
+      }
+    };
+    ethereum.on('chainChanged', onChainChanged);
   }, [dispatch]);
+
+  const initMetaMaskWallet = useCallback(async () => {
+    try {
+      const accounts = await window.ethereum.request({
+        method: 'eth_requestAccounts'
+      });
+      dispatch(createSetAccountsAction(accounts));
+      const chainIdHex = await window.ethereum.request({ method: 'eth_chainId' });
+      if (chainIdHex !== process.env.REACT_APP_CHAIN_ID_HEX) {
+        await window.ethereum.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: process.env.REACT_APP_CHAIN_ID_HEX }]
+        });
+      }
+
+      console.log(chainIdHex);
+      dispatch(createSetChainIdHexAction(chainIdHex));
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
 
   useEffect(() => {
     if (isMetaMaskInstalled) {
       watchEthereumAccountsChange();
+      initMetaMaskWallet();
     }
-  }, [isMetaMaskInstalled, watchEthereumAccountsChange]);
+  }, [isMetaMaskInstalled, watchEthereumAccountsChange, initMetaMaskWallet]);
 
   useEffect(() => {
-    if (accounts.length) {
+    const isCorrectChainId = chainIdHex === process.env.REACT_APP_CHAIN_ID_HEX;
+    if (accounts.length && isCorrectChainId) {
       const abi = StyleArtContract.abi;
       const address = process.env.REACT_APP_CONTRACT_ADDRESS;
       const web3Instance = new Web3(window.ethereum);
@@ -70,7 +103,7 @@ const WalletProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
       dispatch(createSetContractInstanceAction(contractInstance));
     }
-  }, [accounts]);
+  }, [accounts, chainIdHex]);
 
   const onTokenTransferred = useCallback(
     async (error: Error, event: OwnershipTransferredEvent) => {
