@@ -12,6 +12,8 @@ export const useStyles = makeStyles((theme) => ({
   mainSection: {
     paddingTop: theme.spacing(2),
     flex: 1,
-    overflowY: 'auto'
+    overflowY: 'auto',
+    display: 'flex',
+    flexDirection: 'column'
   }
 }));
