@@ -27,11 +27,6 @@ export const Header: React.FC<Record<string, unknown>> = () => {
   const history = useHistory();
   const location = useLocation();
 
-  const handleHomeClick = () => {
-    history.push('/');
-    handleMenuClose();
-  };
-
   const handleGenerateClick = () => {
     history.push(`/generate/${transformations?.[0].name}`);
     handleMenuClose();
