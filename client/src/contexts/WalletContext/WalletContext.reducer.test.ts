@@ -4,6 +4,7 @@ import {
   createAddUserGeneratedTokenEntitiesAction,
   createAddUserGeneratedTokenIdsAction,
   createSetAccountsAction,
+  createSetChainIdHexAction,
   createSetContractInstanceAction,
   createSetMintedTokenAction,
   createSetPayGeneratingLoadingAction,
@@ -16,6 +17,7 @@ import { Contract } from 'web3-eth-contract';
 import { TokenMintedEvent } from 'models/TokenMintedEvent.model';
 import { MintedToken } from 'models/MintedToken.model';
 import { OwnershipTransferredEvent } from 'models/OwnershipTransferredEvent.model';
+import { Transformations } from 'models/Transformations.model';
 
 test('Has appropriate initial state', () => {
   expect(initialState).toEqual({
@@ -23,6 +25,7 @@ test('Has appropriate initial state', () => {
     metaMaskOnboarding: expect.any(MetaMaskOnboarding),
     isMetaMaskInstalled: Boolean(window?.ethereum?.isMetaMask),
     accounts: [],
+    chainIdHex: null,
     web3Instance: null,
     contract: null,
     transformations: null,
@@ -108,12 +111,28 @@ test('SET_MINTED_TOKEN', () => {
   expect(expectedState).toEqual(state);
 });
 
+test('SET_CHAIN_ID_HEX', () => {
+  const mockChainIdHex = '0x1';
+
+  const state = walletReducer(initialState, createSetChainIdHexAction(mockChainIdHex));
+
+  const expectedState = {
+    ...initialState,
+    chainIdHex: mockChainIdHex
+  };
+
+  expect(expectedState).toEqual(state);
+});
+
 test('SET_TRANSFORMATIONS', () => {
-  const mockTransformations = [
+  const mockTransformations: Transformations = [
     {
       id: 'a',
-      name: 'b',
-      price: '1'
+      name: 'ascii',
+      price: '1',
+      description: 'mock description',
+      nTokens: '100',
+      supply: '100'
     }
   ];
 
