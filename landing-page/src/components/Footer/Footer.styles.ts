@@ -14,7 +14,18 @@ export const useStyles = makeStyles((theme) => ({
     flex: 1,
     display: 'flex',
     alignItems: 'center',
+    justifyContent: 'center',
     margin: `${theme.spacing(0.5)}px auto`,
     maxWidth: theme.spacing(100)
+  },
+  socialbutton: {
+    color: '#fff',
+    marginRight: theme.spacing(1),
+    marginLeft: theme.spacing(1)
+  },
+  icon: {
+    width: theme.spacing(2),
+    height: theme.spacing(2),
+    marginRight: theme.spacing(0.5)
   }
 }));
