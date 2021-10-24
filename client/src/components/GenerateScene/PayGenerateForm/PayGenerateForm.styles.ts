@@ -37,7 +37,7 @@ export const useStyles = makeStyles((theme) => ({
     paddingTop: 0,
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(1),
-    maxWidth: theme.spacing(40),
+    maxWidth: theme.spacing(50),
     width: `calc(100% - ${theme.spacing(4)}px)`,
     margin: 'auto'
   },
@@ -48,7 +48,18 @@ export const useStyles = makeStyles((theme) => ({
     width: '100%'
   },
   transformationFormControlLabel: {
-    width: theme.spacing(16)
+    width: theme.spacing(20),
+    display: 'flex',
+    alignItems: 'center',
+    '& > span:last-child': {
+      flex: 1
+    }
+  },
+  transformationLabelSpan: {
+    width: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between'
   },
   ctaButtonsContainer: {
     margin: theme.spacing(2),
