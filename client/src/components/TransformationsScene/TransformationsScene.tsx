@@ -1,4 +1,4 @@
-import { Box } from '@material-ui/core';
+import { Box, Typography } from '@material-ui/core';
 import { useWallet } from 'contexts/WalletContext/WalletContext';
 import { TransformationCard } from 'components/TransformationCard/TransformationCard';
 import { useStyles } from './TransformationsScene.styles';
@@ -13,13 +13,19 @@ export const TransformationsScene: React.FC<Record<string, unknown>> = () => {
 
   return (
     <Box className={classes.root} data-testid="TransformationsScene-root-container">
-      {transformations &&
-        transformations.map((transformation) => (
-          <TransformationCard
-            key={transformation.name}
-            transformation={transformation as Transformation}
-          />
-        ))}
+      {transformations && (
+        <>
+          <Typography variant="h2" gutterBottom>
+            Transformations
+          </Typography>
+          {transformations.map((transformation) => (
+            <TransformationCard
+              key={transformation.name}
+              transformation={transformation as Transformation}
+            />
+          ))}
+        </>
+      )}
     </Box>
   );
 };

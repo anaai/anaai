@@ -7,7 +7,8 @@ const spacing = (n: number) => n * 13;
 
 const defaultTypographyStyles = {
   color: '#fff',
-  textShadow: '0 3px 3px #0005'
+  textShadow: '0 3px 3px #0005',
+  userSelect: 'none' as const
 };
 // Theme palette: https://coolors.co/03256c-2541b2-1768ac-06bee1-ffffff
 export const primaryTheme = responsiveFontSizes(
