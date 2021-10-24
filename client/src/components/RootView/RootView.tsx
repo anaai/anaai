@@ -14,24 +14,26 @@ export const RootView: React.FC<Record<string, unknown>> = () => {
   const classes = useStyles();
 
   const {
-    state: { accounts }
+    state: { accounts, chainIdHex }
   } = useWallet();
 
   const isWalletConnected = accounts[0];
+  const isCorrectChainId = chainIdHex === process.env.REACT_APP_CHAIN_ID_HEX;
+  const shouldAllowEntry = isWalletConnected && isCorrectChainId;
 
   return (
     <Box className={classes.root}>
       <Header />
 
       <Switch>
-        {isWalletConnected && (
+        {shouldAllowEntry && (
           <Route exact path="/generate/:transformationName" component={GenerateScene} />
         )}
-        {isWalletConnected && <Route exact path="/my-art" component={MyArtScene} />}
-        {isWalletConnected && (
+        {shouldAllowEntry && <Route exact path="/my-art" component={MyArtScene} />}
+        {shouldAllowEntry && (
           <Route exact path="/transformations" component={TransformationsScene} />
         )}
-        {isWalletConnected && (
+        {shouldAllowEntry && (
           <Route
             exact
             path="/transformations/:transformationName"
