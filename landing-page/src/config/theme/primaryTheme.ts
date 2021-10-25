@@ -1,6 +1,8 @@
 import { createTheme, responsiveFontSizes } from '@material-ui/core';
 import { blueGrey } from '@material-ui/core/colors';
 
+export const themeGradient = `linear-gradient(200deg, #4099a7 0%, #44bac1 35%, #48bca8 100%), linear-gradient(160deg, #4099a7 0%, #44bac1 35%, #48bca8 100%)`;
+
 const spacing = (n: number) => n * 13;
 
 const defaultTypographyStyles = {
