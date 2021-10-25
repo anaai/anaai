@@ -11,6 +11,7 @@ export const ACTION_TYPES = {
   SET_PAY_GENERATING_LOADING: 'SET_PAY_GENERATING_LOADING',
   SET_MINTED_TOKEN: 'SET_MINTED_TOKEN',
   SET_TRANSFORMATIONS: 'SET_TRANSFORMATIONS',
+  SET_CHAIN_ID_HEX: 'SET_CHAIN_ID_HEX',
   ADD_USER_GENERATED_TOKEN_IDS: 'ADD_USER_GENERATED_TOKEN_IDS',
   ADD_USER_GENERATED_TOKEN_ENTITIES: 'ADD_USER_GENERATED_TOKEN_ENTITIES'
 } as const;
@@ -51,6 +52,12 @@ export const createSetTransformationsAction = (transformations: Transformations)
     payload: transformations
   } as const);
 
+export const createSetChainIdHexAction = (chainIdHex: string) =>
+  ({
+    type: ACTION_TYPES.SET_CHAIN_ID_HEX,
+    payload: chainIdHex
+  } as const);
+
 export const createAddUserGeneratedTokenIdsAction = (userGeneratedTokenIds: string[]) =>
   ({
     type: ACTION_TYPES.ADD_USER_GENERATED_TOKEN_IDS,
@@ -70,6 +77,7 @@ export type WalletReducerAction = ReturnType<
   | typeof createSetPayGeneratingLoadingAction
   | typeof createSetMintedTokenAction
   | typeof createSetTransformationsAction
+  | typeof createSetChainIdHexAction
   | typeof createAddUserGeneratedTokenIdsAction
   | typeof createAddUserGeneratedTokenEntitiesAction
 >;

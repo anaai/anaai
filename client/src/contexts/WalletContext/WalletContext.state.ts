@@ -10,6 +10,7 @@ export type IWalletContextState = Readonly<{
   metaMaskOnboarding: MetaMaskOnboarding;
   isMetaMaskInstalled: boolean;
   accounts: ReadonlyArray<string>;
+  chainIdHex: string | null;
   web3Instance: Web3 | null;
   contract: Contract | null;
   transformations: Transformations | null;
@@ -31,6 +32,7 @@ export const initialState: IWalletContextState = {
   metaMaskOnboarding: new MetaMaskOnboarding(),
   isMetaMaskInstalled: Boolean(window?.ethereum?.isMetaMask),
   accounts: [],
+  chainIdHex: null,
   web3Instance: null,
   contract: null,
   transformations: null,

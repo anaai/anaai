@@ -3,6 +3,7 @@ import {
   createAddUserGeneratedTokenEntitiesAction,
   createAddUserGeneratedTokenIdsAction,
   createSetAccountsAction,
+  createSetChainIdHexAction,
   createSetContractInstanceAction,
   createSetMintedTokenAction,
   createSetPayGeneratingLoadingAction,
@@ -87,6 +88,19 @@ test('createSetTransformationsAction', () => {
   const expectedAction = {
     type: ACTION_TYPES.SET_TRANSFORMATIONS,
     payload: mockTransformations
+  };
+
+  expect(action).toEqual(expectedAction);
+});
+
+test('createSetChainIdHexAction', () => {
+  const mockChainIdHex = '0x1';
+
+  const action = createSetChainIdHexAction(mockChainIdHex);
+
+  const expectedAction = {
+    type: ACTION_TYPES.SET_CHAIN_ID_HEX,
+    payload: mockChainIdHex
   };
 
   expect(action).toEqual(expectedAction);
