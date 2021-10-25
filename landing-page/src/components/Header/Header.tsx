@@ -30,6 +30,7 @@ export const Header: React.FC<Record<string, unknown>> = () => {
           <Button onClick={handleExamplesClick}>Examples</Button>
           <Button onClick={handleWhatToExpectClick}>What to expect</Button>
           <Button
+            className={classes.goToAppButton}
             target="_blank"
             href="http://stg.anaai.art/"
             color="secondary"

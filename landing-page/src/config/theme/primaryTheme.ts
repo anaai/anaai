@@ -37,10 +37,10 @@ export const primaryTheme = responsiveFontSizes(
       MuiButton: {
         root: {
           letterSpacing: '2px',
-          padding: `${spacing(1)}px ${spacing(2)}px!important`,
+          padding: `${spacing(1)}px ${spacing(2)}px`,
           borderRadius: spacing(2),
           '@media(max-width: 599.95px)': {
-            padding: `${spacing(1)}px!important`
+            padding: `${spacing(1)}px`
           }
         }
       }

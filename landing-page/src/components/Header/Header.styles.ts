@@ -34,5 +34,8 @@ export const useStyles = makeStyles((theme) => ({
     '& > button': {
       marginLeft: theme.spacing(1)
     }
+  },
+  goToAppButton: {
+    marginLeft: theme.spacing(1)
   }
 }));
