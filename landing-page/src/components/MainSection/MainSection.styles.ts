@@ -5,8 +5,8 @@ export const useStyles = makeStyles((theme) => ({
   root: {
     flex: 1,
     display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
+    flexDirection: 'column',
+    overflow: 'auto'
   },
   mainSectionContentContainer: {
     flex: 1,

@@ -1,12 +1,15 @@
 import { makeStyles } from '@material-ui/core';
+import { themeGradient } from 'config/theme/primaryTheme';
 
 export const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: theme.spacing(1),
-    marginLeft: theme.spacing(1)
+    paddingRight: theme.spacing(1),
+    paddingLeft: theme.spacing(1),
+    boxShadow: theme.shadows[2],
+    zIndex: 2
   },
   headerContentContainer: {
     flex: 1,

@@ -9,7 +9,7 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
   return (
     <Box className={classes.root} data-testid="MainSection-root-container">
       <Box className={classes.mainSectionContentContainer}>
-        <Box className={classes.heroSectionContainer}>
+        <Box className={classes.heroSectionContainer} id="hero-section">
           <Box className={classes.heroTextContainer}>
             <Typography variant="h3" className={classes.heroTitle}>
               ANA
@@ -34,7 +34,7 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
           </Box>
         </Box>
 
-        <Box className={classes.ourVisionContainer}>
+        <Box className={classes.ourVisionContainer} id="our-vision-section">
           <Typography variant="h3" className={classes.title}>
             Our Vision
           </Typography>
@@ -51,7 +51,7 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
           </Typography>
         </Box>
 
-        <Box className={classes.howItWorksContainer}>
+        <Box className={classes.howItWorksContainer} id="how-it-works-section">
           <Typography variant="h3" className={classes.title}>
             How it works
           </Typography>
@@ -88,7 +88,7 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
           </Box>
         </Box>
 
-        <Box className={classes.examplesContainer}>
+        <Box className={classes.examplesContainer} id="examples-section">
           <Typography variant="h3" className={classes.title}>
             Examples
           </Typography>
@@ -149,7 +149,7 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
           </Box>
         </Box>
 
-        <Box className={classes.whatToExpectContainer}>
+        <Box className={classes.whatToExpectContainer} id="what-to-expect-section">
           <Typography variant="h3" className={classes.title}>
             What to expect
           </Typography>
