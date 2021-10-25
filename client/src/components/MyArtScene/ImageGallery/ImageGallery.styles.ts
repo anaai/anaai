@@ -32,7 +32,11 @@ export const useStyles = makeStyles((theme) => ({
     flex: 0,
     marginBottom: theme.spacing(1)
   },
-  tokenLink: {},
+  tokenLink: {
+    '&:hover': {
+      textDecoration: 'none'
+    }
+  },
   image: {
     flex: 1,
     objectFit: 'cover'

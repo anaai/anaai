@@ -146,9 +146,11 @@ export const PayGenerateForm: React.FC<Record<string, unknown>> = () => {
                 name="selectedTransformationType"
                 value={transformationName}
                 onChange={handleSelectedTransformationTypeChange}
+                className={classes.transformationsRadioGroup}
               >
                 {transformations.map((transformation) => (
                   <FormControlLabel
+                    className={classes.transformationFormControlLabel}
                     key={transformation.id}
                     value={transformation.name}
                     control={<Radio />}

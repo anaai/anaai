@@ -35,11 +35,15 @@ export const WalletConnector: React.FC<Record<string, unknown>> = () => {
     metaMaskOnboarding.startOnboarding();
   };
 
+  const isWalletConnected = accounts[0];
+
   const classes = useStyles();
 
   const sharedButtonProps = {
-    color: (accounts.length ? 'primary' : undefined) as PropTypes.Color | undefined,
-    className: classes.metamaskButton,
+    color: (isWalletConnected ? 'primary' : undefined) as PropTypes.Color | undefined,
+    className: `${classes.metamaskButton} ${
+      isWalletConnected ? classes.metamaskConnectedButton : ''
+    }`,
     variant: 'contained' as const,
     endIcon: <MetaMaskFox />,
     'data-testid': 'metamask-button'
