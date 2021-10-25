@@ -12,9 +12,9 @@ export const Footer: React.FC<Record<string, unknown>> = () => {
     if (newWindow) newWindow.opener = null;
   };
 
-  const handleDiscordClick = () => openInNewTab('TODO');
-  const handleTwitterClick = () => openInNewTab('TODO');
-  const handleEmailClick = () => openInNewTab('mailto:no-reply@example.com');
+  const handleDiscordClick = () => openInNewTab('https://discord.gg/BevCBhDv');
+  const handleTwitterClick = () => openInNewTab('https://twitter.com/anaai_art');
+  const handleEmailClick = () => openInNewTab('mailto:milan.keca@anaai.art');
 
   return (
     <Box className={classes.root} data-testid="Footer-root-container">
