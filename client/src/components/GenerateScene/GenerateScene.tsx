@@ -32,7 +32,7 @@ export const GenerateScene: React.FC<Record<string, unknown>> = () => {
             <br />
             2. Choose a transformation
             <br />
-            3. Press PAY IMAGE GENERATE button
+            3. Generate your art
             <br />
             <br />
             The image generation process takes a couple of minutes. If you happen to navigate away,

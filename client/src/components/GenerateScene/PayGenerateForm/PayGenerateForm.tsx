@@ -186,7 +186,7 @@ export const PayGenerateForm: React.FC<Record<string, unknown>> = () => {
           type="submit"
           disabled={payGeneratingLoading}
         >
-          Pay Image Generate
+          Generate Your Art
         </Button>
         <Button
           className={classes.backButton}
