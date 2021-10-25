@@ -12,7 +12,10 @@ export const useStyles = makeStyles((theme) => ({
     flex: 1,
     display: 'flex',
     flexDirection: 'column',
-    padding: theme.spacing(2),
+    alignItems: 'center',
+    paddingRight: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
+    paddingLeft: theme.spacing(2),
     margin: `0 ${theme.spacing(5)}px`,
     maxWidth: theme.spacing(100),
     [theme.breakpoints.down('sm')]: {

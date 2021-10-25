@@ -33,6 +33,7 @@ export const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(1)
   },
   tokenLink: {
+    color: '#fff',
     '&:hover': {
       textDecoration: 'none'
     }

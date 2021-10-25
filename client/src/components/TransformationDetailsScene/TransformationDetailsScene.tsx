@@ -50,7 +50,7 @@ export const TransformationDetailsScene: React.FC<Record<string, unknown>> = () 
     <Box className={classes.root} data-testid="TransformationDetailsScene-root-container">
       <Box>
         <Box className={classes.transformationInfoContainer}>
-          <Typography className={classes.transformationTitle} variant="h3">
+          <Typography variant="h2" gutterBottom>
             {transformationName}
           </Typography>
 

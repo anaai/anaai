@@ -3,7 +3,6 @@ import { grey } from '@material-ui/core/colors';
 
 export const useStyles = makeStyles((theme) => ({
   root: {
-    marginBottom: theme.spacing(2),
     display: 'flex',
     flexDirection: 'column-reverse',
     alignItems: 'center',
@@ -16,7 +15,8 @@ export const useStyles = makeStyles((theme) => ({
   logo: {
     letterSpacing: theme.spacing(1),
     fontWeight: 'bold',
-    marginRight: theme.spacing(1)
+    marginRight: theme.spacing(1),
+    cursor: 'pointer'
   },
   spacerBox: {
     flex: 1

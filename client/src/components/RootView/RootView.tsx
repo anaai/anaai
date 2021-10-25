@@ -9,6 +9,7 @@ import { TransformationsScene } from 'components/TransformationsScene/Transforma
 import { TransformationDetailsScene } from 'components/TransformationDetailsScene/TransformationDetailsScene';
 import { MyArtScene } from 'components/MyArtScene/MyArtScene';
 import { Header } from 'components/Header/Header';
+import { Footer } from 'components/Footer/Footer';
 
 export const RootView: React.FC<Record<string, unknown>> = () => {
   const classes = useStyles();
@@ -25,24 +26,28 @@ export const RootView: React.FC<Record<string, unknown>> = () => {
     <Box className={classes.root}>
       <Header />
 
-      <Switch>
-        {shouldAllowEntry && (
-          <Route exact path="/generate/:transformationName" component={GenerateScene} />
-        )}
-        {shouldAllowEntry && <Route exact path="/my-art" component={MyArtScene} />}
-        {shouldAllowEntry && (
-          <Route exact path="/transformations" component={TransformationsScene} />
-        )}
-        {shouldAllowEntry && (
-          <Route
-            exact
-            path="/transformations/:transformationName"
-            component={TransformationDetailsScene}
-          />
-        )}
-        <Route exact path="/" component={LandingScene} />
-        <Route path="" render={() => <Redirect to="/" />} />
-      </Switch>
+      <Box className={classes.mainSection}>
+        <Switch>
+          {shouldAllowEntry && (
+            <Route exact path="/generate/:transformationName" component={GenerateScene} />
+          )}
+          {shouldAllowEntry && <Route exact path="/my-art" component={MyArtScene} />}
+          {shouldAllowEntry && (
+            <Route exact path="/transformations" component={TransformationsScene} />
+          )}
+          {shouldAllowEntry && (
+            <Route
+              exact
+              path="/transformations/:transformationName"
+              component={TransformationDetailsScene}
+            />
+          )}
+          <Route exact path="/" component={LandingScene} />
+          <Route path="" render={() => <Redirect to="/" />} />
+        </Switch>
+      </Box>
+
+      <Footer />
     </Box>
   );
 };

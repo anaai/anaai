@@ -7,6 +7,7 @@ import {
   FormControl,
   FormControlLabel,
   FormLabel,
+  IconButton,
   Radio,
   RadioGroup,
   Typography
@@ -24,6 +25,7 @@ import { PayGeneratingResult } from 'models/PayGeneratingResult.model';
 import { validateAccountConnection, validateUrl } from 'utils/validators';
 import { useStyles } from './PayGenerateForm.styles';
 import { TransformationName } from 'config/transformations/transformations';
+import InfoIcon from '@material-ui/icons/Info';
 
 interface PayGenerateFormParams {
   transformationName: TransformationName;
@@ -107,6 +109,10 @@ export const PayGenerateForm: React.FC<Record<string, unknown>> = () => {
     history.goBack();
   };
 
+  const handleTransformationInfoClick = (transfomationName: TransformationName) => {
+    history.push(`/transformations/${transfomationName}`);
+  };
+
   const classes = useStyles();
 
   return (
@@ -154,7 +160,16 @@ export const PayGenerateForm: React.FC<Record<string, unknown>> = () => {
                     key={transformation.id}
                     value={transformation.name}
                     control={<Radio />}
-                    label={transformation.name}
+                    label={
+                      <span className={classes.transformationLabelSpan}>
+                        {transformation.name}
+                        <IconButton
+                          onClick={() => handleTransformationInfoClick(transformation.name)}
+                        >
+                          <InfoIcon />
+                        </IconButton>
+                      </span>
+                    }
                   />
                 ))}
               </RadioGroup>

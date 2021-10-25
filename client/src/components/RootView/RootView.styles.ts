@@ -4,16 +4,16 @@ import { themeGradient } from 'config/theme/primaryTheme';
 export const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
-    minHeight: '100vh',
+    height: '100vh',
     background: themeGradient,
     display: 'flex',
     flexDirection: 'column'
   },
-  headerContainer: {
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2),
+  mainSection: {
+    paddingTop: theme.spacing(2),
+    flex: 1,
+    overflowY: 'auto',
     display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center'
+    flexDirection: 'column'
   }
 }));
