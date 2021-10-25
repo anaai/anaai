@@ -18,8 +18,13 @@ export const Header: React.FC<Record<string, unknown>> = () => {
           <Button>How it works</Button>
           <Button>Examples</Button>
           <Button>What to expect</Button>
-          <Button color="secondary" variant="contained">
-            App
+          <Button
+            target="_blank"
+            href="http://stg.anaai.art/"
+            color="secondary"
+            variant="contained"
+          >
+            Generate your art
           </Button>
         </Box>
       </Box>

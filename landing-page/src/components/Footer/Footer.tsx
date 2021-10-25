@@ -12,8 +12,8 @@ export const Footer: React.FC<Record<string, unknown>> = () => {
     if (newWindow) newWindow.opener = null;
   };
 
-  const handleDiscordClick = () => openInNewTab('TODO');
-  const handleTwitterClick = () => openInNewTab('TODO');
+  const handleDiscordClick = () => openInNewTab('https://discord.gg/h3Btmn3N');
+  const handleTwitterClick = () => openInNewTab('https://twitter.com/anaai_art');
   const handleEmailClick = () => openInNewTab('mailto:no-reply@example.com');
 
   return (
