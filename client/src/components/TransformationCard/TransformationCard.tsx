@@ -1,3 +1,4 @@
+import Web3 from 'web3';
 import { Box, Button, Typography } from '@material-ui/core';
 import { images } from 'config/imageLoader/imageLoader';
 import ReactCompareImage from 'react-compare-image';
@@ -52,9 +53,9 @@ export const TransformationCard: React.FC<TransformationCardProps> = ({ transfor
 
             <Box className={classes.transformationStat}>
               <Typography className={classes.transformationStatValue} variant="h6">
-                15
+                {Web3.utils.fromWei(transformation.price.toString())} ETH
               </Typography>
-              <Typography>Lorem start</Typography>
+              <Typography>Price</Typography>
             </Box>
           </Box>
 

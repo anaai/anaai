@@ -1,3 +1,4 @@
+import Web3 from 'web3';
 import {
   Box,
   Button,
@@ -75,9 +76,9 @@ export const TransformationDetailsScene: React.FC<Record<string, unknown>> = () 
 
             <Box className={classes.transformationStat}>
               <Typography className={classes.transformationStatValue} variant="h6">
-                15
+                {Web3.utils.fromWei(transformation.price.toString())} ETH
               </Typography>
-              <Typography>Lorem start</Typography>
+              <Typography>Price</Typography>
             </Box>
           </Box>
         </Box>
