@@ -95,14 +95,6 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
           <Box className={classes.exampleContainer}>
             <ReactCompareImage
               sliderPositionPercentage={0.33}
-              leftImage={images.sketch.mLake}
-              rightImage={images.base.mLake}
-            />
-          </Box>
-
-          <Box className={classes.exampleContainer}>
-            <ReactCompareImage
-              sliderPositionPercentage={0.33}
               leftImage={images.ascii.mCity}
               rightImage={images.base.mCity}
             />
@@ -111,16 +103,16 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
           <Box className={classes.exampleContainer}>
             <ReactCompareImage
               sliderPositionPercentage={0.33}
-              leftImage={images.theScream.fCat}
-              rightImage={images.base.fCat}
+              leftImage={images.sketch.mLake}
+              rightImage={images.base.mLake}
             />
           </Box>
 
           <Box className={classes.exampleContainer}>
             <ReactCompareImage
               sliderPositionPercentage={0.33}
-              leftImage={images.mosaic.mGirl}
-              rightImage={images.base.mGirl}
+              leftImage={images.candy.fGirl}
+              rightImage={images.base.fGirl}
             />
           </Box>
 
@@ -135,8 +127,16 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
           <Box className={classes.exampleContainer}>
             <ReactCompareImage
               sliderPositionPercentage={0.33}
-              leftImage={images.candy.fGirl}
-              rightImage={images.base.fGirl}
+              leftImage={images.mosaic.mGirl}
+              rightImage={images.base.mGirl}
+            />
+          </Box>
+
+          <Box className={classes.exampleContainer}>
+            <ReactCompareImage
+              sliderPositionPercentage={0.33}
+              leftImage={images.theScream.fCat}
+              rightImage={images.base.fCat}
             />
           </Box>
 
