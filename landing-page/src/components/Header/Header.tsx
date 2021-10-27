@@ -1,5 +1,17 @@
-import { Box, Button, Typography } from '@material-ui/core';
+import {
+  Box,
+  Button,
+  IconButton,
+  Menu,
+  MenuItem,
+  Typography,
+  useMediaQuery,
+  useTheme
+} from '@material-ui/core';
+import MenuIcon from '@material-ui/icons/Menu';
+import { useState, MouseEventHandler } from 'react';
 import { useStyles } from './Header.styles';
+import logo from 'assets/images/logo/logo-1.svg';
 
 export const Header: React.FC<Record<string, unknown>> = () => {
   const classes = useStyles();
@@ -9,35 +21,105 @@ export const Header: React.FC<Record<string, unknown>> = () => {
     element && element.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const handleLogoClick = () => scrollTo('hero-section');
-  const handleOurVisionClick = () => scrollTo('our-vision-section');
-  const handleHowItWorksClick = () => scrollTo('how-it-works-section');
-  const handleExamplesClick = () => scrollTo('examples-section');
-  const handleWhatToExpectClick = () => scrollTo('what-to-expect-section');
+  const handleLogoClick = () => {
+    scrollTo('hero-section');
+  };
+  const handleOurVisionClick = () => {
+    scrollTo('our-vision-section');
+  };
+  const handleHowItWorksClick = () => {
+    scrollTo('how-it-works-section');
+  };
+  const handleExamplesClick = () => {
+    scrollTo('examples-section');
+  };
+  const handleWhatToExpectClick = () => {
+    scrollTo('what-to-expect-section');
+  };
+
+  const [menuAnchorEl, setMenuAnchorEl] = useState<Element | null>(null);
+
+  const handleMenuClick: MouseEventHandler<HTMLButtonElement> = (event) => {
+    setMenuAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setMenuAnchorEl(null);
+  };
+
+  const theme = useTheme();
+
+  const matchesMdDown = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
     <Box className={classes.root} data-testid="Header-root-container">
       <Box className={classes.headerContentContainer}>
         <Box onClick={handleLogoClick} className={classes.logoContainer}>
-          <Typography variant="h4" className={classes.title}>
+          <img className={classes.logo} src={logo} alt="logo" />
+          {/* <Typography variant="h4" className={classes.title}>
             ANA.AI
-          </Typography>
+          </Typography> */}
         </Box>
 
         <Box className={classes.headerActionsContainer}>
-          <Button onClick={handleOurVisionClick}>Our Vision</Button>
-          <Button onClick={handleHowItWorksClick}>How it works</Button>
-          <Button onClick={handleExamplesClick}>Examples</Button>
-          <Button onClick={handleWhatToExpectClick}>What to expect</Button>
-          <Button
-            className={classes.goToAppButton}
-            target="_blank"
-            href="http://stg.anaai.art/"
-            color="secondary"
-            variant="contained"
-          >
-            Generate your art
-          </Button>
+          {matchesMdDown ? (
+            <>
+              <Button
+                className={classes.goToAppButton}
+                target="_blank"
+                href="http://stg.anaai.art/"
+                color="secondary"
+                variant="contained"
+              >
+                Generate your art
+              </Button>
+
+              <IconButton className={classes.menuButton} onClick={handleMenuClick}>
+                <MenuIcon />
+              </IconButton>
+
+              <Menu
+                anchorEl={menuAnchorEl}
+                keepMounted
+                open={Boolean(menuAnchorEl)}
+                onClose={handleMenuClose}
+                classes={{ paper: classes.dropdownMenuPaper }}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                getContentAnchorEl={null}
+              >
+                <MenuItem className={classes.menuItem} onClick={handleOurVisionClick}>
+                  Our Vision
+                </MenuItem>
+                <MenuItem className={classes.menuItem} onClick={handleHowItWorksClick}>
+                  How it works
+                </MenuItem>
+                <MenuItem className={classes.menuItem} onClick={handleExamplesClick}>
+                  Examples
+                </MenuItem>
+
+                <MenuItem className={classes.menuItem} onClick={handleWhatToExpectClick}>
+                  What to expect
+                </MenuItem>
+              </Menu>
+            </>
+          ) : (
+            <>
+              <Button onClick={handleOurVisionClick}>Our Vision</Button>
+              <Button onClick={handleHowItWorksClick}>How it works</Button>
+              <Button onClick={handleExamplesClick}>Examples</Button>
+              <Button onClick={handleWhatToExpectClick}>What to expect</Button>
+              <Button
+                className={classes.goToAppButton}
+                target="_blank"
+                href="http://stg.anaai.art/"
+                color="secondary"
+                variant="contained"
+              >
+                Generate your art
+              </Button>
+            </>
+          )}
         </Box>
       </Box>
     </Box>

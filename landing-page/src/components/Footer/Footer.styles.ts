@@ -16,7 +16,19 @@ export const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
     margin: `${theme.spacing(0.5)}px auto`,
-    maxWidth: theme.spacing(100)
+    maxWidth: theme.spacing(100),
+    [theme.breakpoints.down('xs')]: {
+      flexDirection: 'column'
+    },
+    '& > span': {
+      transition: theme.transitions.create('transform', {
+        duration: theme.transitions.duration.short,
+        easing: theme.transitions.easing.easeInOut
+      }),
+      [theme.breakpoints.down('xs')]: {
+        transform: 'rotate(90deg)'
+      }
+    }
   },
   socialbutton: {
     color: '#fff',

@@ -7,8 +7,8 @@ export const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     paddingRight: theme.spacing(1),
     paddingLeft: theme.spacing(1),
-    boxShadow: theme.shadows[2],
-    zIndex: 2
+    zIndex: 2,
+    backgroundColor: '#fff'
   },
   headerContentContainer: {
     flex: 1,
@@ -23,6 +23,11 @@ export const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     marginRight: theme.spacing(1)
   },
+  logo: {
+    height: theme.spacing(6),
+    width: theme.spacing(6),
+    cursor: 'pointer'
+  },
   title: {
     fontWeight: 'bolder',
     letterSpacing: theme.spacing(0.5),
@@ -30,11 +35,20 @@ export const useStyles = makeStyles((theme) => ({
     userSelect: 'none'
   },
   headerActionsContainer: {
+    display: 'flex',
     '& > button': {
       marginLeft: theme.spacing(1)
     }
   },
   goToAppButton: {
     marginLeft: theme.spacing(1)
+  },
+  menuButton: {
+    color: '#fff',
+    marginLeft: theme.spacing(1)
+  },
+  menuItem: {},
+  dropdownMenuPaper: {
+    backgroundColor: theme.palette.secondary.main
   }
 }));
