@@ -1,9 +1,49 @@
-import { Box, Typography } from '@material-ui/core';
+import {
+  Box,
+  ImageList,
+  ImageListItem,
+  Typography,
+  useMediaQuery,
+  useTheme
+} from '@material-ui/core';
 import { images } from 'config/imageLoader/imageLoader';
 import ReactCompareImage from 'react-compare-image';
 import { useStyles } from './MainSection.styles';
 
+import caterpillar from 'assets/images/news-cards/caterpillar.jpg';
+import lightBulb from 'assets/images/news-cards/light-bulb.jpg';
+import cassette from 'assets/images/news-cards/cassette.jpg';
+
 export const MainSection: React.FC<Record<string, unknown>> = () => {
+  const imageExamples = [
+    {
+      leftImage: images.ascii.mCity,
+      rightImage: images.base.mCity
+    },
+    {
+      leftImage: images.sketch.mLake,
+      rightImage: images.base.mLake
+    },
+    {
+      leftImage: images.candy.fGirl,
+      rightImage: images.base.fGirl
+    },
+    {
+      leftImage: images.feathers.fBeach,
+      rightImage: images.base.fBeach
+    },
+    {
+      leftImage: images.mosaic.mGirl,
+      rightImage: images.base.mGirl
+    },
+    {
+      leftImage: images.theScream.fCat,
+      rightImage: images.base.fCat
+    }
+  ] as const;
+
+  const theme = useTheme();
+  const matchesSmDown = useMediaQuery(theme.breakpoints.down('sm'));
   const classes = useStyles();
 
   return (
@@ -92,60 +132,24 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
           <Typography variant="h3" className={classes.title}>
             Examples
           </Typography>
-          <Box className={classes.exampleContainer}>
-            <ReactCompareImage
-              sliderPositionPercentage={0.33}
-              leftImage={images.ascii.mCity}
-              rightImage={images.base.mCity}
-            />
-          </Box>
 
-          <Box className={classes.exampleContainer}>
-            <ReactCompareImage
-              sliderPositionPercentage={0.33}
-              leftImage={images.sketch.mLake}
-              rightImage={images.base.mLake}
-            />
-          </Box>
-
-          <Box className={classes.exampleContainer}>
-            <ReactCompareImage
-              sliderPositionPercentage={0.33}
-              leftImage={images.candy.fGirl}
-              rightImage={images.base.fGirl}
-            />
-          </Box>
-
-          <Box className={classes.exampleContainer}>
-            <ReactCompareImage
-              sliderPositionPercentage={0.33}
-              leftImage={images.feathers.fBeach}
-              rightImage={images.base.fBeach}
-            />
-          </Box>
-
-          <Box className={classes.exampleContainer}>
-            <ReactCompareImage
-              sliderPositionPercentage={0.33}
-              leftImage={images.mosaic.mGirl}
-              rightImage={images.base.mGirl}
-            />
-          </Box>
-
-          <Box className={classes.exampleContainer}>
-            <ReactCompareImage
-              sliderPositionPercentage={0.33}
-              leftImage={images.theScream.fCat}
-              rightImage={images.base.fCat}
-            />
-          </Box>
-
-          <Box className={classes.exampleContainer}>
-            <ReactCompareImage
-              sliderPositionPercentage={0.33}
-              leftImage={images.udnie.mForest}
-              rightImage={images.base.mForest}
-            />
+          <Box className={classes.galleryContainerInner}>
+            <ImageList
+              rowHeight={theme.spacing(30)}
+              className={classes.imageList}
+              cols={matchesSmDown ? 1 : 2}
+              gap={theme.spacing(1.5)}
+            >
+              {imageExamples.map(({ leftImage, rightImage }) => (
+                <ImageListItem className={classes.galleryImageContainer} key={leftImage} cols={1}>
+                  <ReactCompareImage
+                    sliderPositionPercentage={0.33}
+                    leftImage={leftImage}
+                    rightImage={rightImage}
+                  />
+                </ImageListItem>
+              ))}
+            </ImageList>
           </Box>
         </Box>
 
@@ -160,11 +164,7 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
 
           <Box className={classes.whatToExpectCardsContainer}>
             <Box className={classes.whatToExpectCard}>
-              <img
-                src="https://3.img-dpreview.com/files/p/E~TS590x0~articles/8692662059/8283897908.jpeg"
-                alt=""
-                className={classes.whatToExpectCardImage}
-              />
+              <img src={caterpillar} alt="" className={classes.whatToExpectCardImage} />
 
               <Typography variant="h6" className={classes.whatToExpectCardTitle}>
                 More transformations
@@ -176,11 +176,7 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
             </Box>
 
             <Box className={classes.whatToExpectCard}>
-              <img
-                src="https://3.img-dpreview.com/files/p/E~TS590x0~articles/8692662059/8283897908.jpeg"
-                alt=""
-                className={classes.whatToExpectCardImage}
-              />
+              <img src={cassette} alt="" className={classes.whatToExpectCardImage} />
 
               <Typography variant="h6" className={classes.whatToExpectCardTitle}>
                 Support for audio/video
@@ -192,11 +188,7 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
             </Box>
 
             <Box className={classes.whatToExpectCard}>
-              <img
-                src="https://3.img-dpreview.com/files/p/E~TS590x0~articles/8692662059/8283897908.jpeg"
-                alt=""
-                className={classes.whatToExpectCardImage}
-              />
+              <img src={lightBulb} alt="" className={classes.whatToExpectCardImage} />
 
               <Typography variant="h6" className={classes.whatToExpectCardTitle}>
                 Open sourcing custom generative models

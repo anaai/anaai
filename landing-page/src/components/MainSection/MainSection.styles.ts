@@ -17,20 +17,19 @@ export const useStyles = makeStyles((theme) => ({
   heroSectionContainer: {
     display: 'flex',
     alignItems: 'center',
-    minHeight: '90vh',
     margin: `${theme.spacing(0.5)}px auto`,
     width: '100%',
     maxWidth: theme.spacing(100),
     flexDirection: 'column'
   },
   heroTextContainer: {
-    padding: theme.spacing(2)
+    padding: theme.spacing(2),
+    marginTop: theme.spacing(4)
   },
   heroTitle: {
     color: '#fff',
     userSelect: 'none',
     letterSpacing: theme.spacing(1),
-    marginBottom: theme.spacing(1),
     zIndex: 1,
     textShadow: '0 3px 3px #0005',
     fontWeight: 'bold',
@@ -52,7 +51,7 @@ export const useStyles = makeStyles((theme) => ({
   heroImageContainer: {
     margin: theme.spacing(2),
     width: '100%',
-    maxWidth: theme.spacing(70),
+    maxWidth: theme.spacing(90),
     position: 'relative'
   },
   macbookDeviceContainer: {
@@ -94,12 +93,16 @@ export const useStyles = makeStyles((theme) => ({
   },
   limitedTransformationsLeadingParahraph: {
     textAlign: 'center',
-    marginBottom: theme.spacing(2)
+    marginBottom: theme.spacing(2),
+    padding: theme.spacing(1)
   },
   howItWorksContentContainer: {
     display: 'flex',
     justifyContent: 'center',
-    width: '100%'
+    width: '100%',
+    [theme.breakpoints.down('sm')]: {
+      flexDirection: 'column'
+    }
   },
   howItWorksVideoContainer: {
     flex: 1,
@@ -107,7 +110,8 @@ export const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2)
   },
   howItWorksVideo: {
-    flex: 1
+    flex: 1,
+    width: '100%'
   },
   howItWorksTextContainer: {
     flex: 1,
@@ -119,19 +123,31 @@ export const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(1)
   },
   title: {
-    marginBottom: theme.spacing(2),
-    textAlign: 'center'
+    textAlign: 'center',
+    marginBottom: theme.spacing(4)
   },
   ourVisionText: {
     margin: `${theme.spacing(0.5)}px auto`,
     maxWidth: theme.spacing(100),
+    padding: theme.spacing(1),
     textAlign: 'center'
   },
   examplesContainer: {
     margin: `${theme.spacing(0.5)}px auto`,
-    maxWidth: theme.spacing(60),
+    maxWidth: theme.spacing(100),
     width: '100%',
     padding: theme.spacing(2)
+  },
+  galleryContainerInner: {},
+  imageList: {},
+  galleryImageContainer: {
+    '& > div': {
+      borderRadius: theme.spacing(0.2),
+      boxShadow: theme.shadows[1]
+    },
+    '& > div > div': {
+      height: '100%!important'
+    }
   },
   exampleContainer: {
     marginTop: theme.spacing(4),
@@ -146,7 +162,8 @@ export const useStyles = makeStyles((theme) => ({
   },
   whatToExpectLeadingParahraph: {
     textAlign: 'center',
-    marginBottom: theme.spacing(2)
+    marginBottom: theme.spacing(2),
+    padding: theme.spacing(1)
   },
   whatToExpectCardsContainer: {
     display: 'flex',
@@ -160,11 +177,12 @@ export const useStyles = makeStyles((theme) => ({
     borderRadius: theme.spacing(0.2),
     backgroundColor: 'rgba(255, 255, 255, .15)',
     backdropFilter: 'blur(5px)',
-    boxShadow: theme.shadows[1]
+    boxShadow: theme.shadows[1],
+    flex: 1
   },
   whatToExpectCardImage: {
     width: '100%',
-    height: theme.spacing(15),
+    height: theme.spacing(18),
     objectFit: 'cover',
     [theme.breakpoints.down('sm')]: {
       height: theme.spacing(20)
@@ -172,7 +190,6 @@ export const useStyles = makeStyles((theme) => ({
   },
   whatToExpectCardTitle: {
     marginRight: theme.spacing(1),
-    marginBottom: theme.spacing(1),
     marginLeft: theme.spacing(1)
   },
   whatToExpectCardDescription: {
