@@ -8,10 +8,6 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract StyleArt is ERC721, Ownable {
-  struct UserCollection {
-    uint256[] generatedTokens;
-  }
-
   struct Transformation {
     uint256 id;
     uint256 price;
@@ -27,7 +23,7 @@ contract StyleArt is ERC721, Ownable {
 
   address payable private admin;
 
-  mapping(address => UserCollection) private userCollection;
+  mapping(address => uint256[]) private userCollection;
   Transformation[] private transformations;
 
   event ImageGenerationPaid(address sender, uint256 value, uint256 transformationId,
@@ -87,7 +83,7 @@ contract StyleArt is ERC721, Ownable {
     _mint(payer, newItemId);
     _setTokenURI(newItemId, tokenURI);
 
-    userCollection[payer].generatedTokens.push(newItemId);
+    userCollection[payer].push(newItemId);
 
     emit TokenMinted(payer, newItemId, tokenURI);
 
@@ -116,8 +112,8 @@ contract StyleArt is ERC721, Ownable {
   }
 
   function userGeneratedTokens(address user) external view returns (uint256[] memory) {
-    require(userCollection[user].generatedTokens.length > 0, "User has no generated tokens");
-    return userCollection[user].generatedTokens;
+    require(userCollection[user].length > 0, "User has no generated tokens");
+    return userCollection[user];
   }
 
   function listTransformations() external view returns (Transformation[] memory) {
