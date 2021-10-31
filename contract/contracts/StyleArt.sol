@@ -15,6 +15,7 @@ contract StyleArt is ERC721, Ownable {
     uint256 nTokens;
     string name;
     string description;
+    bool exists;
   }
 
   using Counters for Counters.Counter;
@@ -24,7 +25,8 @@ contract StyleArt is ERC721, Ownable {
   address payable private admin;
 
   mapping(address => uint256[]) private userCollection;
-  Transformation[] private transformations;
+  uint256[] private transformationIds;
+  mapping(uint256 => Transformation) private transformations;
 
   event ImageGenerationPaid(address sender, uint256 value, uint256 transformationId,
                             uint256 transformationNumber, string imageURL);
@@ -35,24 +37,18 @@ contract StyleArt is ERC721, Ownable {
   }
 
   modifier availableTransformation(uint256 id, uint256 price) {
-    bool exists = false;
-    for (uint i = 0; i < transformations.length; i++) {
-      if (transformations[i].id == id) {
-        exists = true;
-
-        require(
-          transformations[i].price == price,
-          "Transaction value must match transformation price"
-        );
-
-        require(
-          transformations[i].nTokens < transformations[i].supply,
-          "Transformation supply is exhausted"
-        );
-      }
+    if (transformations[id].exists) {
+      require(
+        transformations[id].price == price,
+        "Transaction value must match transformation price"
+      );
+      require(
+        transformations[id].nTokens < transformations[id].supply,
+        "Transformation supply is exhausted"
+      );
+    } else {
+      require(transformations[id].exists, "Requested transformation doesn't exist");
     }
-
-    require(exists, "Requested transformation doesn't exist");
 
     _;
   }
@@ -61,13 +57,8 @@ contract StyleArt is ERC721, Ownable {
   public payable availableTransformation(transformationId, msg.value) {
     uint256 transformationNumber;
 
-    for (uint i = 0; i < transformations.length; i++) {
-      if (transformations[i].id == transformationId) {
-        transformations[i].nTokens += 1;
-        transformationNumber = transformations[i].nTokens;
-        break;
-      }
-    }
+    transformations[transformationId].nTokens += 1;
+    transformationNumber = transformations[transformationId].nTokens;
 
     admin.transfer(msg.value);
     emit ImageGenerationPaid(msg.sender, msg.value, transformationId, transformationNumber, imageUrl);
@@ -95,20 +86,19 @@ contract StyleArt is ERC721, Ownable {
     _transformationIds.increment();
     uint256 newTransformationId = _transformationIds.current();
 
-    transformations.push(Transformation(newTransformationId, price, supply, 0, name, description));
+    transformationIds.push(newTransformationId);
+    transformations[newTransformationId] = Transformation(
+      newTransformationId, price, supply, 0, name, description, true
+    );
 
     return newTransformationId;
   }
 
+  // another modifier for checking id of transformation
   function updateTransformationPrice(uint256 id, uint256 price) public onlyOwner returns (bool) {
-    for (uint i = 0; i < transformations.length; i++) {
-      if (transformations[i].id == id) {
-        transformations[i].price = price;
-        return true;
-      }
-    }
+    transformations[id].price = price;
 
-    return false;
+    return true;
   }
 
   function userGeneratedTokens(address user) external view returns (uint256[] memory) {
@@ -117,6 +107,10 @@ contract StyleArt is ERC721, Ownable {
   }
 
   function listTransformations() external view returns (Transformation[] memory) {
-    return transformations;
+    Transformation[] memory transformationsList = new Transformation[](transformationIds.length);
+    for (uint i = 0; i < transformationIds.length; i++) {
+      transformationsList[i] = transformations[transformationIds[i]];
+    }
+    return transformationsList;
   }
 }
