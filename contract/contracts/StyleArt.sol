@@ -8,12 +8,6 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract StyleArt is ERC721, Ownable {
-  struct Asset {
-    address payer;
-    uint256 time;
-    bool exists;
-  }
-
   struct UserCollection {
     uint256[] generatedTokens;
   }
@@ -33,7 +27,6 @@ contract StyleArt is ERC721, Ownable {
 
   address payable private admin;
 
-  mapping(uint256 => Asset) private assets;
   mapping(address => UserCollection) private userCollection;
   Transformation[] private transformations;
 
@@ -68,12 +61,6 @@ contract StyleArt is ERC721, Ownable {
     _;
   }
 
-  modifier validToken(uint256 tokenId) {
-    require(assets[tokenId].exists, "Token does not exist");
-
-    _;
-  }
-
   function payGenerating(uint256 transformationId, string memory imageUrl)
   public payable availableTransformation(transformationId, msg.value) {
     uint256 transformationNumber;
@@ -100,7 +87,6 @@ contract StyleArt is ERC721, Ownable {
     _mint(payer, newItemId);
     _setTokenURI(newItemId, tokenURI);
 
-    assets[newItemId] = Asset(payer, block.timestamp, true);
     userCollection[payer].generatedTokens.push(newItemId);
 
     emit TokenMinted(payer, newItemId, tokenURI);
@@ -127,11 +113,6 @@ contract StyleArt is ERC721, Ownable {
     }
 
     return false;
-  }
-
-  function payerOf(uint256 tokenId) external view returns (address) {
-    require(assets[tokenId].exists, "Token doesn't exist");
-    return assets[tokenId].payer;
   }
 
   function userGeneratedTokens(address user) external view returns (uint256[] memory) {

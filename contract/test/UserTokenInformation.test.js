@@ -12,22 +12,6 @@ describe("StyleArt", () => {
     this.contract = await StyleNFT.new({from: owner});
   });
 
-  describe("payerOf", () => {
-    it("Returns the address of the user who payed for generating the image", async () => {
-      await this.contract.mintNFT(user1, "tokenURI", {from: owner});
-      const payer = await this.contract.payerOf(new BN("1"));
-
-      expect(payer).to.equal(user1);
-    });
-
-    it("Reverts when the token doesn't exist", async () => {
-      expectRevert(
-        this.contract.payerOf(new BN("1")),
-        "Token doesn't exist"
-      );
-    });
-  });
-
   describe("userGeneratedTokens", () => {
     it("Returns a list of tokens the user paid for generating", async () => {
       await this.contract.mintNFT(user1, "tokenURI1", {from: owner});
