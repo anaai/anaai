@@ -9,14 +9,18 @@ export const useStyles = makeStyles((theme) => ({
     justifyContent: 'center'
   },
   appBar: {
-    paddingTop: theme.spacing(0.5),
-    paddingBottom: theme.spacing(0.5)
+    paddingTop: theme.spacing(0.1),
+    paddingBottom: theme.spacing(0.1)
+  },
+  logoContainer: {
+    cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center'
   },
   logo: {
-    letterSpacing: theme.spacing(1),
-    fontWeight: 'bold',
     marginRight: theme.spacing(1),
-    cursor: 'pointer'
+    height: theme.spacing(4),
+    width: theme.spacing(10)
   },
   spacerBox: {
     flex: 1
