@@ -11,7 +11,7 @@ import {
 import MenuIcon from '@material-ui/icons/Menu';
 import { useState, MouseEventHandler } from 'react';
 import { useStyles } from './Header.styles';
-import logo from 'assets/images/logo/logo-1.svg';
+import logo from 'assets/images/logo/anaai-logo.svg';
 
 export const Header: React.FC<Record<string, unknown>> = () => {
   const classes = useStyles();
@@ -67,7 +67,7 @@ export const Header: React.FC<Record<string, unknown>> = () => {
               <Button
                 className={classes.goToAppButton}
                 target="_blank"
-                href="http://stg.anaai.art/"
+                href="https://stg2.anaai.art/"
                 color="secondary"
                 variant="contained"
               >
@@ -112,7 +112,7 @@ export const Header: React.FC<Record<string, unknown>> = () => {
               <Button
                 className={classes.goToAppButton}
                 target="_blank"
-                href="http://stg.anaai.art/"
+                href="https://stg2.anaai.art/"
                 color="secondary"
                 variant="contained"
               >

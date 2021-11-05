@@ -105,7 +105,7 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
           <Box className={classes.howItWorksContentContainer}>
             <Box className={classes.howItWorksVideoContainer}>
               <video className={classes.howItWorksVideo} controls autoPlay>
-                <source src="http://www.w3schools.com/html/movie.mp4" type="video/mp4" />
+                <source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4" />
                 <track kind="captions"></track>
               </video>
             </Box>
