@@ -127,6 +127,7 @@ export const Header: React.FC<Record<string, unknown>> = () => {
             <>
               <Box className={`${classes.ctaButtonsContainer} ${shouldAllowEntry && classes.show}`}>
                 <Button
+                  size="small"
                   className={`${classes.generateButton} ${
                     location.pathname.startsWith('/generate') ? classes.activeButton : 'undefined'
                   }`}
@@ -136,6 +137,7 @@ export const Header: React.FC<Record<string, unknown>> = () => {
                 </Button>
 
                 <Button
+                  size="small"
                   className={`${classes.transformationsButton} ${
                     location.pathname.startsWith('/transformations')
                       ? classes.activeButton
@@ -147,6 +149,7 @@ export const Header: React.FC<Record<string, unknown>> = () => {
                 </Button>
 
                 <Button
+                  size="small"
                   className={`${classes.myArtButton} ${
                     location.pathname.startsWith('/my-art') ? classes.activeButton : 'undefined'
                   }`}
