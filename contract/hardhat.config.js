@@ -16,6 +16,10 @@ module.exports = {
     rinkeby: {
       url: API_URL,
       accounts: [`0x${PRIVATE_KEY}`]
+    },
+    polygon: {
+      url: API_URL,
+      accounts: [`0x${PRIVATE_KEY}`]
     }
   },
 }
