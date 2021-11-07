@@ -14,7 +14,30 @@ export const useStyles = makeStyles((theme) => ({
     flex: 1,
     display: 'flex',
     alignItems: 'center',
+    justifyContent: 'center',
     margin: `${theme.spacing(0.5)}px auto`,
-    maxWidth: theme.spacing(100)
+    maxWidth: theme.spacing(100),
+    [theme.breakpoints.down('xs')]: {
+      flexDirection: 'column'
+    },
+    '& > span': {
+      transition: theme.transitions.create('transform', {
+        duration: theme.transitions.duration.short,
+        easing: theme.transitions.easing.easeInOut
+      }),
+      [theme.breakpoints.down('xs')]: {
+        transform: 'rotate(90deg)'
+      }
+    }
+  },
+  socialbutton: {
+    color: '#fff',
+    marginRight: theme.spacing(1),
+    marginLeft: theme.spacing(1)
+  },
+  icon: {
+    width: theme.spacing(2),
+    height: theme.spacing(2),
+    marginRight: theme.spacing(0.5)
   }
 }));
