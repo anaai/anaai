@@ -53,14 +53,16 @@ export const WalletConnector: React.FC<Record<string, unknown>> = () => {
     <NotificationTooltip>
       {isMetaMaskInstalled ? (
         accounts.length ? (
-          <Button {...sharedButtonProps}>Connected</Button>
+          <Button size="small" {...sharedButtonProps}>
+            Connected
+          </Button>
         ) : (
-          <Button {...sharedButtonProps} onClick={handleConnectToMetaMask}>
+          <Button size="small" {...sharedButtonProps} onClick={handleConnectToMetaMask}>
             Connect
           </Button>
         )
       ) : (
-        <Button {...sharedButtonProps} onClick={handleInstallMetaMask}>
+        <Button size="small" {...sharedButtonProps} onClick={handleInstallMetaMask}>
           Install MetaMask
         </Button>
       )}

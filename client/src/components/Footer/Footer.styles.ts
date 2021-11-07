@@ -15,7 +15,6 @@ export const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    margin: `${theme.spacing(0.5)}px auto`,
     maxWidth: theme.spacing(100)
   },
   socialbutton: {

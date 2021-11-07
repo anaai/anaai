@@ -20,6 +20,7 @@ export const Footer: React.FC<Record<string, unknown>> = () => {
     <Box className={classes.root} data-testid="Footer-root-container">
       <Box className={classes.footerContentContainer}>
         <Button
+          size="small"
           onClick={handleDiscordClick}
           className={classes.socialbutton}
           endIcon={<img className={classes.icon} src={DiscordIcon} alt="discord" />}
@@ -28,6 +29,7 @@ export const Footer: React.FC<Record<string, unknown>> = () => {
         </Button>
         |
         <Button
+          size="small"
           onClick={handleTwitterClick}
           className={classes.socialbutton}
           endIcon={<TwitterIcon />}
@@ -35,7 +37,12 @@ export const Footer: React.FC<Record<string, unknown>> = () => {
           Twitter
         </Button>
         |
-        <Button onClick={handleEmailClick} className={classes.socialbutton} endIcon={<MailIcon />}>
+        <Button
+          size="small"
+          onClick={handleEmailClick}
+          className={classes.socialbutton}
+          endIcon={<MailIcon />}
+        >
           eMail
         </Button>
       </Box>

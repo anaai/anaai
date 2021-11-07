@@ -16,6 +16,7 @@ import { useHistory, useLocation } from 'react-router';
 import { useStyles } from './Header.styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import { MouseEventHandler, useState } from 'react';
+import AnaAILogo from 'assets/images/logos/anaai-logo.svg';
 
 export const Header: React.FC<Record<string, unknown>> = () => {
   const {
@@ -68,10 +69,9 @@ export const Header: React.FC<Record<string, unknown>> = () => {
     <Box className={classes.root} data-testid="Header-root-container">
       <AppBar position="static" color="secondary" className={classes.appBar}>
         <Toolbar>
-          <Typography variant="h6" className={classes.logo} onClick={handleHomeClick}>
-            ANA.AI
-          </Typography>
-
+          <Box className={classes.logoContainer} onClick={handleHomeClick}>
+            <img className={classes.logo} src={AnaAILogo} alt="anaai logo" />
+          </Box>
           <Box className={classes.spacerBox} />
 
           {matchesMdDown ? (
@@ -127,6 +127,7 @@ export const Header: React.FC<Record<string, unknown>> = () => {
             <>
               <Box className={`${classes.ctaButtonsContainer} ${shouldAllowEntry && classes.show}`}>
                 <Button
+                  size="small"
                   className={`${classes.generateButton} ${
                     location.pathname.startsWith('/generate') ? classes.activeButton : 'undefined'
                   }`}
@@ -136,6 +137,7 @@ export const Header: React.FC<Record<string, unknown>> = () => {
                 </Button>
 
                 <Button
+                  size="small"
                   className={`${classes.transformationsButton} ${
                     location.pathname.startsWith('/transformations')
                       ? classes.activeButton
@@ -147,6 +149,7 @@ export const Header: React.FC<Record<string, unknown>> = () => {
                 </Button>
 
                 <Button
+                  size="small"
                   className={`${classes.myArtButton} ${
                     location.pathname.startsWith('/my-art') ? classes.activeButton : 'undefined'
                   }`}
