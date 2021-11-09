@@ -22,12 +22,5 @@ describe("StyleArt", () => {
       expect(tokens[0].words[0]).to.equal(1)
       expect(tokens[1].words[0]).to.equal(2)
     });
-
-    it("Reverts when the user didn't generate any tokens", async () => {
-      expectRevert(
-        this.contract.userGeneratedTokens(owner),
-        "User has no generated tokens"
-      );
-    });
   });
 });

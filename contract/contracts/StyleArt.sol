@@ -102,7 +102,6 @@ contract StyleArt is ERC721, Ownable {
   }
 
   function userGeneratedTokens(address user) external view returns (uint256[] memory) {
-    require(userCollection[user].length > 0, "User has no generated tokens");
     return userCollection[user];
   }
 
