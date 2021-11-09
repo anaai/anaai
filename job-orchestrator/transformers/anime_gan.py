@@ -40,7 +40,7 @@ class AnimeGAN():
   def _postprocess_image(self, image):
     output = (image + 1) * 127.5
     output = np.clip(output, 0, 255).astype(np.uint8)
-    return output
+    return cv2.cvtColor(output, cv2.COLOR_BGR2RGB)
 
   def _scale_image(self, image):
     return image / 127.5 - 1.0
