@@ -8,16 +8,6 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract StyleArt is ERC721, Ownable {
-  struct Asset {
-    address payer;
-    uint256 time;
-    bool exists;
-  }
-
-  struct UserCollection {
-    uint256[] generatedTokens;
-  }
-
   struct Transformation {
     uint256 id;
     uint256 price;
@@ -25,6 +15,7 @@ contract StyleArt is ERC721, Ownable {
     uint256 nTokens;
     string name;
     string description;
+    bool exists;
   }
 
   using Counters for Counters.Counter;
@@ -33,9 +24,9 @@ contract StyleArt is ERC721, Ownable {
 
   address payable private admin;
 
-  mapping(uint256 => Asset) private assets;
-  mapping(address => UserCollection) private userCollection;
-  Transformation[] private transformations;
+  mapping(address => uint256[]) private userCollection;
+  uint256[] private transformationIds;
+  mapping(uint256 => Transformation) private transformations;
 
   event ImageGenerationPaid(address sender, uint256 value, uint256 transformationId,
                             uint256 transformationNumber, string imageURL);
@@ -46,30 +37,18 @@ contract StyleArt is ERC721, Ownable {
   }
 
   modifier availableTransformation(uint256 id, uint256 price) {
-    bool exists = false;
-    for (uint i = 0; i < transformations.length; i++) {
-      if (transformations[i].id == id) {
-        exists = true;
-
-        require(
-          transformations[i].price == price,
-          "Transaction value must match transformation price"
-        );
-
-        require(
-          transformations[i].nTokens < transformations[i].supply,
-          "Transformation supply is exhausted"
-        );
-      }
+    if (transformations[id].exists) {
+      require(
+        transformations[id].price == price,
+        "Transaction value must match transformation price"
+      );
+      require(
+        transformations[id].nTokens < transformations[id].supply,
+        "Transformation supply is exhausted"
+      );
+    } else {
+      require(transformations[id].exists, "Requested transformation doesn't exist");
     }
-
-    require(exists, "Requested transformation doesn't exist");
-
-    _;
-  }
-
-  modifier validToken(uint256 tokenId) {
-    require(assets[tokenId].exists, "Token does not exist");
 
     _;
   }
@@ -78,13 +57,8 @@ contract StyleArt is ERC721, Ownable {
   public payable availableTransformation(transformationId, msg.value) {
     uint256 transformationNumber;
 
-    for (uint i = 0; i < transformations.length; i++) {
-      if (transformations[i].id == transformationId) {
-        transformations[i].nTokens += 1;
-        transformationNumber = transformations[i].nTokens;
-        break;
-      }
-    }
+    transformations[transformationId].nTokens += 1;
+    transformationNumber = transformations[transformationId].nTokens;
 
     admin.transfer(msg.value);
     emit ImageGenerationPaid(msg.sender, msg.value, transformationId, transformationNumber, imageUrl);
@@ -100,8 +74,7 @@ contract StyleArt is ERC721, Ownable {
     _mint(payer, newItemId);
     _setTokenURI(newItemId, tokenURI);
 
-    assets[newItemId] = Asset(payer, block.timestamp, true);
-    userCollection[payer].generatedTokens.push(newItemId);
+    userCollection[payer].push(newItemId);
 
     emit TokenMinted(payer, newItemId, tokenURI);
 
@@ -113,33 +86,30 @@ contract StyleArt is ERC721, Ownable {
     _transformationIds.increment();
     uint256 newTransformationId = _transformationIds.current();
 
-    transformations.push(Transformation(newTransformationId, price, supply, 0, name, description));
+    transformationIds.push(newTransformationId);
+    transformations[newTransformationId] = Transformation(
+      newTransformationId, price, supply, 0, name, description, true
+    );
 
     return newTransformationId;
   }
 
+  // another modifier for checking id of transformation
   function updateTransformationPrice(uint256 id, uint256 price) public onlyOwner returns (bool) {
-    for (uint i = 0; i < transformations.length; i++) {
-      if (transformations[i].id == id) {
-        transformations[i].price = price;
-        return true;
-      }
-    }
+    transformations[id].price = price;
 
-    return false;
-  }
-
-  function payerOf(uint256 tokenId) external view returns (address) {
-    require(assets[tokenId].exists, "Token doesn't exist");
-    return assets[tokenId].payer;
+    return true;
   }
 
   function userGeneratedTokens(address user) external view returns (uint256[] memory) {
-    require(userCollection[user].generatedTokens.length > 0, "User has no generated tokens");
-    return userCollection[user].generatedTokens;
+    return userCollection[user];
   }
 
   function listTransformations() external view returns (Transformation[] memory) {
-    return transformations;
+    Transformation[] memory transformationsList = new Transformation[](transformationIds.length);
+    for (uint i = 0; i < transformationIds.length; i++) {
+      transformationsList[i] = transformations[transformationIds[i]];
+    }
+    return transformationsList;
   }
 }
