@@ -48,6 +48,8 @@ six==1.16.0
 SQLAlchemy==1.4.22
 starlette==0.14.2
 toml==0.10.2
+torch==1.10.0
+torchvision==0.10.0
 traitlets==5.0.5
 typing-extensions==3.10.0.0
 urllib3==1.26.6
