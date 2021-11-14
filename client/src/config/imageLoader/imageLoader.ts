@@ -94,6 +94,42 @@ import udnieMLake from 'assets/images/transformations/udnie/mlake-udnie.jpg';
 import udnieMForest from 'assets/images/transformations/udnie/mforest-udnie.jpg';
 import udnieMCity from 'assets/images/transformations/udnie/mcity-udnie.jpg';
 
+import celebaDistillFGirl from 'assets/images/transformations/celeba-distill/fgirl-celeba-distill.jpg';
+import celebaDistillFCat from 'assets/images/transformations/celeba-distill/fcat-celeba-distill.jpg';
+import celebaDistillFDog from 'assets/images/transformations/celeba-distill/fdog-celeba-distill.jpg';
+import celebaDistillFParrot from 'assets/images/transformations/celeba-distill/fparrot-celeba-distill.jpg';
+import celebaDistillFBeach from 'assets/images/transformations/celeba-distill/fbeach-celeba-distill.jpg';
+import celebaDistillFSky from 'assets/images/transformations/celeba-distill/fsky-celeba-distill.jpg';
+import celebaDistillMGirl from 'assets/images/transformations/celeba-distill/mgirl-celeba-distill.jpg';
+import celebaDistillMDogs from 'assets/images/transformations/celeba-distill/mdogs-celeba-distill.jpg';
+import celebaDistillMLake from 'assets/images/transformations/celeba-distill/mlake-celeba-distill.jpg';
+import celebaDistillMForest from 'assets/images/transformations/celeba-distill/mforest-celeba-distill.jpg';
+import celebaDistillMCity from 'assets/images/transformations/celeba-distill/mcity-celeba-distill.jpg';
+
+import facePaintFGirl from 'assets/images/transformations/face-paint/fgirl-face-paint.jpg';
+import facePaintFCat from 'assets/images/transformations/face-paint/fcat-face-paint.jpg';
+import facePaintFDog from 'assets/images/transformations/face-paint/fdog-face-paint.jpg';
+import facePaintFParrot from 'assets/images/transformations/face-paint/fparrot-face-paint.jpg';
+import facePaintFBeach from 'assets/images/transformations/face-paint/fbeach-face-paint.jpg';
+import facePaintFSky from 'assets/images/transformations/face-paint/fsky-face-paint.jpg';
+import facePaintMGirl from 'assets/images/transformations/face-paint/mgirl-face-paint.jpg';
+import facePaintMDogs from 'assets/images/transformations/face-paint/mdogs-face-paint.jpg';
+import facePaintMLake from 'assets/images/transformations/face-paint/mlake-face-paint.jpg';
+import facePaintMForest from 'assets/images/transformations/face-paint/mforest-face-paint.jpg';
+import facePaintMCity from 'assets/images/transformations/face-paint/mcity-face-paint.jpg';
+
+import paprikaFGirl from 'assets/images/transformations/paprika/fgirl-paprika.jpg';
+import paprikaFCat from 'assets/images/transformations/paprika/fcat-paprika.jpg';
+import paprikaFDog from 'assets/images/transformations/paprika/fdog-paprika.jpg';
+import paprikaFParrot from 'assets/images/transformations/paprika/fparrot-paprika.jpg';
+import paprikaFBeach from 'assets/images/transformations/paprika/fbeach-paprika.jpg';
+import paprikaFSky from 'assets/images/transformations/paprika/fsky-paprika.jpg';
+import paprikaMGirl from 'assets/images/transformations/paprika/mgirl-paprika.jpg';
+import paprikaMDogs from 'assets/images/transformations/paprika/mdogs-paprika.jpg';
+import paprikaMLake from 'assets/images/transformations/paprika/mlake-paprika.jpg';
+import paprikaMForest from 'assets/images/transformations/paprika/mforest-paprika.jpg';
+import paprikaMCity from 'assets/images/transformations/paprika/mcity-paprika.jpg';
+
 export const images = {
   base: {
     fGirl: baseFGirl,
@@ -198,5 +234,44 @@ export const images = {
     mLake: udnieMLake,
     mForest: udnieMForest,
     mCity: udnieMCity
+  },
+  celebaDistill: {
+    fGirl: celebaDistillFGirl,
+    fCat: celebaDistillFCat,
+    fDog: celebaDistillFDog,
+    fParrot: celebaDistillFParrot,
+    fBeach: celebaDistillFBeach,
+    fSky: celebaDistillFSky,
+    mGirl: celebaDistillMGirl,
+    mDogs: celebaDistillMDogs,
+    mLake: celebaDistillMLake,
+    mForest: celebaDistillMForest,
+    mCity: celebaDistillMCity
+  },
+  facePaint: {
+    fGirl: facePaintFGirl,
+    fCat: facePaintFCat,
+    fDog: facePaintFDog,
+    fParrot: facePaintFParrot,
+    fBeach: facePaintFBeach,
+    fSky: facePaintFSky,
+    mGirl: facePaintMGirl,
+    mDogs: facePaintMDogs,
+    mLake: facePaintMLake,
+    mForest: facePaintMForest,
+    mCity: facePaintMCity
+  },
+  paprika: {
+    fGirl: paprikaFGirl,
+    fCat: paprikaFCat,
+    fDog: paprikaFDog,
+    fParrot: paprikaFParrot,
+    fBeach: paprikaFBeach,
+    fSky: paprikaFSky,
+    mGirl: paprikaMGirl,
+    mDogs: paprikaMDogs,
+    mLake: paprikaMLake,
+    mForest: paprikaMForest,
+    mCity: paprikaMCity
   }
 } as const;
