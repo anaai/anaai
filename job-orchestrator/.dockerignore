@@ -1,1 +1,8 @@
 postgres-data/
+.env
+.env.example
+results/
+images/
+.pytest_cache/
+**/__pycache__
+*.pyc
