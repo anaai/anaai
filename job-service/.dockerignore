@@ -1,4 +1,6 @@
 test.db
+
+.git/
 .env
 .env.example
 .pytest_cache/
