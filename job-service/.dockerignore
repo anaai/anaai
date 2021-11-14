@@ -1,8 +1,10 @@
 test.db
 
 .git/
+.gitignore
 .env
 .env.example
+
 .pytest_cache/
 **/__pycache__
 *.pyc
