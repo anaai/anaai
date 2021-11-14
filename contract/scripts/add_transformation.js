@@ -37,4 +37,7 @@ udnieDesc = "Style transfer is the task of changing the style of an image in one
   await addTransformation(nftContract, PUBLIC_KEY, "mosaic", mosaicDesc, 0, 300);
   await addTransformation(nftContract, PUBLIC_KEY, "theScream", theScreamDesc, 0, 300);
   await addTransformation(nftContract, PUBLIC_KEY, "udnie", udnieDesc, 0, 300);
+  await addTransformation(nftContract, PUBLIC_KEY, "celeba_distill", udnieDesc, 0, 300);
+  await addTransformation(nftContract, PUBLIC_KEY, "face_paint", udnieDesc, 0, 300);
+  await addTransformation(nftContract, PUBLIC_KEY, "paprika", udnieDesc, 0, 300);
 })();

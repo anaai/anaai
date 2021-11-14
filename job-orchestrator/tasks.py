@@ -105,6 +105,30 @@ def udnie(transformation_name, transformation_number, payer, image_url, image_na
 
   return status
 
+@app.task(autoretry_for=(Exception,), retry_kwargs={"max_retries": 3, "countdown": 5})
+def celeba_distill(transformation_name, transformation_number, payer, image_url, image_name):
+  celeba_distill = transformers.AnimeGAN(model_paths.CELEBA_DISTILL_ANIME_GAN)
+  status = create_token(celeba_distill, transformation_name, transformation_number,
+                        payer, image_url, image_name)
+
+  return status
+
+@app.task(autoretry_for=(Exception,), retry_kwargs={"max_retries": 3, "countdown": 5})
+def face_paint(transformation_name, transformation_number, payer, image_url, image_name):
+  face_paint = transformers.AnimeGAN(model_paths.FACE_PAINT_ANIME_GAN)
+  status = create_token(face_paint, transformation_name, transformation_number,
+                        payer, image_url, image_name)
+
+  return status
+
+@app.task(autoretry_for=(Exception,), retry_kwargs={"max_retries": 3, "countdown": 5})
+def paprika(transformation_name, transformation_number, payer, image_url, image_name):
+  paprika = transformers.AnimeGAN(model_paths.PAPRIKA_ANIME_GAN)
+  status = create_token(paprika, transformation_name, transformation_number,
+                        payer, image_url, image_name)
+
+  return status
+
 def _mint_nft(payer, token_uri):
   payload = {"payer": payer, "token_uri": token_uri}
   return requests.post(NFT_SERVICE_MINT_TOKEN_URL, json=payload)

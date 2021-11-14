@@ -4,10 +4,10 @@ asgiref==3.4.1
 attrs==21.2.0
 backcall==0.2.0
 billiard==3.6.4.0
-celery==5.1.2
+celery==5.2.0
 certifi==2021.5.30
 charset-normalizer==2.0.4
-click==7.1.2
+click==8.0.3
 click-didyoumean==0.0.3
 click-plugins==1.1.1
 click-repl==0.2.0
@@ -22,7 +22,7 @@ iniconfig==1.1.1
 ipython==7.26.0
 ipython-genutils==0.2.0
 jedi==0.18.0
-kombu==5.1.0
+kombu==5.2.1
 logassert==6
 matplotlib-inline==0.1.2
 numpy==1.21.1
@@ -48,6 +48,8 @@ six==1.16.0
 SQLAlchemy==1.4.22
 starlette==0.14.2
 toml==0.10.2
+torch==1.10.0
+torchvision==0.10.0
 traitlets==5.0.5
 typing-extensions==3.10.0.0
 urllib3==1.26.6

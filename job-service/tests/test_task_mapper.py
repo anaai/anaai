@@ -2,7 +2,7 @@ import pytest
 import task_mapper
 
 def test_supported_transformations():
-  assert len(task_mapper.TASK_MAPPINGS) == 7
+  assert len(task_mapper.TASK_MAPPINGS) == 10
   assert task_mapper.TASK_MAPPINGS[1] == "tasks.ascii"
   assert task_mapper.TASK_MAPPINGS[2] == "tasks.sketch"
   assert task_mapper.TASK_MAPPINGS[3] == "tasks.candy"
@@ -10,6 +10,9 @@ def test_supported_transformations():
   assert task_mapper.TASK_MAPPINGS[5] == "tasks.mosaic"
   assert task_mapper.TASK_MAPPINGS[6] == "tasks.the_scream"
   assert task_mapper.TASK_MAPPINGS[7] == "tasks.udnie"
+  assert task_mapper.TASK_MAPPINGS[8] == "tasks.celeba_distill"
+  assert task_mapper.TASK_MAPPINGS[9] == "tasks.face_paint"
+  assert task_mapper.TASK_MAPPINGS[10] == "tasks.paprika"
 
 def test_task_name_for_existing_transformation():
   assert task_mapper.task_name(1) == "tasks.ascii"

@@ -5,7 +5,10 @@ TASK_MAPPINGS = {
   4: "tasks.feathers",
   5: "tasks.mosaic",
   6: "tasks.the_scream",
-  7: "tasks.udnie"
+  7: "tasks.udnie",
+  8: "tasks.celeba_distill",
+  9: "tasks.face_paint",
+  10: "tasks.paprika"
 }
 
 def task_name(transformation_id):
