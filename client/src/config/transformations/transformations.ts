@@ -7,7 +7,10 @@ export const transformationNames = [
   'feathers',
   'mosaic',
   'theScream',
-  'udnie'
+  'udnie',
+  'celebaDistill',
+  'facePaint',
+  'paprika'
 ] as const;
 
 export type TransformationName = typeof transformationNames[number];
