@@ -76,7 +76,7 @@ export const Header: React.FC<Record<string, unknown>> = () => {
                 Generate your art
               </Button>
 
-              <IconButton className={classes.menuButton} onClick={handleMenuClick}>
+              <IconButton size="small" className={classes.menuButton} onClick={handleMenuClick}>
                 <MenuIcon />
               </IconButton>
 

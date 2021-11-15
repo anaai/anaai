@@ -81,7 +81,7 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
         </Box>
 
         <Box className={classes.ourVisionContainer} id="our-vision-section">
-          <Typography variant="h3" className={classes.title}>
+          <Typography variant="h3" className={classes.ourVisionTitle}>
             Our Vision
           </Typography>
           <Typography className={classes.ourVisionText}>
@@ -91,11 +91,6 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
             <br />
             Inspired by maths, AI and blockchain technology, we believe everyone should be able to
             generate, posess or sell their own art.
-            <br />
-            <br />
-            ANA will keep developing new generative models and release the best of them for you to
-            create your own original art. The supply will always be limited to reward people who
-            believed in our vision early.
           </Typography>
         </Box>
 
@@ -184,6 +179,12 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
 
           <Typography className={classes.whatToExpectLeadingParahraph}>
             We have big plans for the future, jump along for the ride!
+            <br />
+            <br />
+            ANA will keep developing new generative models and release the best of them for you to
+            create your own original art. The supply will always be limited to reward people who
+            believed in our vision early.
+            <br />
             <br />
             Follow us on twitter and join our discord to share your ideas with us. We want our
             models to be a collaborative effor with the community. Expect interesting features in

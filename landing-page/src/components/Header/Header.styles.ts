@@ -44,8 +44,8 @@ export const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(1)
   },
   menuButton: {
-    color: '#fff',
-    marginLeft: theme.spacing(1)
+    marginRight: theme.spacing(1),
+    marginLeft: `${theme.spacing(2)}px!important`
   },
   menuItem: {},
   dropdownMenuPaper: {
