@@ -8,9 +8,10 @@ export const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'center'
   },
-  appBar: {
-    paddingTop: theme.spacing(0.1),
-    paddingBottom: theme.spacing(0.1)
+  appBar: {},
+  toolbar: {
+    minHeight: 'auto',
+    margin: `${theme.spacing(0.2)}px 0`
   },
   logoContainer: {
     cursor: 'pointer',
@@ -19,8 +20,8 @@ export const useStyles = makeStyles((theme) => ({
   },
   logo: {
     marginRight: theme.spacing(1),
-    height: theme.spacing(4),
-    width: theme.spacing(10)
+    height: theme.spacing(3),
+    width: theme.spacing(8)
   },
   spacerBox: {
     flex: 1
