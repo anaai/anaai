@@ -19,27 +19,33 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
   const imageExamples = [
     {
       leftImage: images.ascii.mCity,
-      rightImage: images.base.mCity
+      rightImage: images.base.mCity,
+      transformationName: 'ASCII art'
     },
     {
       leftImage: images.sketch.mLake,
-      rightImage: images.base.mLake
+      rightImage: images.base.mLake,
+      transformationName: 'Sketch'
     },
     {
       leftImage: images.candy.fGirl,
-      rightImage: images.base.fGirl
+      rightImage: images.base.fGirl,
+      transformationName: 'Candy'
     },
     {
       leftImage: images.feathers.fBeach,
-      rightImage: images.base.fBeach
+      rightImage: images.base.fBeach,
+      transformationName: 'Feathers style transfer'
     },
     {
       leftImage: images.mosaic.mGirl,
-      rightImage: images.base.mGirl
+      rightImage: images.base.mGirl,
+      transformationName: 'Mosaic style transfer'
     },
     {
       leftImage: images.theScream.fCat,
-      rightImage: images.base.fCat
+      rightImage: images.base.fCat,
+      transformationName: 'The Scream style transfer'
     }
   ] as const;
 
@@ -119,15 +125,15 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
 
             <Box className={classes.howItWorksTextContainer}>
               <Typography className={classes.howItWorksLeadingParahraph}>
-                ANA platform allows you to create a personal art collection in 3 clicks.
+                ANA allows you to create a personal art collection in 3 clicks.
               </Typography>
 
               <ul className={classes.howItWorksList}>
                 <li className={classes.howItWorksListItem}>
-                  Choose base image to apply transformation to
+                  Choose base content to apply transformation to
                 </li>
-                <li className={classes.howItWorksListItem}>Choose transformation</li>
-                <li className={classes.howItWorksListItem}>Generate art</li>
+                <li className={classes.howItWorksListItem}>Select desired transformation</li>
+                <li className={classes.howItWorksListItem}>Generate your art</li>
               </ul>
             </Box>
           </Box>
@@ -149,7 +155,7 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
 
         <Box className={classes.examplesContainer} id="examples-section">
           <Typography variant="h3" className={classes.title}>
-            Examples
+            Gallery
           </Typography>
 
           <Box className={classes.galleryContainerInner}>
@@ -159,14 +165,17 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
               cols={matchesSmDown ? 1 : 2}
               gap={theme.spacing(1.5)}
             >
-              {imageExamples.map(({ leftImage, rightImage }) => (
-                <ImageListItem className={classes.galleryImageContainer} key={leftImage} cols={1}>
-                  <ReactCompareImage
-                    sliderPositionPercentage={0.33}
-                    leftImage={leftImage}
-                    rightImage={rightImage}
-                  />
-                </ImageListItem>
+              {imageExamples.map(({ leftImage, rightImage, transformationName }) => (
+                <Box key={leftImage} className={classes.galleryCardContainer}>
+                  <Typography>{transformationName}</Typography>
+                  <ImageListItem className={classes.galleryImageContainer} cols={1}>
+                    <ReactCompareImage
+                      sliderPositionPercentage={0.33}
+                      leftImage={leftImage}
+                      rightImage={rightImage}
+                    />
+                  </ImageListItem>
+                </Box>
               ))}
             </ImageList>
           </Box>
@@ -187,7 +196,7 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
             <br />
             <br />
             Follow us on twitter and join our discord to share your ideas with us. We want our
-            models to be a collaborative effor with the community. Expect interesting features in
+            models to be a collaborative effort with the community. Expect interesting features in
             the future!
           </Typography>
 

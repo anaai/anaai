@@ -148,8 +148,13 @@ export const useStyles = makeStyles((theme) => ({
   galleryContainerInner: {
     padding: theme.spacing(2)
   },
+  galleryCardContainer: {
+    display: 'flex',
+    flexDirection: 'column'
+  },
   imageList: {},
   galleryImageContainer: {
+    flex: 1,
     '& > div': {
       borderRadius: theme.spacing(0.2),
       boxShadow: theme.shadows[1]
