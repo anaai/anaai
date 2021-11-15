@@ -71,6 +71,7 @@ export const Header: React.FC<Record<string, unknown>> = () => {
                 href="https://stg2.anaai.art/"
                 color="secondary"
                 variant="contained"
+                rel="noopener noreferrer"
               >
                 Generate your art
               </Button>
@@ -125,6 +126,7 @@ export const Header: React.FC<Record<string, unknown>> = () => {
                 href="https://stg2.anaai.art/"
                 color="secondary"
                 variant="contained"
+                rel="noopener noreferrer"
               >
                 Generate your art
               </Button>

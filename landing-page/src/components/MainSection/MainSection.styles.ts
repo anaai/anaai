@@ -96,6 +96,10 @@ export const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(2),
     padding: theme.spacing(1)
   },
+  link: {
+    color: '#fff',
+    fontWeight: 'bolder'
+  },
   howItWorksContentContainer: {
     display: 'flex',
     justifyContent: 'center',

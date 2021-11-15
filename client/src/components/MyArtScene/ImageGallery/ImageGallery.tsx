@@ -38,6 +38,7 @@ export const ImageGallery: React.FC<Record<string, unknown>> = () => {
                   variant="inherit"
                   href={tokenURL(tokenId)}
                   target="_blank"
+                  rel="noopener noreferrer"
                 >
                   {generatedTokens[tokenId]?.name}
                 </Link>

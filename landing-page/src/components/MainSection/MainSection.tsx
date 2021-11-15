@@ -2,6 +2,7 @@ import {
   Box,
   ImageList,
   ImageListItem,
+  Link,
   Typography,
   useMediaQuery,
   useTheme
@@ -51,21 +52,19 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
       <Box className={classes.mainSectionContentContainer}>
         <Box className={classes.heroSectionContainer} id="hero-section">
           <Box className={classes.heroTextContainer}>
-            <Typography variant="h3" className={classes.heroTitle}>
+            <Typography variant="h2" className={classes.heroTitle}>
               ANA
             </Typography>
-            {/* <Typography variant="body1" className={classes.heroSubtitle}>
-              AI
-            </Typography> */}
-            <Typography variant="body1" className={classes.heroDescription}>
-              Unlock the future of generative digital art.
-              <br />
-              <br />
-              ANA is the first generative art platform on blockchain.
-              <br />
-              <br />
-              As generative art is getting more and more popular, ANA helps everyone become an
-              artist using state of the art generative and AI models to create your own art.
+            <br />
+            <Typography variant="h5" className={classes.heroDescription}>
+              There is a new art form on the rise.
+            </Typography>
+            <br />
+            <Typography className={classes.heroDescription}>
+              Unlock the future of generative digital art using the first generative art platform on
+              blockchain.
+              {/* As generative art is getting more and more popular, ANA helps everyone become an
+              artist using state of the art generative and AI models to create your own art. */}
             </Typography>
           </Box>
 
@@ -86,9 +85,6 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
             Our Vision
           </Typography>
           <Typography className={classes.ourVisionText}>
-            There is a new art form on the rise.
-            <br />
-            <br />
             Generative art is a process of algorithmically generating new ideas, forms, shapes,
             colors or patterns.
             <br />
@@ -144,7 +140,16 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
 
         <Typography className={classes.howItWorksLeadingParahraph}>
           Enjoy your token that ANA has minted for you. ANA is erc721 compatible, so your tokens can
-          be found on Opensea.
+          be found on{' '}
+          <Link
+            href="https://opensea.io/"
+            className={classes.link}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Opensea
+          </Link>
+          .
         </Typography>
 
         <Box className={classes.examplesContainer} id="examples-section">
