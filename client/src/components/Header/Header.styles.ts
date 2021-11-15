@@ -9,15 +9,20 @@ export const useStyles = makeStyles((theme) => ({
     justifyContent: 'center'
   },
   appBar: {
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
+    display: 'flex',
+    width: '100%'
   },
   toolbar: {
-    minHeight: 'auto'
+    minHeight: 'auto',
+    display: 'flex',
+    flex: 1
   },
   logoContainer: {
     cursor: 'pointer',
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginLeft: theme.spacing(1)
   },
   logo: {
     marginRight: theme.spacing(1),
@@ -50,6 +55,7 @@ export const useStyles = makeStyles((theme) => ({
   activeButton: {},
   menuButton: {
     marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
     opacity: 0,
     visibility: 'hidden',
     transform: 'translate(0, -2rem)',
