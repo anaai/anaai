@@ -8,7 +8,9 @@ export const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'center'
   },
-  appBar: {},
+  appBar: {
+    backgroundColor: '#fff'
+  },
   toolbar: {
     minHeight: 'auto'
   },
@@ -37,30 +39,20 @@ export const useStyles = makeStyles((theme) => ({
     })
   },
   generateButton: {
-    color: '#fff',
     marginRight: theme.spacing(1),
-    marginLeft: theme.spacing(1),
-    border: `2px solid ${theme.palette.secondary.main}`
+    marginLeft: theme.spacing(1)
   },
   transformationsButton: {
-    color: '#fff',
     marginRight: theme.spacing(1),
-    marginLeft: theme.spacing(1),
-    border: `2px solid ${theme.palette.secondary.main}`
+    marginLeft: theme.spacing(1)
   },
   myArtButton: {
-    color: '#fff',
     marginRight: theme.spacing(1),
-    marginLeft: theme.spacing(1),
-    border: `2px solid ${theme.palette.secondary.main}`
+    marginLeft: theme.spacing(1)
   },
-  activeButton: {
-    border: `2px solid ${grey[200]}`
-  },
+  activeButton: {},
   menuButton: {
-    color: '#fff',
     marginLeft: theme.spacing(1),
-    border: `2px solid ${theme.palette.secondary.main}`,
     opacity: 0,
     visibility: 'hidden',
     transform: 'translate(0, -2rem)',
