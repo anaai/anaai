@@ -14,7 +14,7 @@ export const useStyles = makeStyles((theme) => ({
     flex: 1,
     display: 'flex',
     alignItems: 'center',
-    margin: `${theme.spacing(0.5)}px auto`,
+    margin: `${theme.spacing(0.2)}px auto`,
     maxWidth: theme.spacing(100)
   },
   logoContainer: {
@@ -24,7 +24,7 @@ export const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(1)
   },
   logo: {
-    height: theme.spacing(6),
+    height: theme.spacing(3),
     width: theme.spacing(6),
     cursor: 'pointer'
   },

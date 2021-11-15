@@ -79,7 +79,7 @@ export const useStyles = makeStyles((theme) => ({
   ourVisionContainer: {
     width: '100%',
     backgroundColor: theme.palette.primary.main,
-    marginBottom: theme.spacing(15),
+    marginBottom: theme.spacing(4),
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4)
   },
@@ -133,7 +133,7 @@ export const useStyles = makeStyles((theme) => ({
     textAlign: 'center'
   },
   examplesContainer: {
-    margin: `${theme.spacing(0.5)}px auto`,
+    margin: `${theme.spacing(2)}px auto`,
     maxWidth: theme.spacing(100),
     width: '100%',
     padding: theme.spacing(2)

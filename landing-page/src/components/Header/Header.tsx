@@ -65,6 +65,7 @@ export const Header: React.FC<Record<string, unknown>> = () => {
           {matchesMdDown ? (
             <>
               <Button
+                size="small"
                 className={classes.goToAppButton}
                 target="_blank"
                 href="https://stg2.anaai.art/"
@@ -105,11 +106,20 @@ export const Header: React.FC<Record<string, unknown>> = () => {
             </>
           ) : (
             <>
-              <Button onClick={handleOurVisionClick}>Our Vision</Button>
-              <Button onClick={handleHowItWorksClick}>How it works</Button>
-              <Button onClick={handleExamplesClick}>Examples</Button>
-              <Button onClick={handleWhatToExpectClick}>What to expect</Button>
+              <Button size="small" onClick={handleOurVisionClick}>
+                Our Vision
+              </Button>
+              <Button size="small" onClick={handleHowItWorksClick}>
+                How it works
+              </Button>
+              <Button size="small" onClick={handleExamplesClick}>
+                Examples
+              </Button>
+              <Button size="small" onClick={handleWhatToExpectClick}>
+                What to expect
+              </Button>
               <Button
+                size="small"
                 className={classes.goToAppButton}
                 target="_blank"
                 href="https://stg2.anaai.art/"
