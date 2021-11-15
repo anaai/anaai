@@ -78,9 +78,9 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
             <Box className={classes.macbookDeviceContainer}></Box>
             <Box className={classes.macbookDeviceContentContainer}>
               <ReactCompareImage
-                sliderPositionPercentage={0.5}
-                leftImage={images.feathers.mDogs}
-                rightImage={images.base.mDogs}
+                sliderPositionPercentage={0.6}
+                leftImage={images.udnie.hero}
+                rightImage={images.base.hero}
               />
             </Box>
           </Box>

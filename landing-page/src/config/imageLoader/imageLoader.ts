@@ -9,6 +9,7 @@ import baseMDogs from 'assets/images/transformations/base/mdogs.jpg';
 import baseMLake from 'assets/images/transformations/base/mlake.jpg';
 import baseMForest from 'assets/images/transformations/base/mforest.jpg';
 import baseMCity from 'assets/images/transformations/base/mcity.jpg';
+import baseHero from 'assets/images/transformations/base/hero-base.jpg';
 
 import asciiFGirl from 'assets/images/transformations/ascii/fgirl-ascii.jpg';
 import asciiFCat from 'assets/images/transformations/ascii/fcat-ascii.jpg';
@@ -93,6 +94,7 @@ import udnieMDogs from 'assets/images/transformations/udnie/mdogs-udnie.jpg';
 import udnieMLake from 'assets/images/transformations/udnie/mlake-udnie.jpg';
 import udnieMForest from 'assets/images/transformations/udnie/mforest-udnie.jpg';
 import udnieMCity from 'assets/images/transformations/udnie/mcity-udnie.jpg';
+import udnieHero from 'assets/images/transformations/udnie/hero-udnie.jpg';
 
 export const images = {
   base: {
@@ -106,7 +108,8 @@ export const images = {
     mDogs: baseMDogs,
     mLake: baseMLake,
     mForest: baseMForest,
-    mCity: baseMCity
+    mCity: baseMCity,
+    hero: baseHero
   },
   ascii: {
     fGirl: asciiFGirl,
@@ -197,6 +200,7 @@ export const images = {
     mDogs: udnieMDogs,
     mLake: udnieMLake,
     mForest: udnieMForest,
-    mCity: udnieMCity
+    mCity: udnieMCity,
+    hero: udnieHero
   }
 } as const;
