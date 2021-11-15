@@ -4,7 +4,6 @@ import {
   IconButton,
   Menu,
   MenuItem,
-  Typography,
   useMediaQuery,
   useTheme
 } from '@material-ui/core';

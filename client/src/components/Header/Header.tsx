@@ -1,12 +1,9 @@
 import {
-  AppBar,
   Box,
   Button,
   IconButton,
   Menu,
   MenuItem,
-  Toolbar,
-  Typography,
   useMediaQuery,
   useTheme
 } from '@material-ui/core';
