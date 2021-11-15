@@ -25,7 +25,7 @@ export const useStyles = makeStyles((theme) => ({
   },
   logo: {
     height: theme.spacing(3),
-    width: theme.spacing(6),
+    width: theme.spacing(8),
     cursor: 'pointer'
   },
   title: {
