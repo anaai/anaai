@@ -59,6 +59,13 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
             </Typography> */}
             <Typography variant="body1" className={classes.heroDescription}>
               Unlock the future of generative digital art.
+              <br />
+              <br />
+              ANA is the first generative art platform on blockchain.
+              <br />
+              <br />
+              As generative art is getting more and more popular, ANA helps everyone become an
+              artist using state of the art generative and AI models to create your own art.
             </Typography>
           </Box>
 
@@ -88,6 +95,11 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
             <br />
             Inspired by maths, AI and blockchain technology, we believe everyone should be able to
             generate, posess or sell their own art.
+            <br />
+            <br />
+            ANA will keep developing new generative models and release the best of them for you to
+            create your own original art. The supply will always be limited to reward people who
+            believed in our vision early.
           </Typography>
         </Box>
 
@@ -97,9 +109,13 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
           </Typography>
 
           <Typography className={classes.limitedTransformationsLeadingParahraph}>
-            Art is generated used one of our predefined transformations. Each transformation has a
+            Art is generated using one of our predefined transformations. Each transformation has a
             limited supply meaning that it can be used only a number of times. After that, the
             transformation becomes unavialable for future use.
+            <br />
+            <br />
+            Each transformation is a mathematical or AI model developed that can be used for
+            generating different content in the space of images, audio, video and text.
           </Typography>
 
           <Box className={classes.howItWorksContentContainer}>
@@ -121,12 +137,15 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
                 </li>
                 <li className={classes.howItWorksListItem}>Choose transformation</li>
                 <li className={classes.howItWorksListItem}>Generate art</li>
-                <li className={classes.howItWorksListItem}>ANA mints the token for you</li>
-                <li className={classes.howItWorksListItem}>Enjoy your newly generated art!</li>
               </ul>
             </Box>
           </Box>
         </Box>
+
+        <Typography className={classes.howItWorksLeadingParahraph}>
+          Enjoy your token that ANA has minted for you. ANA is erc721 compatible, so your tokens can
+          be found on Opensea.
+        </Typography>
 
         <Box className={classes.examplesContainer} id="examples-section">
           <Typography variant="h3" className={classes.title}>
@@ -160,6 +179,10 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
 
           <Typography className={classes.whatToExpectLeadingParahraph}>
             We have big plans for the future, jump along for the ride!
+            <br />
+            Follow us on twitter and join our discord to share your ideas with us. We want our
+            models to be a collaborative effor with the community. Expect interesting features in
+            the future!
           </Typography>
 
           <Box className={classes.whatToExpectCardsContainer}>
