@@ -57,9 +57,7 @@ const WalletProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
     const onChainChanged = (chainIdHex: string) => {
       console.log('chainIdHex', chainIdHex);
-      if (chainIdHex !== process.env.REACT_APP_CHAIN_ID_HEX) {
-        window.location.reload();
-      }
+      window.location.reload();
     };
     ethereum.on('chainChanged', onChainChanged);
   }, [dispatch]);
