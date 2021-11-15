@@ -10,8 +10,7 @@ export const useStyles = makeStyles((theme) => ({
   },
   appBar: {},
   toolbar: {
-    minHeight: 'auto',
-    margin: `${theme.spacing(0.2)}px 0`
+    minHeight: 'auto'
   },
   logoContainer: {
     cursor: 'pointer',
