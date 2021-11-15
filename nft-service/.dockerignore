@@ -1,11 +1,7 @@
-postgres-data/
-
 .git/
 .gitignore
 .env
 .env.example
-results/
-images/
 
 .pytest_cache/
 **/__pycache__
