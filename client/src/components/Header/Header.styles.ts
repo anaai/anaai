@@ -39,15 +39,12 @@ export const useStyles = makeStyles((theme) => ({
     })
   },
   generateButton: {
-    marginRight: theme.spacing(1),
     marginLeft: theme.spacing(1)
   },
   transformationsButton: {
-    marginRight: theme.spacing(1),
     marginLeft: theme.spacing(1)
   },
   myArtButton: {
-    marginRight: theme.spacing(1),
     marginLeft: theme.spacing(1)
   },
   activeButton: {},
