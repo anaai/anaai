@@ -38,7 +38,7 @@ export const primaryTheme = responsiveFontSizes(
         root: {
           letterSpacing: '2px',
           padding: `${spacing(1)}px ${spacing(2)}px`,
-          borderRadius: spacing(2),
+          borderRadius: spacing(0),
           '@media(max-width: 599.95px)': {
             padding: `${spacing(1)}px`
           }

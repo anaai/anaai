@@ -79,22 +79,24 @@ export const useStyles = makeStyles((theme) => ({
   ourVisionContainer: {
     width: '100%',
     backgroundColor: theme.palette.primary.main,
-    marginBottom: theme.spacing(15),
+    marginBottom: theme.spacing(4),
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4)
   },
   howItWorksContainer: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
     margin: `${theme.spacing(0.5)}px auto`,
     width: '100%',
     maxWidth: theme.spacing(100)
   },
   limitedTransformationsLeadingParahraph: {
-    textAlign: 'center',
     marginBottom: theme.spacing(2),
     padding: theme.spacing(1)
+  },
+  link: {
+    color: '#fff',
+    fontWeight: 'bolder'
   },
   howItWorksContentContainer: {
     display: 'flex',
@@ -117,30 +119,42 @@ export const useStyles = makeStyles((theme) => ({
     flex: 1,
     padding: theme.spacing(2)
   },
-  howItWorksLeadingParahraph: {},
+  howItWorksLeadingParahraph: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1)
+  },
   howItWorksList: {},
   howItWorksListItem: {
     marginBottom: theme.spacing(1)
   },
   title: {
-    textAlign: 'center',
-    marginBottom: theme.spacing(4)
+    padding: theme.spacing(1)
+  },
+  ourVisionTitle: {
+    margin: 'auto',
+    maxWidth: theme.spacing(100),
+    padding: theme.spacing(1)
   },
   ourVisionText: {
     margin: `${theme.spacing(0.5)}px auto`,
     maxWidth: theme.spacing(100),
-    padding: theme.spacing(1),
-    textAlign: 'center'
+    padding: theme.spacing(1)
   },
   examplesContainer: {
-    margin: `${theme.spacing(0.5)}px auto`,
+    margin: `${theme.spacing(2)}px auto`,
     maxWidth: theme.spacing(100),
-    width: '100%',
+    width: '100%'
+  },
+  galleryContainerInner: {
     padding: theme.spacing(2)
   },
-  galleryContainerInner: {},
+  galleryCardContainer: {
+    display: 'flex',
+    flexDirection: 'column'
+  },
   imageList: {},
   galleryImageContainer: {
+    flex: 1,
     '& > div': {
       borderRadius: theme.spacing(0.2),
       boxShadow: theme.shadows[1]
@@ -161,7 +175,6 @@ export const useStyles = makeStyles((theme) => ({
     maxWidth: theme.spacing(100)
   },
   whatToExpectLeadingParahraph: {
-    textAlign: 'center',
     marginBottom: theme.spacing(2),
     padding: theme.spacing(1)
   },
@@ -190,7 +203,8 @@ export const useStyles = makeStyles((theme) => ({
   },
   whatToExpectCardTitle: {
     marginRight: theme.spacing(1),
-    marginLeft: theme.spacing(1)
+    marginLeft: theme.spacing(1),
+    marginBottom: theme.spacing(2)
   },
   whatToExpectCardDescription: {
     marginRight: theme.spacing(1),

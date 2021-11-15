@@ -27,7 +27,7 @@ export const Footer: React.FC<Record<string, unknown>> = () => {
         >
           Discord
         </Button>
-        |
+        <span>|</span>
         <Button
           size="small"
           onClick={handleTwitterClick}
@@ -36,7 +36,7 @@ export const Footer: React.FC<Record<string, unknown>> = () => {
         >
           Twitter
         </Button>
-        |
+        <span>|</span>
         <Button
           size="small"
           onClick={handleEmailClick}

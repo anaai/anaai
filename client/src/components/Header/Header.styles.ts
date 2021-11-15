@@ -9,18 +9,27 @@ export const useStyles = makeStyles((theme) => ({
     justifyContent: 'center'
   },
   appBar: {
-    paddingTop: theme.spacing(0.1),
-    paddingBottom: theme.spacing(0.1)
+    backgroundColor: '#fff',
+    display: 'flex',
+    width: '100%'
+  },
+  toolbar: {
+    minHeight: 'auto',
+    display: 'flex',
+    maxWidth: theme.spacing(100),
+    flex: 1,
+    margin: 'auto'
   },
   logoContainer: {
     cursor: 'pointer',
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginLeft: theme.spacing(1)
   },
   logo: {
     marginRight: theme.spacing(1),
-    height: theme.spacing(4),
-    width: theme.spacing(10)
+    height: theme.spacing(3),
+    width: theme.spacing(8)
   },
   spacerBox: {
     flex: 1
@@ -37,30 +46,18 @@ export const useStyles = makeStyles((theme) => ({
     })
   },
   generateButton: {
-    color: '#fff',
-    marginRight: theme.spacing(1),
-    marginLeft: theme.spacing(1),
-    border: `2px solid ${theme.palette.secondary.main}`
+    marginLeft: theme.spacing(1)
   },
   transformationsButton: {
-    color: '#fff',
-    marginRight: theme.spacing(1),
-    marginLeft: theme.spacing(1),
-    border: `2px solid ${theme.palette.secondary.main}`
+    marginLeft: theme.spacing(1)
   },
   myArtButton: {
-    color: '#fff',
-    marginRight: theme.spacing(1),
-    marginLeft: theme.spacing(1),
-    border: `2px solid ${theme.palette.secondary.main}`
+    marginLeft: theme.spacing(1)
   },
-  activeButton: {
-    border: `2px solid ${grey[200]}`
-  },
+  activeButton: {},
   menuButton: {
-    color: '#fff',
     marginLeft: theme.spacing(1),
-    border: `2px solid ${theme.palette.secondary.main}`,
+    marginRight: theme.spacing(1),
     opacity: 0,
     visibility: 'hidden',
     transform: 'translate(0, -2rem)',

@@ -1,12 +1,9 @@
 import {
-  AppBar,
   Box,
   Button,
   IconButton,
   Menu,
   MenuItem,
-  Toolbar,
-  Typography,
   useMediaQuery,
   useTheme
 } from '@material-ui/core';
@@ -67,8 +64,8 @@ export const Header: React.FC<Record<string, unknown>> = () => {
 
   return (
     <Box className={classes.root} data-testid="Header-root-container">
-      <AppBar position="static" color="secondary" className={classes.appBar}>
-        <Toolbar>
+      <Box className={classes.appBar}>
+        <Box className={classes.toolbar}>
           <Box className={classes.logoContainer} onClick={handleHomeClick}>
             <img className={classes.logo} src={AnaAILogo} alt="anaai logo" />
           </Box>
@@ -79,6 +76,7 @@ export const Header: React.FC<Record<string, unknown>> = () => {
               <WalletConnector />
 
               <IconButton
+                size="small"
                 className={`${classes.menuButton} ${shouldAllowEntry && classes.show}`}
                 onClick={handleMenuClick}
               >
@@ -162,8 +160,8 @@ export const Header: React.FC<Record<string, unknown>> = () => {
               <WalletConnector />
             </>
           )}
-        </Toolbar>
-      </AppBar>
+        </Box>
+      </Box>
     </Box>
   );
 };

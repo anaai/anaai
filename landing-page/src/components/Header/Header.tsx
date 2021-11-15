@@ -4,7 +4,6 @@ import {
   IconButton,
   Menu,
   MenuItem,
-  Typography,
   useMediaQuery,
   useTheme
 } from '@material-ui/core';
@@ -37,6 +36,10 @@ export const Header: React.FC<Record<string, unknown>> = () => {
     scrollTo('what-to-expect-section');
   };
 
+  const handleContactClick = () => {
+    scrollTo('footer-section');
+  };
+
   const [menuAnchorEl, setMenuAnchorEl] = useState<Element | null>(null);
 
   const handleMenuClick: MouseEventHandler<HTMLButtonElement> = (event) => {
@@ -65,16 +68,18 @@ export const Header: React.FC<Record<string, unknown>> = () => {
           {matchesMdDown ? (
             <>
               <Button
+                size="small"
                 className={classes.goToAppButton}
                 target="_blank"
                 href="https://stg2.anaai.art/"
                 color="secondary"
                 variant="contained"
+                rel="noopener noreferrer"
               >
                 Generate your art
               </Button>
 
-              <IconButton className={classes.menuButton} onClick={handleMenuClick}>
+              <IconButton size="small" className={classes.menuButton} onClick={handleMenuClick}>
                 <MenuIcon />
               </IconButton>
 
@@ -95,26 +100,41 @@ export const Header: React.FC<Record<string, unknown>> = () => {
                   How it works
                 </MenuItem>
                 <MenuItem className={classes.menuItem} onClick={handleExamplesClick}>
-                  Examples
+                  Gallery
                 </MenuItem>
-
                 <MenuItem className={classes.menuItem} onClick={handleWhatToExpectClick}>
                   What to expect
+                </MenuItem>
+                <MenuItem className={classes.menuItem} onClick={handleContactClick}>
+                  Contact
                 </MenuItem>
               </Menu>
             </>
           ) : (
             <>
-              <Button onClick={handleOurVisionClick}>Our Vision</Button>
-              <Button onClick={handleHowItWorksClick}>How it works</Button>
-              <Button onClick={handleExamplesClick}>Examples</Button>
-              <Button onClick={handleWhatToExpectClick}>What to expect</Button>
+              <Button size="small" onClick={handleOurVisionClick}>
+                Our Vision
+              </Button>
+              <Button size="small" onClick={handleHowItWorksClick}>
+                How it works
+              </Button>
+              <Button size="small" onClick={handleExamplesClick}>
+                Gallery
+              </Button>
+              <Button size="small" onClick={handleWhatToExpectClick}>
+                What to expect
+              </Button>
+              <Button size="small" onClick={handleContactClick}>
+                Contact
+              </Button>
               <Button
+                size="small"
                 className={classes.goToAppButton}
                 target="_blank"
                 href="https://stg2.anaai.art/"
                 color="secondary"
                 variant="contained"
+                rel="noopener noreferrer"
               >
                 Generate your art
               </Button>

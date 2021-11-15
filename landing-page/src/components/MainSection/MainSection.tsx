@@ -2,6 +2,7 @@ import {
   Box,
   ImageList,
   ImageListItem,
+  Link,
   Typography,
   useMediaQuery,
   useTheme
@@ -13,32 +14,39 @@ import { useStyles } from './MainSection.styles';
 import caterpillar from 'assets/images/news-cards/caterpillar.jpg';
 import lightBulb from 'assets/images/news-cards/light-bulb.jpg';
 import cassette from 'assets/images/news-cards/cassette.jpg';
+import { Footer } from 'components/Footer/Footer';
 
 export const MainSection: React.FC<Record<string, unknown>> = () => {
   const imageExamples = [
     {
       leftImage: images.ascii.mCity,
-      rightImage: images.base.mCity
+      rightImage: images.base.mCity,
+      transformationName: 'ASCII art'
     },
     {
       leftImage: images.sketch.mLake,
-      rightImage: images.base.mLake
+      rightImage: images.base.mLake,
+      transformationName: 'Sketch'
     },
     {
       leftImage: images.candy.fGirl,
-      rightImage: images.base.fGirl
+      rightImage: images.base.fGirl,
+      transformationName: 'Candy style transfer'
     },
     {
       leftImage: images.feathers.fBeach,
-      rightImage: images.base.fBeach
+      rightImage: images.base.fBeach,
+      transformationName: 'Feathers style transfer'
     },
     {
       leftImage: images.mosaic.mGirl,
-      rightImage: images.base.mGirl
+      rightImage: images.base.mGirl,
+      transformationName: 'Mosaic style transfer'
     },
     {
       leftImage: images.theScream.fCat,
-      rightImage: images.base.fCat
+      rightImage: images.base.fCat,
+      transformationName: 'The Scream style transfer'
     }
   ] as const;
 
@@ -51,14 +59,19 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
       <Box className={classes.mainSectionContentContainer}>
         <Box className={classes.heroSectionContainer} id="hero-section">
           <Box className={classes.heroTextContainer}>
-            <Typography variant="h3" className={classes.heroTitle}>
+            <Typography variant="h2" className={classes.heroTitle}>
               ANA
             </Typography>
-            {/* <Typography variant="body1" className={classes.heroSubtitle}>
-              AI
-            </Typography> */}
-            <Typography variant="body1" className={classes.heroDescription}>
-              Unlock the future of generative digital art.
+            <br />
+            <Typography variant="h5" className={classes.heroDescription}>
+              There is a new art form on the rise.
+            </Typography>
+            <br />
+            <Typography className={classes.heroDescription}>
+              Unlock the future of generative digital art using the first generative art platform on
+              blockchain.
+              {/* As generative art is getting more and more popular, ANA helps everyone become an
+              artist using state of the art generative and AI models to create your own art. */}
             </Typography>
           </Box>
 
@@ -66,22 +79,19 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
             <Box className={classes.macbookDeviceContainer}></Box>
             <Box className={classes.macbookDeviceContentContainer}>
               <ReactCompareImage
-                sliderPositionPercentage={0.5}
-                leftImage={images.feathers.mDogs}
-                rightImage={images.base.mDogs}
+                sliderPositionPercentage={0.6}
+                leftImage={images.udnie.hero}
+                rightImage={images.base.hero}
               />
             </Box>
           </Box>
         </Box>
 
         <Box className={classes.ourVisionContainer} id="our-vision-section">
-          <Typography variant="h3" className={classes.title}>
+          <Typography variant="h3" className={classes.ourVisionTitle}>
             Our Vision
           </Typography>
           <Typography className={classes.ourVisionText}>
-            There is a new art form on the rise.
-            <br />
-            <br />
             Generative art is a process of algorithmically generating new ideas, forms, shapes,
             colors or patterns.
             <br />
@@ -97,9 +107,13 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
           </Typography>
 
           <Typography className={classes.limitedTransformationsLeadingParahraph}>
-            Art is generated used one of our predefined transformations. Each transformation has a
+            Art is generated using one of our predefined transformations. Each transformation has a
             limited supply meaning that it can be used only a number of times. After that, the
             transformation becomes unavialable for future use.
+            <br />
+            <br />
+            Each transformation is a mathematical or AI model developed that can be used for
+            generating different content in the space of images, audio, video and text.
           </Typography>
 
           <Box className={classes.howItWorksContentContainer}>
@@ -112,25 +126,37 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
 
             <Box className={classes.howItWorksTextContainer}>
               <Typography className={classes.howItWorksLeadingParahraph}>
-                ANA platform allows you to create a personal art collection in 3 clicks.
+                ANA allows you to create a personal art collection in 3 clicks.
               </Typography>
 
               <ul className={classes.howItWorksList}>
                 <li className={classes.howItWorksListItem}>
-                  Choose base image to apply transformation to
+                  Choose base content to apply transformation to
                 </li>
-                <li className={classes.howItWorksListItem}>Choose transformation</li>
-                <li className={classes.howItWorksListItem}>Generate art</li>
-                <li className={classes.howItWorksListItem}>ANA mints the token for you</li>
-                <li className={classes.howItWorksListItem}>Enjoy your newly generated art!</li>
+                <li className={classes.howItWorksListItem}>Select desired transformation</li>
+                <li className={classes.howItWorksListItem}>Generate your art</li>
               </ul>
             </Box>
           </Box>
         </Box>
 
+        <Typography className={classes.howItWorksLeadingParahraph}>
+          Enjoy your token that ANA has minted for you. ANA is erc721 compatible, so your tokens can
+          be found on{' '}
+          <Link
+            href="https://opensea.io/"
+            className={classes.link}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Opensea
+          </Link>
+          .
+        </Typography>
+
         <Box className={classes.examplesContainer} id="examples-section">
           <Typography variant="h3" className={classes.title}>
-            Examples
+            Gallery
           </Typography>
 
           <Box className={classes.galleryContainerInner}>
@@ -140,14 +166,17 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
               cols={matchesSmDown ? 1 : 2}
               gap={theme.spacing(1.5)}
             >
-              {imageExamples.map(({ leftImage, rightImage }) => (
-                <ImageListItem className={classes.galleryImageContainer} key={leftImage} cols={1}>
-                  <ReactCompareImage
-                    sliderPositionPercentage={0.33}
-                    leftImage={leftImage}
-                    rightImage={rightImage}
-                  />
-                </ImageListItem>
+              {imageExamples.map(({ leftImage, rightImage, transformationName }) => (
+                <Box key={leftImage} className={classes.galleryCardContainer}>
+                  <Typography>{transformationName}</Typography>
+                  <ImageListItem className={classes.galleryImageContainer} cols={1}>
+                    <ReactCompareImage
+                      sliderPositionPercentage={0.33}
+                      leftImage={leftImage}
+                      rightImage={rightImage}
+                    />
+                  </ImageListItem>
+                </Box>
               ))}
             </ImageList>
           </Box>
@@ -160,6 +189,16 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
 
           <Typography className={classes.whatToExpectLeadingParahraph}>
             We have big plans for the future, jump along for the ride!
+            <br />
+            <br />
+            ANA will keep developing new generative models and release the best of them for you to
+            create your own original art. The supply will always be limited to reward people who
+            believed in our vision early.
+            <br />
+            <br />
+            Follow us on twitter and join our discord to share your ideas with us. We want our
+            models to be a collaborative effort with the community. Expect interesting features in
+            the future!
           </Typography>
 
           <Box className={classes.whatToExpectCardsContainer}>
@@ -201,6 +240,8 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
           </Box>
         </Box>
       </Box>
+
+      <Footer />
     </Box>
   );
 };

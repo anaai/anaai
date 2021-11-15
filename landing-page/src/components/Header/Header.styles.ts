@@ -14,7 +14,6 @@ export const useStyles = makeStyles((theme) => ({
     flex: 1,
     display: 'flex',
     alignItems: 'center',
-    margin: `${theme.spacing(0.5)}px auto`,
     maxWidth: theme.spacing(100)
   },
   logoContainer: {
@@ -24,8 +23,8 @@ export const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(1)
   },
   logo: {
-    height: theme.spacing(6),
-    width: theme.spacing(6),
+    height: theme.spacing(3),
+    width: theme.spacing(8),
     cursor: 'pointer'
   },
   title: {
@@ -44,8 +43,8 @@ export const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(1)
   },
   menuButton: {
-    color: '#fff',
-    marginLeft: theme.spacing(1)
+    marginRight: theme.spacing(1),
+    marginLeft: `${theme.spacing(2)}px!important`
   },
   menuItem: {},
   dropdownMenuPaper: {
