@@ -64,7 +64,7 @@ export const Header: React.FC<Record<string, unknown>> = () => {
 
   return (
     <Box className={classes.root} data-testid="Header-root-container">
-      <Box position="static" className={classes.appBar}>
+      <Box className={classes.appBar}>
         <Box className={classes.toolbar}>
           <Box className={classes.logoContainer} onClick={handleHomeClick}>
             <img className={classes.logo} src={AnaAILogo} alt="anaai logo" />

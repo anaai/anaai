@@ -31,7 +31,7 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
     {
       leftImage: images.candy.fGirl,
       rightImage: images.base.fGirl,
-      transformationName: 'Candy'
+      transformationName: 'Candy style transfer'
     },
     {
       leftImage: images.feathers.fBeach,
