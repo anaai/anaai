@@ -17,7 +17,7 @@ export const Footer: React.FC<Record<string, unknown>> = () => {
   const handleEmailClick = () => openInNewTab('mailto:milan.keca@anaai.art');
 
   return (
-    <Box className={classes.root} data-testid="Footer-root-container">
+    <Box className={classes.root} data-testid="Footer-root-container" id="footer-section">
       <Box className={classes.footerContentContainer}>
         <Button
           onClick={handleDiscordClick}

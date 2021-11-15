@@ -37,6 +37,10 @@ export const Header: React.FC<Record<string, unknown>> = () => {
     scrollTo('what-to-expect-section');
   };
 
+  const handleContactClick = () => {
+    scrollTo('footer-section');
+  };
+
   const [menuAnchorEl, setMenuAnchorEl] = useState<Element | null>(null);
 
   const handleMenuClick: MouseEventHandler<HTMLButtonElement> = (event) => {
@@ -99,13 +103,11 @@ export const Header: React.FC<Record<string, unknown>> = () => {
                 <MenuItem className={classes.menuItem} onClick={handleExamplesClick}>
                   Gallery
                 </MenuItem>
-
                 <MenuItem className={classes.menuItem} onClick={handleWhatToExpectClick}>
                   What to expect
                 </MenuItem>
-
-                <MenuItem className={classes.menuItem} onClick={handleWhatToExpectClick}>
-                  What to expect
+                <MenuItem className={classes.menuItem} onClick={handleContactClick}>
+                  Contact
                 </MenuItem>
               </Menu>
             </>
@@ -122,6 +124,9 @@ export const Header: React.FC<Record<string, unknown>> = () => {
               </Button>
               <Button size="small" onClick={handleWhatToExpectClick}>
                 What to expect
+              </Button>
+              <Button size="small" onClick={handleContactClick}>
+                Contact
               </Button>
               <Button
                 size="small"

@@ -14,6 +14,7 @@ import { useStyles } from './MainSection.styles';
 import caterpillar from 'assets/images/news-cards/caterpillar.jpg';
 import lightBulb from 'assets/images/news-cards/light-bulb.jpg';
 import cassette from 'assets/images/news-cards/cassette.jpg';
+import { Footer } from 'components/Footer/Footer';
 
 export const MainSection: React.FC<Record<string, unknown>> = () => {
   const imageExamples = [
@@ -239,6 +240,8 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
           </Box>
         </Box>
       </Box>
+
+      <Footer />
     </Box>
   );
 };
