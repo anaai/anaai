@@ -97,7 +97,11 @@ export const Header: React.FC<Record<string, unknown>> = () => {
                   How it works
                 </MenuItem>
                 <MenuItem className={classes.menuItem} onClick={handleExamplesClick}>
-                  Examples
+                  Gallery
+                </MenuItem>
+
+                <MenuItem className={classes.menuItem} onClick={handleWhatToExpectClick}>
+                  What to expect
                 </MenuItem>
 
                 <MenuItem className={classes.menuItem} onClick={handleWhatToExpectClick}>
@@ -114,7 +118,7 @@ export const Header: React.FC<Record<string, unknown>> = () => {
                 How it works
               </Button>
               <Button size="small" onClick={handleExamplesClick}>
-                Examples
+                Gallery
               </Button>
               <Button size="small" onClick={handleWhatToExpectClick}>
                 What to expect

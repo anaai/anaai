@@ -14,7 +14,6 @@ export const useStyles = makeStyles((theme) => ({
     flex: 1,
     display: 'flex',
     alignItems: 'center',
-    margin: `${theme.spacing(0.2)}px auto`,
     maxWidth: theme.spacing(100)
   },
   logoContainer: {
