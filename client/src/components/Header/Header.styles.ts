@@ -16,7 +16,9 @@ export const useStyles = makeStyles((theme) => ({
   toolbar: {
     minHeight: 'auto',
     display: 'flex',
-    flex: 1
+    maxWidth: theme.spacing(100),
+    flex: 1,
+    margin: 'auto'
   },
   logoContainer: {
     cursor: 'pointer',
