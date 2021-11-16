@@ -12,7 +12,7 @@ export const Footer: React.FC<Record<string, unknown>> = () => {
     if (newWindow) newWindow.opener = null;
   };
 
-  const handleDiscordClick = () => openInNewTab('https://discord.gg/h3Btmn3N');
+  const handleDiscordClick = () => openInNewTab('https://discord.gg/MbZTRseVDT');
   const handleTwitterClick = () => openInNewTab('https://twitter.com/anaai_art');
   const handleEmailClick = () => openInNewTab('mailto:milan.keca@anaai.art');
 
