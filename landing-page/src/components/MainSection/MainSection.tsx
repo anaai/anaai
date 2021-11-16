@@ -118,14 +118,17 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
 
           <Box className={classes.howItWorksContentContainer}>
             <Box className={classes.howItWorksVideoContainer}>
-              <iframe
-                title="anaai demo"
-                src="https://player.vimeo.com/video/646376903?h=fe5a686245&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
-                width="600"
-                height="400"
-                frameBorder="0"
-                allow="fullscreen; picture-in-picture"
-              ></iframe>
+              <Box className={classes.howItWorkVideoContainerInner}>
+                <iframe
+                  src="https://player.vimeo.com/video/646376903?h=fe5a686245&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+                  frameBorder="0"
+                  allow="autoplay; fullscreen; picture-in-picture"
+                  allowFullScreen
+                  className={classes.videoIframe}
+                  title="anaai-demo.mp4"
+                ></iframe>
+              </Box>
+              <script src="https://player.vimeo.com/api/player.js"></script>
             </Box>
 
             <Box className={classes.howItWorksTextContainer}>

@@ -109,11 +109,23 @@ export const useStyles = makeStyles((theme) => ({
   howItWorksVideoContainer: {
     flex: 1,
     display: 'flex',
-    padding: theme.spacing(2)
+    margin: theme.spacing(2)
+  },
+  howItWorkVideoContainerInner: {
+    width: '100%',
+    padding: '56.25% 0 0 0',
+    position: 'relative'
   },
   howItWorksVideo: {
     flex: 1,
     width: '100%'
+  },
+  videoIframe: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%'
   },
   howItWorksTextContainer: {
     flex: 1,
