@@ -118,10 +118,14 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
 
           <Box className={classes.howItWorksContentContainer}>
             <Box className={classes.howItWorksVideoContainer}>
-              <video className={classes.howItWorksVideo} controls autoPlay>
-                <source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4" />
-                <track kind="captions"></track>
-              </video>
+              <iframe
+                title="anaai demo"
+                src="https://player.vimeo.com/video/646376903?h=fe5a686245&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+                width="600"
+                height="400"
+                frameBorder="0"
+                allow="fullscreen; picture-in-picture"
+              ></iframe>
             </Box>
 
             <Box className={classes.howItWorksTextContainer}>
