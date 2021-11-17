@@ -16,6 +16,7 @@ import { useHistory, useParams } from 'react-router';
 import { useStyles } from './TransformationDetailsScene.styles';
 import { resolveTransformationByTransformationName } from 'utils/resolvers';
 import { Transformation } from 'models/Transformations.model';
+import { ScrollToTopOnUnmount } from 'components/ScrollToTopOnUnmount/ScrollToTopOnUnmount';
 
 interface TransformationDetailsParams {
   transformationName: TransformationName;
@@ -49,6 +50,8 @@ export const TransformationDetailsScene: React.FC<Record<string, unknown>> = () 
 
   return (
     <Box className={classes.root} data-testid="TransformationDetailsScene-root-container">
+      <ScrollToTopOnUnmount />
+
       <Box>
         <Box className={classes.transformationInfoContainer}>
           <Typography variant="h2" gutterBottom>

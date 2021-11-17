@@ -4,6 +4,7 @@ import { GeneratedImage } from './GeneratedImage/GeneratedImage';
 import { PayGenerateForm } from './PayGenerateForm/PayGenerateForm';
 import { useStyles } from './GenerateScene.styles';
 import { ImageGeneratedActions } from './ImageGeneratedActions/ImageGeneratedActions';
+import { ScrollToTopOnUnmount } from 'components/ScrollToTopOnUnmount/ScrollToTopOnUnmount';
 
 export const GenerateScene: React.FC<Record<string, unknown>> = () => {
   const {
@@ -17,6 +18,8 @@ export const GenerateScene: React.FC<Record<string, unknown>> = () => {
 
   return (
     <Box className={classes.root} data-testid="GenerateScene-root-container">
+      <ScrollToTopOnUnmount />
+
       <Box className={classes.contentContainer}>
         <Typography variant="h2" gutterBottom>
           Generate

@@ -3,6 +3,7 @@ import { useWallet } from 'contexts/WalletContext/WalletContext';
 import { TransformationCard } from 'components/TransformationCard/TransformationCard';
 import { useStyles } from './TransformationsScene.styles';
 import { Transformation } from 'models/Transformations.model';
+import { ScrollToTopOnUnmount } from 'components/ScrollToTopOnUnmount/ScrollToTopOnUnmount';
 
 export const TransformationsScene: React.FC<Record<string, unknown>> = () => {
   const classes = useStyles();
@@ -13,6 +14,8 @@ export const TransformationsScene: React.FC<Record<string, unknown>> = () => {
 
   return (
     <Box className={classes.root} data-testid="TransformationsScene-root-container">
+      <ScrollToTopOnUnmount />
+
       {transformations && (
         <>
           <Typography variant="h2" gutterBottom>
