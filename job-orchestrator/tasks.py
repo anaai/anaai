@@ -12,13 +12,11 @@ from transformers import model_paths
 import working_directory
 import logger
 
-POSTGRES_URL = os.getenv("POSTGRES_CONNECTION_URL")
-BROKER_URL = os.getenv("BROKER_URL")
 PINATA_JWT = os.getenv("PINATA_JWT")
-
 NFT_SERVICE_MINT_TOKEN_URL = os.getenv("NFT_SERVICE_MINT_TOKEN_URL")
 
-app = Celery("tasks", backend=POSTGRES_URL, broker=BROKER_URL)
+app = Celery("tasks")
+app.config_from_object("celeryconfig")
 
 def create_token(transformer, transformation_name, transformation_number,
                  payer, image_url, image_name):
