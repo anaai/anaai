@@ -49,7 +49,7 @@ class JobRequest(Base):
   id = sa.Column(sa.Integer, primary_key=True, index=True)
   job_request_hash = sa.Column(sa.String(155), nullable=False)
   payer = sa.Column(sa.String(155), nullable=False)
-  transaction_hash = sa.Column(sa.String(155), nullable=False, unique=True)
+  transaction_hash = sa.Column(sa.String(155), nullable=False)
   block_hash = sa.Column(sa.String(155), nullable=False)
   transformation = sa.Column(sa.Integer, nullable=False)
   transformation_number = sa.Column(sa.Integer, nullable=False)
