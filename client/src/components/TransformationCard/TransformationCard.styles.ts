@@ -46,6 +46,11 @@ export const useStyles = makeStyles((theme) => ({
   },
   transformationDescription: {
     marginBottom: theme.spacing(2),
+    display: '-webkit-box',
+    '-webkit-line-clamp': 4,
+    '-webkit-box-orient': 'vertical',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
     flex: 1
   },
   transformationStats: {
