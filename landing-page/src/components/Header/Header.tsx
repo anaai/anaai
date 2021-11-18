@@ -71,7 +71,7 @@ export const Header: React.FC<Record<string, unknown>> = () => {
                 size="small"
                 className={classes.goToAppButton}
                 target="_blank"
-                href="https://stg.anaai.art/"
+                href="https://app.anaai.art/"
                 color="secondary"
                 variant="contained"
                 rel="noopener noreferrer"
@@ -131,7 +131,7 @@ export const Header: React.FC<Record<string, unknown>> = () => {
                 size="small"
                 className={classes.goToAppButton}
                 target="_blank"
-                href="https://stg.anaai.art/"
+                href="https://app.anaai.art/"
                 color="secondary"
                 variant="contained"
                 rel="noopener noreferrer"
