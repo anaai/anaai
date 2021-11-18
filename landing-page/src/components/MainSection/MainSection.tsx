@@ -64,12 +64,12 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
             </Typography>
             <br />
             <Typography variant="h5" className={classes.heroDescription}>
-              There is a new art form on the rise.
+              There is a new art form on the rise
             </Typography>
             <br />
             <Typography className={classes.heroDescription}>
               Unlock the future of generative digital art using the first generative art platform on
-              blockchain.
+              blockchain
               {/* As generative art is getting more and more popular, ANA helps everyone become an
               artist using state of the art generative and AI models to create your own art. */}
             </Typography>
