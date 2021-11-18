@@ -107,9 +107,9 @@ export const useStyles = makeStyles((theme) => ({
     }
   },
   howItWorksVideoContainer: {
-    flex: 1,
+    flex: 2,
     display: 'flex',
-    margin: theme.spacing(2)
+    margin: theme.spacing(1)
   },
   howItWorkVideoContainerInner: {
     width: '100%',
@@ -129,11 +129,12 @@ export const useStyles = makeStyles((theme) => ({
   },
   howItWorksTextContainer: {
     flex: 1,
-    padding: theme.spacing(2)
+    padding: theme.spacing(1)
   },
   howItWorksLeadingParahraph: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1)
+    paddingLeft: theme.spacing(1),
+    paddingRight: theme.spacing(1),
+    maxWidth: theme.spacing(100)
   },
   howItWorksList: {},
   howItWorksListItem: {
