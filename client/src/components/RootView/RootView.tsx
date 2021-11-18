@@ -10,6 +10,7 @@ import { TransformationDetailsScene } from 'components/TransformationDetailsScen
 import { MyArtScene } from 'components/MyArtScene/MyArtScene';
 import { Header } from 'components/Header/Header';
 import { Footer } from 'components/Footer/Footer';
+import { mainScrollContainerId } from 'components/ScrollToTopOnUnmount/ScrollToTopOnUnmount';
 
 export const RootView: React.FC<Record<string, unknown>> = () => {
   const classes = useStyles();
@@ -26,7 +27,7 @@ export const RootView: React.FC<Record<string, unknown>> = () => {
     <Box className={classes.root}>
       <Header />
 
-      <Box className={classes.mainSection}>
+      <Box className={classes.mainSection} id={mainScrollContainerId}>
         <Switch>
           {shouldAllowEntry && (
             <Route exact path="/generate/:transformationName" component={GenerateScene} />
@@ -45,9 +46,9 @@ export const RootView: React.FC<Record<string, unknown>> = () => {
           <Route exact path="/" component={LandingScene} />
           <Route path="" render={() => <Redirect to="/" />} />
         </Switch>
-      </Box>
 
-      <Footer />
+        <Footer />
+      </Box>
     </Box>
   );
 };

@@ -4,7 +4,8 @@ import { themeGradient } from 'config/theme/primaryTheme';
 export const useStyles = makeStyles((theme) => ({
   metamaskButton: {
     marginLeft: theme.spacing(1),
-    alignSelf: 'stretch'
+    alignSelf: 'stretch',
+    zIndex: 1
   },
   metamaskConnectedButton: {
     background: themeGradient,
