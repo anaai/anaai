@@ -93,11 +93,11 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
           </Typography>
           <Typography className={classes.ourVisionText}>
             Generative art is a process of algorithmically generating new ideas, forms, shapes,
-            colors or patterns.
+            colors, or patterns.
             <br />
             <br />
-            Inspired by maths, AI and blockchain technology, we believe everyone should be able to
-            generate, posess or sell their own art.
+            Inspired by maths, AI, and blockchain technology, we believe everyone should be able to
+            generate, possess or sell their own art.
           </Typography>
         </Box>
 
@@ -109,11 +109,11 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
           <Typography className={classes.limitedTransformationsLeadingParahraph}>
             Art is generated using one of our predefined transformations. Each transformation has a
             limited supply meaning that it can be used only a number of times. After that, the
-            transformation becomes unavialable for future use.
+            transformation becomes unavailable for future use.
             <br />
             <br />
             Each transformation is a mathematical or AI model developed that can be used for
-            generating different content in the space of images, audio, video and text.
+            generating different content in the space of images, audio, video, and text.
           </Typography>
 
           <Box className={classes.howItWorksContentContainer}>
@@ -138,9 +138,9 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
 
               <ul className={classes.howItWorksList}>
                 <li className={classes.howItWorksListItem}>
-                  Choose base content to apply transformation to
+                  Choose base content to apply a transformation to
                 </li>
-                <li className={classes.howItWorksListItem}>Select desired transformation</li>
+                <li className={classes.howItWorksListItem}>Select the desired transformation</li>
                 <li className={classes.howItWorksListItem}>Generate your art</li>
               </ul>
             </Box>
@@ -148,7 +148,7 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
         </Box>
 
         <Typography className={classes.howItWorksLeadingParahraph}>
-          Enjoy your token that ANA has minted for you. ANA is erc721 compatible, so your tokens can
+          Enjoy the token that ANA has minted for you. ANA is erc721 compatible, so your tokens can
           be found on{' '}
           <Link
             href="https://opensea.io/"
@@ -203,7 +203,7 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
             believed in our vision early.
             <br />
             <br />
-            Follow us on twitter and join our discord to share your ideas with us. We want our
+            Follow us on Twitter and join our discord to share your ideas with us. We want our
             models to be a collaborative effort with the community. Expect interesting features in
             the future!
           </Typography>
@@ -229,7 +229,7 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
               </Typography>
 
               <Typography variant="body1" className={classes.whatToExpectCardDescription}>
-                Generative art applied to other mediums such as video and audio!
+                Generative art will be applied to other mediums such as video and audio!
               </Typography>
             </Box>
 
@@ -241,7 +241,8 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
               </Typography>
 
               <Typography variant="body1" className={classes.whatToExpectCardDescription}>
-                After the supply for a transformation is exhausted, some of our models will sourced!
+                After the supply for a transformation is exhausted, some of our models will be open
+                sourced!
               </Typography>
             </Box>
           </Box>
