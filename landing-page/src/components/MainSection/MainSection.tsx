@@ -92,12 +92,12 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
             Our Vision
           </Typography>
           <Typography className={classes.ourVisionText}>
-            Generative art is a process of algorithmically generating new ideas, forms, shapes,
-            colors, or patterns.
+            Generative art is a process of algorithmically generating new ideas, forms, colors, or
+            patterns.
             <br />
             <br />
             Inspired by maths, AI, and blockchain technology, we believe everyone should be able to
-            generate, possess or sell their own art.
+            generate, possess or sell their art.
           </Typography>
         </Box>
 
@@ -107,13 +107,13 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
           </Typography>
 
           <Typography className={classes.limitedTransformationsLeadingParahraph}>
-            Art is generated using one of our predefined transformations. Each transformation has a
-            limited supply meaning that it can be used only a number of times. After that, the
-            transformation becomes unavailable for future use.
+            We generate art by applying one of our predefined transformations to the uploaded image.
+            Each transformation has a limited supply and becomes unavailable for future use after
+            the supply runs out.
             <br />
             <br />
-            Each transformation is a mathematical or AI model developed that can be used for
-            generating different content in the space of images, audio, video, and text.
+            Transformations are mathematical or AI models that we can use to generate content in the
+            space of images, audio, video, and text.
           </Typography>
 
           <Box className={classes.howItWorksContentContainer}>
@@ -133,7 +133,8 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
 
             <Box className={classes.howItWorksTextContainer}>
               <Typography className={classes.howItWorksLeadingParahraph}>
-                ANA allows you to create a personal art collection in 3 clicks.
+                ANA allows you to create a personal art collection in 3 clicks by doing the
+                following
               </Typography>
 
               <ul className={classes.howItWorksList}>
@@ -141,22 +142,22 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
                   Choose base content to apply a transformation to
                 </li>
                 <li className={classes.howItWorksListItem}>Select the desired transformation</li>
-                <li className={classes.howItWorksListItem}>Generate your art</li>
+                <li className={classes.howItWorksListItem}>Generate your art!</li>
               </ul>
             </Box>
           </Box>
         </Box>
 
         <Typography className={classes.howItWorksLeadingParahraph}>
-          Enjoy the token that ANA has minted for you. ANA is erc721 compatible, so your tokens can
-          be found on{' '}
+          Enjoy the token that ANA has minted for you. ANA tokens are erc721 compatible, and you can
+          find them on{' '}
           <Link
             href="https://opensea.io/"
             className={classes.link}
             target="_blank"
             rel="noopener noreferrer"
           >
-            Opensea
+            OpenSea
           </Link>
           .
         </Typography>
@@ -195,16 +196,15 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
           </Typography>
 
           <Typography className={classes.whatToExpectLeadingParahraph}>
-            We have big plans for the future, jump along for the ride!
+            We have big plans for the future so come along for the ride!
             <br />
             <br />
-            ANA will keep developing new generative models and release the best of them for you to
-            create your own original art. The supply will always be limited to reward people who
-            believed in our vision early.
+            ANA will keep introducing new generative models for you to create your original art. The
+            supply will always be limited to reward people who believed in our vision early.
             <br />
             <br />
-            Follow us on Twitter and join our discord to share your ideas with us. We want our
-            models to be a collaborative effort with the community. Expect interesting features in
+            Follow us on Twitter and join our Discord channel to share your ideas with us. We want
+            our models to be a collaborative effort with the community. Expect more cool features in
             the future!
           </Typography>
 
@@ -217,7 +217,7 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
               </Typography>
 
               <Typography variant="body1" className={classes.whatToExpectCardDescription}>
-                Expect new transformations on a regular basis with new cool generative art!
+                Expect new transformations regularly with cool generative art!
               </Typography>
             </Box>
 
@@ -229,7 +229,7 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
               </Typography>
 
               <Typography variant="body1" className={classes.whatToExpectCardDescription}>
-                Generative art will be applied to other mediums such as video and audio!
+                Generative art for other mediums such as video and audio!
               </Typography>
             </Box>
 
@@ -241,8 +241,8 @@ export const MainSection: React.FC<Record<string, unknown>> = () => {
               </Typography>
 
               <Typography variant="body1" className={classes.whatToExpectCardDescription}>
-                After the supply for a transformation is exhausted, some of our models will be open
-                sourced!
+                We will open-source some of our models after the supply for a transformation is
+                exhausted!
               </Typography>
             </Box>
           </Box>
