@@ -29,7 +29,7 @@ contract StyleArt is ERC721, Ownable {
   mapping(uint256 => Transformation) private transformations;
 
   event ImageGenerationPaid(address sender, uint256 value, uint256 transformationId,
-                            uint256 transformationNumber, string imageURL);
+                            uint256 transformationNumber, bytes params);
   event TokenMinted(address payer, uint256 tokenId, string tokenURI);
 
   constructor() ERC721("styleart", "sart") {
@@ -53,7 +53,7 @@ contract StyleArt is ERC721, Ownable {
     _;
   }
 
-  function payGenerating(uint256 transformationId, string memory imageUrl)
+  function payGenerating(uint256 transformationId, bytes memory params)
   public payable availableTransformation(transformationId, msg.value) {
     uint256 transformationNumber;
 
@@ -61,7 +61,7 @@ contract StyleArt is ERC721, Ownable {
     transformationNumber = transformations[transformationId].nTokens;
 
     admin.transfer(msg.value);
-    emit ImageGenerationPaid(msg.sender, msg.value, transformationId, transformationNumber, imageUrl);
+    emit ImageGenerationPaid(msg.sender, msg.value, transformationId, transformationNumber, params);
   }
 
   function mintNFT(address payer, string memory tokenURI)
