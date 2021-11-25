@@ -1,3 +1,4 @@
+import Web3 from 'web3';
 import { ChangeEventHandler, FocusEventHandler, SyntheticEvent, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router';
@@ -71,8 +72,10 @@ export const PayGenerateForm: React.FC<Record<string, unknown>> = () => {
       // Loading finish is triggered either on payGenerating error or tokenTransferredEvent
       dispatch(createSetPayGeneratingLoadingAction(true));
       try {
+        // Extract this to separate function and test !important
+        const params = Web3.utils.asciiToHex(JSON.stringify({ image_url: url }));
         const payGeneratingResult: PayGeneratingResult = await contract.methods
-          .payGenerating(transformationEntity.id, url)
+          .payGenerating(transformationEntity.id, params)
           .send({ from: accounts[0], gas: 1_000_000, value: transformationEntity.price });
 
         console.debug('payGeneratingResult: ', payGeneratingResult);
