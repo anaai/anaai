@@ -73,7 +73,7 @@ export const PayGenerateForm: React.FC<Record<string, unknown>> = () => {
       try {
         const payGeneratingResult: PayGeneratingResult = await contract.methods
           .payGenerating(transformationEntity.id, url)
-          .send({ from: accounts[0], gas: 1_000_000 });
+          .send({ from: accounts[0], gas: 1_000_000, value: transformationEntity.price });
 
         console.debug('payGeneratingResult: ', payGeneratingResult);
       } catch (error) {

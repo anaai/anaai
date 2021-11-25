@@ -1,4 +1,4 @@
-import { TransformationName } from "config/transformations/transformations";
+import { TransformationName } from 'config/transformations/transformations';
 
 export type Transformations = Transformation[];
 
