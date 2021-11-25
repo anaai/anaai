@@ -18,13 +18,14 @@ const folapAddress = "0x7b245f044456183BF4949dC1aff2ae9d3691edfF";
 
 const TRANFORMATION_ID = 3;
 const IMAGE_URL = "https://i.pinimg.com/originals/5b/b9/59/5bb95935defd974fa87b44eaa8ed9bcd.jpg";
+const PARAMS = web3.utils.asciiToHex(JSON.stringify({image_url: IMAGE_URL}));
 
-async function payGenerating(contract, address, transformationId, imageUrl) {
+async function payGenerating(contract, address, transformationId, params) {
   const message = await contract.methods
-    .payGenerating(transformationId, imageUrl)
-    .send({from: address, gas: 500000});
+    .payGenerating(transformationId, params)
+    .send({from: address, gas: 1000000, value: 0});
 
   console.log(message);
 }
 
-payGenerating(nftContract, PUBLIC_KEY, TRANFORMATION_ID, IMAGE_URL);
+payGenerating(nftContract, PUBLIC_KEY, TRANFORMATION_ID, PARAMS);

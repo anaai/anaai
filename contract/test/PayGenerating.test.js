@@ -10,6 +10,7 @@ describe("StyleArt", () => {
   const supply = new BN("1");
   const transformationId = new BN("1");
   const transformationNumber = new BN("1");
+  const params = web3.utils.asciiToHex('{"image_url": "http://image.com"}');
 
   beforeEach(async () => {
     // Deploy a new contract for each test
@@ -23,7 +24,7 @@ describe("StyleArt", () => {
       const oldBalance = await web3.eth.getBalance(owner)
 
       await this.contract.contract.methods
-        .payGenerating(1, "imageUrl")
+        .payGenerating(1, params)
         .send({from: user1, gas: 500000, value});
 
       const newBalance = await web3.eth.getBalance(owner)
@@ -35,7 +36,7 @@ describe("StyleArt", () => {
 
       await expectRevert(
         this.contract.contract.methods
-          .payGenerating(2, "imageUrl")
+          .payGenerating(2, params)
           .send({from: user1, gas: 500000, value}),
         "Requested transformation doesn't exist"
       );
@@ -46,7 +47,7 @@ describe("StyleArt", () => {
 
       await expectRevert(
         this.contract.contract.methods
-          .payGenerating(1, "imageUrl")
+          .payGenerating(1, params)
           .send({from: user1, gas: 500000, value}),
         "Transaction value must match transformation price"
       );
@@ -54,14 +55,15 @@ describe("StyleArt", () => {
 
     it("It reverts when transformation supply is exhausted", async () => {
       const value = web3.utils.toWei("1", "ether");
+      const params2 = web3.utils.asciiToHex('{"image_url": "http://image2.com"}');
 
       await this.contract.contract.methods
-        .payGenerating(1, "imageUrl1")
+        .payGenerating(1, params)
         .send({from: user1, gas: 500000, value}),
 
       await expectRevert(
         this.contract.contract.methods
-          .payGenerating(1, "imageUrl2")
+          .payGenerating(1, params2)
           .send({from: user1, gas: 500000, value}),
         "Transformation supply is exhausted"
       );
@@ -69,17 +71,33 @@ describe("StyleArt", () => {
 
     it("Emits ImageGenerationPaid event", async () => {
       const value = web3.utils.toWei("1", "ether");
-      const imageURL = "imageURL"
 
       const tx = await this.contract.contract.methods
-        .payGenerating(transformationId, imageURL)
+        .payGenerating(transformationId, params)
         .send({from: user1, gas: 500000, value});
 
       expectEvent(
         tx,
         "ImageGenerationPaid",
-        {sender: user1, value, transformationId, transformationNumber, imageURL}
+        {sender: user1, value, transformationId, transformationNumber, params}
       );
+    });
+
+    it("Emits params bytes that are convertible to original json", async () => {
+      const value = web3.utils.toWei("1", "ether");
+
+      const tx = await this.contract.contract.methods
+        .payGenerating(transformationId, params)
+        .send({from: user1, gas: 500000, value});
+
+      expectEvent(
+        tx,
+        "ImageGenerationPaid",
+        {sender: user1, value, transformationId, transformationNumber, params}
+      );
+
+      const decodedParams = '{"image_url": "http://image.com"}';
+      expect(web3.utils.hexToAscii(params)).to.equal(decodedParams);
     });
   });
 });

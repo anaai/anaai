@@ -32,13 +32,14 @@ const triggerJob = async (
 }
 
 nftContract.events.ImageGenerationPaid(async (error, event) => {
-  const imageURL = event.returnValues.imageURL;
+  const params = JSON.parse(web3.utils.hexToAscii(event.returnValues.params));
   const payer = event.returnValues.sender;
   const transformationId = parseInt(event.returnValues.transformationId);
   const transformationNumber = parseInt(event.returnValues.transformationNumber)
   const txHash = event.transactionHash;
   const blockHash = event.blockHash;
   const jobHash = uuid.v4();
+  const imageURL = params.image_url;
   console.log(`Recieved transaction ${txHash} in block ${blockHash}`);
   console.log(`${payer} triggered job ${jobHash} for image ${imageURL} with transformation ${transformationId}`);
 
