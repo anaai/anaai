@@ -59,7 +59,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged && npm test -- --watchAll=false"
+      "pre-commit": "lint-staged && npm test -- --watchAll=false --testPathPattern=./src\/.*"
     }
   },
   "lint-staged": {
