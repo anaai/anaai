@@ -34,5 +34,5 @@ async def mint_nft(nft: NFTPayload):
   token_id = contract.mint_nft(Web3.toChecksumAddress(nft.payer),
                                nft.token_uri)
 
-  logger.log_token_minted(token_id)
+  logger.log_token_minted(nft.payer, token_id, nft.token_uri)
   return JSONResponse({"token_id": token_id})
