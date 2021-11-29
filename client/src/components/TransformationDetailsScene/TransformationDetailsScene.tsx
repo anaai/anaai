@@ -10,7 +10,11 @@ import {
 import { useWallet } from 'contexts/WalletContext/WalletContext';
 import { useTheme } from '@material-ui/core';
 import { images } from 'config/imageLoader/imageLoader';
-import { ImageName, TransformationName } from 'config/transformations/transformations';
+import {
+  ImageName,
+  transformationDescriptions,
+  TransformationName
+} from 'config/transformations/transformations';
 import ReactCompareImage from 'react-compare-image';
 import { useHistory, useParams } from 'react-router';
 import { useStyles } from './TransformationDetailsScene.styles';
@@ -59,7 +63,7 @@ export const TransformationDetailsScene: React.FC<Record<string, unknown>> = () 
           </Typography>
 
           <Typography className={classes.transformationDescription} variant="body2">
-            {transformation.description}
+            {transformationDescriptions[transformation.name]}
           </Typography>
 
           <Box className={classes.transformationStats}>

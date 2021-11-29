@@ -14,7 +14,6 @@ contract StyleArt is ERC721, Ownable {
     uint256 supply;
     uint256 nTokens;
     string name;
-    string description;
     bool exists;
   }
 
@@ -81,14 +80,14 @@ contract StyleArt is ERC721, Ownable {
     return newItemId;
   }
 
-  function addTransformation(string memory name, string memory description, uint256 price, uint256 supply)
+  function addTransformation(string memory name, uint256 price, uint256 supply)
   public onlyOwner returns (uint256) {
     _transformationIds.increment();
     uint256 newTransformationId = _transformationIds.current();
 
     transformationIds.push(newTransformationId);
     transformations[newTransformationId] = Transformation(
-      newTransformationId, price, supply, 0, name, description, true
+      newTransformationId, price, supply, 0, name, true
     );
 
     return newTransformationId;
