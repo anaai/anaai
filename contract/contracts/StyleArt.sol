@@ -22,6 +22,7 @@ contract StyleArt is ERC721, Ownable {
   Counters.Counter private _transformationIds;
 
   address payable private admin;
+  mapping(address => bool) private minters;
 
   mapping(address => uint256[]) private userCollection;
   uint256[] private transformationIds;
@@ -52,6 +53,11 @@ contract StyleArt is ERC721, Ownable {
     _;
   }
 
+  modifier adminOrMinter(address caller) {
+    require(caller == admin || minters[caller] == true, "No permission to mint");
+    _;
+  }
+
   function payGenerating(uint256 transformationId, bytes memory params)
   public payable availableTransformation(transformationId, msg.value) {
     uint256 transformationNumber;
@@ -64,7 +70,7 @@ contract StyleArt is ERC721, Ownable {
   }
 
   function mintNFT(address payer, string memory tokenURI)
-  public onlyOwner
+  public adminOrMinter(msg.sender)
   returns (uint256)
   {
     _tokenIds.increment();
@@ -78,6 +84,16 @@ contract StyleArt is ERC721, Ownable {
     emit TokenMinted(payer, newItemId, tokenURI);
 
     return newItemId;
+  }
+
+  function addMinter(address minter) public onlyOwner returns (bool) {
+    minters[minter] = true;
+    return true;
+  }
+
+  function removeMinter(address minter) public onlyOwner returns (bool) {
+    minters[minter] = false;
+    return true;
   }
 
   function addTransformation(string memory name, uint256 price, uint256 supply)
