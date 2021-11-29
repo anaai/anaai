@@ -5,6 +5,7 @@ import ReactCompareImage from 'react-compare-image';
 import { useHistory, useLocation } from 'react-router';
 import { useStyles } from './TransformationCard.styles';
 import { Transformation } from 'models/Transformations.model';
+import { transformationDescriptions } from 'config/transformations/transformations';
 
 interface TransformationCardProps {
   transformation: Transformation;
@@ -33,7 +34,7 @@ export const TransformationCard: React.FC<TransformationCardProps> = ({ transfor
           </Typography>
 
           <Typography className={classes.transformationDescription} variant="body2">
-            {transformation.description}
+            {transformationDescriptions[transformation.name]}
           </Typography>
 
           <Box className={classes.transformationStats}>
