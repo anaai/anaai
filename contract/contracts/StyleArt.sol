@@ -53,8 +53,8 @@ contract StyleArt is ERC721, Ownable {
     _;
   }
 
-  modifier adminOrMinter(address caller) {
-    require(caller == admin || minters[caller] == true, "No permission to mint");
+  modifier adminOrMinter() {
+    require(msg.sender == admin || minters[msg.sender] == true, "No permission to mint");
     _;
   }
 
@@ -70,7 +70,7 @@ contract StyleArt is ERC721, Ownable {
   }
 
   function mintNFT(address payer, string memory tokenURI)
-  public adminOrMinter(msg.sender)
+  public adminOrMinter()
   returns (uint256)
   {
     _tokenIds.increment();
