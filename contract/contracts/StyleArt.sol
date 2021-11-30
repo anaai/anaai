@@ -70,7 +70,7 @@ contract StyleArt is ERC721, Ownable {
   }
 
   function mintNFT(address payer, string memory tokenURI)
-  public adminOrMinter()
+  public adminOrMinter
   returns (uint256)
   {
     _tokenIds.increment();
