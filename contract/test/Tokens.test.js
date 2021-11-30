@@ -51,7 +51,7 @@ describe("StyleArt", () => {
     it("Doesn't mint a token when you are not the owner", async () => {
       await expectRevert(
         this.contract.mintNFT(user1, uri, {from: user1}),
-        "Ownable: caller is not the owner"
+        "No permission to mint"
       );
     });
   });
