@@ -3,8 +3,8 @@ import numpy as np
 import cv2
 
 from tasks import (
-  _download_image, ascii, sketch, candy, feathers, mosaic,
-  the_scream, udnie, celeba_distill, face_paint, paprika
+  _download_image, ascii, candy, mosaic, the_scream,
+  udnie, celeba_distill, face_paint, paprika
 )
 
 IMAGE_URL = "image_url"
@@ -63,40 +63,12 @@ def test_ascii(download_mock, pinata_mock, dir_mock, cv2_mock, requests_mock):
 @patch("tasks.working_directory", return_value="image_path.jpg")
 @patch("tasks.PinataClient")
 @patch("tasks._download_image")
-def test_sketch(download_mock, pinata_mock, dir_mock, cv2_mock, requests_mock):
-  original_image = cv2.imread("tests/original.jpeg")
-
-  _setup_mocks(dir_mock, pinata_mock, download_mock, original_image)
-
-  status = sketch(TRANSFORMATION_NAME, TRANSFORMATION_NUMBER, PAYER, IMAGE_URL, IMAGE_NAME)
-
-  _assert_call_order_and_params(download_mock, dir_mock, cv2_mock, pinata_mock, requests_mock)
-
-@patch("tasks.requests")
-@patch("tasks.cv2")
-@patch("tasks.working_directory", return_value="image_path.jpg")
-@patch("tasks.PinataClient")
-@patch("tasks._download_image")
 def test_candy(download_mock, pinata_mock, dir_mock, cv2_mock, requests_mock):
   original_image = cv2.imread("tests/original.jpeg")
 
   _setup_mocks(dir_mock, pinata_mock, download_mock, original_image)
 
   status = candy(TRANSFORMATION_NAME, TRANSFORMATION_NUMBER, PAYER, IMAGE_URL, IMAGE_NAME)
-
-  _assert_call_order_and_params(download_mock, dir_mock, cv2_mock, pinata_mock, requests_mock)
-
-@patch("tasks.requests")
-@patch("tasks.cv2")
-@patch("tasks.working_directory", return_value="image_path.jpg")
-@patch("tasks.PinataClient")
-@patch("tasks._download_image")
-def test_feathers(download_mock, pinata_mock, dir_mock, cv2_mock, requests_mock):
-  original_image = cv2.imread("tests/original.jpeg")
-
-  _setup_mocks(dir_mock, pinata_mock, download_mock, original_image)
-
-  status = feathers(TRANSFORMATION_NAME, TRANSFORMATION_NUMBER, PAYER, IMAGE_URL, IMAGE_NAME)
 
   _assert_call_order_and_params(download_mock, dir_mock, cv2_mock, pinata_mock, requests_mock)
 
@@ -138,7 +110,7 @@ def test_udnie(download_mock, pinata_mock, dir_mock, cv2_mock, requests_mock):
 
   _setup_mocks(dir_mock, pinata_mock, download_mock, original_image)
 
-  status = feathers(TRANSFORMATION_NAME, TRANSFORMATION_NUMBER, PAYER, IMAGE_URL, IMAGE_NAME)
+  status = udnie(TRANSFORMATION_NAME, TRANSFORMATION_NUMBER, PAYER, IMAGE_URL, IMAGE_NAME)
 
   _assert_call_order_and_params(download_mock, dir_mock, cv2_mock, pinata_mock, requests_mock)
 
