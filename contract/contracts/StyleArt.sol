@@ -22,7 +22,7 @@ contract StyleArt is ERC721, Ownable {
   Counters.Counter private _transformationIds;
 
   address payable private admin;
-  mapping(address => bool) private minters;
+  mapping(address => bool) public minters;
 
   mapping(address => uint256[]) private userCollection;
   uint256[] private transformationIds;
