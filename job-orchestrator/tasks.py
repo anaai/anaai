@@ -56,25 +56,9 @@ def ascii(transformation_name, transformation_number, payer, image_url, image_na
   return status
 
 @app.task(autoretry_for=(Exception,), retry_kwargs={"max_retries": 3, "countdown": 5})
-def sketch(transformation_name, transformation_number, payer, image_url, image_name):
-  sketch = transformers.SketchArt()
-  status = create_token(sketch, transformation_name, transformation_number,
-                        payer, image_url, image_name)
-
-  return status
-
-@app.task(autoretry_for=(Exception,), retry_kwargs={"max_retries": 3, "countdown": 5})
 def candy(transformation_name, transformation_number, payer, image_url, image_name):
   candy = transformers.FastNeuralStyle(model_paths.CANDY_FAST_NEURAL_TRANSFER_MODEL)
   status = create_token(candy, transformation_name, transformation_number,
-                        payer, image_url, image_name)
-
-  return status
-
-@app.task(autoretry_for=(Exception,), retry_kwargs={"max_retries": 3, "countdown": 5})
-def feathers(transformation_name, transformation_number, payer, image_url, image_name):
-  feathers = transformers.FastNeuralStyle(model_paths.FEATHERS_FAST_NEURAL_TRANSFER_MODEL)
-  status = create_token(feathers, transformation_name, transformation_number,
                         payer, image_url, image_name)
 
   return status

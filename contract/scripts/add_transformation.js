@@ -27,11 +27,9 @@ const priceHalf = Web3.utils.toBN("500000000000000000");
 const priceFifth = Web3.utils.toBN("200000000000000000");
 
 (async () => {
-  await addTransformation(nftContract, PUBLIC_KEY, "ascii", priceFifth, 300);
-  await addTransformation(nftContract, PUBLIC_KEY, "sketch", priceFifth, 300);
-  await addTransformation(nftContract, PUBLIC_KEY, "candy", priceFifth, 300);
-  await addTransformation(nftContract, PUBLIC_KEY, "feathers", priceHalf, 300);
-  await addTransformation(nftContract, PUBLIC_KEY, "mosaic", priceHalf, 300);
+  await addTransformation(nftContract, PUBLIC_KEY, "ascii", 0, 300);
+  await addTransformation(nftContract, PUBLIC_KEY, "candy", 0, 300);
+  await addTransformation(nftContract, PUBLIC_KEY, "mosaic", 0, 300);
   await addTransformation(nftContract, PUBLIC_KEY, "theScream", priceHalf, 300);
   await addTransformation(nftContract, PUBLIC_KEY, "udnie", priceHalf, 300);
   await addTransformation(nftContract, PUBLIC_KEY, "celebaDistill", price1, 300);
