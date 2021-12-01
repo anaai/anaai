@@ -54,7 +54,7 @@ export const TransformationCard: React.FC<TransformationCardProps> = ({ transfor
 
             <Box className={classes.transformationStat}>
               <Typography className={classes.transformationStatValue} variant="h6">
-                {Web3.utils.fromWei(transformation.price.toString())} ETH
+                {Web3.utils.fromWei(transformation.price.toString())} MATIC
               </Typography>
               <Typography>Price</Typography>
             </Box>
