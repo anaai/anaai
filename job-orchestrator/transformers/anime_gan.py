@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+import imutils
 
 import torch
 from torch import nn
@@ -11,6 +12,7 @@ torch.backends.cudnn.deterministic = True
 
 DEVICE = "cpu"
 UPSAMPLE_ALIGN = False
+IMAGE_WIDTH = 1200
 
 class AnimeGAN():
   def __init__(self, model_path):
@@ -29,6 +31,7 @@ class AnimeGAN():
     return animated_image
 
   def _preprocess_image(self, image):
+    image = imutils.resize(image, width=IMAGE_WIDTH)
     image = image.astype(np.float32)
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     h, w = image.shape[:2]
