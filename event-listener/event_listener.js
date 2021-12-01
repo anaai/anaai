@@ -43,5 +43,9 @@ nftContract.events.ImageGenerationPaid(async (error, event) => {
   console.log(`Recieved transaction ${txHash} in block ${blockHash}`);
   console.log(`${payer} triggered job ${jobHash} for image ${imageURL} with transformation ${transformationId}`);
 
-  await triggerJob(payer, transformationId, transformationNumber, imageURL, jobHash, txHash, blockHash);
+  try {
+    await triggerJob(payer, transformationId, transformationNumber, imageURL, jobHash, txHash, blockHash);
+  } catch (error) {
+    console.log(error);
+  }
 });
