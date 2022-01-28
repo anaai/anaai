@@ -32,24 +32,41 @@ blocks:
   - name: Job Service
     dependencies: []
     run:
-      when: change_in('/job-orchestrator/')
+      when: change_in('/job-service/')
     task:
+      secrets:
+        - name: job-service-db
       jobs:
         - name: 'Job #1'
           commands:
             - checkout
             - cd job-service
             - docker build -t job-service .
-            - 'docker run job-service:latest python -m pytest tests'
+            - 'docker run -e MIGRATIONS_CONNECTION_URL=$MIGRATIONS_CONNECTION_URL job-service:latest python -m pytest tests'
   - name: NFT Service
     dependencies: []
     run:
       when: change_in('/nft-service/')
     task:
+      secrets:
+        - name: wallet
+        - name: contract
       jobs:
         - name: 'Job #1'
           commands:
             - checkout
             - cd nft-service
             - docker build -t nft-service .
-            - 'docker run nft-service:latest python -m pytest tests'
+            - 'docker run -e CONTRACT_ADDRESS=$CONTRACT_ADDRESS -e PUBLIC_KEY=$PUBLIC_KEY nft-service:latest python -m pytest tests'
+  - name: Client app
+    dependencies: []
+    run:
+      when: change_in('/client/')
+    task:
+      jobs:
+        - name: 'Job #1'
+          commands:
+            - checkout
+            - cd client
+            - yarn install
+            - yarn test
