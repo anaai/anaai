@@ -2,7 +2,7 @@ import pytest
 import task_mapper
 
 def test_supported_transformations():
-  assert len(task_mapper.TASK_MAPPINGS) == 10
+  assert len(task_mapper.TASK_MAPPINGS) == 8
   assert task_mapper.TASK_MAPPINGS[1] == "tasks.ascii"
   assert task_mapper.TASK_MAPPINGS[2] == "tasks.candy"
   assert task_mapper.TASK_MAPPINGS[3] == "tasks.mosaic"
