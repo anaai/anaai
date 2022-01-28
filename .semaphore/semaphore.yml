@@ -1,0 +1,55 @@
+version: v1.0
+name: CI pipeline
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu2004
+blocks:
+  - name: Contract
+    dependencies: []
+    run:
+      when: change_in('/contract/')
+    task:
+      jobs:
+        - name: 'Job #1'
+          commands:
+            - checkout
+            - cd contract
+            - yarn install
+            - yarn test
+  - name: Job Orchestrator
+    dependencies: []
+    run:
+      when: change_in('/job-orchestrator/')
+    task:
+      jobs:
+        - name: 'Job #1'
+          commands:
+            - checkout
+            - cd job-orchestrator
+            - docker build -t job-orchestrator .
+            - 'docker run job-orchestrator:latest python -m pytest tests'
+  - name: Job Service
+    dependencies: []
+    run:
+      when: change_in('/job-orchestrator/')
+    task:
+      jobs:
+        - name: 'Job #1'
+          commands:
+            - checkout
+            - cd job-service
+            - docker build -t job-service .
+            - 'docker run job-service:latest python -m pytest tests'
+  - name: NFT Service
+    dependencies: []
+    run:
+      when: change_in('/nft-service/')
+    task:
+      jobs:
+        - name: 'Job #1'
+          commands:
+            - checkout
+            - cd nft-service
+            - docker build -t nft-service .
+            - 'docker run nft-service:latest python -m pytest tests'
