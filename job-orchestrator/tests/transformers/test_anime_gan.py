@@ -20,4 +20,4 @@ def test_stylized_image_shape(anime_gan):
   image = cv2.imread("tests/gril.jpg")
 
   animated_image = anime_gan.transform(image)
-  assert animated_image.shape == (876, 644, 3)
+  assert animated_image.shape == (1628, 1200, 3)

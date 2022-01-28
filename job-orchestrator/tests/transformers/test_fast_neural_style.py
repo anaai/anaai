@@ -20,4 +20,4 @@ def test_stylized_image_shape(fast_neural_style):
   image = cv2.imread("tests/original.jpeg")
 
   stylized_image = fast_neural_style.transform(image)
-  assert stylized_image.shape == (1500, 1000, 3)
+  assert stylized_image.shape == (1952, 1300, 3)
