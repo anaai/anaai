@@ -1,11 +1,7 @@
 # Event Listener
-Event listener listens for events on the blockchain through their web socket API
-and triggers appropriate actions on the rest of the platform.
-
-1. When users pay for generating an image -> Triggers a job for generating an
-   image
-2. When users pay for an image -> Calls nft service to transfer token ownership
-   to the user who paid for the image
+Event listener listens for events on the blockchain [node provider](https://www.alchemy.com/)
+through their web socket API and posts a request to start generating an image to
+job service.
 
 ### Requirements
 1. Docker
@@ -19,11 +15,9 @@ and triggers appropriate actions on the rest of the platform.
 
 ## See event listener in action
 Start the service and:
-### Reacting to payGenerating
-* `cd contract`
-* `node scripts/pay_generating.js` -> to see whether a job will be triggered
-
-### Reacting to payGenerating
-* `cd contract`
-* `node scripts/pay_image.js` -> to see whether a request will be posted to nft
-  service for changing token ownership
+* `cd ../contract` - go to contract directory
+* `node scripts/pay_generating.js`
+    * this will send a transaction and you can see how event listener reacts to
+        it
+    * Make sure to listen to the same contract address as your are sending
+        transactions to

@@ -1,8 +1,5 @@
 # NFT Service
-Service used for running admin transactions on the blockchain. Contains admin
-contracts private key.
-1. Minting NFTs on the blockchain
-2. Transfering token ownership
+Service used for running admin transactions on the blockchain. Contains contract minter's private keys (you can use the owner's private key for development).
 
 ## Requirements
 1. Docker
@@ -16,5 +13,4 @@ contracts private key.
 
 ## Running examples
 Start the service and:
-1. `./scripts/mint_nft.sh`
-2. `./scripts/transfer_token.sh`
+* `./scripts/mint_nft.sh`

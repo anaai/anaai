@@ -1,8 +1,8 @@
 # Job Service
 Job service is used for managing job requests and triggering image generation
 celery jobs. It is connected to Postgres and Redis.
-When a job request is received, the service will put a message into redis
-(message queue).
+When a job request is received, the service will store the job request in
+postgres and put a message into redis (message queue).
 
 ## Requirements
 1. Docker
@@ -35,7 +35,7 @@ to always check them before applying.
 ### Applying migrations
 `alembic upgrade head`
 
-### Generating zero state migrations
+### Generating zero state migrations (not needed anymore)
 One problem we have is that `Celery` will generate tables for `Tasks` and
 `TaskSets`. `Celery` runs migrations when first task is finished.
 
