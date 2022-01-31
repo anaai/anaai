@@ -1,7 +1,7 @@
 # anaai
 [![Build Status](https://vonum.semaphoreci.com/badges/anaai.svg)](https://vonum.semaphoreci.com/projects/anaai)
 
-![ana.ai demo](./assets/anaai-demo.mp4)
+https://user-images.githubusercontent.com/10870130/151812096-93827fbc-0b19-4bca-8665-bc223137e6a7.mp4
 
 Platform for generating images using ai and selling them as NFTs on ethereum
 blockchain. The idea is to allow users to generate their own art using anaai and
