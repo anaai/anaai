@@ -1,28 +1,34 @@
 # anaai
 [![Build Status](https://vonum.semaphoreci.com/badges/anaai.svg)](https://vonum.semaphoreci.com/projects/anaai)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+[ana.ai](https://anaai.art/) is a generative art platform for creating your own
+art as NFTs. The idea is to allow users to create their own art using different
+generative mathematical and AI models. It is live on [Polygon](https://polygon.technology/)
+and can be found [here](https://app.anaai.art/)!
 
 https://user-images.githubusercontent.com/10870130/151812096-93827fbc-0b19-4bca-8665-bc223137e6a7.mp4
 
-Platform for generating images using ai and selling them as NFTs on ethereum
-blockchain. The idea is to allow users to generate their own art using anaai and
-buy NFTs (tokens).
-How it is used:
-1. Upload an image
-2. Send transaction to blockchain to generate an image
-3. The platform receives the transaction and generates the image
-4. Image is uploaded to Pinata and token minted for the user
+### How it is used:
+1. Copy image url you want to transform
+2. Accept the transaction in your metamask wallet
+3. Enjoy your generated image!
+
+### What happens in the background
+1. ana.ai listens for events on Ethereum
+2. When an event is received, a background job is triggered
+3. After the image is generated, it is uploaded to IPFS and the token is minted
+   for you
+4. ana.ai emits another event to notify your browser that your image is
+   successfully generated
 
 ![Architecture](./assets/ana.ai.jpg)
-
-## Tokens
-Tokens are defined on the blockchain via `id` and `tokenURI`. Token uri links to
-the token metadata that is stored anywhere on the internet. The metadata defines
-content's url, alongside other information.
 
 ## Components
 ### Contract
 Contract defines what data we want to store on the blockchain and how to
-manipulate it. It is based on the ERC721 standard.
+manipulate it. It is based on the [ERC721](https://eips.ethereum.org/EIPS/eip-721)
+standard.
 
 Possible user transactions are:
 1. payGenerating
@@ -35,31 +41,33 @@ Possible admin transactions are:
 2. safeTransferFrom
 3. addTransformation
 
-### NFT service
-NFT service is responsible for all admin transactions for our contract:
-1. Minting NFTs for the user
-
 ### Event listener
-Event listener listens for events on the [Ethereum blockchain](https://ethereum.org/en/)
-and triggers actions on the rest of the platform:
-1. When users pay for generating an image -> Triggers a job for generating an
-   image
+Event listener listens for events on the blockchain and triggers actions int the
+platform. When users pay for generating an image, a background job is triggered
+that generates the image.
 
 ### Job service
-Service responsible for triggering background jobs. Event listener posts
-requests from users and job requests stores these requests in a db and triggers
-background jobs.
+Service responsible for triggering background jobs that generate images.
+Requests are emmited via the event listener. Job service does the following:
+1. Stores the job request
+2. Published to redis to trigger a background job
 
 ### Job orchestrator
 Task queue used for running background jobs. Implemented using [Celery](https://docs.celeryproject.org/en/stable/getting-started/introduction.html).
-Shares db with job service because job requests are linked to these background
-tasks.
 Redis is used as a messaging queue and postgres is used as the result db.
+Job orchestrator is subscribed to redis and upon receiving a message starts a
+background job that does the following:
+1. Generate image
+2. Upload image to [IPFS](https://www.pinata.cloud/)
+3. Post a mint token request to nft service
+
+### NFT service
+NFT service is responsible for all admin transactions for our contract. In this
+case, it's only used for minting NFTs for users.
 
 ### Client
 Frontend application for interracting with the platform. Allows user's to pay
 for generating images and shows their gallery of generated images.
-Fronted application implemented in [React](https://reactjs.org/).
 
 ## Requirements
 1. [Metamask](https://metamask.io/) wallet for testing and deploying contracts
@@ -70,7 +78,7 @@ Fronted application implemented in [React](https://reactjs.org/).
 
 ## Setup
 1. Deploy contract on Ethereum (or use an existing one)
-2. Setup environment variables for services
+2. Setup environment variables for services (check .env.example of each service)
 3. `docker-compose up build`
 
 ## Test
