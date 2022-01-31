@@ -1,16 +1,18 @@
 # anaai
 [![Build Status](https://vonum.semaphoreci.com/badges/anaai.svg)](https://vonum.semaphoreci.com/projects/anaai)
 
+![ana.ai demo](./assets/anaai-demo.mp4)
+
 Platform for generating images using ai and selling them as NFTs on ethereum
 blockchain. The idea is to allow users to generate their own art using anaai and
 buy NFTs (tokens).
 How it is used:
 1. Upload an image
 2. Send transaction to blockchain to generate an image
-3. Image is generated and token is minted
-4. User sees the image and can buy token (only the user who paid for the
-   transaction can buy in the first hour, after that anyone can buy the token)
-5. Token is transfered to user's ownership
+3. The platform receives the transaction and generates the image
+4. Image is uploaded to Pinata and token minted for the user
+
+![Architecture](./assets/ana.ai.jpg)
 
 ## Tokens
 Tokens are defined on the blockchain via `id` and `tokenURI`. Token uri links to
@@ -24,32 +26,27 @@ manipulate it. It is based on the ERC721 standard.
 
 Possible user transactions are:
 1. payGenerating
-2. payImage
+2. listTransformations
 3. listTransformations
 4. All the ERC721 standard public views
 
-Possible admint transactions are
+Possible admin transactions are:
 1. mintNFT
 2. safeTransferFrom
 3. addTransformation
-4. listTransformations
-5. All the ERC721 standard public views
 
 ### NFT service
 NFT service is responsible for all admin transactions for our contract:
-1. Minting NFTs on the blockchain
-2. Transfering token ownership
+1. Minting NFTs for the user
 
 ### Event listener
 Event listener listens for events on the [Ethereum blockchain](https://ethereum.org/en/)
 and triggers actions on the rest of the platform:
 1. When users pay for generating an image -> Triggers a job for generating an
    image
-2. When users pay for an image -> Calls nft service to transfer token ownership
-   to the user who paid for the image
 
 ### Job service
-Service responsible for triggering background jobs. Event listeners posts
+Service responsible for triggering background jobs. Event listener posts
 requests from users and job requests stores these requests in a db and triggers
 background jobs.
 
@@ -60,6 +57,8 @@ tasks.
 Redis is used as a messaging queue and postgres is used as the result db.
 
 ### Client
+Frontend application for interracting with the platform. Allows user's to pay
+for generating images and shows their gallery of generated images.
 Fronted application implemented in [React](https://reactjs.org/).
 
 ## Requirements
